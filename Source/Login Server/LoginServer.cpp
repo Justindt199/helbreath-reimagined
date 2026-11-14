@@ -29,6 +29,7 @@ CLoginServer::CLoginServer()
 		dwShutdownInterval = 0;
 		bConfigsUpdated = FALSE;
 		ItemCfg = Item2Cfg = Item3Cfg = BuildItemCfg = DupItemIDCfg = MagicCfg = NULL;
+		for (int e = 0; e < MAX_EXTRA_ITEMCFG; e++) ExtraItemCfg[e] = NULL;
 		NoticementTxt = NPCCfg = PotionCfg = QuestCfg = SkillCfg = CraftingCfg = TeleportCfg = NULL;
 }
 //=============================================================================
@@ -50,6 +51,7 @@ CLoginServer::~CLoginServer()
 		SAFEDELETE(ItemCfg);
 		SAFEDELETE(Item2Cfg);
 		SAFEDELETE(Item3Cfg);
+		for (int e = 0; e < MAX_EXTRA_ITEMCFG; e++) SAFEDELETE(ExtraItemCfg[e]);
 		SAFEDELETE(BuildItemCfg);
 		SAFEDELETE(DupItemIDCfg);
 		SAFEDELETE(MagicCfg);
@@ -124,6 +126,7 @@ BOOL CLoginServer::bReadAllConfig()
 		if(ReadConfig("Item2.cfg")			== FALSE) return FALSE;
 		SAFEDELETE(Item3Cfg);
 		if(ReadConfig("Item3.cfg")			== FALSE) return FALSE;
+		ReadExtraItemConfigs();
 		SAFEDELETE(BuildItemCfg);
 		if(ReadConfig("BuildItem.cfg")		== FALSE) return FALSE;
 		SAFEDELETE(DupItemIDCfg);
@@ -187,6 +190,15 @@ void CLoginServer::SendConfigToGS(BYTE ID)
         *dwp = MSGID_ITEMCONFIGURATIONCONTENTS;
         SafeCopy(SendCfgData+6, Item3Cfg);
         SendMsgToGS(ID, SendCfgData, strlen(Item3Cfg)+7);
+
+        for (int e = 0; e < MAX_EXTRA_ITEMCFG; e++) {
+            if (ExtraItemCfg[e] == NULL) continue;
+            ZeroMemory(SendCfgData, sizeof(SendCfgData));
+            dwp  = (DWORD*)SendCfgData;
+            *dwp = MSGID_ITEMCONFIGURATIONCONTENTS;
+            SafeCopy(SendCfgData+6, ExtraItemCfg[e]);
+            SendMsgToGS(ID, SendCfgData, strlen(ExtraItemCfg[e])+7);
+        }
 
         ZeroMemory(SendCfgData, sizeof(SendCfgData));
         dwp  = (DWORD*)SendCfgData;
@@ -1247,6 +1259,24 @@ void CLoginServer::RegisterGameServerSocket(char *Data, BYTE ID)
 			   }
                return;
               }
+}
+//=============================================================================
+void CLoginServer::ReadExtraItemConfigs()
+{
+	char cFile[64], cTxt[120];
+	for (int e = 0; e < MAX_EXTRA_ITEMCFG; e++) {
+		SAFEDELETE(ExtraItemCfg[e]);
+		sprintf(cFile, "Config/ItemValoria%d.cfg", e + 1);
+		FILE * pFile = fopen(cFile, "rt");
+		if (pFile == NULL) continue;
+		const DWORD dwSize = filesize(pFile);
+		ExtraItemCfg[e] = new char[dwSize + 2];
+		ZeroMemory(ExtraItemCfg[e], dwSize + 2);
+		fread(ExtraItemCfg[e], dwSize, 1, pFile);
+		fclose(pFile);
+		sprintf(cTxt, "(!) Reading configuration file [%s]...", cFile);
+		PutLogList(cTxt);
+	}
 }
 //=============================================================================
 BOOL CLoginServer::ReadConfig(char *FileName)

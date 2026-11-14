@@ -129,6 +129,11 @@ public:
 	WORD            ListenPort, GateServerPort, mySqlPort;
 	string mySqlDatabase;
 	BOOL            ListenToAllAddresses, mySQLAutoFixProcess, IsThreadMysqlBeingUsed;
+	// VALORIA items: Config\ItemValoria1.cfg .. ItemValoria4.cfg (optional), each sent as its own
+	// item message, as the game server takes at most 30000 bytes per message.
+	enum { MAX_EXTRA_ITEMCFG = 4 };
+	char			*ExtraItemCfg[MAX_EXTRA_ITEMCFG];
+	void			ReadExtraItemConfigs();
 	char			*ItemCfg, *Item2Cfg, *Item3Cfg, *BuildItemCfg, *DupItemIDCfg, *MagicCfg, 
 		*NoticementTxt, *NPCCfg, *PotionCfg, *QuestCfg, *SkillCfg, *CraftingCfg, *TeleportCfg;
 	BOOL			bIsF1pressed, bIsF4pressed, bIsF5pressed;
