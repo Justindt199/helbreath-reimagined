@@ -35,16 +35,6 @@ HornedHelm(M) 3 0 0 0 0 0 0 0 0
 HornedHelm(W) 3 0 0 0 0 0 0 0 0
 DragonHelm(M) 0 0 0 0 0 40 0 0 0
 DragonHelm(W) 0 0 0 0 0 40 0 0 0
-LeatherGloves(M) 0 1 0 0 0 0 0 0 0
-LeatherGloves(W) 0 1 0 0 0 0 0 0 0
-ChainGauntlets(M) 2 0 0 0 0 0 0 0 0
-ChainGauntlets(W) 2 0 0 0 0 0 0 0 0
-SilkGloves(M) 0 0 0 3 4 0 20 0 0
-SilkGloves(W) 0 0 0 3 4 0 20 0 0
-PlateGauntlets(M) 3 0 0 0 0 0 0 0 0
-PlateGauntlets(W) 3 0 0 0 0 0 0 0 0
-DragonGauntlets(M) 5 0 0 0 0 0 0 0 3
-DragonGauntlets(W) 5 0 0 0 0 0 0 0 3
 WindBoots 0 4 0 0 0 0 0 0 0
 CopperRing 1 0 0 0 0 0 0 0 0
 AmethystRing 0 0 0 4 5 0 0 0 0
@@ -86,8 +76,6 @@ CuisseAbyssWalker(M) 0 0 5 5 5 0 0 0 0
 CuisseAbyssWalker(W) 0 0 5 5 5 0 0 0 0
 FrostwyrmCrown(M) 0 0 5 5 5 0 207 0 0
 FrostwyrmCrown(W) 0 0 5 5 5 0 207 0 0
-HellclawGrips(M) 5 0 5 0 0 0 0 0 4
-HellclawGrips(W) 5 0 5 0 0 0 0 0 4
 EmberstrideGreaves 0 0 5 5 5 0 148 0 0
 AegisOfTheBlackWing 0 0 5 0 0 0 0 0 0
 BulwarkOfTheAbyss 0 0 5 0 0 228 0 0 0
@@ -102,8 +90,6 @@ EmberOfTheFireWyvern 5 0 5 0 0 0 0 0 7
 AbyssalScepter 0 0 5 5 5 0 0 0 0
 DeathknightsHelm(M) 5 0 5 0 0 0 0 0 0
 DeathknightsHelm(W) 5 0 5 0 0 0 0 0 0
-WyrmfireWraps(M) 0 0 5 5 5 0 0 0 0
-WyrmfireWraps(W) 0 0 5 5 5 0 0 0 0
 RimefangTreads 0 5 5 0 0 0 0 0 0
 SandspireSeal 0 0 5 5 5 0 172 0 0
 WormglassPendant 0 0 5 5 5 0 162 0 0

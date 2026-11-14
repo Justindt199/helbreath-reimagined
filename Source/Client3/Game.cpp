@@ -20709,10 +20709,8 @@ void CGame::DlgBoxClick_Inventory()
 		PlaySound('E', 14, 5);
 	}
 	else if (onButton == 2)
-	{	if (m_cSkillMastery[SKILL_MANUFACTURING] == 0)
-		{	AddEventList(DLGBOXCLICK_INVENTORY1, 10);
-			AddEventList(DLGBOXCLICK_INVENTORY2, 10);//"The manufacturing manual is purchasable in Blacksmith."
-		}else if (m_bSkillUsingStatus == TRUE)
+	{	// VALORIA recipes: no manufacturing skill needed first
+		if (m_bSkillUsingStatus == TRUE)
 		{	AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY5, 10);//""You are already using another skill."
 			return;
 		}else if (_bIsItemOnHand() == TRUE)
@@ -28242,21 +28240,13 @@ void CGame::DlgBoxDoubleClick_Inventory()
 				{	AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY6, 10);//"You can't use this item because it is exhausted."
 				}else
 				{	switch (m_pItemList[cItemID]->m_sSpriteFrame) {
-					case 55: // Alchemy pot
-						if (m_cSkillMastery[SKILL_ALCHEMY] == 0)
-						{	AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY9, 10);//"You should learn alchemy skill to use this item."
-						}else
-						{	EnableDialogBox(26, 1, NULL, NULL, NULL);
-							AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY10, 10);//"Using alchemy skill..."
-						}
+					case 55: // Alchemy pot (VALORIA recipes: no skill needed, the skill grows as you brew)
+						EnableDialogBox(26, 1, NULL, NULL, NULL);
+						AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY10, 10);//"Using alchemy skill..."
 						break;
-					case 113: // Smith's Anvil
-						if (m_cSkillMastery[SKILL_MANUFACTURING] == 0)
-						{	AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY11, 10);//"You should learn manufacturing skill to use this item.."
-						}else
-						{	EnableDialogBox(26, 3, NULL, NULL, NULL);
-							AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY12, 10);//"Using a manufacturing skill..."
-						}
+					case 113: // Smith's Anvil (VALORIA recipes: no skill needed, the skill grows as you forge)
+						EnableDialogBox(26, 3, NULL, NULL, NULL);
+						AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY12, 10);//"Using a manufacturing skill..."
 						break;
 
 					// Crafting
@@ -37418,8 +37408,7 @@ void CGame::DlgBoxClick_Magic()
 		m_dialogBoxes[3].sView = 9;
 	else if (onButton == 20)
 	{	
-		if (m_cSkillMastery[SKILL_ALCHEMY] == 0) AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY16, 10);
-		else
+		// VALORIA recipes: no alchemy skill needed first
 		{	
 			for (i = 0; i < MAXITEMS; i++)
 			if ((m_pItemList[i] != NULL) && (m_pItemList[i]->m_cItemType == ITEMTYPE_USE_SKILL_ENABLEDIALOGBOX) &&

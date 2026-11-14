@@ -175,26 +175,6 @@
   "DragonHelm(M)",
   "DragonHelm(W)"
  ],
- "leather_gloves": [
-  "LeatherGloves(M)",
-  "LeatherGloves(W)"
- ],
- "chain_gauntlets": [
-  "ChainGauntlets(M)",
-  "ChainGauntlets(W)"
- ],
- "silk_gloves": [
-  "SilkGloves(M)",
-  "SilkGloves(W)"
- ],
- "plate_gauntlets": [
-  "PlateGauntlets(M)",
-  "PlateGauntlets(W)"
- ],
- "dragon_gauntlets": [
-  "DragonGauntlets(M)",
-  "DragonGauntlets(W)"
- ],
  "leather_boots": [
   "LeatherBoots"
  ],
@@ -587,10 +567,6 @@
   "FrostwyrmCrown(M)",
   "FrostwyrmCrown(W)"
  ],
- "hellclaw_grips": [
-  "HellclawGrips(M)",
-  "HellclawGrips(W)"
- ],
  "emberstride_greaves": [
   "EmberstrideGreaves"
  ],
@@ -630,10 +606,6 @@
  "deathknight_helm": [
   "DeathknightsHelm(M)",
   "DeathknightsHelm(W)"
- ],
- "wyrmfire_wraps": [
-  "WyrmfireWraps(M)",
-  "WyrmfireWraps(W)"
  ],
  "rimefang_treads": [
   "RimefangTreads"

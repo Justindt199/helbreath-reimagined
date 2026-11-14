@@ -7,7 +7,7 @@
 #define BUILDDATE			0
 
 
-#define MAXLEVEL			115
+#define MAXLEVEL			140
 #define MAXSTAT				200
 
 #define MAXDELETELEVEL		100

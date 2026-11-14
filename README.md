@@ -1,6 +1,6 @@
 # Helbreath Reimagined
 
-Justin's Helbreath client, login server and game server, built on the Helbreath Unrivaled source, with the max level set to 115. VALORIA's items and skills (forging, crafting, alchemy, enchanting, passive tree, empowering) are being added on top.
+Justin's Helbreath client, login server and game server, built on the Helbreath Unrivaled source, with the max level set to 140. VALORIA's items and skills (forging, crafting, alchemy, enchanting, passive tree, empowering) are being added on top.
 
 | Folder | What it is |
 |---|---|

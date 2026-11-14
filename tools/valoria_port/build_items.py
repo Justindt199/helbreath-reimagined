@@ -14,7 +14,8 @@ Writes  Server/Login Server/Config/ItemValoria<N>.cfg (the item rows, split so e
         tools/valoria_port/sprite_frames.json        (frame order of valoria_items.pak, for build_sprites.py)
 
 The conversion rules (the same for every item; see RULES.md):
-  * Required level  = VALORIA required level x 115 / 80, rounded (VALORIA's highest is 79 -> 114).
+  * Required level  = VALORIA required level x 140 / 80, rounded (VALORIA's highest is 79 -> 138).
+  * VALORIA gloves are not ported: Helbreath has no glove slot.
   * Weapon damage   = HB average 3.5 x (VALORIA average / 6.5) ^ 0.69, split over the template's dice
                       (more dice for big hitters, so no die has more than about 14 sides).
   * Armour defence  = the slot's best Helbreath value x (VALORIA defence / slot's best VALORIA defence).
@@ -36,7 +37,7 @@ END = '// ==== end of VALORIA items ===='
 
 FIRST_ID, LAST_ID = 1103, 1499          # free item numbers below MAXITEMTYPES (1500)
 SPRITE = 23                             # valoria_items.pak is registered as item sprite 23
-MAX_VAL_LEVEL, MAX_HB_LEVEL = 80, 115
+MAX_VAL_LEVEL, MAX_HB_LEVEL = 80, 140
 
 # Helbreath columns after "Item =" (see CGame::_bDecodeItemConfigFileContents)
 COLS = ['id', 'name', 'type', 'epos', 'eff', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'dur', 'seff', 'spr', 'sfrm',
@@ -49,6 +50,7 @@ REUSE = {'iron_ore': 'IronOre', 'ruby': 'Ruby', 'sapphire': 'Sapphire', 'emerald
 # VALORIA's quests, which Helbreath doesn't have).
 LATER_TYPES = {'enhance', 'elixir', 'quest', 'relic'}
 LATER_IDS = {'crypt_scroll', 'xp_scroll', 'smith_luck_scroll'}
+DROPPED_TYPES = {'gloves'}               # Helbreath has no glove slot
 
 # Template for each weapon (worn look, swing speed, skill, dice count). Order matters: first match wins.
 WEAPON_TEMPLATES = [
@@ -183,6 +185,9 @@ def main():
         t = v['type']
         if t in LATER_TYPES or key in LATER_IDS:
             skipped.append((key, 'later stage' if t != 'quest' else 'VALORIA quest item'))
+            continue
+        if t in DROPPED_TYPES:
+            skipped.append((key, 'no glove slot in Helbreath'))
             continue
         if key in REUSE:
             item_map[key] = [REUSE[key]]

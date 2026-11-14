@@ -11,3 +11,4 @@ deps/
 Database/db_reset.sql
 Server_old/
 Source_old_github/
+__pycache__/

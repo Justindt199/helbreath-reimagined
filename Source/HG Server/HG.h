@@ -176,7 +176,7 @@ class CIni;
 //============================
 
 //============================
-#define PLAYERMAXLEVEL	115
+#define PLAYERMAXLEVEL	140
 //============================
 
 //============================
@@ -439,6 +439,11 @@ public:
 	void LocalSavePlayerData(int iClientH);
 	bool _bDecodePortionConfigFileContents(char * pData, uint32 dwMsgSize);
 	void ReqCreatePortionHandler(int iClientH, char * pData);
+	// VALORIA recipes (see the comment above CGame::Valoria_ReadSlots in HG.cpp)
+	enum { VRES_OK, VRES_NOMATCH, VRES_LEVEL, VRES_GOLD };
+	int  Valoria_ReadSlots(int iClientH, char * cp, short * sIdx);
+	int  Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const short * sArray);
+	int  Valoria_MakeRecipe(int iClientH, const char * pName, const short * sIdx, int n, const short * sArray, char * pItemType);
 	void _CheckAttackType(int iClientH, short * spType);
 	bool bOnClose();
 	void AdminOrder_SetInvi(int iClientH);

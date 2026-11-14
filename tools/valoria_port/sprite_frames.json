@@ -156,26 +156,6 @@
   "icon": "mx_dragon_helm"
  },
  {
-  "key": "leather_gloves",
-  "icon": "g_leather"
- },
- {
-  "key": "chain_gauntlets",
-  "icon": "g_chain"
- },
- {
-  "key": "silk_gloves",
-  "icon": "mx_silk_gloves"
- },
- {
-  "key": "plate_gauntlets",
-  "icon": "mx_plate_gauntlets"
- },
- {
-  "key": "dragon_gauntlets",
-  "icon": "g_dragon"
- },
- {
   "key": "leather_boots",
   "icon": "mx_leather_boots"
  },
@@ -620,10 +600,6 @@
   "icon": "mx_frostwyrm_crown"
  },
  {
-  "key": "hellclaw_grips",
-  "icon": "mx_hellclaw_grips"
- },
- {
   "key": "emberstride_greaves",
   "icon": "mx_emberstride_greaves"
  },
@@ -674,10 +650,6 @@
  {
   "key": "deathknight_helm",
   "icon": "mx_deathknight_helm"
- },
- {
-  "key": "wyrmfire_wraps",
-  "icon": "mx_wyrmfire_wraps"
  },
  {
   "key": "rimefang_treads",

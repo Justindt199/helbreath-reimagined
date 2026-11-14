@@ -9,6 +9,7 @@
 namespace
 {
 	std::map<std::string, ValoriaGearBonus> g_gear;
+	std::map<std::string, ValoriaRecipe> g_recipes;
 }
 
 int Valoria_LoadGear(const char * pFileName)
@@ -36,4 +37,28 @@ const ValoriaGearBonus * Valoria_FindGear(const char * pItemName)
 	if (pItemName == NULL) return NULL;
 	std::map<std::string, ValoriaGearBonus>::const_iterator it = g_gear.find(pItemName);
 	return (it == g_gear.end()) ? NULL : &it->second;
+}
+
+int Valoria_LoadRecipes(const char * pFileName)
+{
+	FILE * pFile = fopen(pFileName, "rt");
+	if (pFile == NULL) return -1;
+
+	g_recipes.clear();
+	char cLine[256], cName[64];
+	while (fgets(cLine, sizeof(cLine), pFile) != NULL)
+	{
+		if (cLine[0] == '/' || cLine[0] == '\r' || cLine[0] == '\n') continue;
+		ValoriaRecipe r;
+		if (sscanf(cLine, "%63s %d %d %d", cName, &r.level, &r.gold, &r.qty) == 4) g_recipes[cName] = r;
+	}
+	fclose(pFile);
+	return (int)g_recipes.size();
+}
+
+const ValoriaRecipe * Valoria_FindRecipe(const char * pItemName)
+{
+	if (pItemName == NULL) return NULL;
+	std::map<std::string, ValoriaRecipe>::const_iterator it = g_recipes.find(pItemName);
+	return (it == g_recipes.end()) ? NULL : &it->second;
 }

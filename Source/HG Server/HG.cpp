@@ -383,6 +383,9 @@ bool CGame::bInit()
 		const int iGear = Valoria_LoadGear("..\\configs\\valoria_gear.txt");
 		if (iGear < 0) PutLogList("(!) ..\\configs\\valoria_gear.txt not found: VALORIA gear has no stat bonuses");
 		else { wsprintf(cTxt, "(!) VALORIA gear bonuses: %d items", iGear); PutLogList(cTxt); }
+		const int iRecipes = Valoria_LoadRecipes("..\\configs\\valoria_recipes.txt");
+		if (iRecipes < 0) PutLogList("(!) ..\\configs\\valoria_recipes.txt not found: VALORIA recipes have no level, gold or quantity");
+		else { wsprintf(cTxt, "(!) VALORIA recipes: %d", iRecipes); PutLogList(cTxt); }
 	}
 	//
 
@@ -24924,233 +24927,155 @@ void CGame::_CheckAttackType(int iClientH, short *spType)
 }
 
 
-void CGame::ReqCreatePortionHandler(int iClientH, char *pData)
+// ---- VALORIA recipes (Valoria.h) ------------------------------------------------------------------------------
+// VALORIA's recipes replace Helbreath's in all three crafting windows (Manufacturing, Alchemy, Crafting), with
+// VALORIA's rules:
+//  * the items placed must be exactly the recipe's ingredients; a placed stack offers its whole count, so 30
+//    Forge Dust is one stack in one slot;
+//  * the character needs the recipe's level and gold (..\configs\valoria_recipes.txt);
+//  * it always succeeds, uses up exactly the ingredients and the gold, and makes the recipe's quantity;
+//  * a recipe for armour names the male (M) version; a woman gets the female (W) version.
+
+// Reads the six slot numbers the client sent, keeping each inventory slot once. Returns how many, or -1.
+int CGame::Valoria_ReadSlots(int iClientH, char * cp, short * sIdx)
 {
-	char  * cp, cI[6], cPortionName[21];
-	int    i, j, iEraseReq, iSkillLimit, iSkillLevel, iResult, iDifficulty;
-	short sItemIndex[6], sTemp;
-	uint32  itemNumber[6];
-	short sItemArray[12];
-	bool   bDup, bFlag;
-	class  CItem * pItem;
+	int n = 0;
+	for (int i = 0; i < 6; i++) {
+		const int c = cp[i];
+		if (c < 0) continue;
+		if (c >= MAXITEMS || m_pClientList[iClientH]->m_pItemList[c] == NULL) return -1;
+		if (m_pClientList[iClientH]->m_pItemList[c]->m_disabled) return -1;
+		bool bDup = false;
+		for (int j = 0; j < n; j++) if (sIdx[j] == c) bDup = true;
+		if (!bDup) sIdx[n++] = (short)c;
+	}
+	return n;
+}
+
+// -1 if an ingredient is missing or short, or a placed item isn't one of the recipe's ingredients; otherwise
+// the recipe's total number of ingredients (when two recipes match, the bigger one is made).
+int CGame::Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const short * sArray)
+{
+	CClient * p = m_pClientList[iClientH];
+	int iTotal = 0;
+	for (int k = 0; k < 6; k++) {
+		const int id = sArray[k*2], need = sArray[k*2+1];
+		if (id < 0 || need <= 0) continue;
+		uint32 dwHave = 0;
+		for (int i = 0; i < n; i++)
+			if ((int)p->m_pItemList[sIdx[i]]->m_sIDnum == id) dwHave += p->m_pItemList[sIdx[i]]->m_dwCount;
+		if (dwHave < (uint32)need) return -1;
+		iTotal += need;
+	}
+	for (int i = 0; i < n; i++) {
+		bool bUsed = false;
+		for (int k = 0; k < 6; k++)
+			if (sArray[k*2+1] > 0 && sArray[k*2] == (int)p->m_pItemList[sIdx[i]]->m_sIDnum) bUsed = true;
+		if (!bUsed) return -1;
+	}
+	return (iTotal > 0) ? iTotal : -1;
+}
+
+// Checks the level and gold, uses up the ingredients and the gold and gives the items. Returns VRES_*.
+int CGame::Valoria_MakeRecipe(int iClientH, const char * pName, const short * sIdx, int n, const short * sArray, char * pItemType)
+{
+	CClient * p = m_pClientList[iClientH];
+	const ValoriaRecipe * r = Valoria_FindRecipe(pName);
+	const int iLevel = r ? r->level : 0, iGold = r ? r->gold : 0, iQty = (r && r->qty > 0) ? r->qty : 1;
+	char cTxt[120];
+
+	if (p->m_iLevel < iLevel) {
+		wsprintf(cTxt, "You need level %d to make that.", iLevel);
+		ShowClientMsg(iClientH, cTxt);
+		return VRES_LEVEL;
+	}
+	const uint32 dwGold = dwGetItemCount(iClientH, "Gold");
+	if (dwGold < (uint32)iGold) {
+		wsprintf(cTxt, "You need %d gold to make that.", iGold);
+		ShowClientMsg(iClientH, cTxt);
+		return VRES_GOLD;
+	}
+
+	char cMake[21];
+	ZeroMemory(cMake, sizeof(cMake));
+	strncpy(cMake, pName, 20);
+	const size_t len = strlen(cMake);
+	CItem * pFirst = new CItem;
+	if (p->m_cSex == FEMALE && len > 3 && strcmp(cMake + len - 3, "(M)") == 0) {
+		cMake[len - 2] = 'W';
+		if (pFirst->InitItemAttr(cMake) == false) cMake[len - 2] = 'M';
+		delete pFirst;
+		pFirst = new CItem;
+	}
+	if (pFirst->InitItemAttr(cMake) == false) {
+		delete pFirst;
+		return VRES_NOMATCH;
+	}
+	*pItemType = pFirst->m_cItemType;
+
+	for (int k = 0; k < 6; k++) {
+		const int id = sArray[k*2];
+		uint32 dwNeed = (sArray[k*2+1] > 0) ? (uint32)sArray[k*2+1] : 0;
+		for (int i = 0; (i < n) && (dwNeed > 0); i++) {
+			CItem * pIt = p->m_pItemList[sIdx[i]];
+			if (pIt == NULL || (int)pIt->m_sIDnum != id) continue;
+			const uint32 dwTake = (pIt->m_dwCount < dwNeed) ? pIt->m_dwCount : dwNeed;
+			dwNeed -= dwTake;
+			if (pIt->m_dwCount == dwTake) ItemDepleteHandler(iClientH, sIdx[i], false);
+			else SetItemCount(iClientH, sIdx[i], pIt->m_dwCount - dwTake);
+		}
+	}
+	if (iGold > 0) SetItemCount(iClientH, "Gold", dwGold - iGold);
+
+	const bool bStacks = (pFirst->m_cItemType == ITEMTYPE_CONSUME) || (pFirst->m_cItemType == ITEMTYPE_ARROW);
+	for (int q = 0; q < (bStacks ? 1 : iQty); q++) {
+		CItem * pItem = pFirst;
+		if (q > 0) {
+			pItem = new CItem;
+			pItem->InitItemAttr(cMake);
+		}
+		if (bStacks) pItem->m_dwCount = iQty;
+		if (pItem->m_cItemType == ITEMTYPE_EQUIP) {
+			pItem->m_sTouchEffectType   = ITET_ID;
+			pItem->m_sTouchEffectValue1 = dice(1,100000);
+			pItem->m_sTouchEffectValue2 = dice(1,100000);
+			pItem->m_sTouchEffectValue3 = timeGetTime();
+		}
+		bAddItem(iClientH, pItem);
+	}
+	return VRES_OK;
+}
+
+void CGame::ReqCreatePortionHandler(int iClientH, char *pData)
+{	// Alchemy: VALORIA potions and food (see "VALORIA recipes" above)
+	short sIdx[6];
+	char  cName[21], cType;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	m_pClientList[iClientH]->m_iSkillMsgRecvCount++;
 
-	for (i = 0; i < 6; i++) {
-		cI[i] = -1;
-		sItemIndex[i]  = -1;
-		itemNumber[i] = 0;
-	}
+	const int n = Valoria_ReadSlots(iClientH, pData + 11, sIdx);
+	if (n < 0) return;
 
-	cp = (char *)(pData + 11);
-	cI[0] = *cp;
-	cp++;
-	cI[1] = *cp;
-	cp++;
-	cI[2] = *cp;
-	cp++;
-	cI[3] = *cp;
-	cp++;
-	cI[4] = *cp;
-	cp++;
-	cI[5] = *cp;
-	cp++;
-
-
-	for (i = 0; i < 6; i++) {
-		if (cI[i] >= MAXITEMS) return;
-		if ((cI[i] >= 0) && (m_pClientList[iClientH]->m_pItemList[cI[i]] == NULL)) return;
-	}
-
-	for (i = 0; i < 6; i++)
-		if (cI[i] >= 0) {
-			bDup = false;
-			for (j = 0; j < 6; j++) 
-				if (sItemIndex[j] == cI[i]) {
-					itemNumber[j]++;
-					bDup = true;
-				}
-			if (bDup == false) {
-				for (j = 0; j < 6; j++) 
-					if (sItemIndex[j] == -1) {
-						sItemIndex[j] = cI[i];
-						itemNumber[j]++;
-						break;
-					}
-			}
-		}
-
-	for (i = 0; i < 6; i++) 
-		if (sItemIndex[i] != -1) {
-			if (sItemIndex[i] < 0) return;
-			if ((sItemIndex[i] >= 0) && (sItemIndex[i] >= MAXITEMS)) return;
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]] == NULL) return;
-
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_dwCount < itemNumber[i]) return;
-		}
-
-
-	bFlag = true;
-	while (bFlag == true) {
-		bFlag = false;
-		for (i = 0; i < 5; i++) 
-			if ((sItemIndex[i] != -1) && (sItemIndex[i+1] != -1)) {
-				if ((m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum) <
-					(m_pClientList[iClientH]->m_pItemList[sItemIndex[i+1]]->m_sIDnum)) {
-						sTemp = sItemIndex[i+1];
-						sItemIndex[i+1] = sItemIndex[i];
-						sItemIndex[i] = sTemp;
-						sTemp = itemNumber[i+1];
-						itemNumber[i+1] = itemNumber[i];
-						itemNumber[i] = sTemp;
-						bFlag = true;
-				}
-			}
-		}
-
-		//testcode
-		/*
-		char cTemp[120];
-		char cTxt1[120];
-		char cTxt2[120];
-		ZeroMemory(cTxt1, sizeof(cTxt1));
-		ZeroMemory(cTxt2, sizeof(cTxt2));
-		for (i = 0; i < 6; i++) {
-		ZeroMemory(cTemp, sizeof(cTemp));
-		if (sItemIndex[i] != -1)
-		wsprintf(cTemp, "(%d) ", m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum);
-		else strcpy(cTemp, "(*)");
-		strcat(cTxt1, cTemp);
-
-		ZeroMemory(cTemp, sizeof(cTemp));
-		wsprintf(cTemp, "(%d) ", itemNumber[i]);
-		strcat(cTxt2, cTemp);
-		}
-		PutLogList(cTxt1);
-		PutLogList(cTxt2);
-		*/
-
-	j = 0;
-	for (i = 0; i < 6; i++) {
-		if (sItemIndex[i] != -1)
-			sItemArray[j] = m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum;
-		else sItemArray[j] = sItemIndex[i];
-		sItemArray[j+1] = itemNumber[i];
-		j += 2;
-	}
-
-		//testcode
-		/*
-		char cTemp[120], cTxt1[120];
-		ZeroMemory(cTxt1, sizeof(cTxt1));
-		for (i = 0; i < 12; i++) {
-		ZeroMemory(cTemp, sizeof(cTemp));
-		wsprintf(cTemp, "%d", sItemArray[i]);
-		strcat(cTxt1, cTemp);
-		}
-		PutLogList(cTxt1);
-		*/
-
-
-	ZeroMemory(cPortionName, sizeof(cPortionName));
-
-	for (i = 0; i < MAXPORTIONTYPES; i++) 
+	int iBest = -1, iBestSize = 0;
+	for (int i = 0; i < MAXPORTIONTYPES; i++)
 		if (m_pPortionConfigList[i] != NULL) {
-			bFlag = false;
-			for (j = 0; j < 12; j++) 
-				if (m_pPortionConfigList[i]->m_sArray[j] != sItemArray[j]) bFlag = true;
-
-			if (bFlag == false) {
-
-				ZeroMemory(cPortionName, sizeof(cPortionName));
-				memcpy(cPortionName, m_pPortionConfigList[i]->m_cName, 20);
-				iSkillLimit = m_pPortionConfigList[i]->m_iSkillLimit;
-				iDifficulty = m_pPortionConfigList[i]->m_iDifficulty;
-			}
+			const int iSize = Valoria_RecipeSize(iClientH, sIdx, n, m_pPortionConfigList[i]->m_sArray);
+			if (iSize > iBestSize) { iBest = i; iBestSize = iSize; }
 		}
-
-
-	if (strlen(cPortionName) == 0) {
+	if (iBest < 0) {
 		SendNotifyMsg(NULL, iClientH, NOTIFY_NOMATCHINGPORTION, NULL, NULL, NULL, NULL);
 		return;
 	}
 
-	iSkillLevel = m_pClientList[iClientH]->m_cSkillMastery[SKILL_ALCHEMY];
-	if (iSkillLimit > iSkillLevel) {
-		SendNotifyMsg(NULL, iClientH, NOTIFY_LOWPORTIONSKILL, NULL, NULL, NULL, cPortionName);
-		return;
-	}
+	ZeroMemory(cName, sizeof(cName));
+	memcpy(cName, m_pPortionConfigList[iBest]->m_cName, 20);
+	if (Valoria_MakeRecipe(iClientH, cName, sIdx, n, m_pPortionConfigList[iBest]->m_sArray, &cType) != VRES_OK) return;
 
-
-	iSkillLevel -= iDifficulty;
-	if (iSkillLevel <= 0) iSkillLevel = 1;
-
-
-	if( m_pClientList[iClientH]->m_cSkillMastery[SKILL_ALCHEMY] == 100 )
-		iSkillLevel += 5;
-
-	iResult = dice(1,100);
-	if (iResult > iSkillLevel) {
-		SendNotifyMsg(NULL, iClientH, NOTIFY_PORTIONFAIL, NULL, NULL, NULL, cPortionName);
-		return;
-	}
-
-	/*
-	if ((m_pClientList[iClientH]->m_iLevel < 20) && (iSkillLevel > 80 )) {
-	SendNotifyMsg(NULL, iClientH, NOTIFY_PORTIONFAIL, NULL, NULL, NULL, cPortionName);
-	return;
-	}
-	*/
-
+	SendNotifyMsg(NULL, iClientH, NOTIFY_PORTIONSUCCESS, NULL, NULL, NULL, cName);
 	CalculateSSN_SkillIndex(iClientH, SKILL_ALCHEMY, 1);
-
-	if (strlen(cPortionName) != 0) {
-		pItem = NULL;
-		pItem = new class CItem;
-		if (pItem == NULL) return;
-
-		for (i = 0; i < 6; i++)
-			if (sItemIndex[i] != -1) {
-				if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == ITEMTYPE_CONSUME)
-
-					SetItemCount(iClientH, sItemIndex[i], //     m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cName,
-					m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_dwCount - itemNumber[i]);
-				else ItemDepleteHandler(iClientH, sItemIndex[i], false);
-			}
-
-		SendNotifyMsg(NULL, iClientH, NOTIFY_PORTIONSUCCESS, NULL, NULL, NULL, cPortionName);
-
-		GetExp(iClientH, dice(2, (iDifficulty/3))); //m_pClientList[iClientH]->m_iExpStock += dice(1, (iDifficulty/3));
-
-		if ((pItem->InitItemAttr(cPortionName) == true)) {
-
-			if (_bAddClientItemList(iClientH, pItem, &iEraseReq) == true) {
-
-				SendItemNotifyMsg(iClientH, NOTIFY_ITEMOBTAINED, pItem, NULL, true);
-
-				if (iEraseReq == 1) delete pItem;
-
-				//if ((pItem->m_wPrice * pItem->m_dwCount) > 1000) 
-				//	SendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATA, iClientH);
-			}
-			else {
-
-				m_pMapList[ m_pClientList[iClientH]->m_cMapIndex ]->bSetItem(m_pClientList[iClientH]->m_sX, 
-					m_pClientList[iClientH]->m_sY, pItem);
-
-				SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, COMMONTYPE_ITEMDROP, m_pClientList[iClientH]->m_cMapIndex,
-					m_pClientList[iClientH]->m_sX, m_pClientList[iClientH]->m_sY,  
-					pItem->m_sSprite, pItem->m_sSpriteFrame, pItem->m_cItemColor); 
-
-				SendItemNotifyMsg(iClientH, NOTIFY_CANNOTCARRYMOREITEM, NULL, NULL, true);
-			}
-		}
-		else {
-			delete pItem;
-			pItem = NULL;
-		}
-	}
+	const ValoriaRecipe * r = Valoria_FindRecipe(cName);
+	GetExp(iClientH, dice(2, (r != NULL && r->level > 0) ? r->level : 1));
 }
 
 
@@ -29062,230 +28987,37 @@ bool CGame::_bDecodeBuildItemConfigFileContents(char *pData, uint32 dwMsgSize)
 }
 
 void CGame::BuildItemHandler(int iClientH, char *pData)
-{
-	char * cp, cName[21], cElementItemID[6];
-	int    i, x, z, iMatch, iCount, iPlayerSkillLevel, iResult, iTotalValue, iResultValue, iTemp, iItemCount[MAXITEMS];
-	class  CItem * pItem;
-	bool   bFlag, bItemFlag[6];
-	double dV1, dV2, dV3;
-	uint32  dwTemp, dwTemp2;
-	uint16   wTemp;
+{	// Manufacturing: VALORIA blacksmith recipes (see "VALORIA recipes" above)
+	short sIdx[6], sArray[12];
+	char  cName[21], cType;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	m_pClientList[iClientH]->m_iSkillMsgRecvCount++;
 
-	cp = (char *)(pData + 11);
 	ZeroMemory(cName, sizeof(cName));
-	memcpy(cName, cp, 20);
-	cp += 20;
+	memcpy(cName, pData + 11, 20);
+	const int n = Valoria_ReadSlots(iClientH, pData + 11 + 20, sIdx);
+	if (n < 0) return;
 
-	ZeroMemory(cElementItemID, sizeof(cElementItemID));
-	cElementItemID[0] = *cp;
-	cp++;
-	cElementItemID[1] = *cp;
-	cp++;
-	cElementItemID[2] = *cp;
-	cp++;
-	cElementItemID[3] = *cp;
-	cp++;
-	cElementItemID[4] = *cp;
-	cp++;
-	cElementItemID[5] = *cp;
-	cp++;
-
-	bFlag = true;
-	while (bFlag == true) {
-		bFlag = false;
-		for (i = 0; i <= 4; i++) 
-			if ((cElementItemID[i] == -1) && (cElementItemID[i+1] != -1)) {
-				cElementItemID[i] = cElementItemID[i+1];
-				cElementItemID[i+1] = -1;
-				bFlag = true;
+	for (int i = 0; i < MAXBUILDITEMS; i++)
+		if ((m_pBuildItemList[i] != NULL) && (memcmp(m_pBuildItemList[i]->m_cName, cName, 20) == 0)) {
+			for (int k = 0; k < 6; k++) {
+				sArray[k*2]   = (m_pBuildItemList[i]->m_iMaterialItemCount[k] > 0) ? (short)m_pBuildItemList[i]->m_iMaterialItemID[k] : -1;
+				sArray[k*2+1] = (short)m_pBuildItemList[i]->m_iMaterialItemCount[k];
 			}
-	}
-
-	for (i = 0; i < 6; i++) bItemFlag[i] = false;
-
-	iPlayerSkillLevel = m_pClientList[iClientH]->m_cSkillMastery[SKILL_MANUFACTURING];
-	iResult = dice(1, 100);
-
-	if (iResult > iPlayerSkillLevel) {
-		SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMFAIL, NULL, NULL, NULL, NULL);
-		return;
-	}
-
-	for (i = 0; i < 6; i++)
-		if (cElementItemID[i] != -1) {
-			if ((cElementItemID[i] < 0) || (cElementItemID[i] > MAXITEMS)) return;
-			if(!m_pClientList[iClientH]->m_pItemList[cElementItemID[i]] ||
-				m_pClientList[iClientH]->m_pItemList[cElementItemID[i]]->m_disabled) return;
+			if ((Valoria_RecipeSize(iClientH, sIdx, n, sArray) < 0) ||
+				(Valoria_MakeRecipe(iClientH, cName, sIdx, n, sArray, &cType) != VRES_OK)) {
+				SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMFAIL, NULL, NULL, NULL, NULL);
+				return;
+			}
+			SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMSUCCESS, 0, cType, NULL, NULL);
+			if (m_pBuildItemList[i]->m_iMaxSkill > m_pClientList[iClientH]->m_cSkillMastery[SKILL_MANUFACTURING])
+				CalculateSSN_SkillIndex(iClientH, SKILL_MANUFACTURING, 1);
+			const ValoriaRecipe * r = Valoria_FindRecipe(cName);
+			GetExp(iClientH, dice(2, (r != NULL && r->level > 0) ? r->level : 1));
+			return;
 		}
-
-		for (i = 0; i < MAXBUILDITEMS; i++)
-			if (m_pBuildItemList[i] != NULL) {
-				if (memcmp(m_pBuildItemList[i]->m_cName, cName, 20) == 0) {
-
-
-					if (m_pBuildItemList[i]->m_iSkillLimit > m_pClientList[iClientH]->m_cSkillMastery[SKILL_MANUFACTURING]) return;
-
-					for (x = 0; x < MAXITEMS; x++) 
-						if (m_pClientList[iClientH]->m_pItemList[x] != NULL) 
-							iItemCount[x] = m_pClientList[iClientH]->m_pItemList[x]->m_dwCount;
-						else iItemCount[x] = 0;
-
-						iMatch = 0;
-						iTotalValue = 0;
-
-						for (x = 0; x < 6; x++) {
-							if (m_pBuildItemList[i]->m_iMaterialItemCount[x] == 0) {
-								iMatch++;
-							}
-							else {
-								for (z = 0; z < 6; z++) 
-									if ((cElementItemID[z] != -1) && (bItemFlag[z] == false)) {
-
-										if ((m_pClientList[iClientH]->m_pItemList[cElementItemID[z]]->m_sIDnum  == m_pBuildItemList[i]->m_iMaterialItemID[x]) &&
-											(m_pClientList[iClientH]->m_pItemList[cElementItemID[z]]->m_dwCount >= m_pBuildItemList[i]->m_iMaterialItemCount[x]) &&
-											(iItemCount[cElementItemID[z]] > 0)) {
-												iTemp = m_pClientList[iClientH]->m_pItemList[cElementItemID[z]]->m_sItemSpecEffectValue2;
-												if (iTemp > m_pClientList[iClientH]->m_cSkillMastery[SKILL_MANUFACTURING]) {
-													iTemp = iTemp - (iTemp - m_pClientList[iClientH]->m_cSkillMastery[SKILL_MANUFACTURING])/2;
-												}
-
-												iTotalValue += (iTemp * m_pBuildItemList[i]->m_iMaterialItemValue[x]);
-												iItemCount[cElementItemID[z]] -= m_pBuildItemList[i]->m_iMaterialItemCount[x];
-												iMatch++;
-												bItemFlag[z] = true;
-
-												goto BIH_LOOPBREAK;
-										}
-									}
-BIH_LOOPBREAK:;
-							}
-						}
-
-						if (iMatch != 6) {
-							SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMFAIL, NULL, NULL, NULL, NULL);
-							return;
-						}
-
-						dV2 = (double)m_pBuildItemList[i]->m_iMaxValue;
-						if (iTotalValue <= 0) 
-							dV3 = 1.0f;
-						else dV3 = (double)iTotalValue;
-						dV1 = (double)(dV3/dV2)*100.0f;
-
-						iTotalValue = (int)dV1;
-
-
-						pItem = new class CItem;
-						if (pItem->InitItemAttr(m_pBuildItemList[i]->m_cName) == false) {
-							delete pItem;
-							return;
-						}
-
-						pItem->m_dwAttribute |= 1;
-
-						if (pItem->m_cItemType == ITEMTYPE_MATERIAL)
-						{
-							iTemp = dice(1, (iPlayerSkillLevel/2)+1) -1;
-							pItem->m_sItemSpecEffectValue2 = (iPlayerSkillLevel/2) + iTemp;
-
-							pItem->m_sTouchEffectType   = ITET_ID;
-							pItem->m_sTouchEffectValue1 = dice(1,100000);
-							pItem->m_sTouchEffectValue2 = dice(1,100000);
-							pItem->m_sTouchEffectValue3 = timeGetTime();
-
-						}
-						else {
-
-							dwTemp = pItem->m_dwAttribute;
-							dwTemp = dwTemp & 0x0000FFFF;
-
-							dwTemp2 = (uint16)m_pBuildItemList[i]->m_wAttribute;
-							dwTemp2 = dwTemp2 << 16;
-
-							dwTemp  = dwTemp | dwTemp2;
-							pItem->m_dwAttribute = dwTemp;
-
-							iResultValue = (iTotalValue - m_pBuildItemList[i]->m_iAverageValue);
-
-
-
-							if (iResultValue > 0) {
-								dV2 = (double)iResultValue;
-								dV3 = (double)(100 - m_pBuildItemList[i]->m_iAverageValue);
-								dV1 = (dV2/dV3)*100.0f;
-								pItem->m_sItemSpecEffectValue2 = (int)dV1;
-							}
-							else if (iResultValue < 0) {
-								dV2 = (double)(iResultValue);
-								dV3 = (double)(m_pBuildItemList[i]->m_iAverageValue);
-								dV1 = (dV2/dV3)*100.0f;
-								pItem->m_sItemSpecEffectValue2 = (int)dV1;
-							}
-							else pItem->m_sItemSpecEffectValue2 = 0;
-
-
-							dV2 = (double)pItem->m_sItemSpecEffectValue2;
-							dV3 = (double)pItem->m_wMaxLifeSpan;
-							dV1 = (dV2/100.0f)*dV3;
-
-							iTemp  = (int)pItem->m_wMaxLifeSpan;
-							iTemp += (int)dV1;
-
-
-							pItem->m_sTouchEffectType   = ITET_ID;
-							pItem->m_sTouchEffectValue1 = dice(1,100000);
-							pItem->m_sTouchEffectValue2 = dice(1,100000);
-							pItem->m_sTouchEffectValue3 = timeGetTime();
-
-							if (iTemp <= 0) 
-								wTemp = 1;
-							else wTemp = (uint16)iTemp;
-
-							if (wTemp <= pItem->m_wMaxLifeSpan*2) {
-								pItem->m_wMaxLifeSpan = wTemp;
-								pItem->m_sItemSpecEffectValue1 = (short)wTemp;
-								pItem->m_wCurLifeSpan = pItem->m_wMaxLifeSpan;
-							}
-							else pItem->m_sItemSpecEffectValue1 = (short)pItem->m_wMaxLifeSpan;
-
-
-							pItem->m_cItemColor = 2;
-						}
-
-						bAddItem(iClientH, pItem);
-						SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMSUCCESS, pItem->m_sItemSpecEffectValue2, pItem->m_cItemType, NULL, NULL); 
-
-#ifdef TAIWANLOG
-
-						_bItemLog(ITEMLOG_MAKE, iClientH, (int) -1, pItem);
-#endif
-
-						for (x = 0; x < 6; x++)
-							if (cElementItemID[x] != -1) {
-								if (m_pClientList[iClientH]->m_pItemList[cElementItemID[x]] == NULL) {
-									// ### BUG POINT!!!
-									wsprintf(g_cTxt, "(?) Char(%s) ElementItemID(%d)", m_pClientList[iClientH]->m_cCharName, cElementItemID[x]);
-									PutLogFileList(g_cTxt);
-								}
-								else {
-									iCount = m_pClientList[iClientH]->m_pItemList[cElementItemID[x]]->m_dwCount - m_pBuildItemList[i]->m_iMaterialItemCount[x];
-									if (iCount < 0) iCount = 0;
-									SetItemCount(iClientH, cElementItemID[x], iCount);
-								}
-							}
-
-							if (m_pBuildItemList[i]->m_iMaxSkill > m_pClientList[iClientH]->m_cSkillMastery[SKILL_MANUFACTURING])
-								CalculateSSN_SkillIndex(iClientH, SKILL_MANUFACTURING, 1);
-
-
-							GetExp(iClientH, dice(2, (m_pBuildItemList[i]->m_iSkillLimit/4))); //m_pClientList[iClientH]->m_iExpStock += dice(1, (m_pBuildItemList[i]->m_iSkillLimit/4));
-
-							return;
-				}
-			}
+	SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMFAIL, NULL, NULL, NULL, NULL);
 }
 
 void CGame::AdminOrder_EventSpell(int iClientH, char * pData, uint32 dwMsgSize)
@@ -38633,302 +38365,35 @@ bool CGame::_bDecodeCraftingConfigFileContents(char *pData, uint32 dwMsgSize)
 
 
 void CGame::ReqCreateCraftingHandler(int iClientH, char *pData)
-{
-	char * cp, cI[6], cCraftingName[21];
-	int i, j, iEraseReq, iRiskLevel, iDifficulty, iNeededContrib = 0;
-	short sTemp;
-	short sItemIndex[6], sItemPurity[6], sItemNumber[6], sItemArray[12];
-	bool bDup, bFlag, bNeedLog;
-	class CItem * pItem;
-	char g_cTxt[120];
+{	// Crafting: VALORIA jewellery, staves, robes and essences (see "VALORIA recipes" above)
+	short sIdx[6];
+	char  cName[21], cType;
+
 	if (m_pClientList[iClientH] == NULL) return;
 	m_pClientList[iClientH]->m_iSkillMsgRecvCount++;
 
-	for (i = 0; i < 6; i++)
-	{ 
-		cI[i] = -1;
-		sItemIndex[i] = -1;
-		sItemNumber[i] = 0;
-		sItemPurity[i] = -1;
-	}
-	cp = (char *)(pData + 11);
-	cp += 20;
-	cI[0] = *cp;
-	cp++;
-	cI[1] = *cp;
-	cp++;
-	cI[2] = *cp;
-	cp++;
-	cI[3] = *cp;
-	cp++;
-	cI[4] = *cp;
-	cp++;
-	cI[5] = *cp;
-	cp++;
+	const int n = Valoria_ReadSlots(iClientH, pData + 11 + 20, sIdx);
+	if (n < 0) return;
 
-	for (i = 0; i < 6; i++)
-	{ 
-		if (cI[i] >= MAXITEMS) return;
-		if ((cI[i] >= 0) && (m_pClientList[iClientH]->m_pItemList[cI[i]] == NULL)) return;
-	}
-
-	for (i = 0; i < 6; i++)
-		if (cI[i] >= 0)
-		{ 
-			bDup = false;
-			for (j = 0; j < 6; j++)
-				if (sItemIndex[j] == cI[i])
-				{ 
-					sItemNumber[j]++;
-					bDup = true;
-				}
-
-			if (bDup == false)
-			{ 
-				for (j = 0; j < 6; j++)
-					if (sItemIndex[j] == -1)
-					{ 
-						sItemIndex[j] = cI[i];
-						sItemNumber[j]++;
-						break;
-					}
-			} 
+	int iBest = -1, iBestSize = 0;
+	for (int i = 0; i < MAXCRAFTING; i++)
+		if (m_pCraftingConfigList[i] != NULL) {
+			const int iSize = Valoria_RecipeSize(iClientH, sIdx, n, m_pCraftingConfigList[i]->m_sArray);
+			if (iSize > iBestSize) { iBest = i; iBestSize = iSize; }
 		}
-
-
-	for (i = 0; i < 6; i++)
-		if (sItemIndex[i] != -1)
-		{ 
-			if (sItemIndex[i] < 0) return;
-			if ((sItemIndex[i] >= 0) && (sItemIndex[i] >= MAXITEMS)) return;
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]] == NULL) return;
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_dwCount < sItemNumber[i]) return;
-
-			sItemPurity[i] = m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sItemSpecEffectValue2;
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum == ITEM_STONEOFMERIEN)
-			{ 
-				sItemPurity[i] = 100; // Merien stones considered 100% purity.
-			}
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == ITEMTYPE_CONSUME)
-			{ 
-				sItemPurity[i] = -1; // Diamonds / Emeralds.etc.. never have purity
-			}
-			if (sItemNumber[i] > 1) // No purity for stacked items
-			{ 
-				sItemPurity[i] = -1;
-			}
-			// Prevent upgrade of alreaddy merienned Necks
-			if ((m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_dwAttribute & 0xF0000000) != 0)
-			{				
-				SendNotifyMsg(NULL, iClientH, NOTIFY_CRAFTING_FAIL, NULL, NULL, NULL, NULL); // "There is not enough material"
-				return;
-			} 
-
-			if((m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == ITEMTYPE_EQUIP
-				&& m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cEquipPos == EQUIPPOS_NECK) || 
-				m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sItemEffectType == ITEMEFFECTTYPE_SOCKET)
-			{ 
-				// crafting of necks and gems requires 10 contrib
-				iNeededContrib = 10; 
-			} 
-		}
-
-	// Bubble Sort
-	bFlag = true;
-	while (bFlag == true)
-	{ 
-		bFlag = false;
-		for (i = 0; i < 5; i++)
-			if ((sItemIndex[i] != -1) && (sItemIndex[i+1] != -1))
-			{ 
-				if ((m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum) < (m_pClientList[iClientH]->m_pItemList[sItemIndex[i+1]]->m_sIDnum))
-				{ 
-					sTemp = sItemIndex[i+1];
-					sItemIndex[i+1] = sItemIndex[i];
-					sItemIndex[i] = sTemp;
-					sTemp = sItemPurity[i+1];
-					sItemPurity[i+1] = sItemPurity[i];
-					sItemPurity[i] = sTemp;
-					sTemp = sItemNumber[i+1];
-					sItemNumber[i+1] = sItemNumber[i];
-					sItemNumber[i] = sTemp;
-					bFlag = true;
-				} 
-			}
-
-	}
-	j = 0;
-	for (i = 0; i < 6; i++)
-	{ 
-		if (sItemIndex[i] != -1)
-			sItemArray[j] = m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum;
-		else sItemArray[j] = sItemIndex[i];
-		sItemArray[j+1] = sItemNumber[i];
-		j += 2;
-	}
-
-	// Search Crafting you wanna build
-	ZeroMemory(cCraftingName, sizeof(cCraftingName));
-	for (i = 0; i < MAXCRAFTING; i++)
-		if (m_pCraftingConfigList[i] != NULL)
-		{	
-			bFlag = false;
-			for (j = 0; j < 12; j++) {
-				if (m_pCraftingConfigList[i]->m_sArray[j] != sItemArray[j]) bFlag = true; // one item mismatch
-			}
-			if (bFlag == false) // good Crafting receipe
-			{ 
-				ZeroMemory(cCraftingName, sizeof(cCraftingName));
-				memcpy(cCraftingName, m_pCraftingConfigList[i]->m_cName, 20);
-				iRiskLevel = m_pCraftingConfigList[i]->m_iSkillLimit; // % to loose item if crafting fails
-				iDifficulty = m_pCraftingConfigList[i]->m_iDifficulty;
-			} 
-		}
-	// Check if recipe is OK
-	if (strlen(cCraftingName) == 0)
-	{ 
-		SendNotifyMsg(NULL, iClientH, NOTIFY_NOMATCHINGCRAFTING, 1, NULL, NULL, NULL); // "There is not enough material"
-		return;
-	}
-	// Check for Contribution
-	if (m_pClientList[iClientH]->m_iContribution < iNeededContrib)
-	{ 
-		SendNotifyMsg(NULL, iClientH, NOTIFY_NO_CRAFT_CONTRIB, 2, NULL, NULL, NULL); // "There is not enough Contribution Point"
+	if (iBest < 0) {
+		SendNotifyMsg(NULL, iClientH, NOTIFY_NOMATCHINGCRAFTING, 1, NULL, NULL, NULL);
 		return;
 	}
 
-	// Check possible Failure
-	if (dice(1,100) > iDifficulty)
-	{ 
-		SendNotifyMsg(NULL, iClientH, NOTIFY_CRAFTING_FAIL, NULL, NULL, NULL, NULL); // "Crafting failed"
-		// Remove parts...
-		for (i = 0; i < 6; i++)
-			if (sItemIndex[i] != -1)
-			{ // Deplete any Merien Stone
-				if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sIDnum == ITEM_STONEOFMERIEN)
-				{ 
-					ItemDepleteHandler(iClientH, sItemIndex[i], false, false);
-				}else
-					// Risk to deplete any other items (not stackable ones) // ITEMTYPE_CONSUME
-					if ( (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == ITEMTYPE_EQUIP)
-						|| (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == ITEMTYPE_MATERIAL)
-						|| (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_sItemEffectType == ITEMEFFECTTYPE_SOCKET)
-						)
-					{ 
-						if (dice(1,100) < iRiskLevel)
-							ItemDepleteHandler(iClientH, sItemIndex[i], false);
-					} 
-			}
-		return;
-	}
+	ZeroMemory(cName, sizeof(cName));
+	memcpy(cName, m_pCraftingConfigList[iBest]->m_cName, 20);
+	if (Valoria_MakeRecipe(iClientH, cName, sIdx, n, m_pCraftingConfigList[iBest]->m_sArray, &cType) != VRES_OK) return;
 
-	// Purity
-	int iPurity, iTot = 0, iCount = 0;
-	for (i = 0; i < 6; i++)
-	{ 
-		if (sItemIndex[i] != -1 && sItemPurity[i] != -1)
-		{ 
-			iTot += sItemPurity[i];
-			iCount ++;
-		} 
-	}
-	if (iCount == 0 )
-	{ 
-		iPurity = 20 + dice(1,80);
-		if (iPurity >=95) bNeedLog = true;
-		else bNeedLog = false; 
-	}else{	
-		iPurity = iTot/iCount;
-		iTot = (iPurity*4)/5;
-		iCount = iPurity - iTot;
-		iPurity = iTot + dice(1,iCount); // Jewel completion depends off Wares purity
-		bNeedLog = true;
-	}
-	if (iNeededContrib != 0)
-	{ 
-		iPurity = 0; // Necks require contribution but no purity/completion
-		bNeedLog = true;
-	}
-
-	if(iPurity > 200) iPurity = 200;
-	if(iPurity < 0) iPurity = 20;
-
-	if (strlen(cCraftingName) != 0)
-	{ 
-		pItem = new class CItem;
-		if (pItem == NULL) return;
-		for (i = 0; i < 6; i++)
-		{ 
-			if (sItemIndex[i] != -1) {
-				if (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == ITEMTYPE_CONSUME) {
-					SetItemCount(iClientH, sItemIndex[i], m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_dwCount - sItemNumber[i]);
-				}else // So if item is not Type 5 (stackable items), you deplete item
-				{ 
-					ItemDepleteHandler(iClientH, sItemIndex[i], false, false);
-				} 
-			} 
-		}
-		if (iNeededContrib !=0)
-		{ 
-			m_pClientList[iClientH]->m_iContribution -= iNeededContrib;
-			// No known msg to send info to client, so client will compute shown Contrib himself.
-		}
-
-		SendNotifyMsg(NULL, iClientH, NOTIFY_CRAFTING_SUCCESS, NULL, NULL, NULL, NULL);
-
-		GetExp(iClientH, dice(2, 100));
-
-		if ((pItem->InitItemAttr(cCraftingName) == true))
-		{
-			if (iPurity != 0)
-			{ 
-				pItem->m_sItemSpecEffectValue2 = iPurity;
-				pItem->m_dwAttribute = 1;
-			}
-			pItem->m_sTouchEffectType = ITET_ID;
-			pItem->m_sTouchEffectValue1 = dice(1,100000);
-			pItem->m_sTouchEffectValue2 = dice(1,100000);
-			// pItem->m_sTouchEffectValue3 = timeGetTime();
-			SYSTEMTIME SysTime;
-			char cTemp[256];
-			GetLocalTime(&SysTime);
-			ZeroMemory(cTemp, sizeof(cTemp));
-			wsprintf(cTemp, "%d%2d", (short)SysTime.wMonth, (short)SysTime.wDay);
-			pItem->m_sTouchEffectValue3 = atoi(cTemp);
-
-			if (bNeedLog)
-			{ 
-				wsprintf(g_cTxt, "PC(%s) Crafting (%s) Purity(%d)"
-				, m_pClientList[iClientH]->m_cCharName
-				, pItem->m_cName
-				, pItem->m_sItemSpecEffectValue2);
-				PutLogList(g_cTxt);
-			}
-			if (_bAddClientItemList(iClientH, pItem, &iEraseReq) == true)
-			{ 
-				SendItemNotifyMsg(iClientH, NOTIFY_ITEMOBTAINED, pItem, NULL, true);
-				
-				if (iEraseReq == 1) delete pItem;
-				
-			//if ((pItem->m_wPrice * pItem->m_dwCount) > 1000)
-			// SendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATA, iClientH);
-			}else
-			{ 
-				m_pMapList[ m_pClientList[iClientH]->m_cMapIndex ]->bSetItem(m_pClientList[iClientH]->m_sX,	m_pClientList[iClientH]->m_sY, pItem);
-				
-				SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, COMMONTYPE_ITEMDROP, m_pClientList[iClientH]->m_cMapIndex,
-				m_pClientList[iClientH]->m_sX, m_pClientList[iClientH]->m_sY,
-				pItem->m_sSprite, pItem->m_sSpriteFrame, pItem->m_cItemColor);
-
-				SendItemNotifyMsg(iClientH, NOTIFY_CANNOTCARRYMOREITEM, NULL, NULL, true);
-			} 
-		}else
-		{ 
-			delete pItem;
-			pItem = NULL;
-		} 
-	}
-} 
+	SendNotifyMsg(NULL, iClientH, NOTIFY_CRAFTING_SUCCESS, NULL, NULL, NULL, NULL);
+	const ValoriaRecipe * r = Valoria_FindRecipe(cName);
+	GetExp(iClientH, dice(2, (r != NULL && r->level > 0) ? r->level : 1));
+}
 
 void CGame::WriteItemData(char * &cp, CItem * pItem) const
 {
