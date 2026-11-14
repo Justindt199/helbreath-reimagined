@@ -299,9 +299,9 @@ void CGame::DrawCharPanelFront(int iHoverSlot, const char * cEquipPoiStatus)
 	y += 24;
 
 	// ---- vitals
-	const int iMaxHP = m_stat[STAT_VIT] * 3 + m_iLevel * 2 + m_stat[STAT_STR] / 2;
-	const int iMaxMP = m_stat[STAT_MAG] * 2 + m_iLevel * 2 + m_stat[STAT_INT] / 2;
-	const int iMaxSP = m_iLevel * 2 + m_stat[STAT_STR] * 2;
+	const int iMaxHP = MaxHP();
+	const int iMaxMP = MaxMP();
+	const int iMaxSP = MaxSP();
 	const int iMaxWt = m_stat[STAT_STR] * 5 + m_iLevel * 5;
 	const double fWt = iMaxWt > 0 ? (double)m_weight / iMaxWt : 0;
 	const struct { const char * label; long long cur, max; COLORREF c; } vit[4] = {
@@ -343,8 +343,9 @@ void CGame::DrawCharPanelFront(int iHoverSlot, const char * cEquipPoiStatus)
 		R.FillPanel(cx0 + 6, cy0 + 9, cx0 + 42, cy0 + 27, 4, kAttr[i].bg, 255);
 		R.TextOut(cx0 + 24 - Width(R, kAttr[i].tag) / 2, cy0 + 10, kAttr[i].tag, kAttr[i].fg);
 		const int iStat = kAttrStat[i];
-		const int iBonus = (iStat == STAT_VIT || iStat == STAT_CHR) ? 0 : m_angelStat[iStat];
-		wsprintf(cBuf, "%d", m_stat[iStat] - iBonus);
+		const int iAngel = (iStat == STAT_VIT || iStat == STAT_CHR) ? 0 : m_angelStat[iStat];
+		const int iBonus = iAngel + GearStatBonus(iStat);		// angel + VALORIA gear
+		wsprintf(cBuf, "%d", m_stat[iStat] - iAngel);
 		Bold(R, cx0 + 50, cy0 + 1, cBuf, kWhite, 16);
 		if (iBonus != 0) {
 			char cB[16];

@@ -1,0 +1,2894 @@
+{
+ "dagger": {
+  "name": "Dagger",
+  "type": "weapon",
+  "tier": 1,
+  "icon": "mx_dagger",
+  "price": 20,
+  "dmg": [
+   2,
+   5
+  ],
+  "speed": 0.8,
+  "knockback": 1.5
+ },
+ "short_sword": {
+  "name": "Short Sword",
+  "type": "weapon",
+  "tier": 1,
+  "icon": "w_rapier_0",
+  "price": 100,
+  "dmg": [
+   4,
+   9
+  ],
+  "speed": 1.0,
+  "shop": "blacksmith",
+  "icon_r": [
+   "w_rapier_0",
+   "w_rapier_1",
+   "w_rapier_2",
+   "w_rapier_3",
+   "w_rapier_4"
+  ],
+  "knockback": 1.5
+ },
+ "long_sword": {
+  "name": "Long Sword",
+  "type": "weapon",
+  "tier": 2,
+  "icon": "mx_long_sword",
+  "price": 450,
+  "dmg": [
+   8,
+   15
+  ],
+  "speed": 1.0,
+  "req_str": 26,
+  "req_dex": 11,
+  "shop": "blacksmith",
+  "req_level": 5,
+  "knockback": 4
+ },
+ "broadsword": {
+  "name": "Broadsword",
+  "type": "weapon",
+  "tier": 3,
+  "icon": "mx_broadsword",
+  "price": 1100,
+  "dmg": [
+   13,
+   22
+  ],
+  "speed": 1.0,
+  "req_str": 32,
+  "req_dex": 17,
+  "req_level": 10,
+  "craft": true,
+  "knockback": 5
+ },
+ "great_sword": {
+  "name": "Great Sword",
+  "type": "weapon",
+  "tier": 4,
+  "icon": "mx_great_sword",
+  "price": 4000,
+  "dmg": [
+   22,
+   36
+  ],
+  "speed": 1.1,
+  "req_str": 38,
+  "req_dex": 23,
+  "req_level": 15,
+  "shop": "blacksmith",
+  "knockback": 6
+ },
+ "knight_blade": {
+  "name": "Knight Blade",
+  "type": "weapon",
+  "tier": 5,
+  "icon": "mx_knight_blade",
+  "price": 12000,
+  "dmg": [
+   34,
+   52
+  ],
+  "speed": 1.0,
+  "req_str": 44,
+  "req_dex": 29,
+  "req_level": 20,
+  "drop_only": true,
+  "knockback": 7
+ },
+ "dragonslayer": {
+  "name": "Dragonslayer",
+  "type": "weapon",
+  "tier": 6,
+  "icon": "mx_dragonslayer",
+  "price": 30000,
+  "dmg": [
+   50,
+   78
+  ],
+  "speed": 1.05,
+  "req_str": 51,
+  "req_dex": 36,
+  "req_level": 26,
+  "craft": true,
+  "str": 5,
+  "knockback": 8
+ },
+ "initiate_blade": {
+  "name": "Initiate's Blade",
+  "type": "weapon",
+  "tier": 2,
+  "icon": "mx_initiate_blade",
+  "price": 300,
+  "dmg": [
+   9,
+   16
+  ],
+  "speed": 1.0,
+  "starter": true,
+  "drop_only": true,
+  "becomes": "wyrmfang",
+  "lore": "A teaching blade from the Magic Tower. It remembers every hand that tried to unravel it.",
+  "req_level": 5,
+  "req_str": 26,
+  "req_dex": 11,
+  "knockback": 4
+ },
+ "wyrmfang": {
+  "name": "Wyrmfang",
+  "type": "weapon",
+  "tier": 3,
+  "icon": "w_wyrmfang",
+  "price": 4000,
+  "dmg": [
+   16,
+   27
+  ],
+  "speed": 0.85,
+  "unique": true,
+  "drop_only": true,
+  "crit": 3,
+  "fx": {
+   "pvp_recoil": 1
+  },
+  "lore": "The Initiate's Blade would not be unmade. It woke as a dragon-hilted fang and chose its master.",
+  "req_level": 10,
+  "req_str": 32,
+  "req_dex": 17,
+  "knockback": 5,
+  "sig": "pvp_recoil",
+  "sig_name": "Wyrm's Recoil"
+ },
+ "hellbrand": {
+  "name": "Hellbrand",
+  "type": "weapon",
+  "tier": 7,
+  "icon": "w_hellbrand",
+  "price": 250000,
+  "dmg": [
+   76,
+   110
+  ],
+  "unique": true,
+  "drop_from": "barlog",
+  "drop_chance": 0.015,
+  "lore": "Torn from the Balrog King's burning fist. Its runes still smoulder with the fires of the Tower of Hell.",
+  "str": 5,
+  "crit": 8,
+  "hp": 250,
+  "vit": 5,
+  "fx": {
+   "burn": 30,
+   "burn_t": 4,
+   "lifesteal": 5,
+   "boss_dmg": 25,
+   "dmg_pct": 8
+  },
+  "build": "melee",
+  "req_level": 77,
+  "req_str": 112,
+  "req_dex": 97,
+  "knockback": 9,
+  "sig": "burn",
+  "sig_name": "Hellfire"
+ },
+ "nightfall": {
+  "name": "Nightfall",
+  "type": "weapon",
+  "tier": 7,
+  "icon": "w_nightfall",
+  "price": 250000,
+  "dmg": [
+   74,
+   107
+  ],
+  "unique": true,
+  "drop_from": "korgath",
+  "drop_chance": 0.015,
+  "lore": "Forged in the long night beneath the frozen crypts, then carried south by Korgath the Ridgebreaker. Its edge drinks the warmth from every wound.",
+  "dex": 5,
+  "crit": 9,
+  "str": 5,
+  "vit": 5,
+  "fx": {
+   "chill": 22,
+   "chill_t": 3,
+   "slow": 35,
+   "crit_dmg": 18,
+   "dmg_pct": 7
+  },
+  "build": "melee",
+  "req_level": 70,
+  "req_str": 104,
+  "req_dex": 89,
+  "knockback": 9,
+  "sig": "chill",
+  "sig_name": "Nightfall Frostbite"
+ },
+ "aetherion": {
+  "name": "Aetherion",
+  "type": "weapon",
+  "tier": 7,
+  "icon": "w_aetherion",
+  "price": 250000,
+  "dmg": [
+   33,
+   53
+  ],
+  "unique": true,
+  "drop_from": "gorvash",
+  "drop_chance": 0.015,
+  "lore": "Three stars were caught in its guard when the world was young. Gorvash the Bonecaller tore it from a fallen archmage and bent its starlight to the service of the dead.",
+  "mag": 5,
+  "int": 5,
+  "mp": 462,
+  "vit": 5,
+  "fx": {
+   "proc": 20,
+   "proc_dmg": 110,
+   "spell_dmg": 19,
+   "mp_steal": 5,
+   "mp_regen": 18
+  },
+  "build": "magic",
+  "req_level": 79,
+  "req_mag": 94,
+  "knockback": 5.5,
+  "sig": "proc",
+  "sig_name": "Prismatic Burst"
+ },
+ "hand_axe": {
+  "name": "Hand Axe",
+  "type": "weapon",
+  "tier": 1,
+  "icon": "mx_hand_axe",
+  "price": 80,
+  "dmg": [
+   5,
+   10
+  ],
+  "speed": 1.1,
+  "shop": "blacksmith",
+  "knockback": 5.5
+ },
+ "battle_axe": {
+  "name": "Battle Axe",
+  "type": "weapon",
+  "tier": 3,
+  "icon": "mx_battle_axe",
+  "price": 1400,
+  "dmg": [
+   14,
+   24
+  ],
+  "speed": 1.15,
+  "req_str": 32,
+  "req_dex": 17,
+  "shop": "blacksmith",
+  "req_level": 10,
+  "knockback": 8.5
+ },
+ "war_axe": {
+  "name": "War Axe",
+  "type": "weapon",
+  "tier": 4,
+  "icon": "mx_war_axe",
+  "price": 4500,
+  "dmg": [
+   24,
+   40
+  ],
+  "speed": 1.15,
+  "req_str": 38,
+  "req_dex": 23,
+  "req_level": 15,
+  "craft": true,
+  "knockback": 10
+ },
+ "executioners_axe": {
+  "name": "Executioner's Axe",
+  "type": "weapon",
+  "tier": 5,
+  "icon": "mx_executioners_axe",
+  "price": 13000,
+  "dmg": [
+   38,
+   60
+  ],
+  "speed": 1.2,
+  "req_str": 45,
+  "req_dex": 30,
+  "req_level": 21,
+  "craft": true,
+  "knockback": 11.5
+ },
+ "abyssal_cleaver": {
+  "name": "Abyssal Cleaver",
+  "type": "weapon",
+  "tier": 6,
+  "icon": "mx_abyssal_cleaver",
+  "price": 40000,
+  "dmg": [
+   56,
+   90
+  ],
+  "speed": 1.15,
+  "req_str": 54,
+  "req_dex": 38,
+  "req_level": 28,
+  "craft": true,
+  "str": 5,
+  "crit": 5,
+  "knockback": 13
+ },
+ "club": {
+  "name": "Club",
+  "type": "weapon",
+  "tier": 1,
+  "icon": "mx_club",
+  "price": 30,
+  "dmg": [
+   3,
+   8
+  ],
+  "speed": 1.05,
+  "shop": "blacksmith",
+  "knockback": 11
+ },
+ "mace": {
+  "name": "Mace",
+  "type": "weapon",
+  "tier": 2,
+  "icon": "mx_mace",
+  "price": 380,
+  "dmg": [
+   9,
+   16
+  ],
+  "speed": 1.05,
+  "req_str": 26,
+  "req_dex": 11,
+  "shop": "blacksmith",
+  "req_level": 5,
+  "knockback": 14
+ },
+ "morning_star": {
+  "name": "Morning Star",
+  "type": "weapon",
+  "tier": 3,
+  "icon": "mx_morning_star",
+  "price": 1300,
+  "dmg": [
+   15,
+   25
+  ],
+  "speed": 1.05,
+  "req_str": 32,
+  "req_dex": 17,
+  "req_level": 10,
+  "drop_only": true,
+  "crit": 2,
+  "knockback": 17
+ },
+ "war_hammer": {
+  "name": "War Hammer",
+  "type": "weapon",
+  "tier": 4,
+  "icon": "mx_war_hammer",
+  "price": 4800,
+  "dmg": [
+   25,
+   40
+  ],
+  "speed": 1.1,
+  "req_str": 38,
+  "req_dex": 23,
+  "req_level": 15,
+  "craft": true,
+  "knockback": 20
+ },
+ "titan_maul": {
+  "name": "Titan Maul",
+  "type": "weapon",
+  "tier": 5,
+  "icon": "mx_titan_maul",
+  "price": 14000,
+  "dmg": [
+   40,
+   64
+  ],
+  "speed": 1.2,
+  "req_str": 46,
+  "req_dex": 31,
+  "req_level": 22,
+  "craft": true,
+  "vit": 4,
+  "knockback": 23
+ },
+ "oak_staff": {
+  "name": "Oak Staff",
+  "type": "weapon",
+  "tier": 1,
+  "icon": "mx_oak_staff",
+  "price": 250,
+  "dmg": [
+   3,
+   7
+  ],
+  "speed": 1.0,
+  "mag": 5,
+  "int": 4,
+  "shop": "magic",
+  "knockback": 2.5
+ },
+ "wizard_staff": {
+  "name": "Wizard Staff",
+  "type": "weapon",
+  "tier": 3,
+  "icon": "mx_wizard_staff",
+  "price": 1500,
+  "dmg": [
+   5,
+   10
+  ],
+  "speed": 1.0,
+  "mag": 5,
+  "int": 5,
+  "req_mag": 25,
+  "shop": "magic",
+  "req_level": 10,
+  "knockback": 3.5
+ },
+ "arcane_staff": {
+  "name": "Arcane Staff",
+  "type": "weapon",
+  "tier": 4,
+  "icon": "mx_arcane_staff",
+  "price": 4200,
+  "dmg": [
+   7,
+   13
+  ],
+  "speed": 1.0,
+  "mag": 5,
+  "int": 5,
+  "mp": 40,
+  "req_mag": 35,
+  "req_level": 15,
+  "craft": true,
+  "knockback": 4
+ },
+ "lich_staff": {
+  "name": "Lich Staff",
+  "type": "weapon",
+  "tier": 5,
+  "icon": "mx_lich_staff",
+  "price": 13000,
+  "dmg": [
+   9,
+   16
+  ],
+  "speed": 1.0,
+  "mag": 5,
+  "int": 5,
+  "mp": 60,
+  "req_mag": 48,
+  "req_level": 20,
+  "craft": true,
+  "knockback": 4.5
+ },
+ "archmage_staff": {
+  "name": "Archmage Staff",
+  "type": "weapon",
+  "tier": 6,
+  "icon": "mx_archmage_staff",
+  "price": 32000,
+  "dmg": [
+   12,
+   20
+  ],
+  "speed": 1.0,
+  "mag": 5,
+  "int": 5,
+  "mp": 100,
+  "req_mag": 60,
+  "req_level": 26,
+  "craft": true,
+  "knockback": 5
+ },
+ "cloth_tunic": {
+  "name": "Cloth Tunic",
+  "type": "armor",
+  "tier": 1,
+  "icon": "mx_cloth_tunic",
+  "price": 30,
+  "def": 1,
+  "shop": "shop"
+ },
+ "leather_armor": {
+  "name": "Leather Armor",
+  "type": "armor",
+  "tier": 1,
+  "icon": "mx_leather_armor",
+  "price": 80,
+  "def": 3,
+  "shop": "blacksmith"
+ },
+ "studded_leather": {
+  "name": "Studded Leather",
+  "type": "armor",
+  "tier": 2,
+  "icon": "a_studded",
+  "price": 320,
+  "def": 6,
+  "dex": 2,
+  "req_str": 26,
+  "req_dex": 11,
+  "craft": true,
+  "req_level": 5
+ },
+ "chain_mail": {
+  "name": "Chain Mail",
+  "type": "armor",
+  "tier": 2,
+  "icon": "mx_chain_mail",
+  "price": 500,
+  "def": 8,
+  "req_str": 26,
+  "req_dex": 11,
+  "shop": "blacksmith",
+  "req_level": 5
+ },
+ "hauberk": {
+  "name": "Hauberk",
+  "type": "hauberk",
+  "tier": 2,
+  "icon": "hauberk_0",
+  "icon_r": [
+   "hauberk_0",
+   "hauberk_1",
+   "hauberk_2",
+   "hauberk_3",
+   "hauberk_4"
+  ],
+  "price": 800,
+  "def": 6,
+  "req_str": 30,
+  "req_dex": 14,
+  "req_level": 8,
+  "shop": "blacksmith",
+  "lore": "A long coat of riveted rings, worn under your armour. Whatever your armour leaves bare, the hauberk still covers."
+ },
+ "scale_mail": {
+  "name": "Scale Mail",
+  "type": "armor",
+  "tier": 3,
+  "icon": "a_scale",
+  "price": 1200,
+  "def": 12,
+  "req_str": 32,
+  "req_dex": 17,
+  "req_level": 10,
+  "craft": true
+ },
+ "plate_mail": {
+  "name": "Plate Mail",
+  "type": "armor",
+  "tier": 4,
+  "icon": "mx_plate_mail",
+  "price": 2200,
+  "def": 16,
+  "req_str": 38,
+  "req_dex": 23,
+  "shop": "blacksmith",
+  "req_level": 15
+ },
+ "knight_plate": {
+  "name": "Knight Plate",
+  "type": "armor",
+  "tier": 5,
+  "icon": "mx_knight_plate",
+  "price": 8000,
+  "def": 26,
+  "req_str": 44,
+  "req_dex": 29,
+  "req_level": 20,
+  "drop_only": true
+ },
+ "dragon_plate": {
+  "name": "Dragon Plate",
+  "type": "armor",
+  "tier": 6,
+  "icon": "mx_dragon_plate",
+  "price": 26000,
+  "def": 38,
+  "hp": 80,
+  "req_str": 50,
+  "req_dex": 35,
+  "req_level": 25,
+  "craft": true
+ },
+ "abyssal_plate": {
+  "name": "Abyssal Plate",
+  "type": "armor",
+  "tier": 6,
+  "icon": "mx_abyssal_plate",
+  "price": 40000,
+  "def": 46,
+  "hp": 120,
+  "vit": 5,
+  "req_str": 54,
+  "req_dex": 38,
+  "req_level": 28,
+  "craft": true
+ },
+ "apprentice_robe": {
+  "name": "Apprentice Robe",
+  "type": "armor",
+  "tier": 2,
+  "icon": "mx_apprentice_robe",
+  "price": 300,
+  "def": 3,
+  "mag": 4,
+  "int": 3,
+  "shop": "magic",
+  "req_level": 5
+ },
+ "mage_robe": {
+  "name": "Mage Robe",
+  "type": "armor",
+  "tier": 3,
+  "icon": "mx_mage_robe",
+  "price": 1300,
+  "def": 5,
+  "mag": 5,
+  "int": 5,
+  "mp": 30,
+  "req_mag": 20,
+  "shop": "magic",
+  "req_level": 10
+ },
+ "frostweave_robe": {
+  "name": "Frostweave Robe",
+  "type": "armor",
+  "tier": 4,
+  "icon": "a_robe_frost",
+  "price": 4800,
+  "def": 8,
+  "mag": 5,
+  "int": 5,
+  "mp": 50,
+  "req_mag": 30,
+  "craft": true,
+  "req_level": 15
+ },
+ "archmage_robe": {
+  "name": "Archmage Robe",
+  "type": "armor",
+  "tier": 5,
+  "icon": "a_robe_arch",
+  "price": 11000,
+  "def": 10,
+  "mag": 5,
+  "int": 5,
+  "mp": 80,
+  "req_mag": 40,
+  "req_level": 20,
+  "drop_only": true
+ },
+ "wooden_shield": {
+  "name": "Wooden Shield",
+  "type": "shield",
+  "tier": 1,
+  "icon": "mx_wooden_shield",
+  "price": 60,
+  "def": 2,
+  "shop": "blacksmith"
+ },
+ "buckler": {
+  "name": "Buckler",
+  "type": "shield",
+  "tier": 2,
+  "icon": "mx_buckler",
+  "price": 260,
+  "def": 3,
+  "dex": 2,
+  "shop": "blacksmith",
+  "req_level": 5,
+  "req_str": 26,
+  "req_dex": 11
+ },
+ "kite_shield": {
+  "name": "Kite Shield",
+  "type": "shield",
+  "tier": 3,
+  "icon": "mx_kite_shield",
+  "price": 800,
+  "def": 5,
+  "req_str": 32,
+  "req_dex": 17,
+  "drop_only": true,
+  "req_level": 10
+ },
+ "tower_shield": {
+  "name": "Tower Shield",
+  "type": "shield",
+  "tier": 4,
+  "icon": "mx_tower_shield",
+  "price": 900,
+  "def": 7,
+  "req_str": 38,
+  "req_dex": 23,
+  "shop": "blacksmith",
+  "req_level": 15
+ },
+ "dragon_shield": {
+  "name": "Dragon Shield",
+  "type": "shield",
+  "tier": 6,
+  "icon": "mx_dragon_shield",
+  "price": 15000,
+  "def": 12,
+  "hp": 60,
+  "req_str": 50,
+  "req_dex": 35,
+  "req_level": 25,
+  "craft": true
+ },
+ "leather_cap": {
+  "name": "Leather Cap",
+  "type": "helmet",
+  "tier": 1,
+  "icon": "mx_leather_cap",
+  "price": 50,
+  "def": 1,
+  "shop": "blacksmith"
+ },
+ "iron_helm": {
+  "name": "Iron Helm",
+  "type": "helmet",
+  "tier": 2,
+  "icon": "mx_iron_helm",
+  "price": 400,
+  "def": 3,
+  "req_str": 26,
+  "req_dex": 11,
+  "shop": "blacksmith",
+  "req_level": 5
+ },
+ "wizard_hat": {
+  "name": "Wizard Hat",
+  "type": "helmet",
+  "tier": 3,
+  "icon": "mx_wizard_hat",
+  "price": 900,
+  "def": 1,
+  "mag": 5,
+  "int": 5,
+  "mp": 20,
+  "shop": "magic",
+  "req_level": 10
+ },
+ "great_helm": {
+  "name": "Great Helm",
+  "type": "helmet",
+  "tier": 4,
+  "icon": "mx_great_helm",
+  "price": 2000,
+  "def": 6,
+  "req_str": 38,
+  "req_dex": 23,
+  "req_level": 15,
+  "drop_only": true
+ },
+ "horned_helm": {
+  "name": "Horned Helm",
+  "type": "helmet",
+  "tier": 5,
+  "icon": "mx_horned_helm",
+  "price": 6000,
+  "def": 8,
+  "str": 3,
+  "req_str": 44,
+  "req_dex": 29,
+  "craft": true,
+  "req_level": 20
+ },
+ "dragon_helm": {
+  "name": "Dragon Helm",
+  "type": "helmet",
+  "tier": 6,
+  "icon": "mx_dragon_helm",
+  "price": 14000,
+  "def": 11,
+  "hp": 40,
+  "req_str": 50,
+  "req_dex": 35,
+  "req_level": 25,
+  "craft": true
+ },
+ "leather_gloves": {
+  "name": "Leather Gloves",
+  "type": "gloves",
+  "tier": 1,
+  "icon": "g_leather",
+  "price": 40,
+  "def": 1,
+  "dex": 1,
+  "shop": "blacksmith"
+ },
+ "chain_gauntlets": {
+  "name": "Chain Gauntlets",
+  "type": "gloves",
+  "tier": 3,
+  "icon": "g_chain",
+  "price": 700,
+  "def": 2,
+  "str": 2,
+  "drop_only": true,
+  "req_level": 10,
+  "req_str": 32,
+  "req_dex": 17
+ },
+ "silk_gloves": {
+  "name": "Silk Gloves",
+  "type": "gloves",
+  "tier": 3,
+  "icon": "mx_silk_gloves",
+  "price": 1200,
+  "mag": 4,
+  "int": 3,
+  "mp": 20,
+  "craft": true,
+  "req_level": 10
+ },
+ "plate_gauntlets": {
+  "name": "Plate Gauntlets",
+  "type": "gloves",
+  "tier": 4,
+  "icon": "mx_plate_gauntlets",
+  "price": 2200,
+  "def": 4,
+  "str": 3,
+  "req_str": 38,
+  "req_dex": 23,
+  "drop_only": true,
+  "req_level": 15
+ },
+ "dragon_gauntlets": {
+  "name": "Dragon Gauntlets",
+  "type": "gloves",
+  "tier": 6,
+  "icon": "g_dragon",
+  "price": 12000,
+  "def": 6,
+  "str": 5,
+  "crit": 3,
+  "req_level": 25,
+  "craft": true,
+  "req_str": 50,
+  "req_dex": 35
+ },
+ "leather_boots": {
+  "name": "Leather Boots",
+  "type": "boots",
+  "tier": 1,
+  "icon": "mx_leather_boots",
+  "price": 40,
+  "def": 1,
+  "shop": "blacksmith"
+ },
+ "iron_greaves": {
+  "name": "Iron Greaves",
+  "type": "boots",
+  "tier": 3,
+  "icon": "b_iron",
+  "price": 700,
+  "def": 3,
+  "req_str": 32,
+  "req_dex": 17,
+  "drop_only": true,
+  "req_level": 10
+ },
+ "plate_greaves": {
+  "name": "Plate Greaves",
+  "type": "boots",
+  "tier": 4,
+  "icon": "mx_plate_greaves",
+  "price": 2100,
+  "def": 5,
+  "req_str": 38,
+  "req_dex": 23,
+  "drop_only": true,
+  "req_level": 15
+ },
+ "wind_boots": {
+  "name": "Wind Boots",
+  "type": "boots",
+  "tier": 4,
+  "icon": "b_wind",
+  "price": 5000,
+  "def": 2,
+  "dex": 4,
+  "speed": 15,
+  "craft": true,
+  "req_level": 15
+ },
+ "dragon_greaves": {
+  "name": "Dragon Greaves",
+  "type": "boots",
+  "tier": 6,
+  "icon": "b_dragon",
+  "price": 12500,
+  "def": 7,
+  "speed": 6,
+  "req_level": 25,
+  "craft": true,
+  "req_str": 50,
+  "req_dex": 35
+ },
+ "copper_ring": {
+  "name": "Copper Ring",
+  "type": "ring",
+  "tier": 1,
+  "icon": "mx_copper_ring",
+  "price": 120,
+  "str": 1,
+  "shop": "magic"
+ },
+ "silver_ring": {
+  "name": "Silver Ring",
+  "type": "ring",
+  "tier": 2,
+  "icon": "r_silver",
+  "price": 450,
+  "dex": 2,
+  "shop": "magic",
+  "req_level": 5
+ },
+ "ruby_ring": {
+  "name": "Ruby Ring",
+  "type": "ring",
+  "tier": 3,
+  "icon": "r_ruby",
+  "price": 1500,
+  "hp": 40,
+  "craft": true,
+  "req_level": 10
+ },
+ "sapphire_ring": {
+  "name": "Sapphire Ring",
+  "type": "ring",
+  "tier": 3,
+  "icon": "r_sapphire",
+  "price": 1500,
+  "mp": 40,
+  "craft": true,
+  "req_level": 10
+ },
+ "emerald_ring": {
+  "name": "Emerald Ring",
+  "type": "ring",
+  "tier": 3,
+  "icon": "r_emerald",
+  "price": 1500,
+  "dex": 4,
+  "craft": true,
+  "req_level": 10
+ },
+ "amethyst_ring": {
+  "name": "Amethyst Ring",
+  "type": "ring",
+  "tier": 4,
+  "icon": "r_amethyst",
+  "price": 2600,
+  "mag": 5,
+  "int": 4,
+  "craft": true,
+  "req_level": 15
+ },
+ "diamond_ring": {
+  "name": "Diamond Ring",
+  "type": "ring",
+  "tier": 5,
+  "icon": "r_diamond",
+  "price": 5000,
+  "def": 4,
+  "crit": 3,
+  "craft": true,
+  "req_level": 20
+ },
+ "ring_of_might": {
+  "name": "Ring of Might",
+  "type": "ring",
+  "tier": 5,
+  "icon": "r_might",
+  "price": 9000,
+  "str": 5,
+  "craft": true,
+  "req_level": 20
+ },
+ "ring_of_archmage": {
+  "name": "Ring of the Archmage",
+  "type": "ring",
+  "tier": 6,
+  "icon": "r_archmage",
+  "price": 14000,
+  "mag": 5,
+  "int": 5,
+  "mp": 60,
+  "craft": true,
+  "req_level": 25
+ },
+ "abaddons_signet": {
+  "name": "Abaddon's Signet",
+  "type": "ring",
+  "tier": 6,
+  "icon": "r_signet",
+  "price": 30000,
+  "str": 5,
+  "mag": 5,
+  "int": 5,
+  "vit": 5,
+  "crit": 4,
+  "drop_only": true,
+  "boss_only": true,
+  "req_level": 25
+ },
+ "bone_charm": {
+  "name": "Bone Charm",
+  "type": "amulet",
+  "tier": 1,
+  "icon": "n_bone",
+  "price": 150,
+  "vit": 1,
+  "shop": "magic"
+ },
+ "wolf_fang_necklace": {
+  "name": "Wolf Fang Necklace",
+  "type": "amulet",
+  "tier": 2,
+  "icon": "n_fang",
+  "price": 700,
+  "str": 2,
+  "crit": 2,
+  "craft": true,
+  "req_level": 5
+ },
+ "amulet_of_vigor": {
+  "name": "Amulet of Vigor",
+  "type": "amulet",
+  "tier": 3,
+  "icon": "n_vigor",
+  "price": 1800,
+  "vit": 5,
+  "hp": 30,
+  "craft": true,
+  "req_level": 10
+ },
+ "amulet_of_wisdom": {
+  "name": "Amulet of Wisdom",
+  "type": "amulet",
+  "tier": 3,
+  "icon": "n_wisdom",
+  "price": 1800,
+  "mag": 5,
+  "int": 4,
+  "mp": 30,
+  "craft": true,
+  "req_level": 10
+ },
+ "unicorn_pendant": {
+  "name": "Unicorn Pendant",
+  "type": "amulet",
+  "tier": 4,
+  "icon": "n_unicorn",
+  "price": 6000,
+  "vit": 4,
+  "hp": 80,
+  "craft": true,
+  "req_level": 15
+ },
+ "dragon_heart_amulet": {
+  "name": "Dragon Heart Amulet",
+  "type": "amulet",
+  "tier": 6,
+  "icon": "n_dragonheart",
+  "price": 20000,
+  "str": 5,
+  "vit": 5,
+  "hp": 200,
+  "craft": true,
+  "req_level": 25
+ },
+ "cloth_leggings": {
+  "name": "Cloth Leggings",
+  "type": "legs",
+  "tier": 1,
+  "icon": "mx_cloth_leggings",
+  "price": 20,
+  "shop": "shop",
+  "def": 1
+ },
+ "leather_leggings": {
+  "name": "Leather Leggings",
+  "type": "legs",
+  "tier": 1,
+  "icon": "l_leather",
+  "price": 40,
+  "shop": "blacksmith",
+  "def": 1
+ },
+ "studded_leggings": {
+  "name": "Studded Leggings",
+  "type": "legs",
+  "tier": 2,
+  "icon": "l_studded",
+  "price": 180,
+  "req_str": 26,
+  "req_dex": 11,
+  "craft": true,
+  "def": 3,
+  "dex": 1,
+  "req_level": 5
+ },
+ "chain_chausses": {
+  "name": "Chain Chausses",
+  "type": "legs",
+  "tier": 2,
+  "icon": "l_chain",
+  "price": 280,
+  "req_str": 26,
+  "req_dex": 11,
+  "shop": "blacksmith",
+  "def": 4,
+  "req_level": 5
+ },
+ "scale_chausses": {
+  "name": "Scale Chausses",
+  "type": "legs",
+  "tier": 3,
+  "icon": "l_scale",
+  "price": 660,
+  "req_str": 32,
+  "req_dex": 17,
+  "req_level": 10,
+  "craft": true,
+  "def": 5
+ },
+ "plate_cuisses": {
+  "name": "Plate Cuisses",
+  "type": "legs",
+  "tier": 4,
+  "icon": "l_plate",
+  "price": 1210,
+  "req_str": 38,
+  "req_dex": 23,
+  "shop": "blacksmith",
+  "def": 7,
+  "req_level": 15
+ },
+ "knight_cuisses": {
+  "name": "Knight Cuisses",
+  "type": "legs",
+  "tier": 5,
+  "icon": "l_knight",
+  "price": 4400,
+  "req_str": 44,
+  "req_dex": 29,
+  "req_level": 20,
+  "drop_only": true,
+  "def": 12
+ },
+ "dragon_cuisses": {
+  "name": "Dragon Cuisses",
+  "type": "legs",
+  "tier": 6,
+  "icon": "l_dragon",
+  "price": 14300,
+  "req_str": 50,
+  "req_dex": 35,
+  "req_level": 25,
+  "craft": true,
+  "def": 17,
+  "hp": 40
+ },
+ "abyssal_cuisses": {
+  "name": "Abyssal Cuisses",
+  "type": "legs",
+  "tier": 6,
+  "icon": "l_abyssal",
+  "price": 22000,
+  "req_str": 54,
+  "req_dex": 38,
+  "req_level": 28,
+  "craft": true,
+  "def": 21,
+  "hp": 60,
+  "vit": 3
+ },
+ "apprentice_skirt": {
+  "name": "Apprentice Robe Bottoms",
+  "type": "legs",
+  "tier": 2,
+  "icon": "l_robe_blue",
+  "price": 160,
+  "shop": "magic",
+  "def": 1,
+  "mag": 2,
+  "int": 2,
+  "req_level": 5
+ },
+ "mage_skirt": {
+  "name": "Mage Robe Bottoms",
+  "type": "legs",
+  "tier": 3,
+  "icon": "l_robe_purple",
+  "price": 720,
+  "req_mag": 20,
+  "shop": "magic",
+  "def": 2,
+  "mp": 15,
+  "mag": 4,
+  "int": 3,
+  "req_level": 10
+ },
+ "frostweave_skirt": {
+  "name": "Frostweave Robe Bottoms",
+  "type": "legs",
+  "tier": 4,
+  "icon": "l_robe_frost",
+  "price": 2640,
+  "req_mag": 30,
+  "craft": true,
+  "def": 4,
+  "mp": 25,
+  "mag": 5,
+  "int": 5,
+  "req_level": 15
+ },
+ "archmage_skirt": {
+  "name": "Archmage Robe Bottoms",
+  "type": "legs",
+  "tier": 5,
+  "icon": "l_robe_arch",
+  "price": 6050,
+  "req_mag": 40,
+  "req_level": 20,
+  "drop_only": true,
+  "def": 4,
+  "mp": 40,
+  "mag": 5,
+  "int": 5
+ },
+ "potion_hp_s": {
+  "name": "Small Health Potion",
+  "type": "potion",
+  "tier": 1,
+  "icon": "mx_potion_hp_s",
+  "price": 15,
+  "heal": 40,
+  "shop": "shop"
+ },
+ "potion_hp": {
+  "name": "Health Potion",
+  "type": "potion",
+  "tier": 2,
+  "icon": "mx_potion_hp",
+  "price": 50,
+  "heal": 120,
+  "shop": "shop",
+  "req_level": 5
+ },
+ "potion_hp_l": {
+  "name": "Greater Health Potion",
+  "type": "potion",
+  "tier": 3,
+  "icon": "mx_potion_hp_l",
+  "price": 150,
+  "heal": 350,
+  "shop": "shop",
+  "req_level": 10
+ },
+ "potion_hp_x": {
+  "name": "Superior Health Potion",
+  "type": "potion",
+  "tier": 5,
+  "icon": "mx_potion_hp_x",
+  "price": 400,
+  "heal": 800,
+  "craft": true,
+  "req_level": 20
+ },
+ "potion_mp_s": {
+  "name": "Small Mana Potion",
+  "type": "potion",
+  "tier": 1,
+  "icon": "mx_potion_mp_s",
+  "price": 15,
+  "mana": 30,
+  "shop": "shop"
+ },
+ "potion_mp": {
+  "name": "Mana Potion",
+  "type": "potion",
+  "tier": 2,
+  "icon": "mx_potion_mp",
+  "price": 50,
+  "mana": 90,
+  "shop": "shop",
+  "req_level": 5
+ },
+ "potion_mp_l": {
+  "name": "Greater Mana Potion",
+  "type": "potion",
+  "tier": 3,
+  "icon": "mx_potion_mp_l",
+  "price": 150,
+  "mana": 220,
+  "shop": "shop",
+  "req_level": 10
+ },
+ "potion_mp_x": {
+  "name": "Superior Mana Potion",
+  "type": "potion",
+  "tier": 5,
+  "icon": "mx_potion_mp_x",
+  "price": 400,
+  "mana": 500,
+  "craft": true,
+  "req_level": 20
+ },
+ "potion_sp_s": {
+  "name": "Small Stamina Potion",
+  "type": "potion",
+  "tier": 1,
+  "icon": "mx_potion_sp_s",
+  "price": 15,
+  "stamina": 40,
+  "shop": "shop"
+ },
+ "potion_sp": {
+  "name": "Stamina Potion",
+  "type": "potion",
+  "tier": 2,
+  "icon": "mx_potion_sp",
+  "price": 50,
+  "stamina": 100,
+  "shop": "shop",
+  "req_level": 5
+ },
+ "potion_sp_l": {
+  "name": "Greater Stamina Potion",
+  "type": "potion",
+  "tier": 3,
+  "icon": "mx_potion_sp_l",
+  "price": 150,
+  "stamina": 220,
+  "shop": "shop",
+  "req_level": 10
+ },
+ "potion_sp_x": {
+  "name": "Superior Stamina Potion",
+  "type": "potion",
+  "tier": 5,
+  "icon": "mx_potion_sp_x",
+  "price": 400,
+  "stamina": 450,
+  "craft": true,
+  "req_level": 20
+ },
+ "bread": {
+  "name": "Bread",
+  "type": "food",
+  "tier": 1,
+  "icon": "mx_bread",
+  "price": 8,
+  "regen_hp": 40,
+  "dur": 10,
+  "shop": "shop"
+ },
+ "roast_meat": {
+  "name": "Roast Meat",
+  "type": "food",
+  "tier": 2,
+  "icon": "mx_roast_meat",
+  "price": 25,
+  "regen_hp": 120,
+  "dur": 12,
+  "shop": "shop",
+  "req_level": 5
+ },
+ "grilled_fish": {
+  "name": "Grilled Fish",
+  "type": "food",
+  "tier": 2,
+  "icon": "f_fish",
+  "price": 30,
+  "regen_hp": 90,
+  "regen_mp": 60,
+  "dur": 12,
+  "craft": true,
+  "req_level": 5
+ },
+ "honey_cake": {
+  "name": "Honey Cake",
+  "type": "food",
+  "tier": 3,
+  "icon": "mx_honey_cake",
+  "price": 60,
+  "regen_hp": 200,
+  "regen_mp": 100,
+  "dur": 15,
+  "shop": "shop",
+  "req_level": 10
+ },
+ "elixir_strength": {
+  "name": "Elixir of Strength",
+  "type": "elixir",
+  "tier": 3,
+  "icon": "mx_elixir_strength",
+  "price": 300,
+  "buff": {
+   "str": 10
+  },
+  "dur": 180,
+  "craft": true,
+  "req_level": 10
+ },
+ "elixir_ironskin": {
+  "name": "Elixir of Iron Skin",
+  "type": "elixir",
+  "tier": 3,
+  "icon": "mx_elixir_ironskin",
+  "price": 300,
+  "buff": {
+   "def": 15
+  },
+  "dur": 180,
+  "craft": true,
+  "req_level": 10
+ },
+ "elixir_swiftness": {
+  "name": "Elixir of Swiftness",
+  "type": "elixir",
+  "tier": 3,
+  "icon": "mx_elixir_swiftness",
+  "price": 300,
+  "buff": {
+   "speed": 30,
+   "dex": 5
+  },
+  "dur": 180,
+  "craft": true,
+  "req_level": 10
+ },
+ "elixir_wisdom": {
+  "name": "Elixir of Wisdom",
+  "type": "elixir",
+  "tier": 3,
+  "icon": "e_blue",
+  "price": 300,
+  "buff": {
+   "mag": 15,
+   "int": 15
+  },
+  "dur": 180,
+  "craft": true,
+  "req_level": 10
+ },
+ "elixir_fortune": {
+  "name": "Elixir of Fortune",
+  "type": "elixir",
+  "tier": 3,
+  "icon": "e_gold",
+  "price": 400,
+  "buff": {
+   "gold_find": 50,
+   "item_find": 50
+  },
+  "dur": 300,
+  "craft": true,
+  "req_level": 10
+ },
+ "recall_scroll": {
+  "name": "Recall Scroll",
+  "type": "scroll",
+  "tier": 1,
+  "icon": "mx_recall_scroll",
+  "price": 40,
+  "recall": true,
+  "shop": "shop"
+ },
+ "crypt_scroll": {
+  "name": "Scroll of the Crypt",
+  "type": "scroll",
+  "tier": 3,
+  "icon": "sc_crypt",
+  "price": 300,
+  "teleport": "crypt",
+  "craft": true,
+  "req_level": 10
+ },
+ "xp_scroll": {
+  "name": "Scroll of Insight",
+  "type": "scroll",
+  "tier": 4,
+  "icon": "sc_insight",
+  "price": 800,
+  "buff": {
+   "xp": 50
+  },
+  "dur": 600,
+  "craft": true,
+  "req_level": 15
+ },
+ "forge_dust": {
+  "name": "Forge Dust",
+  "type": "material",
+  "tier": 1,
+  "icon": "x_dust",
+  "price": 6
+ },
+ "essence_uncommon": {
+  "name": "Verdant Essence",
+  "type": "material",
+  "tier": 2,
+  "icon": "x_ess_green",
+  "price": 40
+ },
+ "essence_rare": {
+  "name": "Azure Essence",
+  "type": "material",
+  "tier": 3,
+  "icon": "x_ess_blue",
+  "price": 120
+ },
+ "essence_epic": {
+  "name": "Violet Essence",
+  "type": "material",
+  "tier": 4,
+  "icon": "x_ess_purple",
+  "price": 400
+ },
+ "essence_legendary": {
+  "name": "Radiant Essence",
+  "type": "material",
+  "tier": 5,
+  "icon": "x_ess_gold",
+  "price": 1500
+ },
+ "upgrade_stone": {
+  "name": "Upgrade Stone",
+  "type": "enhance",
+  "tier": 2,
+  "icon": "x_stone",
+  "price": 120,
+  "effect": "upgrade",
+  "craft": true,
+  "req_level": 5
+ },
+ "blessed_stone": {
+  "name": "Blessed Upgrade Stone",
+  "type": "enhance",
+  "tier": 5,
+  "icon": "x_stone_blessed",
+  "price": 3000,
+  "effect": "upgrade_sure",
+  "craft": true,
+  "req_level": 20
+ },
+ "reforge_orb": {
+  "name": "Reforging Orb",
+  "type": "enhance",
+  "tier": 3,
+  "icon": "x_orb_reforge",
+  "price": 400,
+  "effect": "reforge",
+  "craft": true,
+  "req_level": 10
+ },
+ "ascension_orb": {
+  "name": "Ascension Orb",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_orb_ascend",
+  "price": 1500,
+  "effect": "ascend",
+  "craft": true,
+  "req_level": 15
+ },
+ "radiant_orb": {
+  "name": "Radiant Orb",
+  "type": "enhance",
+  "tier": 6,
+  "icon": "x_orb_radiant",
+  "price": 8000,
+  "effect": "ascend_legendary",
+  "craft": true,
+  "req_level": 25
+ },
+ "rune_might": {
+  "name": "Rune of Might",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_red",
+  "price": 900,
+  "effect": "rune",
+  "stat": "str",
+  "craft": true,
+  "req_level": 15
+ },
+ "rune_agility": {
+  "name": "Rune of Agility",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_green",
+  "price": 900,
+  "effect": "rune",
+  "stat": "dex",
+  "craft": true,
+  "req_level": 15
+ },
+ "rune_vigor": {
+  "name": "Rune of Vigor",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_purple",
+  "price": 900,
+  "effect": "rune",
+  "stat": "vit",
+  "craft": true,
+  "req_level": 15
+ },
+ "rune_sorcery": {
+  "name": "Rune of Sorcery",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_blue",
+  "price": 900,
+  "effect": "rune",
+  "stat": "mag",
+  "craft": true,
+  "req_level": 15
+ },
+ "rune_intellect": {
+  "name": "Rune of Intellect",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_gold",
+  "price": 900,
+  "effect": "rune",
+  "stat": "int",
+  "craft": true,
+  "req_level": 15
+ },
+ "rune_precision": {
+  "name": "Rune of Precision",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_white",
+  "price": 900,
+  "effect": "rune",
+  "stat": "crit",
+  "craft": true,
+  "req_level": 15
+ },
+ "rune_warding": {
+  "name": "Rune of Warding",
+  "type": "enhance",
+  "tier": 4,
+  "icon": "x_rune_grey",
+  "price": 900,
+  "effect": "rune",
+  "stat": "def",
+  "craft": true,
+  "req_level": 15
+ },
+ "mystic_shard": {
+  "name": "Mystic Shard",
+  "type": "material",
+  "tier": 2,
+  "icon": "x_shard_mystic",
+  "price": 30
+ },
+ "prismatic_shard": {
+  "name": "Prismatic Shard",
+  "type": "material",
+  "tier": 5,
+  "icon": "x_shard_prismatic",
+  "price": 600
+ },
+ "smith_luck_scroll": {
+  "name": "Scroll of the Smith's Luck",
+  "type": "scroll",
+  "tier": 3,
+  "icon": "sc_luck",
+  "price": 350,
+  "buff": {
+   "upgrade_luck": 20
+  },
+  "dur": 600,
+  "craft": true,
+  "req_level": 10
+ },
+ "iron_ore": {
+  "name": "Iron Ore",
+  "type": "material",
+  "tier": 1,
+  "icon": "mx_iron_ore",
+  "price": 12,
+  "shop": "blacksmith"
+ },
+ "mithril_ore": {
+  "name": "Mithril Ore",
+  "type": "material",
+  "tier": 3,
+  "icon": "mx_mithril_ore",
+  "price": 60
+ },
+ "adamantite_ore": {
+  "name": "Adamantite Ore",
+  "type": "material",
+  "tier": 5,
+  "icon": "mx_adamantite_ore",
+  "price": 180
+ },
+ "steel_ingot": {
+  "name": "Steel Ingot",
+  "type": "material",
+  "tier": 2,
+  "icon": "m_ingot_steel",
+  "price": 40
+ },
+ "mithril_ingot": {
+  "name": "Mithril Ingot",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_ingot_mithril",
+  "price": 240
+ },
+ "adamantite_ingot": {
+  "name": "Adamantite Ingot",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_ingot_adamant",
+  "price": 700
+ },
+ "healing_herb": {
+  "name": "Healing Herb",
+  "type": "material",
+  "tier": 1,
+  "icon": "mx_healing_herb",
+  "price": 6,
+  "shop": "magic"
+ },
+ "mana_blossom": {
+  "name": "Mana Blossom",
+  "type": "material",
+  "tier": 2,
+  "icon": "mx_mana_blossom",
+  "price": 12,
+  "shop": "magic"
+ },
+ "slime_gel": {
+  "name": "Slime Gel",
+  "type": "material",
+  "tier": 1,
+  "icon": "m_gel",
+  "price": 4
+ },
+ "soft_fur": {
+  "name": "Soft Fur",
+  "type": "material",
+  "tier": 1,
+  "icon": "m_fur",
+  "price": 5
+ },
+ "raw_meat": {
+  "name": "Raw Meat",
+  "type": "material",
+  "tier": 1,
+  "icon": "mx_raw_meat",
+  "price": 4,
+  "shop": "shop"
+ },
+ "raw_fish": {
+  "name": "Raw Fish",
+  "type": "material",
+  "tier": 1,
+  "icon": "m_rawfish",
+  "price": 5
+ },
+ "chitin": {
+  "name": "Chitin Plate",
+  "type": "material",
+  "tier": 1,
+  "icon": "m_chitin",
+  "price": 8
+ },
+ "frog_leg": {
+  "name": "Frog Leg",
+  "type": "material",
+  "tier": 1,
+  "icon": "m_froglet",
+  "price": 5
+ },
+ "orc_tusk": {
+  "name": "Orc Tusk",
+  "type": "material",
+  "tier": 2,
+  "icon": "m_tusk",
+  "price": 14
+ },
+ "scorpion_stinger": {
+  "name": "Scorpion Stinger",
+  "type": "material",
+  "tier": 2,
+  "icon": "m_stinger",
+  "price": 18
+ },
+ "bone_dust": {
+  "name": "Bone Dust",
+  "type": "material",
+  "tier": 2,
+  "icon": "m_bonedust",
+  "price": 12
+ },
+ "ectoplasm": {
+  "name": "Ectoplasm",
+  "type": "material",
+  "tier": 2,
+  "icon": "m_ecto",
+  "price": 16
+ },
+ "golem_core": {
+  "name": "Golem Core",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_core",
+  "price": 45
+ },
+ "beast_hide": {
+  "name": "Beast Hide",
+  "type": "material",
+  "tier": 2,
+  "icon": "m_hide",
+  "price": 16
+ },
+ "wolf_pelt": {
+  "name": "Wolf Pelt",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_pelt",
+  "price": 30
+ },
+ "troll_blood": {
+  "name": "Troll Blood",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_blood",
+  "price": 40
+ },
+ "ogre_hide": {
+  "name": "Ogre Hide",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_ogrehide",
+  "price": 40
+ },
+ "cyclops_eye": {
+  "name": "Cyclops Eye",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_cyclopseye",
+  "price": 120
+ },
+ "werewolf_claw": {
+  "name": "Werewolf Claw",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_claw",
+  "price": 45
+ },
+ "hellfire_ember": {
+  "name": "Hellfire Ember",
+  "type": "material",
+  "tier": 3,
+  "icon": "mx_hellfire_ember",
+  "price": 50
+ },
+ "beholder_eye": {
+  "name": "Beholder Eye",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_eye",
+  "price": 150
+ },
+ "dark_elf_silk": {
+  "name": "Dark Elf Silk",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_silk",
+  "price": 90
+ },
+ "minotaur_horn": {
+  "name": "Minotaur Horn",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_horn",
+  "price": 140
+ },
+ "unicorn_horn": {
+  "name": "Unicorn Horn",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_unihorn",
+  "price": 400
+ },
+ "frost_crystal": {
+  "name": "Frost Crystal",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_frost",
+  "price": 80
+ },
+ "turtle_shell": {
+  "name": "Turtle Shell",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_shell",
+  "price": 90
+ },
+ "ancient_bark": {
+  "name": "Ancient Bark",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_bark",
+  "price": 70
+ },
+ "soul_shard": {
+  "name": "Soul Shard",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_soul",
+  "price": 220
+ },
+ "demon_horn": {
+  "name": "Demon Horn",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_demonhorn",
+  "price": 260
+ },
+ "mana_crystal": {
+  "name": "Mana Crystal",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_manacrystal",
+  "price": 120
+ },
+ "war_scrap": {
+  "name": "War Scrap",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_scrap",
+  "price": 60
+ },
+ "elvine_insignia": {
+  "name": "Elvine Insignia",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_insignia",
+  "price": 250
+ },
+ "dragon_scale": {
+  "name": "Dragon Scale",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_dragonscale",
+  "price": 1200
+ },
+ "dragon_fang": {
+  "name": "Dragon Fang",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_dragonfang",
+  "price": 1500
+ },
+ "dragon_heart": {
+  "name": "Dragon Heart",
+  "type": "material",
+  "tier": 6,
+  "icon": "m_dragonheart",
+  "price": 5000
+ },
+ "hellclaw_pincer": {
+  "name": "Hellclaw Pincer",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_pincer",
+  "price": 2000
+ },
+ "tigerworm_hide": {
+  "name": "Tigerworm Hide",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_wormhide",
+  "price": 2500
+ },
+ "infernal_core": {
+  "name": "Infernal Core",
+  "type": "material",
+  "tier": 6,
+  "icon": "m_infernal",
+  "price": 6000
+ },
+ "abaddon_heart": {
+  "name": "Heart of Abaddon",
+  "type": "material",
+  "tier": 6,
+  "icon": "m_abaddon",
+  "price": 12000
+ },
+ "black_dragon_scale": {
+  "name": "Black Dragon Scale",
+  "type": "material",
+  "tier": 6,
+  "icon": "m_blackscale",
+  "price": 6000
+ },
+ "ruby": {
+  "name": "Ruby",
+  "type": "gem",
+  "tier": 3,
+  "icon": "gem_ruby",
+  "price": 300
+ },
+ "sapphire": {
+  "name": "Sapphire",
+  "type": "gem",
+  "tier": 3,
+  "icon": "gem_sapphire",
+  "price": 300
+ },
+ "emerald": {
+  "name": "Emerald",
+  "type": "gem",
+  "tier": 3,
+  "icon": "gem_emerald",
+  "price": 300
+ },
+ "amethyst": {
+  "name": "Amethyst",
+  "type": "gem",
+  "tier": 4,
+  "icon": "gem_amethyst",
+  "price": 450
+ },
+ "warlord_sigil": {
+  "name": "Warlord's Sigil",
+  "type": "material",
+  "tier": 5,
+  "icon": "m_insignia",
+  "price": 1
+ },
+ "diamond": {
+  "name": "Diamond",
+  "type": "gem",
+  "tier": 5,
+  "icon": "gem_diamond",
+  "price": 900
+ },
+ "monster_gem": {
+  "name": "Monster Gem",
+  "type": "loot",
+  "tier": 2,
+  "icon": "gem",
+  "price": 120
+ },
+ "flux_stone": {
+  "name": "Flux Stone",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_flux",
+  "price": 40,
+  "lore": "A crumbly orange stone that draws slag out of molten metal. Every tier-2 forging needs some."
+ },
+ "spirit_salt": {
+  "name": "Spirit Salt",
+  "type": "material",
+  "tier": 3,
+  "icon": "m_spiritsalt",
+  "price": 45,
+  "lore": "Pale crystals that form where the dead linger. Binds tier-2 brews and enchantments."
+ },
+ "sulfur_bloom": {
+  "name": "Sulfur Bloom",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_sulfur",
+  "price": 70,
+  "lore": "A brittle yellow crust from hell-scorched ground. Distilled into Tempering Oil."
+ },
+ "tempering_oil": {
+  "name": "Tempering Oil",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_temperoil",
+  "price": 150,
+  "lore": "Quenching oil for master forgework. Tier-3 and tier-4 smithing need it. Brewed by the mage."
+ },
+ "moonwell_dew": {
+  "name": "Moonwell Dew",
+  "type": "material",
+  "tier": 4,
+  "icon": "m_moondew",
+  "price": 160,
+  "lore": "Dew gathered from enchanted creatures at night. Tier-3 and tier-4 alchemy need it."
+ },
+ "starmetal_shard": {
+  "name": "Starmetal Shard",
+  "type": "material",
+  "tier": 6,
+  "icon": "m_starmetal",
+  "price": 1800,
+  "lore": "A sliver of fallen-star metal, carried only by the mightiest foes. Every tier-4 recipe needs it."
+ },
+ "sealed_dispatch": {
+  "name": "Sealed Dispatch",
+  "type": "quest",
+  "tier": 1,
+  "icon": "scroll",
+  "price": 0,
+  "lore": "A courier's satchel letter, wax seal unbroken."
+ },
+ "tainted_grain": {
+  "name": "Tainted Grain",
+  "type": "quest",
+  "tier": 1,
+  "icon": "m_blossom",
+  "price": 0,
+  "lore": "A fistful of grain flecked with grey rot — and a powder that is not rot."
+ },
+ "hollow_token": {
+  "name": "Hollow Token",
+  "type": "quest",
+  "tier": 1,
+  "icon": "m_insignia",
+  "price": 0,
+  "lore": "A blackened coin stamped with an empty crown."
+ },
+ "coin_pouch": {
+  "name": "Raider's Coin Pouch",
+  "type": "quest",
+  "tier": 1,
+  "icon": "gold",
+  "price": 0,
+  "lore": "Heavy with minted city silver. Orcs don't mint coin."
+ },
+ "envoy_letter": {
+  "name": "Envoy's Letter",
+  "type": "quest",
+  "tier": 1,
+  "icon": "scroll",
+  "price": 0,
+  "lore": "Sealed terms of truce between the two cities."
+ },
+ "forged_letter": {
+  "name": "Forged Letter",
+  "type": "quest",
+  "tier": 1,
+  "icon": "scroll",
+  "price": 0,
+  "lore": "The same seal — but the words promise war."
+ },
+ "rune_rubbing": {
+  "name": "Rune Rubbing",
+  "type": "quest",
+  "tier": 1,
+  "icon": "sc_insight",
+  "price": 0,
+  "lore": "Charcoal on vellum: the old warding runes of the first kingdom."
+ },
+ "supply_manifest": {
+  "name": "Supply Manifest",
+  "type": "quest",
+  "tier": 1,
+  "icon": "scroll",
+  "price": 0,
+  "lore": "A quartermaster's list. Some lines don't add up."
+ },
+ "vigil_oil": {
+  "name": "Vigil Oil",
+  "type": "quest",
+  "tier": 1,
+  "icon": "potion_mp",
+  "price": 0,
+  "lore": "Blessed lamp oil for the crypt braziers."
+ },
+ "corvane_journal": {
+  "name": "Corvane's Journal",
+  "type": "quest",
+  "tier": 1,
+  "icon": "sc_crypt",
+  "price": 0,
+  "lore": "A soldier's diary that ends in a stranger's handwriting."
+ },
+ "sunshard": {
+  "name": "Sunshard",
+  "type": "quest",
+  "tier": 1,
+  "icon": "x_shard_prismatic",
+  "price": 0,
+  "lore": "A sliver of the Sundered Crown, warm as a hearth."
+ },
+ "moonshard": {
+  "name": "Moonshard",
+  "type": "quest",
+  "tier": 1,
+  "icon": "x_shard_mystic",
+  "price": 0,
+  "lore": "A sliver of the Sundered Crown, cool as river stone."
+ },
+ "wyrmscale_hauberk": {
+  "name": "Wyrmscale Hauberk",
+  "type": "hauberk",
+  "tier": 7,
+  "icon": "u_wyrmscale_hauberk",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "black_dragon",
+  "drop_chance": 0.015,
+  "lore": "Scales from the Black Dragon's own breast, still warm, laced over a hauberk that no forge in Valoria could have made.",
+  "def": 60,
+  "vit": 5,
+  "str": 5,
+  "fx": {
+   "dmg_red": 3,
+   "thorns": 17
+  },
+  "build": "melee",
+  "req_level": 66,
+  "req_str": 99,
+  "req_dex": 84,
+  "sig": "thorns",
+  "sig_name": "Wyrmscale Barbs"
+ },
+ "ridgebreaker_warplate": {
+  "name": "Ridgebreaker's Warplate",
+  "type": "armor",
+  "tier": 7,
+  "icon": "mx_ridgebreaker_warplate",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "korgath",
+  "drop_chance": 0.015,
+  "lore": "Korgath never wiped the blood from it. Every dent is a story, and every story ended badly for someone else.",
+  "def": 55,
+  "str": 5,
+  "hp": 303,
+  "vit": 5,
+  "fx": {
+   "thorns": 12,
+   "regen": 14
+  },
+  "build": "melee",
+  "req_level": 70,
+  "req_str": 104,
+  "req_dex": 89,
+  "sig": "regen",
+  "sig_name": "Mountain's Mending"
+ },
+ "cinderplate": {
+  "name": "Balrog's Cinderplate",
+  "type": "armor",
+  "tier": 7,
+  "icon": "mx_cinderplate",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "barlog",
+  "drop_chance": 0.015,
+  "lore": "It glows from within, like a forge banked for the night. Those who strike it feel the heat.",
+  "mag": 5,
+  "int": 5,
+  "def": 40,
+  "hp": 417,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 13
+  },
+  "build": "magic",
+  "req_level": 77,
+  "req_mag": 92,
+  "sig": "spell_dmg",
+  "sig_name": "Cinder Focus"
+ },
+ "shroud_of_the_bonecaller": {
+  "name": "Shroud of the Bonecaller",
+  "type": "armor",
+  "tier": 7,
+  "icon": "mx_shroud_of_the_bonecaller",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "gorvash",
+  "drop_chance": 0.015,
+  "lore": "Woven from grave-silk and the whispers of the dead. It is never quite still.",
+  "mag": 5,
+  "int": 5,
+  "mp": 411,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 10,
+   "dmg_red": 5
+  },
+  "build": "magic",
+  "req_level": 79,
+  "req_mag": 94,
+  "hood": true,
+  "sig": "dmg_red",
+  "sig_name": "Bonecaller's Ward"
+ },
+ "tigerworm_leggings": {
+  "name": "Tigerworm Hide Leggings",
+  "type": "legs",
+  "tier": 7,
+  "icon": "mx_tigerworm_leggings",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "tigerworm",
+  "drop_chance": 0.02,
+  "lore": "Banded hide from the great worm. Wear it and the ground itself seems to hurry you along.",
+  "dex": 5,
+  "def": 23,
+  "crit": 4,
+  "hp": 117,
+  "vit": 5,
+  "fx": {
+   "dodge": 3
+  },
+  "build": "melee",
+  "req_level": 48,
+  "req_str": 78,
+  "req_dex": 62,
+  "sig": "dodge",
+  "sig_name": "Tigerworm Coil"
+ },
+ "abyss_walker_cuisses": {
+  "name": "Cuisses of the Abyss-Walker",
+  "type": "legs",
+  "tier": 7,
+  "icon": "mx_abyss_walker_cuisses",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "abaddon",
+  "drop_chance": 0.02,
+  "lore": "Abaddon walked out of the pit in these. The wounds of whoever wears them close by themselves.",
+  "mag": 5,
+  "int": 5,
+  "vit": 5,
+  "fx": {
+   "dmg_red": 5,
+   "mp_regen": 14
+  },
+  "build": "magic",
+  "req_level": 70,
+  "req_mag": 88,
+  "sig": "mp_regen",
+  "sig_name": "Abyssal Tide"
+ },
+ "frostwyrm_crown": {
+  "name": "Frostwyrm Crown",
+  "type": "helmet",
+  "tier": 7,
+  "icon": "mx_frostwyrm_crown",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "wyvern",
+  "drop_chance": 0.02,
+  "lore": "Rime never melts from its crest, even by the fire.",
+  "mag": 5,
+  "int": 5,
+  "mp": 207,
+  "vit": 5,
+  "fx": {
+   "mp_regen": 7,
+   "dmg_red": 3
+  },
+  "build": "magic",
+  "req_level": 53,
+  "req_mag": 76,
+  "sig": "mp_regen",
+  "sig_name": "Frostwyrm's Clarity"
+ },
+ "hellclaw_grips": {
+  "name": "Hellclaw Grips",
+  "type": "gloves",
+  "tier": 7,
+  "icon": "mx_hellclaw_grips",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "hellclaw",
+  "drop_chance": 0.02,
+  "lore": "Plate fingers capped with Hellclaw's own pincer-tips. Whatever they grip, they pierce.",
+  "str": 5,
+  "crit": 4,
+  "vit": 5,
+  "fx": {
+   "crit_dmg": 7,
+   "lifesteal": 2
+  },
+  "build": "melee",
+  "req_level": 44,
+  "req_str": 73,
+  "req_dex": 58,
+  "sig": "crit_dmg",
+  "sig_name": "Hellclaw Rend"
+ },
+ "emberstride_greaves": {
+  "name": "Emberstride Greaves",
+  "type": "boots",
+  "tier": 7,
+  "icon": "mx_emberstride_greaves",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "fire_wyvern",
+  "drop_chance": 0.02,
+  "lore": "The Fire Wyvern's talons, hammered flat. Each step leaves a scorch mark.",
+  "mag": 5,
+  "int": 5,
+  "speed": 9,
+  "mp": 148,
+  "vit": 5,
+  "fx": {
+   "regen": 9
+  },
+  "build": "magic",
+  "req_level": 57,
+  "req_mag": 79,
+  "sig": "regen",
+  "sig_name": "Emberstride"
+ },
+ "aegis_of_the_black_wing": {
+  "name": "Aegis of the Black Wing",
+  "type": "shield",
+  "tier": 7,
+  "icon": "mx_aegis_of_the_black_wing",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "black_dragon",
+  "drop_chance": 0.02,
+  "lore": "A single wing-plate of the Black Dragon, rimmed in iron. Fire slides off it like rain.",
+  "def": 45,
+  "vit": 5,
+  "fx": {
+   "dmg_red": 4,
+   "thorns": 17
+  },
+  "build": "melee",
+  "req_level": 66,
+  "req_str": 99,
+  "req_dex": 84,
+  "sig": "thorns",
+  "sig_name": "Black Wing Barbs"
+ },
+ "bulwark_of_the_abyss": {
+  "name": "Bulwark of the Abyss",
+  "type": "shield",
+  "tier": 7,
+  "icon": "mx_bulwark_of_the_abyss",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "abaddon",
+  "drop_chance": 0.02,
+  "lore": "The gate of a prison that held something worse than Abaddon. It still remembers how to keep things in.",
+  "def": 41,
+  "vit": 5,
+  "hp": 228,
+  "fx": {
+   "regen": 14
+  },
+  "build": "melee",
+  "req_level": 70,
+  "req_str": 104,
+  "req_dex": 89,
+  "sig": "regen",
+  "sig_name": "Abyssal Bulwark"
+ },
+ "frostwall": {
+  "name": "Frostwall",
+  "type": "shield",
+  "tier": 7,
+  "icon": "mx_frostwall",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "wyvern",
+  "drop_chance": 0.02,
+  "lore": "Ice from the Wyvern's nest, packed over a kite shield and never melted since.",
+  "mag": 5,
+  "int": 5,
+  "mp": 207,
+  "vit": 5,
+  "fx": {
+   "dmg_red": 5
+  },
+  "build": "magic",
+  "req_level": 53,
+  "req_mag": 76,
+  "sig": "dmg_red",
+  "sig_name": "Frostwall"
+ },
+ "bone_ward": {
+  "name": "Gorvash's Bone Ward",
+  "type": "shield",
+  "tier": 7,
+  "icon": "mx_bone_ward",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "gorvash",
+  "drop_chance": 0.02,
+  "lore": "A ward of knitted ribs. The Bonecaller sang each one into place.",
+  "mag": 5,
+  "int": 5,
+  "hp": 257,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 12,
+   "mp_regen": 12
+  },
+  "build": "magic",
+  "req_level": 79,
+  "req_mag": 94,
+  "sig": "spell_dmg",
+  "sig_name": "Bone Ward"
+ },
+ "coil_of_the_tigerworm": {
+  "name": "Coil of the Tigerworm",
+  "type": "ring",
+  "tier": 7,
+  "icon": "mx_coil_of_the_tigerworm",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "tigerworm",
+  "drop_chance": 0.02,
+  "lore": "A tooth of the worm, curled into a ring. It bites back.",
+  "dex": 5,
+  "crit": 5,
+  "vit": 5,
+  "fx": {
+   "lifesteal": 4
+  },
+  "build": "melee",
+  "req_level": 48,
+  "req_str": 73,
+  "sig": "lifesteal",
+  "sig_name": "Tigerworm's Hunger"
+ },
+ "hellfire_loop": {
+  "name": "Hellfire Loop",
+  "type": "ring",
+  "tier": 7,
+  "icon": "mx_hellfire_loop",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "barlog",
+  "drop_chance": 0.02,
+  "lore": "A ring of black iron that was once a link of the Balrog King's chain.",
+  "mag": 5,
+  "int": 5,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 9,
+   "boss_dmg": 25
+  },
+  "build": "magic",
+  "req_level": 77,
+  "req_mag": 92,
+  "sig": "boss_dmg",
+  "sig_name": "Hellfire Loop"
+ },
+ "band_of_the_wyrm_king": {
+  "name": "Band of the Wyrm King",
+  "type": "ring",
+  "tier": 7,
+  "icon": "mx_band_of_the_wyrm_king",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "black_dragon",
+  "drop_chance": 0.02,
+  "lore": "The Black Dragon wore it on one claw. On a man's finger it's as heavy as a crown.",
+  "str": 5,
+  "vit": 5,
+  "fx": {
+   "dmg_pct": 6
+  },
+  "build": "melee",
+  "req_level": 66,
+  "req_str": 85,
+  "sig": "dmg_pct",
+  "sig_name": "Wyrm King's Might"
+ },
+ "heart_of_the_mountain": {
+  "name": "Heart of the Mountain",
+  "type": "amulet",
+  "tier": 7,
+  "icon": "mx_heart_of_the_mountain",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "korgath",
+  "drop_chance": 0.02,
+  "lore": "A fist of living stone from the roots of the Highlands. It beats, slowly.",
+  "vit": 5,
+  "str": 5,
+  "hp": 197,
+  "fx": {
+   "regen": 12
+  },
+  "build": "melee",
+  "req_level": 70,
+  "req_str": 88,
+  "sig": "regen",
+  "sig_name": "Heart of the Mountain"
+ },
+ "phylactery_of_gorvash": {
+  "name": "Phylactery of Gorvash",
+  "type": "amulet",
+  "tier": 7,
+  "icon": "mx_phylactery_of_gorvash",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "gorvash",
+  "drop_chance": 0.02,
+  "lore": "The Bonecaller kept a sliver of his soul in it. A sliver is plenty.",
+  "mag": 5,
+  "int": 5,
+  "mp": 267,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 8,
+   "mp_regen": 11
+  },
+  "build": "magic",
+  "req_level": 79,
+  "req_mag": 94,
+  "sig": "mp_regen",
+  "sig_name": "Phylactery's Echo"
+ },
+ "ember_of_the_fire_wyvern": {
+  "name": "Ember of the Fire Wyvern",
+  "type": "amulet",
+  "tier": 7,
+  "icon": "mx_ember_of_the_fire_wyvern",
+  "price": 60000,
+  "unique": true,
+  "drop_from": "fire_wyvern",
+  "drop_chance": 0.02,
+  "lore": "A coal from the Wyvern's throat, caged in gold. It never cools.",
+  "str": 5,
+  "crit": 7,
+  "vit": 5,
+  "fx": {
+   "crit_dmg": 19
+  },
+  "build": "melee",
+  "req_level": 57,
+  "req_str": 79,
+  "sig": "crit_dmg",
+  "sig_name": "Wyvern Ember"
+ },
+ "passive_tome": {
+  "name": "Tome of the Unbound Path",
+  "type": "relic",
+  "tier": 7,
+  "icon": "x_tome",
+  "price": 50000,
+  "relic": "passive_point",
+  "drop_only": true,
+  "boss_only": true,
+  "lore": "Reading it opens a door in you that wasn't there before. +1 passive skill point."
+ },
+ "refund_orb": {
+  "name": "Orb of Unmaking",
+  "type": "relic",
+  "tier": 7,
+  "icon": "x_orb_unmake",
+  "price": 50000,
+  "relic": "passive_refund",
+  "drop_only": true,
+  "boss_only": true,
+  "lore": "Shatter it and every path you've walked is forgotten — all passive skill points are returned."
+ },
+ "abyssal_scepter": {
+  "name": "Abyssal Scepter",
+  "type": "weapon",
+  "tier": 7,
+  "icon": "mx_abyssal_scepter",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "abaddon",
+  "drop_chance": 0.015,
+  "lore": "A rod of black glass from the floor of the Abyss. Spells cast through it come out hungry.",
+  "mag": 5,
+  "int": 5,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 20,
+   "mp_regen": 22,
+   "dmg_red": 9
+  },
+  "dmg": [
+   31,
+   50
+  ],
+  "build": "magic",
+  "req_level": 70,
+  "req_mag": 88,
+  "knockback": 5.5,
+  "sig": "dmg_red",
+  "sig_name": "Abyssal Veil"
+ },
+ "deathknight_helm": {
+  "name": "Deathknight's Helm",
+  "type": "helmet",
+  "tier": 7,
+  "icon": "mx_deathknight_helm",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "gorvash",
+  "drop_chance": 0.02,
+  "lore": "Gorvash's first champion wore it. He wears it still, in a manner of speaking.",
+  "def": 37,
+  "str": 5,
+  "vit": 5,
+  "fx": {
+   "lifesteal": 4
+  },
+  "build": "melee",
+  "req_level": 79,
+  "req_str": 115,
+  "req_dex": 100,
+  "sig": "lifesteal",
+  "sig_name": "Deathknight's Thirst"
+ },
+ "wyrmfire_wraps": {
+  "name": "Wyrmfire Wraps",
+  "type": "gloves",
+  "tier": 7,
+  "icon": "mx_wyrmfire_wraps",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "black_dragon",
+  "drop_chance": 0.02,
+  "lore": "Silk spun around a sliver of dragonfire. Your fingertips smoke when you cast.",
+  "mag": 5,
+  "int": 5,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 8,
+   "mp_steal": 4
+  },
+  "build": "magic",
+  "req_level": 66,
+  "req_mag": 85,
+  "sig": "mp_steal",
+  "sig_name": "Wyrmfire Siphon"
+ },
+ "rimefang_treads": {
+  "name": "Rimefang Treads",
+  "type": "boots",
+  "tier": 7,
+  "icon": "mx_rimefang_treads",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "wyvern",
+  "drop_chance": 0.02,
+  "lore": "Greaves faced with the Wyvern's frozen fangs. They bite into ice and stone alike.",
+  "dex": 5,
+  "def": 21,
+  "vit": 5,
+  "fx": {
+   "dodge": 3,
+   "dmg_pct": 3
+  },
+  "build": "melee",
+  "req_level": 53,
+  "req_str": 84,
+  "req_dex": 68,
+  "sig": "dodge",
+  "sig_name": "Rimefang Step"
+ },
+ "sandspire_seal": {
+  "name": "Sandspire Seal",
+  "type": "ring",
+  "tier": 7,
+  "icon": "mx_sandspire_seal",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "hellclaw",
+  "drop_chance": 0.02,
+  "lore": "A seal ring of fused desert glass. The sand in it never settles.",
+  "mag": 5,
+  "int": 5,
+  "mp": 172,
+  "vit": 5,
+  "fx": {
+   "mp_regen": 8
+  },
+  "build": "magic",
+  "req_level": 44,
+  "req_mag": 70,
+  "sig": "mp_regen",
+  "sig_name": "Sandspire Seal"
+ },
+ "wormglass_pendant": {
+  "name": "Wormglass Pendant",
+  "type": "amulet",
+  "tier": 7,
+  "icon": "u_wormglass_pendant",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "tigerworm",
+  "drop_chance": 0.02,
+  "lore": "A lens of glassy worm-hide that bends light, and spells, around corners.",
+  "mag": 5,
+  "int": 5,
+  "mp": 162,
+  "vit": 5,
+  "fx": {
+   "spell_dmg": 6,
+   "dmg_red": 3
+  },
+  "build": "magic",
+  "req_level": 48,
+  "req_mag": 73,
+  "sig": "dmg_red",
+  "sig_name": "Wormglass Ward"
+ },
+ "runestone_of_the_ridge": {
+  "name": "Runestone of the Ridge",
+  "type": "ring",
+  "tier": 7,
+  "icon": "u_runestone_of_the_ridge",
+  "price": 120000,
+  "unique": true,
+  "drop_from": "korgath",
+  "drop_chance": 0.02,
+  "lore": "Korgath's shamans carved it. Only a mage can hear what it whispers.",
+  "mag": 5,
+  "int": 5,
+  "vit": 5,
+  "fx": {
+   "dmg_red": 5
+  },
+  "build": "magic",
+  "req_level": 70,
+  "req_mag": 88,
+  "sig": "dmg_red",
+  "sig_name": "Ridge Runestone"
+ }
+}

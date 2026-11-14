@@ -1,0 +1,698 @@
+[
+ {
+  "key": "knight_blade",
+  "icon": "mx_knight_blade"
+ },
+ {
+  "key": "dragonslayer",
+  "icon": "mx_dragonslayer"
+ },
+ {
+  "key": "initiate_blade",
+  "icon": "mx_initiate_blade"
+ },
+ {
+  "key": "wyrmfang",
+  "icon": "w_wyrmfang"
+ },
+ {
+  "key": "hellbrand",
+  "icon": "w_hellbrand"
+ },
+ {
+  "key": "nightfall",
+  "icon": "w_nightfall"
+ },
+ {
+  "key": "aetherion",
+  "icon": "w_aetherion"
+ },
+ {
+  "key": "hand_axe",
+  "icon": "mx_hand_axe"
+ },
+ {
+  "key": "executioners_axe",
+  "icon": "mx_executioners_axe"
+ },
+ {
+  "key": "abyssal_cleaver",
+  "icon": "mx_abyssal_cleaver"
+ },
+ {
+  "key": "club",
+  "icon": "mx_club"
+ },
+ {
+  "key": "mace",
+  "icon": "mx_mace"
+ },
+ {
+  "key": "morning_star",
+  "icon": "mx_morning_star"
+ },
+ {
+  "key": "war_hammer",
+  "icon": "mx_war_hammer"
+ },
+ {
+  "key": "titan_maul",
+  "icon": "mx_titan_maul"
+ },
+ {
+  "key": "oak_staff",
+  "icon": "mx_oak_staff"
+ },
+ {
+  "key": "wizard_staff",
+  "icon": "mx_wizard_staff"
+ },
+ {
+  "key": "arcane_staff",
+  "icon": "mx_arcane_staff"
+ },
+ {
+  "key": "lich_staff",
+  "icon": "mx_lich_staff"
+ },
+ {
+  "key": "archmage_staff",
+  "icon": "mx_archmage_staff"
+ },
+ {
+  "key": "cloth_tunic",
+  "icon": "mx_cloth_tunic"
+ },
+ {
+  "key": "studded_leather",
+  "icon": "a_studded"
+ },
+ {
+  "key": "knight_plate",
+  "icon": "mx_knight_plate"
+ },
+ {
+  "key": "dragon_plate",
+  "icon": "mx_dragon_plate"
+ },
+ {
+  "key": "abyssal_plate",
+  "icon": "mx_abyssal_plate"
+ },
+ {
+  "key": "apprentice_robe",
+  "icon": "mx_apprentice_robe"
+ },
+ {
+  "key": "mage_robe",
+  "icon": "mx_mage_robe"
+ },
+ {
+  "key": "frostweave_robe",
+  "icon": "a_robe_frost"
+ },
+ {
+  "key": "archmage_robe",
+  "icon": "a_robe_arch"
+ },
+ {
+  "key": "wooden_shield",
+  "icon": "mx_wooden_shield"
+ },
+ {
+  "key": "buckler",
+  "icon": "mx_buckler"
+ },
+ {
+  "key": "kite_shield",
+  "icon": "mx_kite_shield"
+ },
+ {
+  "key": "dragon_shield",
+  "icon": "mx_dragon_shield"
+ },
+ {
+  "key": "leather_cap",
+  "icon": "mx_leather_cap"
+ },
+ {
+  "key": "iron_helm",
+  "icon": "mx_iron_helm"
+ },
+ {
+  "key": "wizard_hat",
+  "icon": "mx_wizard_hat"
+ },
+ {
+  "key": "great_helm",
+  "icon": "mx_great_helm"
+ },
+ {
+  "key": "horned_helm",
+  "icon": "mx_horned_helm"
+ },
+ {
+  "key": "dragon_helm",
+  "icon": "mx_dragon_helm"
+ },
+ {
+  "key": "leather_gloves",
+  "icon": "g_leather"
+ },
+ {
+  "key": "chain_gauntlets",
+  "icon": "g_chain"
+ },
+ {
+  "key": "silk_gloves",
+  "icon": "mx_silk_gloves"
+ },
+ {
+  "key": "plate_gauntlets",
+  "icon": "mx_plate_gauntlets"
+ },
+ {
+  "key": "dragon_gauntlets",
+  "icon": "g_dragon"
+ },
+ {
+  "key": "leather_boots",
+  "icon": "mx_leather_boots"
+ },
+ {
+  "key": "iron_greaves",
+  "icon": "b_iron"
+ },
+ {
+  "key": "plate_greaves",
+  "icon": "mx_plate_greaves"
+ },
+ {
+  "key": "wind_boots",
+  "icon": "b_wind"
+ },
+ {
+  "key": "dragon_greaves",
+  "icon": "b_dragon"
+ },
+ {
+  "key": "copper_ring",
+  "icon": "mx_copper_ring"
+ },
+ {
+  "key": "amethyst_ring",
+  "icon": "r_amethyst"
+ },
+ {
+  "key": "diamond_ring",
+  "icon": "r_diamond"
+ },
+ {
+  "key": "ring_of_might",
+  "icon": "r_might"
+ },
+ {
+  "key": "ring_of_archmage",
+  "icon": "r_archmage"
+ },
+ {
+  "key": "abaddons_signet",
+  "icon": "r_signet"
+ },
+ {
+  "key": "bone_charm",
+  "icon": "n_bone"
+ },
+ {
+  "key": "wolf_fang_necklace",
+  "icon": "n_fang"
+ },
+ {
+  "key": "amulet_of_vigor",
+  "icon": "n_vigor"
+ },
+ {
+  "key": "amulet_of_wisdom",
+  "icon": "n_wisdom"
+ },
+ {
+  "key": "unicorn_pendant",
+  "icon": "n_unicorn"
+ },
+ {
+  "key": "dragon_heart_amulet",
+  "icon": "n_dragonheart"
+ },
+ {
+  "key": "cloth_leggings",
+  "icon": "mx_cloth_leggings"
+ },
+ {
+  "key": "leather_leggings",
+  "icon": "l_leather"
+ },
+ {
+  "key": "studded_leggings",
+  "icon": "l_studded"
+ },
+ {
+  "key": "chain_chausses",
+  "icon": "l_chain"
+ },
+ {
+  "key": "scale_chausses",
+  "icon": "l_scale"
+ },
+ {
+  "key": "plate_cuisses",
+  "icon": "l_plate"
+ },
+ {
+  "key": "knight_cuisses",
+  "icon": "l_knight"
+ },
+ {
+  "key": "dragon_cuisses",
+  "icon": "l_dragon"
+ },
+ {
+  "key": "abyssal_cuisses",
+  "icon": "l_abyssal"
+ },
+ {
+  "key": "apprentice_skirt",
+  "icon": "l_robe_blue"
+ },
+ {
+  "key": "mage_skirt",
+  "icon": "l_robe_purple"
+ },
+ {
+  "key": "frostweave_skirt",
+  "icon": "l_robe_frost"
+ },
+ {
+  "key": "archmage_skirt",
+  "icon": "l_robe_arch"
+ },
+ {
+  "key": "potion_hp_s",
+  "icon": "mx_potion_hp_s"
+ },
+ {
+  "key": "potion_hp",
+  "icon": "mx_potion_hp"
+ },
+ {
+  "key": "potion_hp_l",
+  "icon": "mx_potion_hp_l"
+ },
+ {
+  "key": "potion_hp_x",
+  "icon": "mx_potion_hp_x"
+ },
+ {
+  "key": "potion_mp_s",
+  "icon": "mx_potion_mp_s"
+ },
+ {
+  "key": "potion_mp",
+  "icon": "mx_potion_mp"
+ },
+ {
+  "key": "potion_mp_l",
+  "icon": "mx_potion_mp_l"
+ },
+ {
+  "key": "potion_mp_x",
+  "icon": "mx_potion_mp_x"
+ },
+ {
+  "key": "potion_sp_s",
+  "icon": "mx_potion_sp_s"
+ },
+ {
+  "key": "potion_sp",
+  "icon": "mx_potion_sp"
+ },
+ {
+  "key": "potion_sp_l",
+  "icon": "mx_potion_sp_l"
+ },
+ {
+  "key": "potion_sp_x",
+  "icon": "mx_potion_sp_x"
+ },
+ {
+  "key": "bread",
+  "icon": "mx_bread"
+ },
+ {
+  "key": "roast_meat",
+  "icon": "mx_roast_meat"
+ },
+ {
+  "key": "grilled_fish",
+  "icon": "f_fish"
+ },
+ {
+  "key": "honey_cake",
+  "icon": "mx_honey_cake"
+ },
+ {
+  "key": "forge_dust",
+  "icon": "x_dust"
+ },
+ {
+  "key": "essence_uncommon",
+  "icon": "x_ess_green"
+ },
+ {
+  "key": "essence_rare",
+  "icon": "x_ess_blue"
+ },
+ {
+  "key": "essence_epic",
+  "icon": "x_ess_purple"
+ },
+ {
+  "key": "essence_legendary",
+  "icon": "x_ess_gold"
+ },
+ {
+  "key": "mystic_shard",
+  "icon": "x_shard_mystic"
+ },
+ {
+  "key": "prismatic_shard",
+  "icon": "x_shard_prismatic"
+ },
+ {
+  "key": "mithril_ore",
+  "icon": "mx_mithril_ore"
+ },
+ {
+  "key": "adamantite_ore",
+  "icon": "mx_adamantite_ore"
+ },
+ {
+  "key": "steel_ingot",
+  "icon": "m_ingot_steel"
+ },
+ {
+  "key": "mithril_ingot",
+  "icon": "m_ingot_mithril"
+ },
+ {
+  "key": "adamantite_ingot",
+  "icon": "m_ingot_adamant"
+ },
+ {
+  "key": "healing_herb",
+  "icon": "mx_healing_herb"
+ },
+ {
+  "key": "mana_blossom",
+  "icon": "mx_mana_blossom"
+ },
+ {
+  "key": "slime_gel",
+  "icon": "m_gel"
+ },
+ {
+  "key": "soft_fur",
+  "icon": "m_fur"
+ },
+ {
+  "key": "raw_meat",
+  "icon": "mx_raw_meat"
+ },
+ {
+  "key": "raw_fish",
+  "icon": "m_rawfish"
+ },
+ {
+  "key": "chitin",
+  "icon": "m_chitin"
+ },
+ {
+  "key": "frog_leg",
+  "icon": "m_froglet"
+ },
+ {
+  "key": "orc_tusk",
+  "icon": "m_tusk"
+ },
+ {
+  "key": "scorpion_stinger",
+  "icon": "m_stinger"
+ },
+ {
+  "key": "bone_dust",
+  "icon": "m_bonedust"
+ },
+ {
+  "key": "ectoplasm",
+  "icon": "m_ecto"
+ },
+ {
+  "key": "golem_core",
+  "icon": "m_core"
+ },
+ {
+  "key": "beast_hide",
+  "icon": "m_hide"
+ },
+ {
+  "key": "wolf_pelt",
+  "icon": "m_pelt"
+ },
+ {
+  "key": "troll_blood",
+  "icon": "m_blood"
+ },
+ {
+  "key": "ogre_hide",
+  "icon": "m_ogrehide"
+ },
+ {
+  "key": "hellfire_ember",
+  "icon": "mx_hellfire_ember"
+ },
+ {
+  "key": "beholder_eye",
+  "icon": "m_eye"
+ },
+ {
+  "key": "dark_elf_silk",
+  "icon": "m_silk"
+ },
+ {
+  "key": "minotaur_horn",
+  "icon": "m_horn"
+ },
+ {
+  "key": "frost_crystal",
+  "icon": "m_frost"
+ },
+ {
+  "key": "turtle_shell",
+  "icon": "m_shell"
+ },
+ {
+  "key": "ancient_bark",
+  "icon": "m_bark"
+ },
+ {
+  "key": "soul_shard",
+  "icon": "m_soul"
+ },
+ {
+  "key": "demon_horn",
+  "icon": "m_demonhorn"
+ },
+ {
+  "key": "mana_crystal",
+  "icon": "m_manacrystal"
+ },
+ {
+  "key": "war_scrap",
+  "icon": "m_scrap"
+ },
+ {
+  "key": "elvine_insignia",
+  "icon": "m_insignia"
+ },
+ {
+  "key": "dragon_scale",
+  "icon": "m_dragonscale"
+ },
+ {
+  "key": "dragon_fang",
+  "icon": "m_dragonfang"
+ },
+ {
+  "key": "dragon_heart",
+  "icon": "m_dragonheart"
+ },
+ {
+  "key": "hellclaw_pincer",
+  "icon": "m_pincer"
+ },
+ {
+  "key": "tigerworm_hide",
+  "icon": "m_wormhide"
+ },
+ {
+  "key": "infernal_core",
+  "icon": "m_infernal"
+ },
+ {
+  "key": "abaddon_heart",
+  "icon": "m_abaddon"
+ },
+ {
+  "key": "black_dragon_scale",
+  "icon": "m_blackscale"
+ },
+ {
+  "key": "amethyst",
+  "icon": "gem_amethyst"
+ },
+ {
+  "key": "warlord_sigil",
+  "icon": "m_insignia"
+ },
+ {
+  "key": "monster_gem",
+  "icon": "gem"
+ },
+ {
+  "key": "flux_stone",
+  "icon": "m_flux"
+ },
+ {
+  "key": "spirit_salt",
+  "icon": "m_spiritsalt"
+ },
+ {
+  "key": "sulfur_bloom",
+  "icon": "m_sulfur"
+ },
+ {
+  "key": "tempering_oil",
+  "icon": "m_temperoil"
+ },
+ {
+  "key": "moonwell_dew",
+  "icon": "m_moondew"
+ },
+ {
+  "key": "starmetal_shard",
+  "icon": "m_starmetal"
+ },
+ {
+  "key": "wyrmscale_hauberk",
+  "icon": "u_wyrmscale_hauberk"
+ },
+ {
+  "key": "ridgebreaker_warplate",
+  "icon": "mx_ridgebreaker_warplate"
+ },
+ {
+  "key": "cinderplate",
+  "icon": "mx_cinderplate"
+ },
+ {
+  "key": "shroud_of_the_bonecaller",
+  "icon": "mx_shroud_of_the_bonecaller"
+ },
+ {
+  "key": "tigerworm_leggings",
+  "icon": "mx_tigerworm_leggings"
+ },
+ {
+  "key": "abyss_walker_cuisses",
+  "icon": "mx_abyss_walker_cuisses"
+ },
+ {
+  "key": "frostwyrm_crown",
+  "icon": "mx_frostwyrm_crown"
+ },
+ {
+  "key": "hellclaw_grips",
+  "icon": "mx_hellclaw_grips"
+ },
+ {
+  "key": "emberstride_greaves",
+  "icon": "mx_emberstride_greaves"
+ },
+ {
+  "key": "aegis_of_the_black_wing",
+  "icon": "mx_aegis_of_the_black_wing"
+ },
+ {
+  "key": "bulwark_of_the_abyss",
+  "icon": "mx_bulwark_of_the_abyss"
+ },
+ {
+  "key": "frostwall",
+  "icon": "mx_frostwall"
+ },
+ {
+  "key": "bone_ward",
+  "icon": "mx_bone_ward"
+ },
+ {
+  "key": "coil_of_the_tigerworm",
+  "icon": "mx_coil_of_the_tigerworm"
+ },
+ {
+  "key": "hellfire_loop",
+  "icon": "mx_hellfire_loop"
+ },
+ {
+  "key": "band_of_the_wyrm_king",
+  "icon": "mx_band_of_the_wyrm_king"
+ },
+ {
+  "key": "heart_of_the_mountain",
+  "icon": "mx_heart_of_the_mountain"
+ },
+ {
+  "key": "phylactery_of_gorvash",
+  "icon": "mx_phylactery_of_gorvash"
+ },
+ {
+  "key": "ember_of_the_fire_wyvern",
+  "icon": "mx_ember_of_the_fire_wyvern"
+ },
+ {
+  "key": "abyssal_scepter",
+  "icon": "mx_abyssal_scepter"
+ },
+ {
+  "key": "deathknight_helm",
+  "icon": "mx_deathknight_helm"
+ },
+ {
+  "key": "wyrmfire_wraps",
+  "icon": "mx_wyrmfire_wraps"
+ },
+ {
+  "key": "rimefang_treads",
+  "icon": "mx_rimefang_treads"
+ },
+ {
+  "key": "sandspire_seal",
+  "icon": "mx_sandspire_seal"
+ },
+ {
+  "key": "wormglass_pendant",
+  "icon": "u_wormglass_pendant"
+ },
+ {
+  "key": "runestone_of_the_ridge",
+  "icon": "u_runestone_of_the_ridge"
+ }
+]

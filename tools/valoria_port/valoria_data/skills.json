@@ -1,0 +1,56 @@
+{
+ "_note": "Non-combat skills shown in the Skills window (N). Add a skill by adding an entry; 'xp' lists what earns it (see Game.skill_event). Perks: {level, text, effect: {key: value per level}}. Edit from the dashboard.",
+ "max_level": 60,
+ "curve": 60,
+ "skills": [
+  {
+   "id": "smithing", "name": "Smithing & Forging", "icon": "m_ingot_steel", "color": "#d8a060",
+   "desc": "Smelting ore into ingots and forging weapons and armour at the Blacksmith, upgrading gear, and breaking it down for parts.",
+   "how": ["Smelt or forge at the Blacksmith (Craft)", "Upgrade gear (win or lose)", "Salvage gear"],
+   "xp": {"craft:blacksmith": [30, 20], "upgrade": [40, 0], "salvage": [8, 0]},
+   "perks": [
+    {"level": 1, "text": "+1% upgrade success per 5 levels", "effect": {"upgrade_luck_per5": 1}},
+    {"level": 20, "text": "Forged gear is more likely to come out Rare", "effect": {"forge_rarity": 1}},
+    {"level": 40, "text": "Salvaging sometimes gives an extra material", "effect": {"salvage_bonus": 1}}
+   ]
+  },
+  {
+   "id": "crafting", "name": "Crafting", "icon": "mx_copper_ring", "color": "#7fc0e0",
+   "desc": "Jewellery, enhancement stones and scrolls made at the Magic Tower.",
+   "how": ["Craft rings, amulets, enhancement stones and scrolls at the Magic Tower"],
+   "xp": {"craft:magic": [30, 20]},
+   "perks": [
+    {"level": 1, "text": "1% less gold per recipe per 4 levels (up to 15%)", "effect": {"craft_discount_per4": 1}},
+    {"level": 30, "text": "Crafted jewellery is more likely to come out Rare", "effect": {"forge_rarity": 1}}
+   ]
+  },
+  {
+   "id": "alchemy", "name": "Alchemy", "icon": "potion_hp", "color": "#e06a6a",
+   "desc": "Brewing potions and elixirs from herbs and monster parts at the Magic Tower.",
+   "how": ["Brew potions and elixirs at the Magic Tower (Craft)"],
+   "xp": {"brew": [25, 15]},
+   "perks": [
+    {"level": 1, "text": "1% chance per level to brew one extra", "effect": {"extra_brew_per1": 1}}
+   ]
+  },
+  {
+   "id": "enchanting", "name": "Enchanting & Disenchanting", "icon": "scroll", "color": "#b48cff",
+   "desc": "Taking items apart at the Magic Tower to learn their magic, then laying it onto your own gear. Learned from the Enchanter's lesson.",
+   "how": ["Disenchant items at the Magic Tower", "Enchant your gear"],
+   "uses": "enchant",
+   "perks": [
+    {"level": 1, "text": "More enchantments per item and higher-tier gear as you level (see the Magic Tower)"}
+   ]
+  },
+  {
+   "id": "slayer", "name": "Slayer", "icon": "sword", "color": "#e8c060",
+   "desc": "Hunting the monsters on City Hall bounties. Every bounty kill and every bounty handed in trains it.",
+   "how": ["Kill your City Hall bounty target", "Hand in bounties (boss bounties count for much more)"],
+   "xp": {"bounty_kill": [12, 6], "bounty_done": [150, 40]},
+   "perks": [
+    {"level": 1, "text": "+1% damage against your bounty target per 2 levels", "effect": {"slayer_dmg_per2": 1}},
+    {"level": 25, "text": "Bounty gold +25%", "effect": {"bounty_gold": 25}}
+   ]
+  }
+ ]
+}

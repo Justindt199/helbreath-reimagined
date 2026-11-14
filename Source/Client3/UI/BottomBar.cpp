@@ -110,8 +110,8 @@ void CGame::DrawDialogBox_IconPanel()
 
 	// HP and MP
 	{
-		const int iMaxHP = m_stat[STAT_VIT] * 3 + m_iLevel * 2 + m_stat[STAT_STR] / 2;
-		const int iMaxMP = m_stat[STAT_MAG] * 2 + m_iLevel * 2 + m_stat[STAT_INT] / 2;
+		const int iMaxHP = MaxHP();
+		const int iMaxMP = MaxMP();
 		if (iMaxHP > 0 && m_iHP > iMaxHP) m_iHP = iMaxHP;
 		if (iMaxMP > 0 && m_iMP > iMaxMP) m_iMP = iMaxMP;
 		const int iPx = (L.hp.right - L.hp.left) >= 110 ? 10 : 9;
@@ -133,7 +133,7 @@ void CGame::DrawDialogBox_IconPanel()
 
 	// SP above the location
 	{
-		const int iMaxSP = m_iLevel * 2 + m_stat[STAT_STR] * 2;
+		const int iMaxSP = MaxSP();
 		if (iMaxSP > 0 && m_iSP > iMaxSP) m_iSP = iMaxSP;
 		const std::string s = Commas(m_iSP) + " / " + Commas(iMaxSP);
 		DrawVital(R, At(L.sp), iMaxSP > 0 ? (double)m_iSP / iMaxSP : 0, RGB(56, 164, 72), RGB(150, 235, 150), s.c_str(), 8);
@@ -253,14 +253,14 @@ void CGame::DrawDialogBox_GaugePanel()
 bool CGame::IsLowHp() const
 {
 	if (m_cGameMode != GAMEMODE_ONMAINGAME || m_bIsObserverMode || m_iHP <= 0) return false;
-	const int iMaxHP = m_stat[STAT_VIT] * 3 + m_iLevel * 2 + m_stat[STAT_STR] / 2;
+	const int iMaxHP = MaxHP();
 	return iMaxHP > 0 && m_iHP * 4 < iMaxHP;
 }
 
 void CGame::DrawLowHpGlow()
 {
 	if (!IsLowHp()) return;
-	const int iMaxHP = m_stat[STAT_VIT] * 3 + m_iLevel * 2 + m_stat[STAT_STR] / 2;
+	const int iMaxHP = MaxHP();
 	const float fLow = 1.f - (float)m_iHP / (iMaxHP * 0.25f);		// 0 at 25%, 1 near 0 HP
 	const float f = LowHpPulse(m_dwCurTime) * (0.6f + 0.4f * (fLow < 0 ? 0 : (fLow > 1 ? 1 : fLow)));
 	const int iBand = (std::max)(40, (std::min)((int)GAME_W, (int)VIEW_BOTTOM) / 7);

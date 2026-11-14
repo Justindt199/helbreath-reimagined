@@ -33,6 +33,7 @@
 #include "char\Quest.h"
 #include "char\Skill.h"
 #include "char\item\BuildItem.h"
+#include "Valoria.h"
 #include "char\item\Fish.h"
 #include "char\item\Mineral.h"
 #include "char\item\Potion.h"
@@ -377,6 +378,12 @@ bool CGame::bInit()
 	//CMisc::Temp();
 
 	PutLogList("(!) INITIALIZING GAME SERVER...");
+	{	// VALORIA gear bonuses (Valoria.h)
+		char cTxt[120];
+		const int iGear = Valoria_LoadGear("..\\configs\\valoria_gear.txt");
+		if (iGear < 0) PutLogList("(!) ..\\configs\\valoria_gear.txt not found: VALORIA gear has no stat bonuses");
+		else { wsprintf(cTxt, "(!) VALORIA gear bonuses: %d items", iGear); PutLogList(cTxt); }
+	}
 	//
 
 	for (i = 0; i < MAXCLIENTS+1; i++)
@@ -22326,6 +22333,17 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 	if (!player) return;
 
 	SetAngel(iClientH, OWNERTYPE_PLAYER, 0, false);
+	player->m_gearStr = player->m_gearDex = player->m_gearVit = player->m_gearInt = player->m_gearMag = 0;
+	player->m_gearHP = player->m_gearMP = player->m_gearDef = player->m_gearCrit = 0;
+	for (int g = 0; g < MAXITEMS; g++)
+	{	// VALORIA gear bonuses (Valoria.h)
+		if (player->m_pItemList[g] == NULL || !player->m_bIsItemEquipped[g]) continue;
+		const ValoriaGearBonus * pB = Valoria_FindGear(player->m_pItemList[g]->m_cName);
+		if (pB == NULL) continue;
+		player->m_gearStr += pB->str;  player->m_gearDex += pB->dex;  player->m_gearVit += pB->vit;
+		player->m_gearInt += pB->iint; player->m_gearMag += pB->mag;  player->m_gearHP  += pB->hp;
+		player->m_gearMP  += pB->mp;   player->m_gearDef += pB->def;  player->m_gearCrit += pB->crit;
+	}
 
 	if ( (player->m_sItemEquipmentStatus[EQUIPPOS_RHAND]   != -1) &&
 		(player->m_sItemEquipmentStatus[EQUIPPOS_TWOHAND] != -1) ) {
@@ -22345,7 +22363,7 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 	player->m_cAttackBonus_L      = 0;
 
 	player->m_iHitRatio = 0;
-	player->m_iDefenseRatio = player->GetDex() * 2;
+	player->m_iDefenseRatio = player->GetDex() * 2 + player->m_gearDef;
 	player->m_iDamageAbsorption_Shield = 0;
 
 	for (i = 0; i < MAXITEMEQUIPPOS; i++)
@@ -22989,6 +23007,10 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 			}
 	}
 	player->m_heroArmourBonus = CheckHeroItemEquipped(iClientH);
+
+	// Taking off VALORIA gear can lower the maximum HP / MP below the current value.
+	if (player->m_iHP > player->GetMaxHP()) { player->m_iHP = player->GetMaxHP(); if (bNotify) SendNotifyMsg(NULL, iClientH, NOTIFY_HP, NULL, NULL, NULL, NULL); }
+	if (player->m_iMP > player->GetMaxMP()) { player->m_iMP = player->GetMaxMP(); if (bNotify) SendNotifyMsg(NULL, iClientH, NOTIFY_MP, NULL, NULL, NULL, NULL); }
 }
 
 bool CGame::bAnalyzeCriminalAction(int iClientH, short dX, short dY, bool bIsCheck)

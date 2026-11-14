@@ -3355,6 +3355,13 @@ void CGame::UpdateScreen_OnLoading(bool bActive)
 				CloseHandle(m_hPakFile);
 				framePositions.clear();
 			}
+			// VALORIA items: bag icons (sheet 0) and ground icons (sheet 1), item sprite 23
+			m_hPakFile = CreateFile("sprites\\valoria_items.pak", GENERIC_READ, NULL, NULL, OPEN_EXISTING, NULL, NULL);
+			if( m_hPakFile != INVALID_HANDLE_VALUE ) {
+				m_pSprite[SPRID_ITEMPACK_PIVOTPOINT+23]   = new class CSprite(m_hPakFile, &m_Renderer, "valoria_items", 0, FALSE);
+				m_pSprite[SPRID_ITEMGROUND_PIVOTPOINT+23] = new class CSprite(m_hPakFile, &m_Renderer, "valoria_items", 1, FALSE);
+				CloseHandle(m_hPakFile);
+			}
 			MakeSprite( "item-dynamic", SPRID_ITEMDYNAMIC_PIVOTPOINT, 3, FALSE);
 			m_cLoading = 16;
 		}

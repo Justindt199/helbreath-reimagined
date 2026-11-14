@@ -63,10 +63,10 @@ public:
 	int GetMaxMP() const;
 	int GetMaxSP() const;
 	void AddHP(long hp);
-	int GetStr()		const { return _str + _angelStr; }
-	int GetMag()		const { return _mag + _angelMag; }
-	int GetInt()		const { return _int + _angelInt; }
-	int GetDex()		const { return _dex + _angelDex; }
+	int GetStr()		const { return _str + _angelStr + m_gearStr; }
+	int GetMag()		const { return _mag + _angelMag + m_gearMag; }
+	int GetInt()		const { return _int + _angelInt + m_gearInt; }
+	int GetDex()		const { return _dex + _angelDex + m_gearDex; }
 	int GetBaseStr()	const { return _str; }
 	int GetBaseMag()	const { return _mag; }
 	int GetBaseInt()	const { return _int; }
@@ -440,6 +440,9 @@ public:
 private:
 	int _str, _int, _dex, _mag;
 	int _angelStr, _angelInt, _angelDex, _angelMag;
+public:
+	// VALORIA gear bonuses of the equipped items (CGame::CalcTotalItemEffect, Valoria.h)
+	int m_gearStr, m_gearDex, m_gearVit, m_gearInt, m_gearMag, m_gearHP, m_gearMP, m_gearDef, m_gearCrit;
 
 	CParty * _party;
 	PartyStatus _partyStatus;

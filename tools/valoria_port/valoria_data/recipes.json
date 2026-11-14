@@ -1,0 +1,1005 @@
+[
+ {
+  "station": "blacksmith",
+  "out": "steel_ingot",
+  "qty": 1,
+  "in": {
+   "iron_ore": 2
+  },
+  "gold": 10,
+  "level": 1,
+  "tier": 1
+ },
+ {
+  "station": "blacksmith",
+  "out": "mithril_ingot",
+  "qty": 1,
+  "in": {
+   "mithril_ore": 3,
+   "flux_stone": 1
+  },
+  "gold": 60,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "adamantite_ingot",
+  "qty": 1,
+  "in": {
+   "adamantite_ore": 3,
+   "flux_stone": 2
+  },
+  "gold": 200,
+  "level": 16,
+  "tier": 3
+ },
+ {
+  "station": "blacksmith",
+  "out": "studded_leather",
+  "qty": 1,
+  "in": {
+   "beast_hide": 3,
+   "steel_ingot": 1
+  },
+  "gold": 150,
+  "level": 4,
+  "tier": 1
+ },
+ {
+  "station": "blacksmith",
+  "out": "broadsword",
+  "qty": 1,
+  "in": {
+   "steel_ingot": 4,
+   "flux_stone": 1
+  },
+  "gold": 400,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "scale_mail",
+  "qty": 1,
+  "in": {
+   "turtle_shell": 2,
+   "steel_ingot": 3,
+   "flux_stone": 1
+  },
+  "gold": 600,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "war_axe",
+  "qty": 1,
+  "in": {
+   "mithril_ingot": 3,
+   "minotaur_horn": 1,
+   "flux_stone": 2
+  },
+  "gold": 2000,
+  "level": 15,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "war_hammer",
+  "qty": 1,
+  "in": {
+   "mithril_ingot": 4,
+   "golem_core": 2,
+   "flux_stone": 2
+  },
+  "gold": 2400,
+  "level": 15,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "horned_helm",
+  "qty": 1,
+  "in": {
+   "minotaur_horn": 2,
+   "mithril_ingot": 2,
+   "flux_stone": 2
+  },
+  "gold": 1800,
+  "level": 15,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "wind_boots",
+  "qty": 1,
+  "in": {
+   "werewolf_claw": 2,
+   "dark_elf_silk": 3,
+   "mithril_ingot": 1,
+   "flux_stone": 2
+  },
+  "gold": 1500,
+  "level": 14,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "executioners_axe",
+  "qty": 1,
+  "in": {
+   "adamantite_ingot": 3,
+   "hellclaw_pincer": 1,
+   "tempering_oil": 2
+  },
+  "gold": 9000,
+  "level": 21,
+  "tier": 3
+ },
+ {
+  "station": "blacksmith",
+  "out": "titan_maul",
+  "qty": 1,
+  "in": {
+   "golem_core": 4,
+   "adamantite_ingot": 3,
+   "cyclops_eye": 1,
+   "tempering_oil": 2
+  },
+  "gold": 9000,
+  "level": 22,
+  "tier": 3
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragonslayer",
+  "qty": 1,
+  "in": {
+   "dragon_fang": 2,
+   "dragon_heart": 1,
+   "adamantite_ingot": 4,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 12000,
+  "level": 26,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragon_plate",
+  "qty": 1,
+  "in": {
+   "dragon_scale": 6,
+   "adamantite_ingot": 5,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 15000,
+  "level": 25,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragon_shield",
+  "qty": 1,
+  "in": {
+   "dragon_scale": 4,
+   "adamantite_ingot": 2,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 8000,
+  "level": 24,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragon_helm",
+  "qty": 1,
+  "in": {
+   "dragon_scale": 3,
+   "adamantite_ingot": 2,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 7000,
+  "level": 24,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragon_gauntlets",
+  "qty": 1,
+  "in": {
+   "dragon_scale": 2,
+   "adamantite_ingot": 2,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 6000,
+  "level": 24,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragon_greaves",
+  "qty": 1,
+  "in": {
+   "dragon_scale": 3,
+   "adamantite_ingot": 2,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 6500,
+  "level": 24,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "abyssal_cleaver",
+  "qty": 1,
+  "in": {
+   "abaddon_heart": 1,
+   "demon_horn": 4,
+   "adamantite_ingot": 6,
+   "starmetal_shard": 2,
+   "tempering_oil": 2
+  },
+  "gold": 20000,
+  "level": 28,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "abyssal_plate",
+  "qty": 1,
+  "in": {
+   "abaddon_heart": 1,
+   "black_dragon_scale": 4,
+   "adamantite_ingot": 6,
+   "starmetal_shard": 2,
+   "tempering_oil": 2
+  },
+  "gold": 25000,
+  "level": 28,
+  "tier": 4
+ },
+ {
+  "station": "magic",
+  "out": "potion_hp",
+  "qty": 2,
+  "in": {
+   "healing_herb": 2,
+   "slime_gel": 1
+  },
+  "gold": 10,
+  "level": 1,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "potion_hp_l",
+  "qty": 2,
+  "in": {
+   "healing_herb": 3,
+   "troll_blood": 1
+  },
+  "gold": 40,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "potion_hp_x",
+  "qty": 3,
+  "in": {
+   "troll_blood": 2,
+   "mana_blossom": 1,
+   "unicorn_horn": 1,
+   "spirit_salt": 2
+  },
+  "gold": 100,
+  "level": 14,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "potion_mp",
+  "qty": 2,
+  "in": {
+   "mana_blossom": 2,
+   "slime_gel": 1
+  },
+  "gold": 10,
+  "level": 1,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "potion_mp_l",
+  "qty": 2,
+  "in": {
+   "mana_blossom": 3,
+   "ectoplasm": 1
+  },
+  "gold": 40,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "potion_mp_x",
+  "qty": 3,
+  "in": {
+   "mana_crystal": 2,
+   "mana_blossom": 2,
+   "spirit_salt": 2
+  },
+  "gold": 100,
+  "level": 14,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "potion_sp",
+  "qty": 2,
+  "in": {
+   "healing_herb": 1,
+   "frog_leg": 2
+  },
+  "gold": 10,
+  "level": 1,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "potion_sp_l",
+  "qty": 2,
+  "in": {
+   "frog_leg": 3,
+   "troll_blood": 1
+  },
+  "gold": 40,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "potion_sp_x",
+  "qty": 3,
+  "in": {
+   "werewolf_claw": 1,
+   "troll_blood": 1,
+   "unicorn_horn": 1,
+   "spirit_salt": 2
+  },
+  "gold": 100,
+  "level": 14,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "studded_leggings",
+  "qty": 1,
+  "in": {
+   "beast_hide": 2,
+   "steel_ingot": 1
+  },
+  "gold": 100,
+  "level": 4,
+  "tier": 1
+ },
+ {
+  "station": "blacksmith",
+  "out": "scale_chausses",
+  "qty": 1,
+  "in": {
+   "turtle_shell": 1,
+   "steel_ingot": 2,
+   "flux_stone": 1
+  },
+  "gold": 400,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "dragon_cuisses",
+  "qty": 1,
+  "in": {
+   "dragon_scale": 4,
+   "adamantite_ingot": 3,
+   "starmetal_shard": 1,
+   "tempering_oil": 2
+  },
+  "gold": 9000,
+  "level": 25,
+  "tier": 4
+ },
+ {
+  "station": "blacksmith",
+  "out": "abyssal_cuisses",
+  "qty": 1,
+  "in": {
+   "demon_horn": 3,
+   "black_dragon_scale": 3,
+   "adamantite_ingot": 4,
+   "starmetal_shard": 2,
+   "tempering_oil": 2
+  },
+  "gold": 15000,
+  "level": 28,
+  "tier": 4
+ },
+ {
+  "station": "magic",
+  "out": "frostweave_skirt",
+  "qty": 1,
+  "in": {
+   "frost_crystal": 4,
+   "dark_elf_silk": 2,
+   "spirit_salt": 2
+  },
+  "gold": 1000,
+  "level": 15,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "grilled_fish",
+  "qty": 1,
+  "in": {
+   "raw_fish": 2
+  },
+  "gold": 5,
+  "level": 1,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "elixir_strength",
+  "qty": 1,
+  "in": {
+   "troll_blood": 1,
+   "orc_tusk": 3
+  },
+  "gold": 80,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "elixir_ironskin",
+  "qty": 1,
+  "in": {
+   "turtle_shell": 1,
+   "golem_core": 1,
+   "spirit_salt": 1
+  },
+  "gold": 80,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "elixir_swiftness",
+  "qty": 1,
+  "in": {
+   "werewolf_claw": 2,
+   "frog_leg": 3,
+   "spirit_salt": 1
+  },
+  "gold": 80,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "elixir_wisdom",
+  "qty": 1,
+  "in": {
+   "ectoplasm": 2,
+   "mana_blossom": 2
+  },
+  "gold": 80,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "elixir_fortune",
+  "qty": 1,
+  "in": {
+   "monster_gem": 3,
+   "slime_gel": 2
+  },
+  "gold": 120,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "crypt_scroll",
+  "qty": 1,
+  "in": {
+   "bone_dust": 3,
+   "ectoplasm": 1,
+   "spirit_salt": 1
+  },
+  "gold": 60,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "xp_scroll",
+  "qty": 1,
+  "in": {
+   "soul_shard": 1,
+   "ancient_bark": 1,
+   "spirit_salt": 2
+  },
+  "gold": 200,
+  "level": 14,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "ruby_ring",
+  "qty": 1,
+  "in": {
+   "ruby": 1,
+   "mithril_ingot": 1,
+   "spirit_salt": 1
+  },
+  "gold": 300,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "sapphire_ring",
+  "qty": 1,
+  "in": {
+   "sapphire": 1,
+   "mithril_ingot": 1,
+   "spirit_salt": 1
+  },
+  "gold": 300,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "emerald_ring",
+  "qty": 1,
+  "in": {
+   "emerald": 1,
+   "mithril_ingot": 1,
+   "spirit_salt": 1
+  },
+  "gold": 300,
+  "level": 8,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "amethyst_ring",
+  "qty": 1,
+  "in": {
+   "amethyst": 1,
+   "mithril_ingot": 1,
+   "spirit_salt": 2
+  },
+  "gold": 500,
+  "level": 12,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "diamond_ring",
+  "qty": 1,
+  "in": {
+   "diamond": 1,
+   "mithril_ingot": 2,
+   "moonwell_dew": 1
+  },
+  "gold": 900,
+  "level": 16,
+  "tier": 3
+ },
+ {
+  "station": "magic",
+  "out": "ring_of_might",
+  "qty": 1,
+  "in": {
+   "ruby": 2,
+   "demon_horn": 1,
+   "adamantite_ingot": 1,
+   "moonwell_dew": 2
+  },
+  "gold": 2500,
+  "level": 20,
+  "tier": 3
+ },
+ {
+  "station": "magic",
+  "out": "ring_of_archmage",
+  "qty": 1,
+  "in": {
+   "amethyst": 2,
+   "soul_shard": 3,
+   "adamantite_ingot": 1,
+   "starmetal_shard": 1,
+   "moonwell_dew": 2
+  },
+  "gold": 4000,
+  "level": 24,
+  "tier": 4
+ },
+ {
+  "station": "magic",
+  "out": "wolf_fang_necklace",
+  "qty": 1,
+  "in": {
+   "werewolf_claw": 3,
+   "bone_dust": 2
+  },
+  "gold": 200,
+  "level": 6,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "amulet_of_vigor",
+  "qty": 1,
+  "in": {
+   "ruby": 1,
+   "troll_blood": 2,
+   "spirit_salt": 1
+  },
+  "gold": 400,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "amulet_of_wisdom",
+  "qty": 1,
+  "in": {
+   "sapphire": 1,
+   "ectoplasm": 3,
+   "spirit_salt": 1
+  },
+  "gold": 400,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "unicorn_pendant",
+  "qty": 1,
+  "in": {
+   "unicorn_horn": 1,
+   "diamond": 1,
+   "moonwell_dew": 1
+  },
+  "gold": 1500,
+  "level": 16,
+  "tier": 3
+ },
+ {
+  "station": "magic",
+  "out": "dragon_heart_amulet",
+  "qty": 1,
+  "in": {
+   "dragon_heart": 1,
+   "diamond": 2,
+   "adamantite_ingot": 1,
+   "starmetal_shard": 1,
+   "moonwell_dew": 2
+  },
+  "gold": 6000,
+  "level": 26,
+  "tier": 4
+ },
+ {
+  "station": "magic",
+  "out": "silk_gloves",
+  "qty": 1,
+  "in": {
+   "dark_elf_silk": 3,
+   "spirit_salt": 2
+  },
+  "gold": 300,
+  "level": 12,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "frostweave_robe",
+  "qty": 1,
+  "in": {
+   "frost_crystal": 6,
+   "dark_elf_silk": 4,
+   "spirit_salt": 2
+  },
+  "gold": 1500,
+  "level": 15,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "arcane_staff",
+  "qty": 1,
+  "in": {
+   "mana_crystal": 4,
+   "ancient_bark": 2,
+   "spirit_salt": 2
+  },
+  "gold": 1200,
+  "level": 14,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "lich_staff",
+  "qty": 1,
+  "in": {
+   "soul_shard": 5,
+   "ancient_bark": 2,
+   "amethyst": 1,
+   "moonwell_dew": 2
+  },
+  "gold": 4000,
+  "level": 20,
+  "tier": 3
+ },
+ {
+  "station": "blacksmith",
+  "out": "upgrade_stone",
+  "qty": 1,
+  "in": {
+   "forge_dust": 12,
+   "steel_ingot": 1
+  },
+  "gold": 50,
+  "level": 1,
+  "tier": 1
+ },
+ {
+  "station": "blacksmith",
+  "out": "reforge_orb",
+  "qty": 1,
+  "in": {
+   "forge_dust": 20,
+   "essence_uncommon": 2
+  },
+  "gold": 200,
+  "level": 5,
+  "tier": 1
+ },
+ {
+  "station": "blacksmith",
+  "out": "ascension_orb",
+  "qty": 1,
+  "in": {
+   "forge_dust": 30,
+   "essence_rare": 2,
+   "essence_uncommon": 3,
+   "flux_stone": 1
+  },
+  "gold": 800,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "blessed_stone",
+  "qty": 1,
+  "in": {
+   "upgrade_stone": 3,
+   "essence_epic": 1,
+   "diamond": 1,
+   "flux_stone": 2
+  },
+  "gold": 2000,
+  "level": 15,
+  "tier": 2
+ },
+ {
+  "station": "blacksmith",
+  "out": "radiant_orb",
+  "qty": 1,
+  "in": {
+   "essence_legendary": 1,
+   "essence_epic": 2,
+   "dragon_scale": 1,
+   "tempering_oil": 2
+  },
+  "gold": 5000,
+  "level": 20,
+  "tier": 3
+ },
+ {
+  "station": "magic",
+  "out": "smith_luck_scroll",
+  "qty": 1,
+  "in": {
+   "forge_dust": 15,
+   "monster_gem": 1,
+   "essence_uncommon": 1
+  },
+  "gold": 150,
+  "level": 5,
+  "tier": 1
+ },
+ {
+  "station": "magic",
+  "out": "prismatic_shard",
+  "qty": 1,
+  "in": {
+   "mystic_shard": 12
+  },
+  "gold": 500,
+  "level": 12
+ },
+ {
+  "station": "magic",
+  "out": "essence_rare",
+  "qty": 1,
+  "in": {
+   "essence_uncommon": 3
+  },
+  "gold": 50,
+  "level": 4
+ },
+ {
+  "station": "magic",
+  "out": "essence_epic",
+  "qty": 1,
+  "in": {
+   "essence_rare": 3
+  },
+  "gold": 200,
+  "level": 10
+ },
+ {
+  "station": "magic",
+  "out": "essence_legendary",
+  "qty": 1,
+  "in": {
+   "essence_epic": 3
+  },
+  "gold": 1000,
+  "level": 16
+ },
+ {
+  "station": "magic",
+  "out": "rune_might",
+  "qty": 1,
+  "in": {
+   "ruby": 1,
+   "forge_dust": 10,
+   "essence_rare": 1,
+   "spirit_salt": 1
+  },
+  "gold": 500,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "rune_agility",
+  "qty": 1,
+  "in": {
+   "emerald": 1,
+   "forge_dust": 10,
+   "essence_rare": 1,
+   "spirit_salt": 1
+  },
+  "gold": 500,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "rune_sorcery",
+  "qty": 1,
+  "in": {
+   "sapphire": 1,
+   "forge_dust": 10,
+   "essence_rare": 1,
+   "spirit_salt": 1
+  },
+  "gold": 500,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "rune_intellect",
+  "qty": 1,
+  "in": {
+   "amethyst": 1,
+   "forge_dust": 10,
+   "essence_rare": 1,
+   "spirit_salt": 1
+  },
+  "gold": 500,
+  "level": 10,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "rune_vigor",
+  "qty": 1,
+  "in": {
+   "amethyst": 1,
+   "forge_dust": 10,
+   "essence_rare": 1,
+   "spirit_salt": 2
+  },
+  "gold": 600,
+  "level": 12,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "rune_warding",
+  "qty": 1,
+  "in": {
+   "golem_core": 2,
+   "forge_dust": 10,
+   "essence_rare": 1,
+   "spirit_salt": 2
+  },
+  "gold": 600,
+  "level": 12,
+  "tier": 2
+ },
+ {
+  "station": "magic",
+  "out": "rune_precision",
+  "qty": 1,
+  "in": {
+   "diamond": 1,
+   "forge_dust": 15,
+   "essence_epic": 1,
+   "moonwell_dew": 1
+  },
+  "gold": 1200,
+  "level": 16,
+  "tier": 3
+ },
+ {
+  "station": "magic",
+  "out": "archmage_staff",
+  "qty": 1,
+  "in": {
+   "soul_shard": 8,
+   "dragon_heart": 1,
+   "amethyst": 2,
+   "adamantite_ingot": 2,
+   "starmetal_shard": 1,
+   "moonwell_dew": 2
+  },
+  "gold": 10000,
+  "level": 26,
+  "tier": 4
+ },
+ {
+  "station": "magic",
+  "out": "tempering_oil",
+  "qty": 2,
+  "in": {
+   "troll_blood": 1,
+   "flux_stone": 2,
+   "sulfur_bloom": 1
+  },
+  "gold": 120,
+  "level": 12
+ }
+]

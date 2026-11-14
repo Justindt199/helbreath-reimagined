@@ -559,6 +559,13 @@ public:
 	void DrawDialogBox_GaugePanel();//29
 	void DrawDialogBox_IconPanel();//30
 	bool IsLowHp() const;			// under 25% HP and alive (UI\BottomBar.cpp)
+	// VALORIA gear bonuses (UI\ValoriaGear.cpp); same order as contents\valoria_gear.txt
+	enum { GEAR_STR, GEAR_DEX, GEAR_VIT, GEAR_INT, GEAR_MAG, GEAR_HP, GEAR_MP, GEAR_DEF, GEAR_CRIT, GEAR_COUNT };
+	int GearBonus(int iKind) const;		// sum over the equipped items
+	int GearStatBonus(int iStat) const;	// for a STAT_ index
+	int MaxHP() const;
+	int MaxMP() const;
+	int MaxSP() const;
 	void DrawLowHpGlow();			// red glow round the screen edges while IsLowHp
 	void DrawDialogBox_SellList();//31
 	void DrawDialogBox_Party();//32

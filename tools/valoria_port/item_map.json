@@ -1,0 +1,650 @@
+{
+ "dagger": [
+  "Dagger"
+ ],
+ "short_sword": [
+  "ShortSword"
+ ],
+ "long_sword": [
+  "LongSword"
+ ],
+ "broadsword": [
+  "BroadSword"
+ ],
+ "great_sword": [
+  "GreatSword"
+ ],
+ "knight_blade": [
+  "KnightBlade"
+ ],
+ "dragonslayer": [
+  "Dragonslayer"
+ ],
+ "initiate_blade": [
+  "InitiatesBlade"
+ ],
+ "wyrmfang": [
+  "Wyrmfang"
+ ],
+ "hellbrand": [
+  "Hellbrand"
+ ],
+ "nightfall": [
+  "Nightfall"
+ ],
+ "aetherion": [
+  "Aetherion"
+ ],
+ "hand_axe": [
+  "HandAxe"
+ ],
+ "battle_axe": [
+  "BattleAxe"
+ ],
+ "war_axe": [
+  "WarAxe"
+ ],
+ "executioners_axe": [
+  "ExecutionersAxe"
+ ],
+ "abyssal_cleaver": [
+  "AbyssalCleaver"
+ ],
+ "club": [
+  "Club"
+ ],
+ "mace": [
+  "Mace"
+ ],
+ "morning_star": [
+  "MorningStar"
+ ],
+ "war_hammer": [
+  "WarHammer"
+ ],
+ "titan_maul": [
+  "TitanMaul"
+ ],
+ "oak_staff": [
+  "OakStaff"
+ ],
+ "wizard_staff": [
+  "WizardStaff"
+ ],
+ "arcane_staff": [
+  "ArcaneStaff"
+ ],
+ "lich_staff": [
+  "LichStaff"
+ ],
+ "archmage_staff": [
+  "ArchmageStaff"
+ ],
+ "cloth_tunic": [
+  "ClothTunic(M)",
+  "ClothTunic(W)"
+ ],
+ "leather_armor": [
+  "LeatherArmor(M)",
+  "LeatherArmor(W)"
+ ],
+ "studded_leather": [
+  "StuddedLeather(M)",
+  "StuddedLeather(W)"
+ ],
+ "chain_mail": [
+  "ChainMail(M)",
+  "ChainMail(W)"
+ ],
+ "hauberk": [
+  "Hauberk(M)",
+  "Hauberk(W)"
+ ],
+ "scale_mail": [
+  "ScaleMail(M)",
+  "ScaleMail(W)"
+ ],
+ "plate_mail": [
+  "PlateMail(M)",
+  "PlateMail(W)"
+ ],
+ "knight_plate": [
+  "KnightPlate(M)",
+  "KnightPlate(W)"
+ ],
+ "dragon_plate": [
+  "DragonPlate(M)",
+  "DragonPlate(W)"
+ ],
+ "abyssal_plate": [
+  "AbyssalPlate(M)",
+  "AbyssalPlate(W)"
+ ],
+ "apprentice_robe": [
+  "ApprenticeRobe(M)",
+  "ApprenticeRobe(W)"
+ ],
+ "mage_robe": [
+  "MageRobe(M)",
+  "MageRobe(W)"
+ ],
+ "frostweave_robe": [
+  "FrostweaveRobe(M)",
+  "FrostweaveRobe(W)"
+ ],
+ "archmage_robe": [
+  "ArchmageRobe(M)",
+  "ArchmageRobe(W)"
+ ],
+ "wooden_shield": [
+  "WoodenShield"
+ ],
+ "buckler": [
+  "Buckler"
+ ],
+ "kite_shield": [
+  "KiteShield"
+ ],
+ "tower_shield": [
+  "TowerShield"
+ ],
+ "dragon_shield": [
+  "DragonShield"
+ ],
+ "leather_cap": [
+  "LeatherCap(M)",
+  "LeatherCap(W)"
+ ],
+ "iron_helm": [
+  "IronHelm(M)",
+  "IronHelm(W)"
+ ],
+ "wizard_hat": [
+  "WizardHat(M)",
+  "WizardHat(W)"
+ ],
+ "great_helm": [
+  "GreatHelm(M)",
+  "GreatHelm(W)"
+ ],
+ "horned_helm": [
+  "HornedHelm(M)",
+  "HornedHelm(W)"
+ ],
+ "dragon_helm": [
+  "DragonHelm(M)",
+  "DragonHelm(W)"
+ ],
+ "leather_gloves": [
+  "LeatherGloves(M)",
+  "LeatherGloves(W)"
+ ],
+ "chain_gauntlets": [
+  "ChainGauntlets(M)",
+  "ChainGauntlets(W)"
+ ],
+ "silk_gloves": [
+  "SilkGloves(M)",
+  "SilkGloves(W)"
+ ],
+ "plate_gauntlets": [
+  "PlateGauntlets(M)",
+  "PlateGauntlets(W)"
+ ],
+ "dragon_gauntlets": [
+  "DragonGauntlets(M)",
+  "DragonGauntlets(W)"
+ ],
+ "leather_boots": [
+  "LeatherBoots"
+ ],
+ "iron_greaves": [
+  "IronGreaves"
+ ],
+ "plate_greaves": [
+  "PlateGreaves"
+ ],
+ "wind_boots": [
+  "WindBoots"
+ ],
+ "dragon_greaves": [
+  "DragonGreaves"
+ ],
+ "copper_ring": [
+  "CopperRing"
+ ],
+ "silver_ring": [
+  "SilverRing"
+ ],
+ "ruby_ring": [
+  "RubyRing"
+ ],
+ "sapphire_ring": [
+  "SapphireRing"
+ ],
+ "emerald_ring": [
+  "EmeraldRing"
+ ],
+ "amethyst_ring": [
+  "AmethystRing"
+ ],
+ "diamond_ring": [
+  "DiamondRing"
+ ],
+ "ring_of_might": [
+  "RingOfMight"
+ ],
+ "ring_of_archmage": [
+  "RingOfTheArchmage"
+ ],
+ "abaddons_signet": [
+  "AbaddonsSignet"
+ ],
+ "bone_charm": [
+  "BoneCharm"
+ ],
+ "wolf_fang_necklace": [
+  "WolfFangNecklace"
+ ],
+ "amulet_of_vigor": [
+  "AmuletOfVigor"
+ ],
+ "amulet_of_wisdom": [
+  "AmuletOfWisdom"
+ ],
+ "unicorn_pendant": [
+  "UnicornPendant"
+ ],
+ "dragon_heart_amulet": [
+  "DragonHeartAmulet"
+ ],
+ "cloth_leggings": [
+  "ClothLeggings(M)",
+  "ClothLeggings(W)"
+ ],
+ "leather_leggings": [
+  "LeatherLeggings(M)",
+  "LeatherLeggings(W)"
+ ],
+ "studded_leggings": [
+  "StuddedLeggings(M)",
+  "StuddedLeggings(W)"
+ ],
+ "chain_chausses": [
+  "ChainChausses(M)",
+  "ChainChausses(W)"
+ ],
+ "scale_chausses": [
+  "ScaleChausses(M)",
+  "ScaleChausses(W)"
+ ],
+ "plate_cuisses": [
+  "PlateCuisses(M)",
+  "PlateCuisses(W)"
+ ],
+ "knight_cuisses": [
+  "KnightCuisses(M)",
+  "KnightCuisses(W)"
+ ],
+ "dragon_cuisses": [
+  "DragonCuisses(M)",
+  "DragonCuisses(W)"
+ ],
+ "abyssal_cuisses": [
+  "AbyssalCuisses(M)",
+  "AbyssalCuisses(W)"
+ ],
+ "apprentice_skirt": [
+  "ApprenRobeBottoms(M)",
+  "ApprenRobeBottoms(W)"
+ ],
+ "mage_skirt": [
+  "MageRobeBottoms(M)",
+  "MageRobeBottoms(W)"
+ ],
+ "frostweave_skirt": [
+  "FrostwRobeBottoms(M)",
+  "FrostwRobeBottoms(W)"
+ ],
+ "archmage_skirt": [
+  "ArchmaRobeBottoms(M)",
+  "ArchmaRobeBottoms(W)"
+ ],
+ "potion_hp_s": [
+  "SmallHealthPotion"
+ ],
+ "potion_hp": [
+  "HealthPotion"
+ ],
+ "potion_hp_l": [
+  "GreaterHealthPotion"
+ ],
+ "potion_hp_x": [
+  "SuperiorHealthPotion"
+ ],
+ "potion_mp_s": [
+  "SmallManaPotion"
+ ],
+ "potion_mp": [
+  "ManaPotion"
+ ],
+ "potion_mp_l": [
+  "GreaterManaPotion"
+ ],
+ "potion_mp_x": [
+  "SuperiorManaPotion"
+ ],
+ "potion_sp_s": [
+  "SmallStaminaPotion"
+ ],
+ "potion_sp": [
+  "StaminaPotion"
+ ],
+ "potion_sp_l": [
+  "GreaterStaminaPotion"
+ ],
+ "potion_sp_x": [
+  "SuperioStaminaPotion"
+ ],
+ "bread": [
+  "Bread"
+ ],
+ "roast_meat": [
+  "RoastMeat"
+ ],
+ "grilled_fish": [
+  "GrilledFish"
+ ],
+ "honey_cake": [
+  "HoneyCake"
+ ],
+ "recall_scroll": [
+  "RecallScroll"
+ ],
+ "forge_dust": [
+  "ForgeDust"
+ ],
+ "essence_uncommon": [
+  "VerdantEssence"
+ ],
+ "essence_rare": [
+  "AzureEssence"
+ ],
+ "essence_epic": [
+  "VioletEssence"
+ ],
+ "essence_legendary": [
+  "RadiantEssence"
+ ],
+ "mystic_shard": [
+  "MysticShard"
+ ],
+ "prismatic_shard": [
+  "PrismaticShard"
+ ],
+ "iron_ore": [
+  "IronOre"
+ ],
+ "mithril_ore": [
+  "MithrilOre"
+ ],
+ "adamantite_ore": [
+  "AdamantiteOre"
+ ],
+ "steel_ingot": [
+  "SteelIngot"
+ ],
+ "mithril_ingot": [
+  "MithrilIngot"
+ ],
+ "adamantite_ingot": [
+  "AdamantiteIngot"
+ ],
+ "healing_herb": [
+  "HealingHerb"
+ ],
+ "mana_blossom": [
+  "ManaBlossom"
+ ],
+ "slime_gel": [
+  "SlimeGel"
+ ],
+ "soft_fur": [
+  "SoftFur"
+ ],
+ "raw_meat": [
+  "RawMeat"
+ ],
+ "raw_fish": [
+  "RawFish"
+ ],
+ "chitin": [
+  "ChitinPlate"
+ ],
+ "frog_leg": [
+  "FrogLeg"
+ ],
+ "orc_tusk": [
+  "OrcTusk"
+ ],
+ "scorpion_stinger": [
+  "ScorpionStinger"
+ ],
+ "bone_dust": [
+  "BoneDust"
+ ],
+ "ectoplasm": [
+  "Ectoplasm"
+ ],
+ "golem_core": [
+  "GolemCore"
+ ],
+ "beast_hide": [
+  "BeastHide"
+ ],
+ "wolf_pelt": [
+  "WolfPelt"
+ ],
+ "troll_blood": [
+  "TrollBlood"
+ ],
+ "ogre_hide": [
+  "OgreHide"
+ ],
+ "cyclops_eye": [
+  "CyclopsEye"
+ ],
+ "werewolf_claw": [
+  "WerewolfClaw"
+ ],
+ "hellfire_ember": [
+  "HellfireEmber"
+ ],
+ "beholder_eye": [
+  "BeholderEye"
+ ],
+ "dark_elf_silk": [
+  "DarkElfSilk"
+ ],
+ "minotaur_horn": [
+  "MinotaurHorn"
+ ],
+ "unicorn_horn": [
+  "UnicornHorn"
+ ],
+ "frost_crystal": [
+  "FrostCrystal"
+ ],
+ "turtle_shell": [
+  "TurtleShell"
+ ],
+ "ancient_bark": [
+  "AncientBark"
+ ],
+ "soul_shard": [
+  "SoulShard"
+ ],
+ "demon_horn": [
+  "DemonHorn"
+ ],
+ "mana_crystal": [
+  "ManaCrystal"
+ ],
+ "war_scrap": [
+  "WarScrap"
+ ],
+ "elvine_insignia": [
+  "ElvineInsignia"
+ ],
+ "dragon_scale": [
+  "DragonScale"
+ ],
+ "dragon_fang": [
+  "DragonFang"
+ ],
+ "dragon_heart": [
+  "DragonHeart"
+ ],
+ "hellclaw_pincer": [
+  "HellclawPincer"
+ ],
+ "tigerworm_hide": [
+  "TigerwormHide"
+ ],
+ "infernal_core": [
+  "InfernalCore"
+ ],
+ "abaddon_heart": [
+  "HeartOfAbaddon"
+ ],
+ "black_dragon_scale": [
+  "BlackDragonScale"
+ ],
+ "ruby": [
+  "Ruby"
+ ],
+ "sapphire": [
+  "Sapphire"
+ ],
+ "emerald": [
+  "Emerald"
+ ],
+ "amethyst": [
+  "Amethyst"
+ ],
+ "warlord_sigil": [
+  "WarlordsSigil"
+ ],
+ "diamond": [
+  "Diamond"
+ ],
+ "monster_gem": [
+  "MonsterGem"
+ ],
+ "flux_stone": [
+  "FluxStone"
+ ],
+ "spirit_salt": [
+  "SpiritSalt"
+ ],
+ "sulfur_bloom": [
+  "SulfurBloom"
+ ],
+ "tempering_oil": [
+  "TemperingOil"
+ ],
+ "moonwell_dew": [
+  "MoonwellDew"
+ ],
+ "starmetal_shard": [
+  "StarmetalShard"
+ ],
+ "wyrmscale_hauberk": [
+  "WyrmscaleHauberk(M)",
+  "WyrmscaleHauberk(W)"
+ ],
+ "ridgebreaker_warplate": [
+  "RidgebreaWarplate(M)",
+  "RidgebreaWarplate(W)"
+ ],
+ "cinderplate": [
+  "BalrogsCinderplat(M)",
+  "BalrogsCinderplat(W)"
+ ],
+ "shroud_of_the_bonecaller": [
+  "ShroudBonecaller(M)",
+  "ShroudBonecaller(W)"
+ ],
+ "tigerworm_leggings": [
+  "TigerwHideLegging(M)",
+  "TigerwHideLegging(W)"
+ ],
+ "abyss_walker_cuisses": [
+  "CuisseAbyssWalker(M)",
+  "CuisseAbyssWalker(W)"
+ ],
+ "frostwyrm_crown": [
+  "FrostwyrmCrown(M)",
+  "FrostwyrmCrown(W)"
+ ],
+ "hellclaw_grips": [
+  "HellclawGrips(M)",
+  "HellclawGrips(W)"
+ ],
+ "emberstride_greaves": [
+  "EmberstrideGreaves"
+ ],
+ "aegis_of_the_black_wing": [
+  "AegisOfTheBlackWing"
+ ],
+ "bulwark_of_the_abyss": [
+  "BulwarkOfTheAbyss"
+ ],
+ "frostwall": [
+  "Frostwall"
+ ],
+ "bone_ward": [
+  "GorvashsBoneWard"
+ ],
+ "coil_of_the_tigerworm": [
+  "CoilOfTheTigerworm"
+ ],
+ "hellfire_loop": [
+  "HellfireLoop"
+ ],
+ "band_of_the_wyrm_king": [
+  "BandOfTheWyrmKing"
+ ],
+ "heart_of_the_mountain": [
+  "HeartOfTheMountain"
+ ],
+ "phylactery_of_gorvash": [
+  "PhylacteryOfGorvash"
+ ],
+ "ember_of_the_fire_wyvern": [
+  "EmberOfTheFireWyvern"
+ ],
+ "abyssal_scepter": [
+  "AbyssalScepter"
+ ],
+ "deathknight_helm": [
+  "DeathknightsHelm(M)",
+  "DeathknightsHelm(W)"
+ ],
+ "wyrmfire_wraps": [
+  "WyrmfireWraps(M)",
+  "WyrmfireWraps(W)"
+ ],
+ "rimefang_treads": [
+  "RimefangTreads"
+ ],
+ "sandspire_seal": [
+  "SandspireSeal"
+ ],
+ "wormglass_pendant": [
+  "WormglassPendant"
+ ],
+ "runestone_of_the_ridge": [
+  "RunestoneOfTheRidge"
+ ]
+}

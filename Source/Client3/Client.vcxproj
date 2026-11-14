@@ -266,6 +266,7 @@
     <ClCompile Include="UI\RebirthPanel.cpp" />
     <ClCompile Include="UI\NpcQueryPanel.cpp" />
     <ClCompile Include="UI\BottomBar.cpp" />
+    <ClCompile Include="UI\ValoriaGear.cpp" />
     <ClCompile Include="UI\ClockPing.cpp" />
     <ClCompile Include="Engine\LevelUpBadges.cpp" />
     <ClCompile Include="Net\Msg.cpp" />

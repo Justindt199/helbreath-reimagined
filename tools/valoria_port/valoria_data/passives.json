@@ -1,0 +1,4963 @@
+{
+ "nodes": {
+  "origin": {
+   "name": "The Wanderer's Heart",
+   "kind": "root",
+   "branch": "",
+   "pos": [
+    0,
+    0
+   ],
+   "links": [
+    "might_root",
+    "finesse_root",
+    "arcana_root"
+   ],
+   "mods": {}
+  },
+  "might_root": {
+   "name": "Might",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -130,
+    -75
+   ],
+   "links": [
+    "origin",
+    "might_Brute_2",
+    "might_Bastion_2",
+    "might_Warlord_2"
+   ],
+   "mods": {
+    "str": 2,
+    "vit": 1
+   }
+  },
+  "might_Brute_2": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -211,
+    25
+   ],
+   "links": [
+    "might_root",
+    "might_Brute_3"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Brute_3": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -272,
+    32
+   ],
+   "links": [
+    "might_Brute_2",
+    "might_Brute_3_s",
+    "might_Brute_4"
+   ],
+   "mods": {
+    "dmg_pct": 1
+   }
+  },
+  "might_Brute_3_s": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -304,
+    -23
+   ],
+   "links": [
+    "might_Brute_3"
+   ],
+   "mods": {
+    "str": 2
+   }
+  },
+  "might_Brute_4": {
+   "name": "Brawn",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -334,
+    39
+   ],
+   "links": [
+    "might_Brute_3",
+    "might_Brutea_5",
+    "might_Bruteb_5"
+   ],
+   "mods": {
+    "str": 4,
+    "hp": 15
+   }
+  },
+  "might_Brutea_5": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -383,
+    109
+   ],
+   "links": [
+    "might_Brute_4",
+    "might_Brutea_6"
+   ],
+   "mods": {
+    "dmg_pct": 1
+   }
+  },
+  "might_Brutea_6": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -443,
+    126
+   ],
+   "links": [
+    "might_Brutea_5",
+    "might_Brutea_6_s",
+    "might_Brutea_7"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Brutea_6_s": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -485,
+    79
+   ],
+   "links": [
+    "might_Brutea_6"
+   ],
+   "mods": {
+    "crit_dmg": 3
+   }
+  },
+  "might_Brutea_7": {
+   "name": "Brute Force",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -502,
+    142
+   ],
+   "links": [
+    "might_Brutea_6",
+    "might_Brutea_8"
+   ],
+   "mods": {
+    "str": 4,
+    "dmg_pct": 2.5
+   }
+  },
+  "might_Brutea_8": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -562,
+    159
+   ],
+   "links": [
+    "might_Brutea_7",
+    "might_Brutea_8_s",
+    "might_Brutea_9"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Brutea_8_s": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -607,
+    99
+   ],
+   "links": [
+    "might_Brutea_8"
+   ],
+   "mods": {
+    "dmg_pct": 1.5
+   }
+  },
+  "might_Brutea_9": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -621,
+    176
+   ],
+   "links": [
+    "might_Brutea_8",
+    "might_Brutea_10",
+    "bridge_arcana_might_0"
+   ],
+   "mods": {
+    "dmg_pct": 1
+   }
+  },
+  "might_Brutea_10": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -681,
+    193
+   ],
+   "links": [
+    "might_Brutea_9",
+    "might_Brutea_10_s",
+    "might_Brutea_11",
+    "might_Bruteb_10"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Brutea_10_s": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -729,
+    119
+   ],
+   "links": [
+    "might_Brutea_10"
+   ],
+   "mods": {
+    "crit_dmg": 3
+   }
+  },
+  "might_Brutea_11": {
+   "name": "Crushing Blows",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -741,
+    210
+   ],
+   "links": [
+    "might_Brutea_10",
+    "might_Brutea_12",
+    "bridge_arcana_might_1"
+   ],
+   "mods": {
+    "dmg_pct": 4,
+    "crit_dmg": 5
+   }
+  },
+  "might_Brutea_12": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -800,
+    227
+   ],
+   "links": [
+    "might_Brutea_11",
+    "might_Brutea_12_s",
+    "might_Brutea_13"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Brutea_12_s": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -852,
+    138
+   ],
+   "links": [
+    "might_Brutea_12"
+   ],
+   "mods": {
+    "dmg_pct": 1.5
+   }
+  },
+  "might_Brutea_13": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -860,
+    244
+   ],
+   "links": [
+    "might_Brutea_12",
+    "might_Brutea_14",
+    "bridge_arcana_might_2"
+   ],
+   "mods": {
+    "dmg_pct": 1
+   }
+  },
+  "might_Brutea_14": {
+   "name": "Juggernaut",
+   "kind": "keystone",
+   "branch": "might",
+   "pos": [
+    -933,
+    265
+   ],
+   "links": [
+    "might_Brutea_13"
+   ],
+   "mods": {
+    "dmg_red": 5,
+    "hp_pct": 6,
+    "speed": -5
+   }
+  },
+  "might_Bruteb_5": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -398,
+    -17
+   ],
+   "links": [
+    "might_Brute_4",
+    "might_Bruteb_6"
+   ],
+   "mods": {
+    "boss_dmg": 1.5
+   }
+  },
+  "might_Bruteb_6": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -460,
+    -20
+   ],
+   "links": [
+    "might_Bruteb_5",
+    "might_Bruteb_6_s",
+    "might_Bruteb_7"
+   ],
+   "mods": {
+    "dmg_pct": 1
+   }
+  },
+  "might_Bruteb_6_s": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -485,
+    -78
+   ],
+   "links": [
+    "might_Bruteb_6"
+   ],
+   "mods": {
+    "hp": 11
+   }
+  },
+  "might_Bruteb_7": {
+   "name": "Giant Killer",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -522,
+    -23
+   ],
+   "links": [
+    "might_Bruteb_6",
+    "might_Bruteb_8"
+   ],
+   "mods": {
+    "boss_dmg": 5,
+    "str": 2.5
+   }
+  },
+  "might_Bruteb_8": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -583,
+    -25
+   ],
+   "links": [
+    "might_Bruteb_7",
+    "might_Bruteb_8_s",
+    "might_Bruteb_9"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Bruteb_8_s": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -607,
+    -97
+   ],
+   "links": [
+    "might_Bruteb_8"
+   ],
+   "mods": {
+    "boss_dmg": 2
+   }
+  },
+  "might_Bruteb_9": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -645,
+    -28
+   ],
+   "links": [
+    "might_Bruteb_8",
+    "might_Bruteb_10"
+   ],
+   "mods": {
+    "boss_dmg": 1.5
+   }
+  },
+  "might_Bruteb_10": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -707,
+    -31
+   ],
+   "links": [
+    "might_Bruteb_9",
+    "might_Bruteb_10_s",
+    "might_Bruteb_11",
+    "might_Brutea_10"
+   ],
+   "mods": {
+    "dmg_pct": 1
+   }
+  },
+  "might_Bruteb_10_s": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -730,
+    -117
+   ],
+   "links": [
+    "might_Bruteb_10"
+   ],
+   "mods": {
+    "hp": 11
+   }
+  },
+  "might_Bruteb_11": {
+   "name": "Executioner",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -769,
+    -34
+   ],
+   "links": [
+    "might_Bruteb_10",
+    "might_Bruteb_12"
+   ],
+   "mods": {
+    "dmg_pct": 5,
+    "boss_dmg": 3
+   }
+  },
+  "might_Bruteb_12": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -831,
+    -36
+   ],
+   "links": [
+    "might_Bruteb_11",
+    "might_Bruteb_12_s",
+    "might_Bruteb_13",
+    "might_Bastiona_12"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Bruteb_12_s": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -852,
+    -136
+   ],
+   "links": [
+    "might_Bruteb_12"
+   ],
+   "mods": {
+    "boss_dmg": 2
+   }
+  },
+  "might_Bruteb_13": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -893,
+    -39
+   ],
+   "links": [
+    "might_Bruteb_12",
+    "might_Bruteb_14"
+   ],
+   "mods": {
+    "boss_dmg": 1.5
+   }
+  },
+  "might_Bruteb_14": {
+   "name": "Titan's Grip",
+   "kind": "keystone",
+   "branch": "might",
+   "pos": [
+    -969,
+    -42
+   ],
+   "links": [
+    "might_Bruteb_13"
+   ],
+   "mods": {
+    "dmg_pct": 10,
+    "atk_spd": -5
+   }
+  },
+  "might_Bastion_2": {
+   "name": "Hardened Skin",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -184,
+    -106
+   ],
+   "links": [
+    "might_root",
+    "might_Bastion_3"
+   ],
+   "mods": {
+    "def": 1.5
+   }
+  },
+  "might_Bastion_3": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -237,
+    -137
+   ],
+   "links": [
+    "might_Bastion_2",
+    "might_Bastion_3_s",
+    "might_Bastion_4"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Bastion_3_s": {
+   "name": "Hardened Skin",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -230,
+    -200
+   ],
+   "links": [
+    "might_Bastion_3"
+   ],
+   "mods": {
+    "def": 2
+   }
+  },
+  "might_Bastion_4": {
+   "name": "Shieldwall",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -291,
+    -168
+   ],
+   "links": [
+    "might_Bastion_3",
+    "might_Bastiona_5",
+    "might_Bastionb_5"
+   ],
+   "mods": {
+    "def": 5,
+    "vit": 2.5
+   }
+  },
+  "might_Bastiona_5": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -372,
+    -142
+   ],
+   "links": [
+    "might_Bastion_4",
+    "might_Bastiona_6"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Bastiona_6": {
+   "name": "Iron Will",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -430,
+    -164
+   ],
+   "links": [
+    "might_Bastiona_5",
+    "might_Bastiona_6_s",
+    "might_Bastiona_7"
+   ],
+   "mods": {
+    "def_pct": 1
+   }
+  },
+  "might_Bastiona_6_s": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -436,
+    -226
+   ],
+   "links": [
+    "might_Bastiona_6"
+   ],
+   "mods": {
+    "hp": 11
+   }
+  },
+  "might_Bastiona_7": {
+   "name": "Bulwark",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -488,
+    -186
+   ],
+   "links": [
+    "might_Bastiona_6",
+    "might_Bastiona_8"
+   ],
+   "mods": {
+    "def": 5,
+    "hp": 20
+   }
+  },
+  "might_Bastiona_8": {
+   "name": "Hardened Skin",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -546,
+    -208
+   ],
+   "links": [
+    "might_Bastiona_7",
+    "might_Bastiona_8_s",
+    "might_Bastiona_9"
+   ],
+   "mods": {
+    "def": 1.5
+   }
+  },
+  "might_Bastiona_8_s": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -546,
+    -283
+   ],
+   "links": [
+    "might_Bastiona_8"
+   ],
+   "mods": {
+    "vit": 2
+   }
+  },
+  "might_Bastiona_9": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -604,
+    -230
+   ],
+   "links": [
+    "might_Bastiona_8",
+    "might_Bastiona_10"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Bastiona_10": {
+   "name": "Iron Will",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -662,
+    -252
+   ],
+   "links": [
+    "might_Bastiona_9",
+    "might_Bastiona_10_s",
+    "might_Bastiona_11",
+    "might_Bastionb_10"
+   ],
+   "mods": {
+    "def_pct": 1
+   }
+  },
+  "might_Bastiona_10_s": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -656,
+    -340
+   ],
+   "links": [
+    "might_Bastiona_10"
+   ],
+   "mods": {
+    "hp": 11
+   }
+  },
+  "might_Bastiona_11": {
+   "name": "Unbreakable",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -720,
+    -274
+   ],
+   "links": [
+    "might_Bastiona_10",
+    "might_Bastiona_12"
+   ],
+   "mods": {
+    "hp_pct": 3,
+    "def_pct": 3
+   }
+  },
+  "might_Bastiona_12": {
+   "name": "Hardened Skin",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -778,
+    -296
+   ],
+   "links": [
+    "might_Bastiona_11",
+    "might_Bastiona_12_s",
+    "might_Bastiona_13",
+    "might_Bruteb_12"
+   ],
+   "mods": {
+    "def": 1.5
+   }
+  },
+  "might_Bastiona_12_s": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -766,
+    -398
+   ],
+   "links": [
+    "might_Bastiona_12"
+   ],
+   "mods": {
+    "vit": 2
+   }
+  },
+  "might_Bastiona_13": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -836,
+    -318
+   ],
+   "links": [
+    "might_Bastiona_12",
+    "might_Bastiona_14"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Bastiona_14": {
+   "name": "Iron Fortress",
+   "kind": "keystone",
+   "branch": "might",
+   "pos": [
+    -907,
+    -345
+   ],
+   "links": [
+    "might_Bastiona_13"
+   ],
+   "mods": {
+    "def_pct": 12.5,
+    "thorns": 7.5,
+    "atk_spd": -4
+   }
+  },
+  "might_Bastionb_5": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -309,
+    -251
+   ],
+   "links": [
+    "might_Bastion_4",
+    "might_Bastionb_6"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "might_Bastionb_6": {
+   "name": "Constitution",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -357,
+    -291
+   ],
+   "links": [
+    "might_Bastionb_5",
+    "might_Bastionb_6_s",
+    "might_Bastionb_7"
+   ],
+   "mods": {
+    "hp_pct": 1
+   }
+  },
+  "might_Bastionb_6_s": {
+   "name": "Barbs",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -343,
+    -352
+   ],
+   "links": [
+    "might_Bastionb_6"
+   ],
+   "mods": {
+    "thorns": 1.5
+   }
+  },
+  "might_Bastionb_7": {
+   "name": "Troll Blood",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -405,
+    -330
+   ],
+   "links": [
+    "might_Bastionb_6",
+    "might_Bastionb_8"
+   ],
+   "mods": {
+    "regen": 1.25,
+    "vit": 3
+   }
+  },
+  "might_Bastionb_8": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -453,
+    -369
+   ],
+   "links": [
+    "might_Bastionb_7",
+    "might_Bastionb_8_s",
+    "might_Bastionb_9"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Bastionb_8_s": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -429,
+    -441
+   ],
+   "links": [
+    "might_Bastionb_8"
+   ],
+   "mods": {
+    "regen": 0.4
+   }
+  },
+  "might_Bastionb_9": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -501,
+    -408
+   ],
+   "links": [
+    "might_Bastionb_8",
+    "might_Bastionb_10"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "might_Bastionb_10": {
+   "name": "Constitution",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -549,
+    -447
+   ],
+   "links": [
+    "might_Bastionb_9",
+    "might_Bastionb_10_s",
+    "might_Bastionb_11",
+    "might_Bastiona_10"
+   ],
+   "mods": {
+    "hp_pct": 1
+   }
+  },
+  "might_Bastionb_10_s": {
+   "name": "Barbs",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -516,
+    -529
+   ],
+   "links": [
+    "might_Bastionb_10"
+   ],
+   "mods": {
+    "thorns": 1.5
+   }
+  },
+  "might_Bastionb_11": {
+   "name": "Spiked Hide",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -597,
+    -486
+   ],
+   "links": [
+    "might_Bastionb_10",
+    "might_Bastionb_12"
+   ],
+   "mods": {
+    "thorns": 4,
+    "def": 4
+   }
+  },
+  "might_Bastionb_12": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -645,
+    -525
+   ],
+   "links": [
+    "might_Bastionb_11",
+    "might_Bastionb_12_s",
+    "might_Bastionb_13",
+    "might_Warlorda_12"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Bastionb_12_s": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -602,
+    -618
+   ],
+   "links": [
+    "might_Bastionb_12"
+   ],
+   "mods": {
+    "regen": 0.4
+   }
+  },
+  "might_Bastionb_13": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -693,
+    -565
+   ],
+   "links": [
+    "might_Bastionb_12",
+    "might_Bastionb_14"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "might_Bastionb_14": {
+   "name": "Undying",
+   "kind": "keystone",
+   "branch": "might",
+   "pos": [
+    -752,
+    -613
+   ],
+   "links": [
+    "might_Bastionb_13"
+   ],
+   "mods": {
+    "regen": 4,
+    "hp_pct": 7.5,
+    "dmg_pct": -6
+   }
+  },
+  "might_Warlord_2": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -84,
+    -195
+   ],
+   "links": [
+    "might_root",
+    "might_Warlord_3"
+   ],
+   "mods": {
+    "hp": 7.5
+   }
+  },
+  "might_Warlord_3": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -109,
+    -252
+   ],
+   "links": [
+    "might_Warlord_2",
+    "might_Warlord_3_s",
+    "might_Warlord_4"
+   ],
+   "mods": {
+    "str": 1,
+    "vit": 1
+   }
+  },
+  "might_Warlord_3_s": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -65,
+    -298
+   ],
+   "links": [
+    "might_Warlord_3"
+   ],
+   "mods": {
+    "hp": 11
+   }
+  },
+  "might_Warlord_4": {
+   "name": "Battle Cry",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -133,
+    -309
+   ],
+   "links": [
+    "might_Warlord_3",
+    "might_Warlorda_5",
+    "might_Warlordb_5"
+   ],
+   "mods": {
+    "dmg_pct": 3,
+    "sp_pct": 5
+   }
+  },
+  "might_Warlorda_5": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -214,
+    -336
+   ],
+   "links": [
+    "might_Warlord_4",
+    "might_Warlorda_6"
+   ],
+   "mods": {
+    "sp_pct": 2
+   }
+  },
+  "might_Warlorda_6": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -247,
+    -388
+   ],
+   "links": [
+    "might_Warlorda_5",
+    "might_Warlorda_6_s",
+    "might_Warlorda_7"
+   ],
+   "mods": {
+    "hp": 7.5
+   }
+  },
+  "might_Warlorda_6_s": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -214,
+    -442
+   ],
+   "links": [
+    "might_Warlorda_6"
+   ],
+   "mods": {
+    "dmg_pct": 1.5
+   }
+  },
+  "might_Warlorda_7": {
+   "name": "Warlord",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -280,
+    -440
+   ],
+   "links": [
+    "might_Warlorda_6",
+    "might_Warlorda_8"
+   ],
+   "mods": {
+    "str": 5,
+    "dmg_pct": 4,
+    "hp": 15
+   }
+  },
+  "might_Warlorda_8": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -314,
+    -493
+   ],
+   "links": [
+    "might_Warlorda_7",
+    "might_Warlorda_8_s",
+    "might_Warlorda_9"
+   ],
+   "mods": {
+    "str": 1,
+    "vit": 1
+   }
+  },
+  "might_Warlorda_8_s": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -269,
+    -553
+   ],
+   "links": [
+    "might_Warlorda_8"
+   ],
+   "mods": {
+    "sp_pct": 3
+   }
+  },
+  "might_Warlorda_9": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -347,
+    -545
+   ],
+   "links": [
+    "might_Warlorda_8",
+    "might_Warlorda_10"
+   ],
+   "mods": {
+    "sp_pct": 2
+   }
+  },
+  "might_Warlorda_10": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -380,
+    -597
+   ],
+   "links": [
+    "might_Warlorda_9",
+    "might_Warlorda_10_s",
+    "might_Warlorda_11",
+    "might_Warlordb_10"
+   ],
+   "mods": {
+    "hp": 7.5
+   }
+  },
+  "might_Warlorda_10_s": {
+   "name": "Heavy Blows",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -323,
+    -665
+   ],
+   "links": [
+    "might_Warlorda_10"
+   ],
+   "mods": {
+    "dmg_pct": 1.5
+   }
+  },
+  "might_Warlorda_11": {
+   "name": "Second Wind",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -414,
+    -649
+   ],
+   "links": [
+    "might_Warlorda_10",
+    "might_Warlorda_12"
+   ],
+   "mods": {
+    "sp_pct": 10,
+    "regen": 0.75
+   }
+  },
+  "might_Warlorda_12": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -447,
+    -702
+   ],
+   "links": [
+    "might_Warlorda_11",
+    "might_Warlorda_12_s",
+    "might_Warlorda_13",
+    "might_Bastionb_12"
+   ],
+   "mods": {
+    "str": 1,
+    "vit": 1
+   }
+  },
+  "might_Warlorda_12_s": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -377,
+    -776
+   ],
+   "links": [
+    "might_Warlorda_12"
+   ],
+   "mods": {
+    "sp_pct": 3
+   }
+  },
+  "might_Warlorda_13": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -480,
+    -754
+   ],
+   "links": [
+    "might_Warlorda_12",
+    "might_Warlorda_14"
+   ],
+   "mods": {
+    "sp_pct": 2
+   }
+  },
+  "might_Warlorda_14": {
+   "name": "Blood Pact",
+   "kind": "keystone",
+   "branch": "might",
+   "pos": [
+    -521,
+    -818
+   ],
+   "links": [
+    "might_Warlorda_13"
+   ],
+   "mods": {
+    "lifesteal": 2.5,
+    "dmg_pct": 7.5,
+    "regen": -1.5
+   }
+  },
+  "might_Warlordb_5": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -97,
+    -386
+   ],
+   "links": [
+    "might_Warlord_4",
+    "might_Warlordb_6"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Warlordb_6": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -113,
+    -446
+   ],
+   "links": [
+    "might_Warlordb_5",
+    "might_Warlordb_6_s",
+    "might_Warlordb_7"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Warlordb_6_s": {
+   "name": "Stoicism",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -65,
+    -487
+   ],
+   "links": [
+    "might_Warlordb_6"
+   ],
+   "mods": {
+    "dmg_red": 0.4
+   }
+  },
+  "might_Warlordb_7": {
+   "name": "Berserker's Lust",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -128,
+    -506
+   ],
+   "links": [
+    "might_Warlordb_6",
+    "might_Warlordb_8"
+   ],
+   "mods": {
+    "lifesteal": 1,
+    "dmg_pct": 3
+   }
+  },
+  "might_Warlordb_8": {
+   "name": "Bloodthirst",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -143,
+    -566
+   ],
+   "links": [
+    "might_Warlordb_7",
+    "might_Warlordb_8_s",
+    "might_Warlordb_9"
+   ],
+   "mods": {
+    "lifesteal": 0.15
+   }
+  },
+  "might_Warlordb_8_s": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -81,
+    -610
+   ],
+   "links": [
+    "might_Warlordb_8"
+   ],
+   "mods": {
+    "str": 2
+   }
+  },
+  "might_Warlordb_9": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -158,
+    -626
+   ],
+   "links": [
+    "might_Warlordb_8",
+    "might_Warlordb_10",
+    "bridge_might_finesse_0"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Warlordb_10": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -173,
+    -686
+   ],
+   "links": [
+    "might_Warlordb_9",
+    "might_Warlordb_10_s",
+    "might_Warlordb_11",
+    "might_Warlorda_10"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "might_Warlordb_10_s": {
+   "name": "Stoicism",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -97,
+    -733
+   ],
+   "links": [
+    "might_Warlordb_10"
+   ],
+   "mods": {
+    "dmg_red": 0.4
+   }
+  },
+  "might_Warlordb_11": {
+   "name": "Stone Skin",
+   "kind": "notable",
+   "branch": "might",
+   "pos": [
+    -188,
+    -747
+   ],
+   "links": [
+    "might_Warlordb_10",
+    "might_Warlordb_12",
+    "bridge_might_finesse_1"
+   ],
+   "mods": {
+    "dmg_red": 1.5,
+    "def": 3
+   }
+  },
+  "might_Warlordb_12": {
+   "name": "Bloodthirst",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -204,
+    -807
+   ],
+   "links": [
+    "might_Warlordb_11",
+    "might_Warlordb_12_s",
+    "might_Warlordb_13"
+   ],
+   "mods": {
+    "lifesteal": 0.15
+   }
+  },
+  "might_Warlordb_12_s": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -114,
+    -855
+   ],
+   "links": [
+    "might_Warlordb_12"
+   ],
+   "mods": {
+    "str": 2
+   }
+  },
+  "might_Warlordb_13": {
+   "name": "Strength",
+   "kind": "small",
+   "branch": "might",
+   "pos": [
+    -219,
+    -867
+   ],
+   "links": [
+    "might_Warlordb_12",
+    "might_Warlordb_14",
+    "bridge_might_finesse_2"
+   ],
+   "mods": {
+    "str": 1.5
+   }
+  },
+  "might_Warlordb_14": {
+   "name": "Last Stand",
+   "kind": "keystone",
+   "branch": "might",
+   "pos": [
+    -237,
+    -941
+   ],
+   "links": [
+    "might_Warlordb_13"
+   ],
+   "mods": {
+    "dmg_red": 7.5,
+    "speed": -7.5
+   }
+  },
+  "finesse_root": {
+   "name": "Finesse",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    130,
+    -75
+   ],
+   "links": [
+    "origin",
+    "finesse_Blade_2",
+    "finesse_Shadow_2",
+    "finesse_Fortune_2"
+   ],
+   "mods": {
+    "dex": 2,
+    "crit": 0.5
+   }
+  },
+  "finesse_Blade_2": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    84,
+    -195
+   ],
+   "links": [
+    "finesse_root",
+    "finesse_Blade_3"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Blade_3": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    109,
+    -252
+   ],
+   "links": [
+    "finesse_Blade_2",
+    "finesse_Blade_3_s",
+    "finesse_Blade_4"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Blade_3_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    172,
+    -252
+   ],
+   "links": [
+    "finesse_Blade_3"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Blade_4": {
+   "name": "Keen Edge",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    133,
+    -309
+   ],
+   "links": [
+    "finesse_Blade_3",
+    "finesse_Bladea_5",
+    "finesse_Bladeb_5"
+   ],
+   "mods": {
+    "crit": 1.5,
+    "dex": 2.5
+   }
+  },
+  "finesse_Bladea_5": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    97,
+    -386
+   ],
+   "links": [
+    "finesse_Blade_4",
+    "finesse_Bladea_6"
+   ],
+   "mods": {
+    "atk_spd": 1
+   }
+  },
+  "finesse_Bladea_6": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    113,
+    -446
+   ],
+   "links": [
+    "finesse_Bladea_5",
+    "finesse_Bladea_6_s",
+    "finesse_Bladea_7"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Bladea_6_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    174,
+    -459
+   ],
+   "links": [
+    "finesse_Bladea_6"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Bladea_7": {
+   "name": "Swiftness",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    128,
+    -506
+   ],
+   "links": [
+    "finesse_Bladea_6",
+    "finesse_Bladea_8"
+   ],
+   "mods": {
+    "dex": 4,
+    "atk_spd": 2
+   }
+  },
+  "finesse_Bladea_8": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    143,
+    -566
+   ],
+   "links": [
+    "finesse_Bladea_7",
+    "finesse_Bladea_8_s",
+    "finesse_Bladea_9"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Bladea_8_s": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    218,
+    -575
+   ],
+   "links": [
+    "finesse_Bladea_8"
+   ],
+   "mods": {
+    "atk_spd": 1.5
+   }
+  },
+  "finesse_Bladea_9": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    158,
+    -626
+   ],
+   "links": [
+    "finesse_Bladea_8",
+    "finesse_Bladea_10",
+    "bridge_might_finesse_0"
+   ],
+   "mods": {
+    "atk_spd": 1
+   }
+  },
+  "finesse_Bladea_10": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    173,
+    -686
+   ],
+   "links": [
+    "finesse_Bladea_9",
+    "finesse_Bladea_10_s",
+    "finesse_Bladea_11",
+    "finesse_Bladeb_10"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Bladea_10_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    262,
+    -691
+   ],
+   "links": [
+    "finesse_Bladea_10"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Bladea_11": {
+   "name": "Master of Blades",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    188,
+    -747
+   ],
+   "links": [
+    "finesse_Bladea_10",
+    "finesse_Bladea_12",
+    "bridge_might_finesse_1"
+   ],
+   "mods": {
+    "dex": 5,
+    "atk_spd": 3,
+    "crit": 1
+   }
+  },
+  "finesse_Bladea_12": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    204,
+    -807
+   ],
+   "links": [
+    "finesse_Bladea_11",
+    "finesse_Bladea_12_s",
+    "finesse_Bladea_13"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Bladea_12_s": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    306,
+    -807
+   ],
+   "links": [
+    "finesse_Bladea_12"
+   ],
+   "mods": {
+    "atk_spd": 1.5
+   }
+  },
+  "finesse_Bladea_13": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    219,
+    -867
+   ],
+   "links": [
+    "finesse_Bladea_12",
+    "finesse_Bladea_14",
+    "bridge_might_finesse_2"
+   ],
+   "mods": {
+    "atk_spd": 1
+   }
+  },
+  "finesse_Bladea_14": {
+   "name": "Wind Dancer",
+   "kind": "keystone",
+   "branch": "finesse",
+   "pos": [
+    237,
+    -941
+   ],
+   "links": [
+    "finesse_Bladea_13"
+   ],
+   "mods": {
+    "dodge": 5,
+    "speed": 6,
+    "hp_pct": -5
+   }
+  },
+  "finesse_Bladeb_5": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    214,
+    -336
+   ],
+   "links": [
+    "finesse_Blade_4",
+    "finesse_Bladeb_6"
+   ],
+   "mods": {
+    "crit_dmg": 2.5
+   }
+  },
+  "finesse_Bladeb_6": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    247,
+    -388
+   ],
+   "links": [
+    "finesse_Bladeb_5",
+    "finesse_Bladeb_6_s",
+    "finesse_Bladeb_7"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Bladeb_6_s": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    310,
+    -381
+   ],
+   "links": [
+    "finesse_Bladeb_6"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Bladeb_7": {
+   "name": "Deadeye",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    280,
+    -440
+   ],
+   "links": [
+    "finesse_Bladeb_6",
+    "finesse_Bladeb_8"
+   ],
+   "mods": {
+    "crit": 2,
+    "crit_dmg": 6
+   }
+  },
+  "finesse_Bladeb_8": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    314,
+    -493
+   ],
+   "links": [
+    "finesse_Bladeb_7",
+    "finesse_Bladeb_8_s",
+    "finesse_Bladeb_9"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Bladeb_8_s": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    388,
+    -477
+   ],
+   "links": [
+    "finesse_Bladeb_8"
+   ],
+   "mods": {
+    "crit_dmg": 3.5
+   }
+  },
+  "finesse_Bladeb_9": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    347,
+    -545
+   ],
+   "links": [
+    "finesse_Bladeb_8",
+    "finesse_Bladeb_10"
+   ],
+   "mods": {
+    "crit_dmg": 2.5
+   }
+  },
+  "finesse_Bladeb_10": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    380,
+    -597
+   ],
+   "links": [
+    "finesse_Bladeb_9",
+    "finesse_Bladeb_10_s",
+    "finesse_Bladeb_11",
+    "finesse_Bladea_10"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Bladeb_10_s": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    466,
+    -573
+   ],
+   "links": [
+    "finesse_Bladeb_10"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Bladeb_11": {
+   "name": "Assassin",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    414,
+    -649
+   ],
+   "links": [
+    "finesse_Bladeb_10",
+    "finesse_Bladeb_12"
+   ],
+   "mods": {
+    "crit": 2,
+    "crit_dmg": 10
+   }
+  },
+  "finesse_Bladeb_12": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    447,
+    -702
+   ],
+   "links": [
+    "finesse_Bladeb_11",
+    "finesse_Bladeb_12_s",
+    "finesse_Bladeb_13",
+    "finesse_Shadowa_12"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Bladeb_12_s": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    544,
+    -670
+   ],
+   "links": [
+    "finesse_Bladeb_12"
+   ],
+   "mods": {
+    "crit_dmg": 3.5
+   }
+  },
+  "finesse_Bladeb_13": {
+   "name": "Cruelty",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    480,
+    -754
+   ],
+   "links": [
+    "finesse_Bladeb_12",
+    "finesse_Bladeb_14"
+   ],
+   "mods": {
+    "crit_dmg": 2.5
+   }
+  },
+  "finesse_Bladeb_14": {
+   "name": "Executioner's Eye",
+   "kind": "keystone",
+   "branch": "finesse",
+   "pos": [
+    521,
+    -818
+   ],
+   "links": [
+    "finesse_Bladeb_13"
+   ],
+   "mods": {
+    "crit": 5,
+    "crit_dmg": 20,
+    "dmg_pct": -5
+   }
+  },
+  "finesse_Shadow_2": {
+   "name": "Evasion",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    184,
+    -106
+   ],
+   "links": [
+    "finesse_root",
+    "finesse_Shadow_3"
+   ],
+   "mods": {
+    "dodge": 0.5
+   }
+  },
+  "finesse_Shadow_3": {
+   "name": "Fleet Foot",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    237,
+    -137
+   ],
+   "links": [
+    "finesse_Shadow_2",
+    "finesse_Shadow_3_s",
+    "finesse_Shadow_4"
+   ],
+   "mods": {
+    "speed": 1
+   }
+  },
+  "finesse_Shadow_3_s": {
+   "name": "Evasion",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    288,
+    -99
+   ],
+   "links": [
+    "finesse_Shadow_3"
+   ],
+   "mods": {
+    "dodge": 0.5
+   }
+  },
+  "finesse_Shadow_4": {
+   "name": "Nimble",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    291,
+    -168
+   ],
+   "links": [
+    "finesse_Shadow_3",
+    "finesse_Shadowa_5",
+    "finesse_Shadowb_5"
+   ],
+   "mods": {
+    "dodge": 1.5,
+    "speed": 2
+   }
+  },
+  "finesse_Shadowa_5": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    309,
+    -251
+   ],
+   "links": [
+    "finesse_Shadow_4",
+    "finesse_Shadowa_6"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Shadowa_6": {
+   "name": "Fleet Foot",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    357,
+    -291
+   ],
+   "links": [
+    "finesse_Shadowa_5",
+    "finesse_Shadowa_6_s",
+    "finesse_Shadowa_7"
+   ],
+   "mods": {
+    "speed": 1
+   }
+  },
+  "finesse_Shadowa_6_s": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    414,
+    -264
+   ],
+   "links": [
+    "finesse_Shadowa_6"
+   ],
+   "mods": {
+    "sp_pct": 3
+   }
+  },
+  "finesse_Shadowa_7": {
+   "name": "Shadow Step",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    405,
+    -330
+   ],
+   "links": [
+    "finesse_Shadowa_6",
+    "finesse_Shadowa_8"
+   ],
+   "mods": {
+    "dodge": 2,
+    "speed": 2.5
+   }
+  },
+  "finesse_Shadowa_8": {
+   "name": "Evasion",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    453,
+    -369
+   ],
+   "links": [
+    "finesse_Shadowa_7",
+    "finesse_Shadowa_8_s",
+    "finesse_Shadowa_9"
+   ],
+   "mods": {
+    "dodge": 0.5
+   }
+  },
+  "finesse_Shadowa_8_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    518,
+    -331
+   ],
+   "links": [
+    "finesse_Shadowa_8"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Shadowa_9": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    501,
+    -408
+   ],
+   "links": [
+    "finesse_Shadowa_8",
+    "finesse_Shadowa_10"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Shadowa_10": {
+   "name": "Fleet Foot",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    549,
+    -447
+   ],
+   "links": [
+    "finesse_Shadowa_9",
+    "finesse_Shadowa_10_s",
+    "finesse_Shadowa_11",
+    "finesse_Shadowb_10"
+   ],
+   "mods": {
+    "speed": 1
+   }
+  },
+  "finesse_Shadowa_10_s": {
+   "name": "Endurance",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    623,
+    -398
+   ],
+   "links": [
+    "finesse_Shadowa_10"
+   ],
+   "mods": {
+    "sp_pct": 3
+   }
+  },
+  "finesse_Shadowa_11": {
+   "name": "Untouchable",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    597,
+    -486
+   ],
+   "links": [
+    "finesse_Shadowa_10",
+    "finesse_Shadowa_12"
+   ],
+   "mods": {
+    "dodge": 2.5,
+    "dex": 3
+   }
+  },
+  "finesse_Shadowa_12": {
+   "name": "Evasion",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    645,
+    -525
+   ],
+   "links": [
+    "finesse_Shadowa_11",
+    "finesse_Shadowa_12_s",
+    "finesse_Shadowa_13",
+    "finesse_Bladeb_12"
+   ],
+   "mods": {
+    "dodge": 0.5
+   }
+  },
+  "finesse_Shadowa_12_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    727,
+    -465
+   ],
+   "links": [
+    "finesse_Shadowa_12"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Shadowa_13": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    693,
+    -565
+   ],
+   "links": [
+    "finesse_Shadowa_12",
+    "finesse_Shadowa_14"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Shadowa_14": {
+   "name": "Ghost",
+   "kind": "keystone",
+   "branch": "finesse",
+   "pos": [
+    752,
+    -613
+   ],
+   "links": [
+    "finesse_Shadowa_13"
+   ],
+   "mods": {
+    "dodge": 4,
+    "sp_pct": 20,
+    "def_pct": -7.5
+   }
+  },
+  "finesse_Shadowb_5": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    372,
+    -142
+   ],
+   "links": [
+    "finesse_Shadow_4",
+    "finesse_Shadowb_6"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Shadowb_6": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    430,
+    -164
+   ],
+   "links": [
+    "finesse_Shadowb_5",
+    "finesse_Shadowb_6_s",
+    "finesse_Shadowb_7"
+   ],
+   "mods": {
+    "atk_spd": 1
+   }
+  },
+  "finesse_Shadowb_6_s": {
+   "name": "Evasion",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    476,
+    -121
+   ],
+   "links": [
+    "finesse_Shadowb_6"
+   ],
+   "mods": {
+    "dodge": 0.5
+   }
+  },
+  "finesse_Shadowb_7": {
+   "name": "Fleet of Foot",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    488,
+    -186
+   ],
+   "links": [
+    "finesse_Shadowb_6",
+    "finesse_Shadowb_8"
+   ],
+   "mods": {
+    "speed": 4,
+    "sp_pct": 5
+   }
+  },
+  "finesse_Shadowb_8": {
+   "name": "Fleet Foot",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    546,
+    -208
+   ],
+   "links": [
+    "finesse_Shadowb_7",
+    "finesse_Shadowb_8_s",
+    "finesse_Shadowb_9"
+   ],
+   "mods": {
+    "speed": 1
+   }
+  },
+  "finesse_Shadowb_8_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    596,
+    -151
+   ],
+   "links": [
+    "finesse_Shadowb_8"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Shadowb_9": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    604,
+    -230
+   ],
+   "links": [
+    "finesse_Shadowb_8",
+    "finesse_Shadowb_10"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Shadowb_10": {
+   "name": "Quick Hands",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    662,
+    -252
+   ],
+   "links": [
+    "finesse_Shadowb_9",
+    "finesse_Shadowb_10_s",
+    "finesse_Shadowb_11",
+    "finesse_Shadowa_10"
+   ],
+   "mods": {
+    "atk_spd": 1
+   }
+  },
+  "finesse_Shadowb_10_s": {
+   "name": "Evasion",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    716,
+    -182
+   ],
+   "links": [
+    "finesse_Shadowb_10"
+   ],
+   "mods": {
+    "dodge": 0.5
+   }
+  },
+  "finesse_Shadowb_11": {
+   "name": "Flurry",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    720,
+    -274
+   ],
+   "links": [
+    "finesse_Shadowb_10",
+    "finesse_Shadowb_12"
+   ],
+   "mods": {
+    "atk_spd": 4,
+    "dex": 2
+   }
+  },
+  "finesse_Shadowb_12": {
+   "name": "Fleet Foot",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    778,
+    -296
+   ],
+   "links": [
+    "finesse_Shadowb_11",
+    "finesse_Shadowb_12_s",
+    "finesse_Shadowb_13",
+    "finesse_Fortunea_12"
+   ],
+   "mods": {
+    "speed": 1
+   }
+  },
+  "finesse_Shadowb_12_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    837,
+    -212
+   ],
+   "links": [
+    "finesse_Shadowb_12"
+   ],
+   "mods": {
+    "dex": 2
+   }
+  },
+  "finesse_Shadowb_13": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    836,
+    -318
+   ],
+   "links": [
+    "finesse_Shadowb_12",
+    "finesse_Shadowb_14"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Shadowb_14": {
+   "name": "Whirlwind",
+   "kind": "keystone",
+   "branch": "finesse",
+   "pos": [
+    907,
+    -345
+   ],
+   "links": [
+    "finesse_Shadowb_13"
+   ],
+   "mods": {
+    "atk_spd": 9,
+    "dmg_pct": -6
+   }
+  },
+  "finesse_Fortune_2": {
+   "name": "Treasure Sense",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    211,
+    25
+   ],
+   "links": [
+    "finesse_root",
+    "finesse_Fortune_3"
+   ],
+   "mods": {
+    "gold_find": 2.5
+   }
+  },
+  "finesse_Fortune_3": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    272,
+    32
+   ],
+   "links": [
+    "finesse_Fortune_2",
+    "finesse_Fortune_3_s",
+    "finesse_Fortune_4"
+   ],
+   "mods": {
+    "dex": 1
+   }
+  },
+  "finesse_Fortune_3_s": {
+   "name": "Treasure Sense",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    291,
+    93
+   ],
+   "links": [
+    "finesse_Fortune_3"
+   ],
+   "mods": {
+    "gold_find": 3.5
+   }
+  },
+  "finesse_Fortune_4": {
+   "name": "Lucky Find",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    334,
+    39
+   ],
+   "links": [
+    "finesse_Fortune_3",
+    "finesse_Fortunea_5",
+    "finesse_Fortuneb_5"
+   ],
+   "mods": {
+    "gold_find": 5,
+    "item_find": 3
+   }
+  },
+  "finesse_Fortunea_5": {
+   "name": "Keen Eye",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    398,
+    -17
+   ],
+   "links": [
+    "finesse_Fortune_4",
+    "finesse_Fortunea_6"
+   ],
+   "mods": {
+    "item_find": 1.5
+   }
+  },
+  "finesse_Fortunea_6": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    460,
+    -20
+   ],
+   "links": [
+    "finesse_Fortunea_5",
+    "finesse_Fortunea_6_s",
+    "finesse_Fortunea_7"
+   ],
+   "mods": {
+    "dex": 1
+   }
+  },
+  "finesse_Fortunea_6_s": {
+   "name": "Treasure Sense",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    490,
+    35
+   ],
+   "links": [
+    "finesse_Fortunea_6"
+   ],
+   "mods": {
+    "gold_find": 3.5
+   }
+  },
+  "finesse_Fortunea_7": {
+   "name": "Fortune's Favour",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    522,
+    -23
+   ],
+   "links": [
+    "finesse_Fortunea_6",
+    "finesse_Fortunea_8"
+   ],
+   "mods": {
+    "gold_find": 7.5,
+    "item_find": 5
+   }
+  },
+  "finesse_Fortunea_8": {
+   "name": "Treasure Sense",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    583,
+    -25
+   ],
+   "links": [
+    "finesse_Fortunea_7",
+    "finesse_Fortunea_8_s",
+    "finesse_Fortunea_9"
+   ],
+   "mods": {
+    "gold_find": 2.5
+   }
+  },
+  "finesse_Fortunea_8_s": {
+   "name": "Keen Eye",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    613,
+    44
+   ],
+   "links": [
+    "finesse_Fortunea_8"
+   ],
+   "mods": {
+    "item_find": 2
+   }
+  },
+  "finesse_Fortunea_9": {
+   "name": "Keen Eye",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    645,
+    -28
+   ],
+   "links": [
+    "finesse_Fortunea_8",
+    "finesse_Fortunea_10"
+   ],
+   "mods": {
+    "item_find": 1.5
+   }
+  },
+  "finesse_Fortunea_10": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    707,
+    -31
+   ],
+   "links": [
+    "finesse_Fortunea_9",
+    "finesse_Fortunea_10_s",
+    "finesse_Fortunea_11",
+    "finesse_Fortuneb_10"
+   ],
+   "mods": {
+    "dex": 1
+   }
+  },
+  "finesse_Fortunea_10_s": {
+   "name": "Treasure Sense",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    737,
+    53
+   ],
+   "links": [
+    "finesse_Fortunea_10"
+   ],
+   "mods": {
+    "gold_find": 3.5
+   }
+  },
+  "finesse_Fortunea_11": {
+   "name": "Treasure Hunter",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    769,
+    -34
+   ],
+   "links": [
+    "finesse_Fortunea_10",
+    "finesse_Fortunea_12"
+   ],
+   "mods": {
+    "item_find": 7.5
+   }
+  },
+  "finesse_Fortunea_12": {
+   "name": "Treasure Sense",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    831,
+    -36
+   ],
+   "links": [
+    "finesse_Fortunea_11",
+    "finesse_Fortunea_12_s",
+    "finesse_Fortunea_13",
+    "finesse_Shadowb_12"
+   ],
+   "mods": {
+    "gold_find": 2.5
+   }
+  },
+  "finesse_Fortunea_12_s": {
+   "name": "Keen Eye",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    861,
+    62
+   ],
+   "links": [
+    "finesse_Fortunea_12"
+   ],
+   "mods": {
+    "item_find": 2
+   }
+  },
+  "finesse_Fortunea_13": {
+   "name": "Keen Eye",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    893,
+    -39
+   ],
+   "links": [
+    "finesse_Fortunea_12",
+    "finesse_Fortunea_14"
+   ],
+   "mods": {
+    "item_find": 1.5
+   }
+  },
+  "finesse_Fortunea_14": {
+   "name": "Midas Touch",
+   "kind": "keystone",
+   "branch": "finesse",
+   "pos": [
+    969,
+    -42
+   ],
+   "links": [
+    "finesse_Fortunea_13"
+   ],
+   "mods": {
+    "gold_find": 30,
+    "item_find": 12.5,
+    "hp_pct": -4
+   }
+  },
+  "finesse_Fortuneb_5": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    383,
+    109
+   ],
+   "links": [
+    "finesse_Fortune_4",
+    "finesse_Fortuneb_6"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Fortuneb_6": {
+   "name": "Bloodthirst",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    443,
+    126
+   ],
+   "links": [
+    "finesse_Fortuneb_5",
+    "finesse_Fortuneb_6_s",
+    "finesse_Fortuneb_7"
+   ],
+   "mods": {
+    "lifesteal": 0.15
+   }
+  },
+  "finesse_Fortuneb_6_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    454,
+    187
+   ],
+   "links": [
+    "finesse_Fortuneb_6"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Fortuneb_7": {
+   "name": "Quick Study",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    502,
+    142
+   ],
+   "links": [
+    "finesse_Fortuneb_6",
+    "finesse_Fortuneb_8"
+   ],
+   "mods": {
+    "xp": 5,
+    "dex": 2
+   }
+  },
+  "finesse_Fortuneb_8": {
+   "name": "Studious",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    562,
+    159
+   ],
+   "links": [
+    "finesse_Fortuneb_7",
+    "finesse_Fortuneb_8_s",
+    "finesse_Fortuneb_9"
+   ],
+   "mods": {
+    "xp": 1.5
+   }
+  },
+  "finesse_Fortuneb_8_s": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    568,
+    235
+   ],
+   "links": [
+    "finesse_Fortuneb_8"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Fortuneb_9": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    621,
+    176
+   ],
+   "links": [
+    "finesse_Fortuneb_8",
+    "finesse_Fortuneb_10",
+    "bridge_finesse_arcana_0"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Fortuneb_10": {
+   "name": "Bloodthirst",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    681,
+    193
+   ],
+   "links": [
+    "finesse_Fortuneb_9",
+    "finesse_Fortuneb_10_s",
+    "finesse_Fortuneb_11",
+    "finesse_Fortunea_10"
+   ],
+   "mods": {
+    "lifesteal": 0.15
+   }
+  },
+  "finesse_Fortuneb_10_s": {
+   "name": "Dexterity",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    683,
+    282
+   ],
+   "links": [
+    "finesse_Fortuneb_10"
+   ],
+   "mods": {
+    "dex": 1.5
+   }
+  },
+  "finesse_Fortuneb_11": {
+   "name": "Vampiric Edge",
+   "kind": "notable",
+   "branch": "finesse",
+   "pos": [
+    741,
+    210
+   ],
+   "links": [
+    "finesse_Fortuneb_10",
+    "finesse_Fortuneb_12",
+    "bridge_finesse_arcana_1"
+   ],
+   "mods": {
+    "lifesteal": 1,
+    "crit": 1
+   }
+  },
+  "finesse_Fortuneb_12": {
+   "name": "Studious",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    800,
+    227
+   ],
+   "links": [
+    "finesse_Fortuneb_11",
+    "finesse_Fortuneb_12_s",
+    "finesse_Fortuneb_13"
+   ],
+   "mods": {
+    "xp": 1.5
+   }
+  },
+  "finesse_Fortuneb_12_s": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    798,
+    329
+   ],
+   "links": [
+    "finesse_Fortuneb_12"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Fortuneb_13": {
+   "name": "Precision",
+   "kind": "small",
+   "branch": "finesse",
+   "pos": [
+    860,
+    244
+   ],
+   "links": [
+    "finesse_Fortuneb_12",
+    "finesse_Fortuneb_14",
+    "bridge_finesse_arcana_2"
+   ],
+   "mods": {
+    "crit": 0.5
+   }
+  },
+  "finesse_Fortuneb_14": {
+   "name": "Lucky Star",
+   "kind": "keystone",
+   "branch": "finesse",
+   "pos": [
+    933,
+    265
+   ],
+   "links": [
+    "finesse_Fortuneb_13"
+   ],
+   "mods": {
+    "crit": 3,
+    "dodge": 3,
+    "item_find": 7.5,
+    "def_pct": -5
+   }
+  },
+  "arcana_root": {
+   "name": "Arcana",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    0,
+    150
+   ],
+   "links": [
+    "origin",
+    "arcana_Fire_2",
+    "arcana_Mind_2",
+    "arcana_Life_2"
+   ],
+   "mods": {
+    "mag": 1.5,
+    "int": 1.5,
+    "mp": 10
+   }
+  },
+  "arcana_Fire_2": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    127,
+    170
+   ],
+   "links": [
+    "arcana_root",
+    "arcana_Fire_3"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Fire_3": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    164,
+    220
+   ],
+   "links": [
+    "arcana_Fire_2",
+    "arcana_Fire_3_s",
+    "arcana_Fire_4"
+   ],
+   "mods": {
+    "spell_dmg": 1
+   }
+  },
+  "arcana_Fire_3_s": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    132,
+    275
+   ],
+   "links": [
+    "arcana_Fire_3"
+   ],
+   "mods": {
+    "mag": 2
+   }
+  },
+  "arcana_Fire_4": {
+   "name": "Kindling",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    201,
+    270
+   ],
+   "links": [
+    "arcana_Fire_3",
+    "arcana_Firea_5",
+    "arcana_Fireb_5"
+   ],
+   "mods": {
+    "spell_dmg": 3,
+    "mag": 2.5
+   }
+  },
+  "arcana_Firea_5": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    285,
+    277
+   ],
+   "links": [
+    "arcana_Fire_4",
+    "arcana_Firea_6"
+   ],
+   "mods": {
+    "spell_dmg": 1
+   }
+  },
+  "arcana_Firea_6": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    330,
+    321
+   ],
+   "links": [
+    "arcana_Firea_5",
+    "arcana_Firea_6_s",
+    "arcana_Firea_7"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Firea_6_s": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    311,
+    380
+   ],
+   "links": [
+    "arcana_Firea_6"
+   ],
+   "mods": {
+    "spell_dmg": 1.5
+   }
+  },
+  "arcana_Firea_7": {
+   "name": "Elemental Fury",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    374,
+    364
+   ],
+   "links": [
+    "arcana_Firea_6",
+    "arcana_Firea_8"
+   ],
+   "mods": {
+    "spell_dmg": 5,
+    "mag": 2.5
+   }
+  },
+  "arcana_Firea_8": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    419,
+    407
+   ],
+   "links": [
+    "arcana_Firea_7",
+    "arcana_Firea_8_s",
+    "arcana_Firea_9"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Firea_8_s": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    389,
+    476
+   ],
+   "links": [
+    "arcana_Firea_8"
+   ],
+   "mods": {
+    "spell_dmg": 1.5
+   }
+  },
+  "arcana_Firea_9": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    463,
+    450
+   ],
+   "links": [
+    "arcana_Firea_8",
+    "arcana_Firea_10",
+    "bridge_finesse_arcana_0"
+   ],
+   "mods": {
+    "spell_dmg": 1
+   }
+  },
+  "arcana_Firea_10": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    508,
+    493
+   ],
+   "links": [
+    "arcana_Firea_9",
+    "arcana_Firea_10_s",
+    "arcana_Firea_11",
+    "arcana_Fireb_10"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Firea_10_s": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    467,
+    572
+   ],
+   "links": [
+    "arcana_Firea_10"
+   ],
+   "mods": {
+    "spell_dmg": 1.5
+   }
+  },
+  "arcana_Firea_11": {
+   "name": "Cataclysm",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    552,
+    536
+   ],
+   "links": [
+    "arcana_Firea_10",
+    "arcana_Firea_12",
+    "bridge_finesse_arcana_1"
+   ],
+   "mods": {
+    "spell_dmg": 7
+   }
+  },
+  "arcana_Firea_12": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    597,
+    580
+   ],
+   "links": [
+    "arcana_Firea_11",
+    "arcana_Firea_12_s",
+    "arcana_Firea_13"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Firea_12_s": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    546,
+    668
+   ],
+   "links": [
+    "arcana_Firea_12"
+   ],
+   "mods": {
+    "spell_dmg": 1.5
+   }
+  },
+  "arcana_Firea_13": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    641,
+    623
+   ],
+   "links": [
+    "arcana_Firea_12",
+    "arcana_Firea_14",
+    "bridge_finesse_arcana_2"
+   ],
+   "mods": {
+    "spell_dmg": 1
+   }
+  },
+  "arcana_Firea_14": {
+   "name": "Glass Cannon",
+   "kind": "keystone",
+   "branch": "arcana",
+   "pos": [
+    696,
+    676
+   ],
+   "links": [
+    "arcana_Firea_13"
+   ],
+   "mods": {
+    "spell_dmg": 17.5,
+    "hp_pct": -7.5
+   }
+  },
+  "arcana_Fireb_5": {
+   "name": "Mana Leech",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    184,
+    353
+   ],
+   "links": [
+    "arcana_Fire_4",
+    "arcana_Fireb_6"
+   ],
+   "mods": {
+    "mp_steal": 0.15
+   }
+  },
+  "arcana_Fireb_6": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    212,
+    408
+   ],
+   "links": [
+    "arcana_Fireb_5",
+    "arcana_Fireb_6_s",
+    "arcana_Fireb_7"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Fireb_6_s": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    175,
+    459
+   ],
+   "links": [
+    "arcana_Fireb_6"
+   ],
+   "mods": {
+    "boss_dmg": 2
+   }
+  },
+  "arcana_Fireb_7": {
+   "name": "Spellweaver",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    241,
+    463
+   ],
+   "links": [
+    "arcana_Fireb_6",
+    "arcana_Fireb_8"
+   ],
+   "mods": {
+    "spell_dmg": 4,
+    "mp_regen": 0.5
+   }
+  },
+  "arcana_Fireb_8": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    270,
+    518
+   ],
+   "links": [
+    "arcana_Fireb_7",
+    "arcana_Fireb_8_s",
+    "arcana_Fireb_9"
+   ],
+   "mods": {
+    "spell_dmg": 1
+   }
+  },
+  "arcana_Fireb_8_s": {
+   "name": "Mana Leech",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    219,
+    575
+   ],
+   "links": [
+    "arcana_Fireb_8"
+   ],
+   "mods": {
+    "mp_steal": 0.2
+   }
+  },
+  "arcana_Fireb_9": {
+   "name": "Mana Leech",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    298,
+    573
+   ],
+   "links": [
+    "arcana_Fireb_8",
+    "arcana_Fireb_10"
+   ],
+   "mods": {
+    "mp_steal": 0.15
+   }
+  },
+  "arcana_Fireb_10": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    327,
+    628
+   ],
+   "links": [
+    "arcana_Fireb_9",
+    "arcana_Fireb_10_s",
+    "arcana_Fireb_11",
+    "arcana_Firea_10"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Fireb_10_s": {
+   "name": "Giant Slayer",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    264,
+    690
+   ],
+   "links": [
+    "arcana_Fireb_10"
+   ],
+   "mods": {
+    "boss_dmg": 2
+   }
+  },
+  "arcana_Fireb_11": {
+   "name": "Archmage",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    356,
+    683
+   ],
+   "links": [
+    "arcana_Fireb_10",
+    "arcana_Fireb_12"
+   ],
+   "mods": {
+    "mag": 5,
+    "spell_dmg": 5,
+    "mp_pct": 3
+   }
+  },
+  "arcana_Fireb_12": {
+   "name": "Spellcraft",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    384,
+    738
+   ],
+   "links": [
+    "arcana_Fireb_11",
+    "arcana_Fireb_12_s",
+    "arcana_Fireb_13",
+    "arcana_Minda_12"
+   ],
+   "mods": {
+    "spell_dmg": 1
+   }
+  },
+  "arcana_Fireb_12_s": {
+   "name": "Mana Leech",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    308,
+    806
+   ],
+   "links": [
+    "arcana_Fireb_12"
+   ],
+   "mods": {
+    "mp_steal": 0.2
+   }
+  },
+  "arcana_Fireb_13": {
+   "name": "Mana Leech",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    413,
+    793
+   ],
+   "links": [
+    "arcana_Fireb_12",
+    "arcana_Fireb_14"
+   ],
+   "mods": {
+    "mp_steal": 0.15
+   }
+  },
+  "arcana_Fireb_14": {
+   "name": "Soul Siphon",
+   "kind": "keystone",
+   "branch": "arcana",
+   "pos": [
+    448,
+    860
+   ],
+   "links": [
+    "arcana_Fireb_13"
+   ],
+   "mods": {
+    "mp_steal": 2,
+    "lifesteal": 1.5,
+    "spell_dmg": -4
+   }
+  },
+  "arcana_Mind_2": {
+   "name": "Mana Well",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    0,
+    212
+   ],
+   "links": [
+    "arcana_root",
+    "arcana_Mind_3"
+   ],
+   "mods": {
+    "mp": 7.5
+   }
+  },
+  "arcana_Mind_3": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    0,
+    274
+   ],
+   "links": [
+    "arcana_Mind_2",
+    "arcana_Mind_3_s",
+    "arcana_Mind_4"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Mind_3_s": {
+   "name": "Mana Well",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -58,
+    299
+   ],
+   "links": [
+    "arcana_Mind_3"
+   ],
+   "mods": {
+    "mp": 11
+   }
+  },
+  "arcana_Mind_4": {
+   "name": "Focus",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    0,
+    336
+   ],
+   "links": [
+    "arcana_Mind_3",
+    "arcana_Minda_5",
+    "arcana_Mindb_5"
+   ],
+   "mods": {
+    "int": 3,
+    "mp": 15
+   }
+  },
+  "arcana_Minda_5": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    63,
+    393
+   ],
+   "links": [
+    "arcana_Mind_4",
+    "arcana_Minda_6"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Minda_6": {
+   "name": "Deep Reserves",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    73,
+    454
+   ],
+   "links": [
+    "arcana_Minda_5",
+    "arcana_Minda_6_s",
+    "arcana_Minda_7"
+   ],
+   "mods": {
+    "mp_pct": 1
+   }
+  },
+  "arcana_Minda_6_s": {
+   "name": "Clarity",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    22,
+    491
+   ],
+   "links": [
+    "arcana_Minda_6"
+   ],
+   "mods": {
+    "mp_regen": 0.3
+   }
+  },
+  "arcana_Minda_7": {
+   "name": "Arcane Mind",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    83,
+    515
+   ],
+   "links": [
+    "arcana_Minda_6",
+    "arcana_Minda_8"
+   ],
+   "mods": {
+    "int": 4,
+    "mp": 20
+   }
+  },
+  "arcana_Minda_8": {
+   "name": "Mana Well",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    93,
+    577
+   ],
+   "links": [
+    "arcana_Minda_7",
+    "arcana_Minda_8_s",
+    "arcana_Minda_9"
+   ],
+   "mods": {
+    "mp": 7.5
+   }
+  },
+  "arcana_Minda_8_s": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    28,
+    614
+   ],
+   "links": [
+    "arcana_Minda_8"
+   ],
+   "mods": {
+    "int": 2
+   }
+  },
+  "arcana_Minda_9": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    103,
+    638
+   ],
+   "links": [
+    "arcana_Minda_8",
+    "arcana_Minda_10"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Minda_10": {
+   "name": "Deep Reserves",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    113,
+    699
+   ],
+   "links": [
+    "arcana_Minda_9",
+    "arcana_Minda_10_s",
+    "arcana_Minda_11",
+    "arcana_Mindb_10"
+   ],
+   "mods": {
+    "mp_pct": 1
+   }
+  },
+  "arcana_Minda_10_s": {
+   "name": "Clarity",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    33,
+    738
+   ],
+   "links": [
+    "arcana_Minda_10"
+   ],
+   "mods": {
+    "mp_regen": 0.3
+   }
+  },
+  "arcana_Minda_11": {
+   "name": "Deep Well",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    123,
+    760
+   ],
+   "links": [
+    "arcana_Minda_10",
+    "arcana_Minda_12"
+   ],
+   "mods": {
+    "mp_pct": 5,
+    "mp_regen": 0.5
+   }
+  },
+  "arcana_Minda_12": {
+   "name": "Mana Well",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    133,
+    821
+   ],
+   "links": [
+    "arcana_Minda_11",
+    "arcana_Minda_12_s",
+    "arcana_Minda_13",
+    "arcana_Fireb_12"
+   ],
+   "mods": {
+    "mp": 7.5
+   }
+  },
+  "arcana_Minda_12_s": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    39,
+    862
+   ],
+   "links": [
+    "arcana_Minda_12"
+   ],
+   "mods": {
+    "int": 2
+   }
+  },
+  "arcana_Minda_13": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    142,
+    883
+   ],
+   "links": [
+    "arcana_Minda_12",
+    "arcana_Minda_14"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Minda_14": {
+   "name": "Eldritch Battery",
+   "kind": "keystone",
+   "branch": "arcana",
+   "pos": [
+    155,
+    958
+   ],
+   "links": [
+    "arcana_Minda_13"
+   ],
+   "mods": {
+    "mp_pct": 15,
+    "spell_dmg": 7.5,
+    "mp_regen": -1
+   }
+  },
+  "arcana_Mindb_5": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -63,
+    393
+   ],
+   "links": [
+    "arcana_Mind_4",
+    "arcana_Mindb_6"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Mindb_6": {
+   "name": "Studious",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -73,
+    454
+   ],
+   "links": [
+    "arcana_Mindb_5",
+    "arcana_Mindb_6_s",
+    "arcana_Mindb_7"
+   ],
+   "mods": {
+    "xp": 1.5
+   }
+  },
+  "arcana_Mindb_6_s": {
+   "name": "Mana Well",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -133,
+    473
+   ],
+   "links": [
+    "arcana_Mindb_6"
+   ],
+   "mods": {
+    "mp": 11
+   }
+  },
+  "arcana_Mindb_7": {
+   "name": "Sage",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -83,
+    515
+   ],
+   "links": [
+    "arcana_Mindb_6",
+    "arcana_Mindb_8"
+   ],
+   "mods": {
+    "xp": 5,
+    "int": 4,
+    "mp": 15
+   }
+  },
+  "arcana_Mindb_8": {
+   "name": "Clarity",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -93,
+    577
+   ],
+   "links": [
+    "arcana_Mindb_7",
+    "arcana_Mindb_8_s",
+    "arcana_Mindb_9"
+   ],
+   "mods": {
+    "mp_regen": 0.2
+   }
+  },
+  "arcana_Mindb_8_s": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -167,
+    592
+   ],
+   "links": [
+    "arcana_Mindb_8"
+   ],
+   "mods": {
+    "int": 2
+   }
+  },
+  "arcana_Mindb_9": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -103,
+    638
+   ],
+   "links": [
+    "arcana_Mindb_8",
+    "arcana_Mindb_10"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Mindb_10": {
+   "name": "Studious",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -113,
+    699
+   ],
+   "links": [
+    "arcana_Mindb_9",
+    "arcana_Mindb_10_s",
+    "arcana_Mindb_11",
+    "arcana_Minda_10"
+   ],
+   "mods": {
+    "xp": 1.5
+   }
+  },
+  "arcana_Mindb_10_s": {
+   "name": "Mana Well",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -201,
+    711
+   ],
+   "links": [
+    "arcana_Mindb_10"
+   ],
+   "mods": {
+    "mp": 11
+   }
+  },
+  "arcana_Mindb_11": {
+   "name": "Clear Mind",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -123,
+    760
+   ],
+   "links": [
+    "arcana_Mindb_10",
+    "arcana_Mindb_12"
+   ],
+   "mods": {
+    "mp_regen": 1.25,
+    "int": 2.5,
+    "mag": 1.5
+   }
+  },
+  "arcana_Mindb_12": {
+   "name": "Clarity",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -133,
+    821
+   ],
+   "links": [
+    "arcana_Mindb_11",
+    "arcana_Mindb_12_s",
+    "arcana_Mindb_13",
+    "arcana_Lifea_12"
+   ],
+   "mods": {
+    "mp_regen": 0.2
+   }
+  },
+  "arcana_Mindb_12_s": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -234,
+    831
+   ],
+   "links": [
+    "arcana_Mindb_12"
+   ],
+   "mods": {
+    "int": 2
+   }
+  },
+  "arcana_Mindb_13": {
+   "name": "Intellect",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -142,
+    883
+   ],
+   "links": [
+    "arcana_Mindb_12",
+    "arcana_Mindb_14"
+   ],
+   "mods": {
+    "int": 1.5
+   }
+  },
+  "arcana_Mindb_14": {
+   "name": "Font of Power",
+   "kind": "keystone",
+   "branch": "arcana",
+   "pos": [
+    -155,
+    958
+   ],
+   "links": [
+    "arcana_Mindb_13"
+   ],
+   "mods": {
+    "mp_regen": 4,
+    "mp_pct": -7.5
+   }
+  },
+  "arcana_Life_2": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -127,
+    170
+   ],
+   "links": [
+    "arcana_root",
+    "arcana_Life_3"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "arcana_Life_3": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -164,
+    220
+   ],
+   "links": [
+    "arcana_Life_2",
+    "arcana_Life_3_s",
+    "arcana_Life_4"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "arcana_Life_3_s": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -225,
+    205
+   ],
+   "links": [
+    "arcana_Life_3"
+   ],
+   "mods": {
+    "vit": 2
+   }
+  },
+  "arcana_Life_4": {
+   "name": "Vitality Spring",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -201,
+    270
+   ],
+   "links": [
+    "arcana_Life_3",
+    "arcana_Lifea_5",
+    "arcana_Lifeb_5"
+   ],
+   "mods": {
+    "vit": 3,
+    "regen": 0.5
+   }
+  },
+  "arcana_Lifea_5": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -184,
+    353
+   ],
+   "links": [
+    "arcana_Life_4",
+    "arcana_Lifea_6"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "arcana_Lifea_6": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -212,
+    408
+   ],
+   "links": [
+    "arcana_Lifea_5",
+    "arcana_Lifea_6_s",
+    "arcana_Lifea_7"
+   ],
+   "mods": {
+    "hp": 7.5
+   }
+  },
+  "arcana_Lifea_6_s": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -275,
+    407
+   ],
+   "links": [
+    "arcana_Lifea_6"
+   ],
+   "mods": {
+    "mag": 2
+   }
+  },
+  "arcana_Lifea_7": {
+   "name": "Life Weaver",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -241,
+    463
+   ],
+   "links": [
+    "arcana_Lifea_6",
+    "arcana_Lifea_8"
+   ],
+   "mods": {
+    "regen": 1,
+    "hp": 20,
+    "mp_regen": 0.5
+   }
+  },
+  "arcana_Lifea_8": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -270,
+    518
+   ],
+   "links": [
+    "arcana_Lifea_7",
+    "arcana_Lifea_8_s",
+    "arcana_Lifea_9"
+   ],
+   "mods": {
+    "vit": 1,
+    "mag": 1
+   }
+  },
+  "arcana_Lifea_8_s": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -345,
+    509
+   ],
+   "links": [
+    "arcana_Lifea_8"
+   ],
+   "mods": {
+    "regen": 0.4
+   }
+  },
+  "arcana_Lifea_9": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -298,
+    573
+   ],
+   "links": [
+    "arcana_Lifea_8",
+    "arcana_Lifea_10"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "arcana_Lifea_10": {
+   "name": "Vigour",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -327,
+    628
+   ],
+   "links": [
+    "arcana_Lifea_9",
+    "arcana_Lifea_10_s",
+    "arcana_Lifea_11",
+    "arcana_Lifeb_10"
+   ],
+   "mods": {
+    "hp": 7.5
+   }
+  },
+  "arcana_Lifea_10_s": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -414,
+    612
+   ],
+   "links": [
+    "arcana_Lifea_10"
+   ],
+   "mods": {
+    "mag": 2
+   }
+  },
+  "arcana_Lifea_11": {
+   "name": "Ward of Ages",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -356,
+    683
+   ],
+   "links": [
+    "arcana_Lifea_10",
+    "arcana_Lifea_12"
+   ],
+   "mods": {
+    "dmg_red": 1.5,
+    "vit": 3
+   }
+  },
+  "arcana_Lifea_12": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -384,
+    738
+   ],
+   "links": [
+    "arcana_Lifea_11",
+    "arcana_Lifea_12_s",
+    "arcana_Lifea_13",
+    "arcana_Mindb_12"
+   ],
+   "mods": {
+    "vit": 1,
+    "mag": 1
+   }
+  },
+  "arcana_Lifea_12_s": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -484,
+    715
+   ],
+   "links": [
+    "arcana_Lifea_12"
+   ],
+   "mods": {
+    "regen": 0.4
+   }
+  },
+  "arcana_Lifea_13": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -413,
+    793
+   ],
+   "links": [
+    "arcana_Lifea_12",
+    "arcana_Lifea_14"
+   ],
+   "mods": {
+    "regen": 0.25
+   }
+  },
+  "arcana_Lifea_14": {
+   "name": "Spirit Ward",
+   "kind": "keystone",
+   "branch": "arcana",
+   "pos": [
+    -448,
+    860
+   ],
+   "links": [
+    "arcana_Lifea_13"
+   ],
+   "mods": {
+    "dmg_red": 6,
+    "hp_pct": 4,
+    "spell_dmg": -6
+   }
+  },
+  "arcana_Lifeb_5": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -285,
+    277
+   ],
+   "links": [
+    "arcana_Life_4",
+    "arcana_Lifeb_6"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "arcana_Lifeb_6": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -330,
+    321
+   ],
+   "links": [
+    "arcana_Lifeb_5",
+    "arcana_Lifeb_6_s",
+    "arcana_Lifeb_7"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Lifeb_6_s": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -389,
+    299
+   ],
+   "links": [
+    "arcana_Lifeb_6"
+   ],
+   "mods": {
+    "regen": 0.4
+   }
+  },
+  "arcana_Lifeb_7": {
+   "name": "Mending Light",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -374,
+    364
+   ],
+   "links": [
+    "arcana_Lifeb_6",
+    "arcana_Lifeb_8"
+   ],
+   "mods": {
+    "regen": 1.5,
+    "mag": 2.5
+   }
+  },
+  "arcana_Lifeb_8": {
+   "name": "Stoicism",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -419,
+    407
+   ],
+   "links": [
+    "arcana_Lifeb_7",
+    "arcana_Lifeb_8_s",
+    "arcana_Lifeb_9"
+   ],
+   "mods": {
+    "dmg_red": 0.25
+   }
+  },
+  "arcana_Lifeb_8_s": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -487,
+    375
+   ],
+   "links": [
+    "arcana_Lifeb_8"
+   ],
+   "mods": {
+    "vit": 2
+   }
+  },
+  "arcana_Lifeb_9": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -463,
+    450
+   ],
+   "links": [
+    "arcana_Lifeb_8",
+    "arcana_Lifeb_10",
+    "bridge_arcana_might_0"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "arcana_Lifeb_10": {
+   "name": "Magic",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -508,
+    493
+   ],
+   "links": [
+    "arcana_Lifeb_9",
+    "arcana_Lifeb_10_s",
+    "arcana_Lifeb_11",
+    "arcana_Lifea_10"
+   ],
+   "mods": {
+    "mag": 1.5
+   }
+  },
+  "arcana_Lifeb_10_s": {
+   "name": "Mending",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -586,
+    451
+   ],
+   "links": [
+    "arcana_Lifeb_10"
+   ],
+   "mods": {
+    "regen": 0.4
+   }
+  },
+  "arcana_Lifeb_11": {
+   "name": "Inner Calm",
+   "kind": "notable",
+   "branch": "arcana",
+   "pos": [
+    -552,
+    536
+   ],
+   "links": [
+    "arcana_Lifeb_10",
+    "arcana_Lifeb_12",
+    "bridge_arcana_might_1"
+   ],
+   "mods": {
+    "dmg_red": 1.5,
+    "mp": 15
+   }
+  },
+  "arcana_Lifeb_12": {
+   "name": "Stoicism",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -597,
+    580
+   ],
+   "links": [
+    "arcana_Lifeb_11",
+    "arcana_Lifeb_12_s",
+    "arcana_Lifeb_13"
+   ],
+   "mods": {
+    "dmg_red": 0.25
+   }
+  },
+  "arcana_Lifeb_12_s": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -684,
+    526
+   ],
+   "links": [
+    "arcana_Lifeb_12"
+   ],
+   "mods": {
+    "vit": 2
+   }
+  },
+  "arcana_Lifeb_13": {
+   "name": "Vitality",
+   "kind": "small",
+   "branch": "arcana",
+   "pos": [
+    -641,
+    623
+   ],
+   "links": [
+    "arcana_Lifeb_12",
+    "arcana_Lifeb_14",
+    "bridge_arcana_might_2"
+   ],
+   "mods": {
+    "vit": 1.5
+   }
+  },
+  "arcana_Lifeb_14": {
+   "name": "Phoenix Heart",
+   "kind": "keystone",
+   "branch": "arcana",
+   "pos": [
+    -696,
+    676
+   ],
+   "links": [
+    "arcana_Lifeb_13"
+   ],
+   "mods": {
+    "regen": 5,
+    "dmg_red": 2.5,
+    "mp_pct": -10
+   }
+  },
+  "bridge_might_finesse_0": {
+   "name": "Battle Rhythm",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    0,
+    -677
+   ],
+   "links": [
+    "might_Warlordb_9",
+    "finesse_Bladea_9"
+   ],
+   "mods": {
+    "str": 1.5,
+    "dex": 1.5
+   }
+  },
+  "bridge_might_finesse_1": {
+   "name": "Feint",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    0,
+    -801
+   ],
+   "links": [
+    "might_Warlordb_11",
+    "finesse_Bladea_11"
+   ],
+   "mods": {
+    "dmg_pct": 1.5,
+    "crit": 0.5
+   }
+  },
+  "bridge_might_finesse_2": {
+   "name": "Duelist",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    0,
+    -925
+   ],
+   "links": [
+    "might_Warlordb_13",
+    "finesse_Bladea_13"
+   ],
+   "mods": {
+    "crit_dmg": 3,
+    "def": 2
+   }
+  },
+  "bridge_finesse_arcana_0": {
+   "name": "Arcane Agility",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    586,
+    338
+   ],
+   "links": [
+    "finesse_Fortuneb_9",
+    "arcana_Firea_9"
+   ],
+   "mods": {
+    "dex": 1.5,
+    "int": 1.5
+   }
+  },
+  "bridge_finesse_arcana_1": {
+   "name": "Sharpened Focus",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    694,
+    400
+   ],
+   "links": [
+    "finesse_Fortuneb_11",
+    "arcana_Firea_11"
+   ],
+   "mods": {
+    "crit": 0.5,
+    "spell_dmg": 1.5
+   }
+  },
+  "bridge_finesse_arcana_2": {
+   "name": "Trickster",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    801,
+    462
+   ],
+   "links": [
+    "finesse_Fortuneb_13",
+    "arcana_Firea_13"
+   ],
+   "mods": {
+    "dodge": 0.5,
+    "mp": 10
+   }
+  },
+  "bridge_arcana_might_0": {
+   "name": "Spellblade",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    -586,
+    338
+   ],
+   "links": [
+    "arcana_Lifeb_9",
+    "might_Brutea_9"
+   ],
+   "mods": {
+    "mag": 1.5,
+    "str": 1.5
+   }
+  },
+  "bridge_arcana_might_1": {
+   "name": "Inner Fire",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    -694,
+    400
+   ],
+   "links": [
+    "arcana_Lifeb_11",
+    "might_Brutea_11"
+   ],
+   "mods": {
+    "hp": 10,
+    "mp": 10
+   }
+  },
+  "bridge_arcana_might_2": {
+   "name": "Runed Armour",
+   "kind": "small",
+   "branch": "",
+   "pos": [
+    -801,
+    462
+   ],
+   "links": [
+    "arcana_Lifeb_13",
+    "might_Brutea_13"
+   ],
+   "mods": {
+    "def": 2.5,
+    "dmg_red": 0.5
+   }
+  }
+ }
+}

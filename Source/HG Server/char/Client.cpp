@@ -348,6 +348,7 @@ CClient::CClient(int clientH)
 	m_heroArmourBonus = 0;
 
 	_angelStr = _angelMag = _angelInt = _angelDex = 0;
+	m_gearStr = m_gearDex = m_gearVit = m_gearInt = m_gearMag = m_gearHP = m_gearMP = m_gearDef = m_gearCrit = 0;
 }
 
 CClient::~CClient()
@@ -685,7 +686,7 @@ int CClient::GetMaxHP() const
 {
 	int iRet;
 
-	iRet = m_iVit*3 + m_iLevel*2 + (GetStr())/2;
+	iRet = (m_iVit + m_gearVit)*3 + m_iLevel*2 + (GetStr())/2 + m_gearHP;
 	
 	if (m_iSideEffect_MaxHPdown != 0)
 		iRet = iRet - (iRet/m_iSideEffect_MaxHPdown);
@@ -697,7 +698,7 @@ int CClient::GetMaxMP() const
 {
 	int iRet;
 
-	iRet = (2*(GetMag()) ) + (2*m_iLevel) + ((GetInt())/2);
+	iRet = (2*(GetMag()) ) + (2*m_iLevel) + ((GetInt())/2) + m_gearMP;
 
 	return iRet;
 }
