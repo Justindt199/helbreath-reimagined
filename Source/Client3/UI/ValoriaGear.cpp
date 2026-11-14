@@ -11,8 +11,8 @@
 
 namespace
 {
-	struct GearBonus { int v[CGame::GEAR_COUNT]; };
-	std::map<std::string, GearBonus> g_gear;
+	struct GearRow { int v[CGame::GEAR_COUNT]; };
+	std::map<std::string, GearRow> g_gear;
 	bool g_bLoaded = false;
 
 	void LoadGear()
@@ -23,7 +23,7 @@ namespace
 		char cLine[256], cName[64];
 		while (fgets(cLine, sizeof(cLine), pFile) != NULL) {
 			if (cLine[0] == '/' || cLine[0] == '\r' || cLine[0] == '\n') continue;
-			GearBonus b = {};
+			GearRow b = {};
 			if (sscanf(cLine, "%63s %d %d %d %d %d %d %d %d %d", cName, &b.v[0], &b.v[1], &b.v[2], &b.v[3],
 				&b.v[4], &b.v[5], &b.v[6], &b.v[7], &b.v[8]) == 10)
 				g_gear[cName] = b;
@@ -39,7 +39,7 @@ int CGame::GearBonus(int iKind) const
 	int iSum = 0;
 	for (int i = 0; i < MAXITEMS; i++) {
 		if (m_pItemList[i] == NULL || !m_bIsItemEquipped[i]) continue;
-		std::map<std::string, GearBonus>::const_iterator it = g_gear.find(m_pItemList[i]->m_cName);
+		std::map<std::string, GearRow>::const_iterator it = g_gear.find(m_pItemList[i]->m_cName);
 		if (it != g_gear.end()) iSum += it->second.v[iKind];
 	}
 	return iSum;
