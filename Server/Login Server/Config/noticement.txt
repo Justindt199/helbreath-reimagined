@@ -1,0 +1,24 @@
+@Welcome to HelbreathUSA!!!
+#!   -=-=-=-=-=-=-=-=-=-=-=-    
+
++Be sure to check the 
++online store for specials!
+
+Quest list is updated on the 
+website and expiry dates 
+have been added.
+
+We have not been able to 
+complete tickets during 
+this reset however, we will 
+be tending to them over the 
+weekend.
+
+_Service (Logout) Commands              
+^^^^^^^^^^^^^^^^^^^^^^^^^   
+
+We have new service commands
+for you to complete requests,
+INSIDE the F1 Menu located
+under Beginner Guide.
+

@@ -1,0 +1,3 @@
+LIBRARY search
+EXPORTS
+    __FindHackingDll__

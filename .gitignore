@@ -1,0 +1,13 @@
+# build output
+Build/
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.lib
+!Client/search.dll
+# local-only
+deps/
+Database/db_reset.sql
+Server_old/
+Source_old_github/

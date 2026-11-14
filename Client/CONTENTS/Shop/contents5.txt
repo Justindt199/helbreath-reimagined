@@ -1,0 +1,19 @@
+; Blacksmith - Men's armor (shop list 5, read by the client from CONTENTS\Shop\contents5.txt)
+;-------Name----------------Type--EPos--Effect--ETValue--------MaxLife--MFixC--Spr--SFrame--Price--Wgt--ApprV-Speed--L.Lmt 
+
+Item  = Hauberk(M)            1     3     2     8  1 1  1 1 1   300     0      7    1     400     1200    2     0      0     
+Item  = WizardHauberk(M)      1     3     2    12 12 0 14 100 0 1000    0      7   1     2400     1200    2     0     90   
+Item  = KnightHauberk(M)      1     3     2    12 12 0 11 100 0 1000    0      7   1     2400     1200    2     0     70
+Item  = LeatherArmor(M)       1     2     2     10 1 1  1 1 1   400     0      9    0     500     1500    1     0      0     
+Item  = ScaleMail(M)          1     2     2     20 1 1  1 1 1   600     0      9    2     900     2000    3     0      0     
+Item  = ChainMail(M)          1     2     2     30 1 1  1 1 1   1000    0      9    1    1200     3000    2     0      0     
+Item  = PlateMail(M)          1     2     2     37 1 1  1 1 1   3000    0      9    3    4500    10000    4     0      0     
+Item  = KnightPlateMail(M)    1     2     2    40 42 0  0 0 0   3500    0      9   3     6000    10000    4     0     85
+Item  = ChainHose(M)          1     4     2     6  1 1  1 1 1   500     0      8    2     400     1000    3     0      0     
+Item  = PlateLeggings(M)      1     4     2     12 1 1  1 1 1   1000    0      8    3    1000     2000    4     0      0
+Item  = KnightPlateLeg(M)     1     4     2    15 22 1  1 1 1   1000    0      8   3     3000     2000    4     0     80
+Item  = Helm(M)               1     1     2     5 10 0 0 0 0    1500     0      21   0    800     5200    4     0      0
+Item  = FullHelm(M)           1     1     2     10 20 0 0 0 0   2000     0      21   1   1500     8500    1     0      0
+Item  = KnightFullHelm(M)     1     1     2    12 22 0  0 0 0   2000     0      21   1   3500     8500    1     0     80
+Item  = Horned-Helm(M)        1    1    2     17 24 0 0 0 0   3500      0      21   2    4000 16000    5     0   120
+Item  = Wings-Helm(M)         1    1    2     15 22 0 0 0 0   2500      0      21   3    5000 13000    6     0   100
