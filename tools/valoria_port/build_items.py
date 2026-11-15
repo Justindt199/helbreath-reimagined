@@ -6,7 +6,7 @@ Run from the repo root:  python3 tools/valoria_port/build_items.py
 Reads   tools/valoria_port/valoria_data/items.json   (VALORIA's item list)
         Server/Login Server/Config/Item*.cfg         (Helbreath items, used as templates)
 Writes  Server/Login Server/Config/ItemValoria<N>.cfg (the item rows, split so each file stays under
-                                                      24000 bytes: the game server takes 30000 per message)
+                                                      16000 bytes: a file near 20 KB arrived damaged at the game server)
         Client/CONTENTS/ItemName.cfg                 (block between the VALORIA markers)
         Server/configs/valoria_gear.txt              (stat bonuses of VALORIA gear, read by the game server)
         Client/CONTENTS/valoria_gear.txt             (same table, read by the client)
@@ -324,7 +324,7 @@ def main():
     files, cur = [], header
     for r in out_rows:
         line = 'Item\t=\t' + '\t'.join(r[c] for c in COLS) + '\n'
-        if len(cur) + len(line) > 24000:
+        if len(cur) + len(line) > 16000:
             files.append(cur); cur = header
         cur += line
     files.append(cur)
