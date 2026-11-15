@@ -425,6 +425,7 @@ void CDialogBox::SetMode(char mode)
 		AddButton(218, 239, 240, 268, 19);
 		AddButton(RBTNPOSX, RBTNPOSX + BTNSZX, 285, 285 + BTNSZY, 20);
 		AddButton(LBTNPOSX, LBTNPOSX + BTNSZX, 285, 285 + BTNSZY, 22);	// Enchant (UI\EnchantPanel.cpp)
+		AddButton(LBTNPOSX, RBTNPOSX + BTNSZX, 310, 310 + BTNSZY, 23);	// Passive Skills (UI\PassivePanel.cpp)
 		AddButton(230, 252, 4, 26, 21);		// close
 		break;
 
@@ -1180,6 +1181,9 @@ void CDialogBox::SetMode(char mode)
 		break;
 
 	case DIALOG_ENCHANT:	// VALORIA enchanting: drawn and clicked in code (UI\EnchantPanel.cpp), no fixed buttons
+		break;
+
+	case DIALOG_PASSIVE:	// VALORIA passive tree: drawn and clicked in code (UI\PassivePanel.cpp), no fixed buttons
 		break;
 
 	case DIALOG_BOUNTY:	// Bounty board: drawn and clicked in code (UI\BountyBoard.cpp), no fixed buttons

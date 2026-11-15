@@ -64,6 +64,8 @@
 			<item_t name="The_Devastator" prob="3"/>
 			<item_t name="Excaliber" prob="3"/>
 			<item_t name="RingoftheAbaddon" prob="3"/>
+			<item_t name="OrbOfUnmaking" prob="3"/><!-- VALORIA passive relic -->
+			<item_t name="TomeOfTheUnboundPath" prob="3"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Amphis">
@@ -244,6 +246,8 @@
 			<item_t name="DarkExecutor" prob="10"/>
 			<item_t name="RingofArchmage" prob="5"/>
 			<item_t name="Excaliber" prob="3"/>
+			<item_t name="OrbOfUnmaking" prob="3"/><!-- VALORIA passive relic -->
+			<item_t name="TomeOfTheUnboundPath" prob="3"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Frost">
@@ -381,6 +385,8 @@
 			<item_t name="MerienShield" prob="10"/>
 			<item_t name="NecklaceOfMedusa" prob="1"/>
 			<item_t name="NecklaceOfXelima" prob="1"/>
+			<item_t name="OrbOfUnmaking" prob="1"/><!-- VALORIA passive relic -->
+			<item_t name="TomeOfTheUnboundPath" prob="1"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Ice-Golem">
@@ -670,6 +676,8 @@
 			<item_t name="E.S.W.Manual" prob="10"/>
 			<item_t name="RingofArchmage" prob="8"/>
 			<item_t name="RingoftheAbaddon" prob="4"/>
+			<item_t name="OrbOfUnmaking" prob="4"/><!-- VALORIA passive relic -->
+			<item_t name="TomeOfTheUnboundPath" prob="4"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Troll">
@@ -769,6 +777,8 @@
 			<item_t name="IceStormManual" prob="5"/>
 			<item_t name="RingofArchmage" prob="5"/>
 			<item_t name="StormBringer" prob="3"/>
+			<item_t name="OrbOfUnmaking" prob="3"/><!-- VALORIA passive relic -->
+			<item_t name="TomeOfTheUnboundPath" prob="3"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Zombie">

@@ -1738,6 +1738,7 @@ void CGame::PlayerMapEntry(int iClientH, bool setRecallTime)
 	BountyOnMapEntry(iClientH);	// bounties on the board, owed gold (Bounty.cpp)
 	RebirthOnMapEntry(iClientH);	// rebirth levels (Rebirth.cpp)
 	EnchantSendStats(iClientH);	// VALORIA enchanting: your Enchanting and your items' enchantments (Enchanting.cpp)
+	PassiveSendState(iClientH);	// VALORIA passive tree (Passives.cpp)
 	EnchantSendItems(iClientH);
 }
 
@@ -4507,9 +4508,11 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 	player->m_iAltLevel    = (int)dwGetOffsetValue(pData, 477);
 	player->m_iAltExp      = (int)dwGetOffsetValue(pData, 481);
 	for (i = 0; i < 6; i++) player->m_altStat[i] = (int)dwGetOffsetValue(pData, 485 + i*4);
-	// VALORIA enchanting (Shared\ValoriaEnchant.h): 64 bytes at 509, then the item lists
+	// VALORIA enchanting (Shared\ValoriaEnchant.h) 64 bytes at 509, the passive tree (Shared\ValoriaPassives.h)
+	// 48 bytes after it, then the item lists
 	player->m_enchant.Read((const unsigned char *)(pData + 509));
-	const long charIndexEnd = 509 + Valoria::CHAR_BYTES;
+	player->m_passive.Read((const unsigned char *)(pData + 509 + Valoria::CHAR_BYTES));
+	const long charIndexEnd = 509 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;
 
 	for (i = 0; i < MAXITEMEQUIPPOS; i++) player->m_sItemEquipmentStatus[i] = -1;
 	for (i = 0; i < MAXITEMS; i++) player->m_bIsItemEquipped[i] = false;
@@ -4913,7 +4916,8 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 
 	// VALORIA enchanting (Shared\ValoriaEnchant.h): 64 bytes after the skills, then the item lists
 	m_pClientList[iClientH]->m_enchant.Write((unsigned char *)(pData + charIndexEnd + 224));
-	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES;	// item count, then the bag items
+	m_pClientList[iClientH]->m_passive.Write((unsigned char *)(pData + charIndexEnd + 224 + Valoria::CHAR_BYTES));	// passive tree, 48 bytes
+	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;	// item count, then the bag items
 	NItems = 0;
 	NBankItems = 0;
 
@@ -7049,6 +7053,10 @@ void CGame::MsgProcess()
 
 			case MSGID_REQUEST_ENCHANT:	// VALORIA enchanting (Enchanting.cpp)
 				EnchantRequest(iClientH, pData + 4);
+				break;
+
+			case MSGID_REQUEST_PASSIVE:	// VALORIA passive tree (Passives.cpp)
+				PassiveRequest(iClientH, pData + 4);
 				break;
 
 			case MSGID_REQUEST_PING:
@@ -16702,6 +16710,9 @@ bool CGame::bCheckLevelUp(int iClientH)
 			m_pClientList[iClientH]->m_iLevel++;
 			m_pClientList[iClientH]->m_iLU_Pool += 3;
 			bLevelled = true;
+			// VALORIA passive tree: a new point, and a tree over its points may start working again
+			if (m_pClientList[iClientH]->m_passive.Spare(m_pClientList[iClientH]->m_iLevel) == 0)
+				CalcTotalItemEffect(iClientH, -1, false);
 
 			if (m_pClientList[iClientH]->m_iLevel >= 1 && m_pClientList[iClientH]->m_iLevel <= 50) {
 				pItem = new class CItem;
@@ -22366,6 +22377,7 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 		player->m_gearMP  += pB->mp;   player->m_gearDef += pB->def;  player->m_gearCrit += pB->crit;
 	}
 	EnchantGearBonus(iClientH);	// VALORIA enchantments and empowering on worn gear (Enchanting.cpp)
+	PassiveBonus(iClientH);		// VALORIA passive tree (Passives.cpp)
 
 	if ( (player->m_sItemEquipmentStatus[EQUIPPOS_RHAND]   != -1) &&
 		(player->m_sItemEquipmentStatus[EQUIPPOS_TWOHAND] != -1) ) {
@@ -22386,6 +22398,7 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 
 	player->m_iHitRatio = 0;
 	player->m_iDefenseRatio = player->GetDex() * 2 + player->m_gearDef;
+	player->m_iDefenseRatio += player->m_iDefenseRatio * player->m_passDefPct / 100;	// VALORIA passive tree
 	player->m_iDamageAbsorption_Shield = 0;
 
 	for (i = 0; i < MAXITEMEQUIPPOS; i++)
@@ -34925,6 +34938,7 @@ void CGame::GetExp(int iClientH, int iExp, bool bIsAttackerOwn)
 	CClient * player = m_pClientList[iClientH];
 	if (!player) return;
 	if (iExp <= 0) return;
+	if (player->m_passXpPct != 0) { iExp += iExp * player->m_passXpPct / 100; if (iExp < 1) iExp = 1; }	// VALORIA passive tree
 
 	if (player->m_iLevel <= 80) {
 		dV1 = (double)(80 - player->m_iLevel);

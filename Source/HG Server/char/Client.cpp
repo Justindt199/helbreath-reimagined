@@ -351,6 +351,8 @@ CClient::CClient(int clientH)
 	m_gearStr = m_gearDex = m_gearVit = m_gearInt = m_gearMag = m_gearHP = m_gearMP = m_gearDef = m_gearCrit = 0;
 	m_gearDmgPct = 0;
 	m_dwEnchantBusy = 0;
+	m_passHpPct = m_passMpPct = m_passDefPct = m_passXpPct = 0;
+	m_dwPassiveBusy = 0;
 }
 
 CClient::~CClient()
@@ -689,6 +691,7 @@ int CClient::GetMaxHP() const
 	int iRet;
 
 	iRet = (m_iVit + m_gearVit)*3 + m_iLevel*2 + (GetStr())/2 + m_gearHP;
+	iRet += iRet * m_passHpPct / 100;	// VALORIA passive tree
 	
 	if (m_iSideEffect_MaxHPdown != 0)
 		iRet = iRet - (iRet/m_iSideEffect_MaxHPdown);
@@ -701,6 +704,7 @@ int CClient::GetMaxMP() const
 	int iRet;
 
 	iRet = (2*(GetMag()) ) + (2*m_iLevel) + ((GetInt())/2) + m_gearMP;
+	iRet += iRet * m_passMpPct / 100;	// VALORIA passive tree
 
 	return iRet;
 }

@@ -720,6 +720,10 @@ void CGame::SetupDialogBoxes()
 	m_dialogBoxes[DIALOG_ENCHANT].SetupDialog(DIALOG_ENCHANT, 80, 30, ENCHANTWIN_W, ENCHANTWIN_H);
 	m_dialogBoxes[DIALOG_ENCHANT].SetupHandlers(GAMEFUNCT(DrawDialogBox_Enchant), GAMEFUNCT(DlgBoxClick_Enchant));
 
+	// VALORIA passive tree (UI\PassivePanel.cpp)
+	m_dialogBoxes[DIALOG_PASSIVE].SetupDialog(DIALOG_PASSIVE, 60, 20, PASSIVEWIN_W, PASSIVEWIN_H);
+	m_dialogBoxes[DIALOG_PASSIVE].SetupHandlers(GAMEFUNCT(DrawDialogBox_Passives), GAMEFUNCT(DlgBoxClick_Passives));
+
 	for(int i = 0; i < MAXDIALOGBOX; i++)
 	{		
 		m_dialogBoxes[i].SetMode(0); //Setup default buttons
@@ -1457,6 +1461,12 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 			*wp = wCommand;
 			Push(cp, (uint8)iV1);
 			Push(cp, (uint8)iV2);
+			iRet = m_pGSock->iSendMsg(cMsg, cp - cMsg, cKey);
+			break;
+
+		case MSGID_REQUEST_PASSIVE:	// VALORIA passive tree (UI\PassivePanel.cpp): action, node
+			*wp = wCommand;
+			Push(cp, (uint16)iV1);
 			iRet = m_pGSock->iSendMsg(cMsg, cp - cMsg, cKey);
 			break;
 
@@ -4360,6 +4370,7 @@ void CGame::InitGameSettings()
 	m_iWantedStreak = m_iWantedBest = m_iWantedEnded = 0;
 	m_rebirthOf.clear(); m_iRebirth = m_iRebirthMode = m_iRebirthAltLevel = 0; m_dwRebirthConfirmAt = 0;
 	m_enchant.Clear(); m_iEnchantSel = -1; m_iEnchantScroll = 0; m_dwEnchantConfirmAt = 0;	// VALORIA enchanting
+	m_passive.Clear(); m_iPassivePick = -1; m_dwPassiveOrbAt = 0;	// VALORIA passive tree
 	m_bounties.clear(); m_bountyBackers.clear(); m_cBountySel[0] = 0; m_dwBountyClaims = m_dwBountyClaimGold = 0;
 
 	m_adminLevel = 0;
@@ -16761,6 +16772,7 @@ static const char * ProfDialogName(int i)
 	if (i == DIALOG_BOUNTY) return "Bounty board";
 	if (i == DIALOG_REBIRTH) return "Rebirth";
 	if (i == DIALOG_ENCHANT) return "Enchanting";
+	if (i == DIALOG_PASSIVE) return "Passive skills";
 	return "Window";
 }
 
@@ -27554,6 +27566,7 @@ void CGame::NotifyMsgHandler(char * pData)
 	// VALORIA enchanting (UI\EnchantPanel.cpp)
 	case NOTIFY_ENCHANTSTATS: NotifyMsg_EnchantStats((char *)pData); break;
 	case NOTIFY_ENCHANTITEMS: NotifyMsg_EnchantItems((char *)pData); break;
+	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;	// VALORIA passive tree (UI\PassivePanel.cpp)
 
 	// Clock and ping (UI\ClockPing.cpp)
 	case NOTIFY_PONG: NotifyMsg_Pong((char *)pData); break;
@@ -28175,6 +28188,11 @@ void CGame::DlgBoxDoubleClick_Inventory()
 		{	// Order
 			_SetItemOrder(0, cItemID);
 			GetItemName(m_pItemList[cItemID], cStr1, cStr2, cStr3);
+
+			if (strcmp(m_pItemList[cItemID]->m_cName, "OrbOfUnmaking") == 0 || strcmp(m_pItemList[cItemID]->m_cName, "TomeOfTheUnboundPath") == 0)
+			{	OpenPassiveWindow();	// VALORIA passive tree relics are used from its window (UI\PassivePanel.cpp)
+				return;
+			}
 
 			if ( m_bIsDialogEnabled[11] && (m_bIsDialogEnabled[23] == FALSE) && (m_bIsDialogEnabled[23] == FALSE) && (m_dialogBoxes[39].sV3 == 24) )
 			{	if (m_pItemList[cItemID]->m_cEquipPos != EQUIPPOS_NONE)
@@ -37429,6 +37447,10 @@ void CGame::DlgBoxClick_Magic()
 		m_dialogBoxes[3].sView = 9;
 	else if (onButton == 22)
 	{	OpenEnchantWindow();	// VALORIA enchanting (UI\EnchantPanel.cpp)
+		return;
+	}
+	else if (onButton == 23)
+	{	OpenPassiveWindow();	// VALORIA passive tree (UI\PassivePanel.cpp)
 		return;
 	}
 	else if (onButton == 20)

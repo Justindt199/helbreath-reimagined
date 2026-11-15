@@ -670,5 +670,13 @@
  {
   "key": "enchanters_tome",
   "icon": "obj_x_tome"
+ },
+ {
+  "key": "passive_tome",
+  "icon": "x_tome"
+ },
+ {
+  "key": "refund_orb",
+  "icon": "x_orb_unmake"
  }
 ]

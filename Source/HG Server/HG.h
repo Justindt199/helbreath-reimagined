@@ -581,6 +581,10 @@ public:
 	void EnchantGearBonus(int iClientH);
 	void EnchantAddXP(int iClientH, int n);
 	void EnchantAddModXP(int iClientH, int k, int n);
+	// VALORIA passive tree (Passives.cpp)
+	void PassiveRequest(int iClientH, char * pData);
+	void PassiveSendState(int iClientH);
+	void PassiveBonus(int iClientH);
 	void RequestRetrieveItemHandler(int iClientH, char * pData);
 	void RequestRetrieveGuildItem(CClient * player, char * data);
 	void HandlePingMap(const CClient * player, char * data) const;

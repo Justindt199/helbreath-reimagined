@@ -50,6 +50,8 @@ REUSE = {'iron_ore': 'IronOre', 'ruby': 'Ruby', 'sapphire': 'Sapphire', 'emerald
 # VALORIA's quests, which Helbreath doesn't have).
 LATER_TYPES = {'enhance', 'elixir', 'quest', 'relic'}
 LATER_IDS = {'crypt_scroll', 'xp_scroll', 'smith_luck_scroll'}
+# Relics the passive tree uses (Source/Shared/ValoriaPassives.h): ported now, the other relics later.
+PASSIVE_RELICS = {'passive_tome', 'refund_orb'}
 DROPPED_TYPES = {'gloves'}               # Helbreath has no glove slot
 
 # Template for each weapon (worn look, swing speed, skill, dice count). Order matters: first match wins.
@@ -183,6 +185,8 @@ def main():
 
     for key, v in items.items():
         t = v['type']
+        if key in PASSIVE_RELICS:     # added after the Enchanter's Tome, so older item numbers stay put
+            continue
         if t in LATER_TYPES or key in LATER_IDS:
             skipped.append((key, 'later stage' if t != 'quest' else 'VALORIA quest item'))
             continue
@@ -279,6 +283,13 @@ def main():
     frame = len(frames)
     frames.append({'key': 'enchanters_tome', 'icon': 'obj_x_tome'})
     new_row('AlchemyBowl', 'EnchantersTome', "Enchanter's Tome", {'type': 'tool', 'price': 4000, 'shop': 'magic'}, frame)
+
+    # The passive tree's relics (boss drops; used from the passive tree window, see build_passives.py).
+    for key in sorted(PASSIVE_RELICS):
+        v = items[key]
+        frame = len(frames)
+        frames.append({'key': key, 'icon': v['icon']})
+        item_map[key] = [new_row('Ruby', internal_name(v, key), v['name'], v, frame)]
 
     # ---- item rows: ItemValoria1.cfg, ItemValoria2.cfg, ... (the login server sends each one separately)
     replace_block(ITEM_CFG, [])                                   # older versions wrote them into Item3.cfg

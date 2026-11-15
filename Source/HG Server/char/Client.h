@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "Unit.h"
 #include "..\..\Shared\ValoriaEnchant.h"
+#include "..\..\Shared\ValoriaPassives.h"
 #include "..\net\XSocket.h"
 #include "item\Item.h"
 #include "Magic.h"
@@ -447,6 +448,9 @@ public:
 	int m_gearDmgPct;				// VALORIA empowered weapon damage, % (HG Server\Enchanting.cpp)
 	Valoria::CharData m_enchant;	// VALORIA Enchanting: XP, learned modifiers and their levels (Shared\ValoriaEnchant.h)
 	DWORD m_dwEnchantBusy;			// last enchanting request (anti-spam)
+	ValoriaPassive::Data m_passive;	// VALORIA passive tree: taken nodes, Tomes read (Shared\ValoriaPassives.h)
+	int m_passHpPct, m_passMpPct, m_passDefPct, m_passXpPct;	// the tree's % bonuses (Passives.cpp PassiveBonus)
+	DWORD m_dwPassiveBusy;			// last passive tree request (anti-spam)
 
 	CParty * _party;
 	PartyStatus _partyStatus;

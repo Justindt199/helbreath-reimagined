@@ -51,6 +51,7 @@ void CGame::MagicButtonRect(int id, RECT * pRc)
 {
 	if (id == 20) SetRect(pRc, RBTNPOSX, 285, RBTNPOSX + BTNSZX, 285 + BTNSZY);		// Alchemy
 	else if (id == 22) SetRect(pRc, LBTNPOSX, 285, LBTNPOSX + BTNSZX, 285 + BTNSZY);	// Enchant (UI\EnchantPanel.cpp)
+	else if (id == 23) SetRect(pRc, LBTNPOSX, 310, RBTNPOSX + BTNSZX, 310 + BTNSZY);	// Passive Skills (UI\PassivePanel.cpp)
 	else SetRect(pRc, MAGICWIN_W - 28, 4, MAGICWIN_W - 6, 26);						// close
 }
 
@@ -142,5 +143,16 @@ void CGame::DrawMagicPanel(int iChance, int onButton)
 		const bool bOn = bTop && (onButton == 22);
 		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(196, 160, 255), bOn ? 60 : 26, RGB(196, 160, 255), bOn ? 120 : 70);
 		Centered(R, rc.left, rc.right, rc.top + 3, "Enchant", bOn ? kWhite : RGB(220, 214, 240), 12);
+	}
+	// Passive Skills (VALORIA passive tree, UI\PassivePanel.cpp)
+	MagicButtonRect(23, &rc);
+	OffsetRect(&rc, X, Y);
+	{
+		const bool bOn = bTop && (onButton == 23);
+		const int iSpare = m_passive.Spare(m_iLevel);
+		char cLbl[48];
+		if (iSpare > 0) wsprintf(cLbl, "Passive Skills (%d)", iSpare); else strcpy(cLbl, "Passive Skills");
+		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(232, 188, 92), bOn ? 60 : 24, RGB(232, 188, 92), bOn ? 130 : 70);
+		Centered(R, rc.left, rc.right, rc.top + 3, cLbl, bOn ? kWhite : RGB(236, 226, 200), 12);
 	}
 }

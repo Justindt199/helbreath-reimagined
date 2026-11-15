@@ -32,6 +32,7 @@
 #include "..\shared\npcType.h"
 #include "..\shared\maths.h"
 #include "..\shared\ValoriaEnchant.h"
+#include "..\shared\ValoriaPassives.h"
 
 #include "GlobalDef.h"
 #include "Engine\Renderer.h"
@@ -71,7 +72,7 @@
 #define RBTNPOSX			154
 #define BTNPOSY			292
 
-#define MAXDIALOGBOX		68
+#define MAXDIALOGBOX		69
 
 
 #define INDEX4_MSGID		0
@@ -394,7 +395,7 @@ public:
 	// inventory window drawn in code (UI\InventoryPanel.cpp)
 	enum { INVWIN_W = 226, INVWIN_H = 210 };
 	// magic list drawn in code (UI\MagicPanel.cpp)
-	enum { MAGICWIN_W = 258, MAGICWIN_H = 330 };
+	enum { MAGICWIN_W = 258, MAGICWIN_H = 342 };
 	void MagicButtonRect(int id, RECT * pRc);
 	void DrawMagicPanel(int iChance, int onButton);
 	// skills list drawn in code (UI\SkillPanel.cpp)
@@ -503,6 +504,18 @@ public:
 	void DrawDialogBox_Enchant();
 	void DlgBoxClick_Enchant();
 	bool GearRowOf(const char * pName, int base[Valoria::MOD_CRIT + 1]) const;	// UI\ValoriaGear.cpp
+
+	// VALORIA passive tree (UI\PassivePanel.cpp)
+	enum { PASSIVEWIN_W = 620, PASSIVEWIN_H = 450 };
+	ValoriaPassive::Data m_passive;
+	int  m_iPassiveZoom = 2, m_iPassivePanX = 0, m_iPassivePanY = 0, m_iPassivePick = -1;
+	DWORD m_dwPassiveOrbAt = 0, m_dwPassivePickAt = 0;
+	bool m_bPassiveTotals = false;
+	void NotifyMsg_Passives(char * pData);
+	int  PassiveTotal(int iMod) const;
+	void OpenPassiveWindow();
+	void DrawDialogBox_Passives();
+	void DlgBoxClick_Passives();
 	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED };
 	void  CharDollOrigin(short & sX, short & sY);	// where the paper doll's pivot math starts
 	void  DrawCharPanelBack();

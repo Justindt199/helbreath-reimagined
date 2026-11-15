@@ -44,6 +44,8 @@ int CGame::GearBonus(int iKind) const
 		// VALORIA enchantments and empowering on worn gear (UI\EnchantPanel.cpp); GEAR_* follows Valoria::Mod
 		iSum += Valoria::ItemBonus(m_pItemList[i]->m_valoria, iKind, Valoria::ItemTier(m_pItemList[i]->m_sLevelLimit));
 	}
+	// VALORIA passive tree (UI\PassivePanel.cpp): GEAR_STR .. GEAR_DEF follow PM_STR .. PM_DEF
+	if (iKind <= GEAR_DEF) iSum += PassiveTotal(iKind);
 	return iSum;
 }
 
@@ -62,12 +64,14 @@ bool CGame::GearRowOf(const char * pName, int base[Valoria::MOD_CRIT + 1]) const
 // formulas (CClient::GetMaxHP / GetMaxMP / GetMaxSP) include both.
 int CGame::MaxHP() const
 {
-	return (m_stat[STAT_VIT] + GearBonus(GEAR_VIT)) * 3 + m_iLevel * 2 + (m_stat[STAT_STR] + GearBonus(GEAR_STR)) / 2 + GearBonus(GEAR_HP);
+	const int iHP = (m_stat[STAT_VIT] + GearBonus(GEAR_VIT)) * 3 + m_iLevel * 2 + (m_stat[STAT_STR] + GearBonus(GEAR_STR)) / 2 + GearBonus(GEAR_HP);
+	return iHP + iHP * PassiveTotal(ValoriaPassive::PM_HP_PCT) / 100;
 }
 
 int CGame::MaxMP() const
 {
-	return (m_stat[STAT_MAG] + GearBonus(GEAR_MAG)) * 2 + m_iLevel * 2 + (m_stat[STAT_INT] + GearBonus(GEAR_INT)) / 2 + GearBonus(GEAR_MP);
+	const int iMP = (m_stat[STAT_MAG] + GearBonus(GEAR_MAG)) * 2 + m_iLevel * 2 + (m_stat[STAT_INT] + GearBonus(GEAR_INT)) / 2 + GearBonus(GEAR_MP);
+	return iMP + iMP * PassiveTotal(ValoriaPassive::PM_MP_PCT) / 100;
 }
 
 int CGame::MaxSP() const

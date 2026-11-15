@@ -1,4 +1,5 @@
 #include "..\Shared\ValoriaEnchant.h"
+#include "..\Shared\ValoriaPassives.h"
 #include <string>
 #include "LoginServer.h"
 #include "..\shared\buffer.h"
@@ -7,6 +8,7 @@
 //=============================================================================
 // VALORIA enchanting data (..\Shared\ValoriaEnchant.h) is kept in the database as hex text:
 // char_database.ValoriaEnchant (64 bytes) and item.Valoria (32 bytes, NULL when the item has none).
+// The passive tree (..\Shared\ValoriaPassives.h) the same way: char_database.ValoriaPassive (48 bytes).
 static void ValoriaHexToBytes(const char * pHex, unsigned char * pOut, int iBytes)
 {
 	memset(pOut, 0, iBytes);
@@ -2280,8 +2282,9 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 	MYSQL_FIELD *field[100];
 	MYSQL_ROW myRow, SkillRow[MAXSKILLS], ItemRow[MAXITEMS], BankItemRow[MAXBANKITEMS];
 	st_mysql_res    *QueryResult = NULL;
-	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes at 510, then the item lists
-	const long charIndexEnd = 510 + Valoria::CHAR_BYTES;	// 454 + Most Wanted fields (WantedStreak, WantedLastKill, BestStreak, StreaksEnded) + Rebirth fields (470-506)
+	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes at 510, the passive tree 48 bytes after it
+	// (..\Shared\ValoriaPassives.h), then the item lists
+	const long charIndexEnd = 510 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;	// 454 + Most Wanted fields (WantedStreak, WantedLastKill, BestStreak, StreaksEnded) + Rebirth fields (470-506)
 
 	PutOffsetValue(Data, 200, BYTESIZE, 3);//lu_pool
 	ZeroMemory(QueryConsult, sizeof(QueryConsult));
@@ -2401,6 +2404,7 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 		else if(IsSame(field[f]->name, "AltChr"))             PutOffsetValue(Data, 506, DWORDSIZE, atoul(myRow[f]));
 		else if(IsSame(field[f]->name, "Profile"))          SafeCopy(CharProfile, myRow[f]);
 		else if(IsSame(field[f]->name, "ValoriaEnchant"))   ValoriaHexToBytes(myRow[f], (unsigned char *)(Data + 510), Valoria::CHAR_BYTES);
+		else if(IsSame(field[f]->name, "ValoriaPassive"))   ValoriaHexToBytes(myRow[f], (unsigned char *)(Data + 510 + Valoria::CHAR_BYTES), ValoriaPassive::DATA_BYTES);
 	}
 	if(CharID == NULL){
 		ZeroMemory(log, sizeof(log));
@@ -2944,10 +2948,12 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	pQueryResult = mysql_store_result(&myConn);
 	SAFEFREERESULT(pQueryResult);
 
-	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes after the skills, then the item lists
-	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES;
-	char cValoriaHex[Valoria::CHAR_BYTES * 2 + 1];
+	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes after the skills, the passive tree 48 bytes
+	// after it (..\Shared\ValoriaPassives.h), then the item lists
+	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;
+	char cValoriaHex[Valoria::CHAR_BYTES * 2 + 1], cPassiveHex[ValoriaPassive::DATA_BYTES * 2 + 1];
 	ValoriaBytesToHex((const unsigned char *)(cp + charIndexEnd + 224), Valoria::CHAR_BYTES, cValoriaHex);
+	ValoriaBytesToHex((const unsigned char *)(cp + charIndexEnd + 224 + Valoria::CHAR_BYTES), ValoriaPassive::DATA_BYTES, cPassiveHex);
 	NItems = bGetOffsetValue(cp, itemsAt);
 	CurItemID = (GetLastInsertedItemID(myConn)+1);
 	DeleteAllItemsFromChar(CharID, myConn, bIsBankModified);
@@ -3110,7 +3116,7 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	//PutLogList(cTxt, WARN_MSG);
 
 	// VALORIA enchanting
-	sprintf(QueryConsult, "UPDATE `char_database` SET `ValoriaEnchant` = '%s' WHERE `CharID` = '%lu' LIMIT 1;", cValoriaHex, CharID);
+	sprintf(QueryConsult, "UPDATE `char_database` SET `ValoriaEnchant` = '%s', `ValoriaPassive` = '%s' WHERE `CharID` = '%lu' LIMIT 1;", cValoriaHex, cPassiveHex, CharID);
 	if(ProcessQuery(&myConn, QueryConsult) == -1) return;
 	pQueryResult = mysql_store_result(&myConn);
 	SAFEFREERESULT(pQueryResult);

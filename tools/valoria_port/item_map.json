@@ -618,5 +618,11 @@
  ],
  "runestone_of_the_ridge": [
   "RunestoneOfTheRidge"
+ ],
+ "passive_tome": [
+  "TomeOfTheUnboundPath"
+ ],
+ "refund_orb": [
+  "OrbOfUnmaking"
  ]
 }

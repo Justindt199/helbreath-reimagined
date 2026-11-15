@@ -168,6 +168,7 @@
     <ClCompile Include="Bounty.cpp" />
     <ClCompile Include="Rebirth.cpp" />
     <ClCompile Include="Enchanting.cpp" />
+    <ClCompile Include="Passives.cpp" />
     <ClCompile Include="char\Client.cpp">
       <Filter>char</Filter>
     </ClCompile>

@@ -300,6 +300,9 @@
     <ClCompile Include="UI\EnchantPanel.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="UI\PassivePanel.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
     <ClCompile Include="UI\NpcQueryPanel.cpp">
       <Filter>ui</Filter>
     </ClCompile>
