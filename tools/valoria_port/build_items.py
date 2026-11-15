@@ -57,7 +57,10 @@ USE_BUFFS = [('elixir_strength', 0), ('elixir_ironskin', 1), ('elixir_swiftness'
 USE_INFUSE = [('rune_might', 1), ('rune_agility', 2), ('rune_vigor', 3), ('rune_intellect', 4), ('rune_sorcery', 5),
               ('rune_warding', 8), ('blessed_stone', 100)]
 # Added once crit and gold / item find worked in Helbreath: after the others, so item numbers stay put.
-USE_LATER = [('elixir_fortune', 'RedPotion', dict(type=3, eff=36, v1=5)), ('rune_precision', 'Dye(Indigo)', dict(eff=35, v1=9, dur=1))]
+USE_LATER = [('elixir_fortune', 'RedPotion', dict(type=3, eff=36, v1=5)), ('rune_precision', 'Dye(Indigo)', dict(eff=35, v1=9, dur=1)),
+             # rarity orbs (Source/Shared/ValoriaUse.h INFUSE_REFORGE / ASCEND / RADIANT), with item rarity
+             ('reforge_orb', 'Dye(Indigo)', dict(eff=35, v1=101, dur=1)), ('ascension_orb', 'Dye(Indigo)', dict(eff=35, v1=102, dur=1)),
+             ('radiant_orb', 'Dye(Indigo)', dict(eff=35, v1=103, dur=1))]
 DROPPED_TYPES = {'gloves'}               # Helbreath has no glove slot
 
 # Template for each weapon (worn look, swing speed, skill, dice count). Order matters: first match wins.

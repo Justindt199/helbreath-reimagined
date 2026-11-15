@@ -130,6 +130,7 @@ void CGame::EnchantGearBonus(int iClientH)
 	CClient * p = m_pClientList[iClientH];
 	if (p == NULL) return;
 	p->m_gearDmgPct = 0;
+	p->m_gearPhysRes = p->m_gearMagRes = 0;
 	for (int i = 0; i < MAXITEMS; i++) {
 		CItem * it = p->m_pItemList[i];
 		if (it == NULL || !p->m_bIsItemEquipped[i] || it->m_valoria.Empty()) continue;
@@ -145,7 +146,11 @@ void CGame::EnchantGearBonus(int iClientH)
 		p->m_gearDef  += ItemBonus(d, MOD_DEF, t);
 		p->m_gearCrit += ItemBonus(d, MOD_CRIT, t);
 		if (IsWeaponPos(it->m_cEquipPos)) p->m_gearDmgPct += ItemBonus(d, MOD_DMG, t);
+		p->m_gearPhysRes += ItemResist(d, false);
+		p->m_gearMagRes  += ItemResist(d, true);
 	}
+	if (p->m_gearPhysRes > RES_CAP) p->m_gearPhysRes = RES_CAP;
+	if (p->m_gearMagRes > RES_CAP) p->m_gearMagRes = RES_CAP;
 }
 
 //////////////////////////////////////////////////////////////////////

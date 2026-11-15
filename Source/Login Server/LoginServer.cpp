@@ -33,7 +33,7 @@ static void ValoriaBytesToHex(const unsigned char * p, int iBytes, char * pOut)
 	pOut[iBytes*2] = 0;
 }
 
-// The SQL value for an item's 32 VALORIA bytes: NULL for an item without enchantments.
+// The SQL value for an item's VALORIA bytes (Valoria::ITEM_BYTES): NULL for an item without any.
 static std::string ValoriaItemSQL(const unsigned char * p)
 {
 	Valoria::ItemData d;

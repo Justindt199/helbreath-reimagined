@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `ItemPosX` int(11) NOT NULL DEFAULT '40',
   `ItemPosY` int(11) NOT NULL DEFAULT '30',
   `ItemPos` enum('BAG','WH','GWH','MAIL') NOT NULL,
-  `Valoria` varchar(64) DEFAULT NULL,
+  `Valoria` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`ItemID`),
   UNIQUE KEY `ItemID` (`ItemID`),
   KEY `Index` (`CharID`),

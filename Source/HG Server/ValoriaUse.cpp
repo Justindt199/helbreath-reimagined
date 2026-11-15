@@ -132,6 +132,19 @@ static bool IsBoss(int iType)
 	return iType == NPC_HELLCLAW || iType == NPC_TIGERWORM || iType == NPC_WYVERN || iType == NPC_FIRE_WYVERN || iType == NPC_ABADDON;
 }
 
+// A dropped piece of gear rolls its rarity (better from bosses, and with the killer's item find) and a
+// bonus stat per step above Common: VALORIA's make_drop.
+void CGame::ValoriaRollRarity(CItem * pItem, int iNpcType, short sKillerH)
+{
+	if (pItem == NULL || pItem->m_cItemType != ITEMTYPE_EQUIP || !Valoria::IsGearPos(pItem->m_cEquipPos)) return;
+	const int find = (sKillerH > 0 && sKillerH < MAXCLIENTS && m_pClientList[sKillerH] != NULL) ? m_pClientList[sKillerH]->m_val.itemFind : 0;
+	const int r = Valoria::RollRarity(dice(1, 1000000) / 1000001.0, IsBoss(iNpcType), find);
+	if (r == Valoria::RARITY_COMMON) return;
+	pItem->m_valoria.rarity = (unsigned char)r;
+	pItem->m_valoria.RollBonuses(r, Valoria::IsArmourPos(pItem->m_cEquipPos), Valoria::ItemTier(pItem->m_sLevelLimit),
+		[](int lo, int hi) { return lo + (int)dice(1, hi - lo + 1) - 1; });
+}
+
 // Boss damage: the extra a player's blow or spell does to a boss.
 int CGame::ValoriaBossDamage(short sAttackerH, short sNpcH, int iDamage)
 {
@@ -148,6 +161,9 @@ int CGame::ValoriaHurt(short sTargetH, short sAttackerH, char cAttackerType, int
 	if (p == NULL || iDamage <= 0) return iDamage;
 	const CClient::ValoriaCombat & v = p->m_val;
 	if (bMelee && v.dodge > 0 && dice(1, 100) <= v.dodge) return 0;
+	// rarity resistances: % of a physical (blows, arrows) or magic hit taken off
+	const int res = bMelee ? p->m_gearPhysRes : p->m_gearMagRes;
+	if (res > 0) { iDamage -= iDamage * res / 100; if (iDamage < 1) iDamage = 1; }
 	if (v.dmgRed > 0) { iDamage -= iDamage * v.dmgRed / 100; if (iDamage < 1) iDamage = 1; }
 	if (bMelee && v.thorns > 0) {
 		if (cAttackerType == OWNERTYPE_PLAYER && m_pClientList[sAttackerH] != NULL && m_pClientList[sAttackerH]->m_iHP > 1) {
@@ -186,6 +202,7 @@ void CGame::ValoriaBuffTick(int iClientH)
 {
 	CClient * p = m_pClientList[iClientH];
 	if (p == NULL) return;
+	if (p->m_bValoriaItemsDirty) { p->m_bValoriaItemsDirty = false; EnchantSendItems(iClientH); }	// after the item itself arrived
 	const uint32 t = timeGetTime();
 	bool bEnded = false;
 	for (int b = 0; b < BUFF_COUNT; b++) {
@@ -215,7 +232,32 @@ bool CGame::ValoriaInfuse(int iClientH, short sItemIndex, short sDest)
 	}
 
 	const int v = pUse->m_sItemEffectValue1;
-	if (v == INFUSE_BLESSED) {
+	if (v == INFUSE_REFORGE || v == INFUSE_ASCEND || v == INFUSE_RADIANT) {	// VALORIA's orbs (apply_enhance)
+		if (!Valoria::IsGearPos(pDest->m_cEquipPos) || pDest->m_cItemType != ITEMTYPE_EQUIP) { Say(this, iClientH, "Orbs only work on gear."); return false; }
+		Valoria::ItemData & d = pDest->m_valoria;
+		const int r = d.rarity;
+		const bool bArmour = Valoria::IsArmourPos(pDest->m_cEquipPos);
+		const int tier = Valoria::ItemTier(pDest->m_sLevelLimit);
+		auto D = [](int lo, int hi) { return lo + (int)dice(1, hi - lo + 1) - 1; };
+		if (v == INFUSE_REFORGE) {
+			if (r < Valoria::RARITY_UNCOMMON) { Say(this, iClientH, "Common items have no bonuses to reforge."); return false; }
+			d.RollBonuses(r, bArmour, tier, D);
+		}
+		else if (v == INFUSE_ASCEND) {
+			if (r >= Valoria::RARITY_EPIC) { Say(this, iClientH, r == Valoria::RARITY_EPIC ? "Epic or better: use a Radiant Orb." : "That item is already Legendary."); return false; }
+			d.rarity = (unsigned char)(r + 1);
+			d.RollBonuses(1, bArmour, tier, D, true);
+		}
+		else {
+			if (r != Valoria::RARITY_EPIC) { Say(this, iClientH, "The Radiant Orb only works on Epic gear."); return false; }
+			d.rarity = Valoria::RARITY_LEGENDARY;
+			d.RollBonuses(1, bArmour, tier, D, true);
+		}
+		wsprintf(g_cTxt, "%s: your %s is now %s.", pUse->m_cName, pDest->m_cName, Valoria::RarityName(d.rarity));
+		Say(this, iClientH, g_cTxt);
+		EnchantSendItems(iClientH);
+	}
+	else if (v == INFUSE_BLESSED) {
 		const int lvl = (pDest->m_dwAttribute & 0xF0000000) >> 28;
 		if (!BlessedCategory(pDest->m_cCategory)) { Say(this, iClientH, "The Blessed Upgrade Stone only works on weapons, bows, shields, armour, robes and capes."); return false; }
 		if (pDest->m_sTouchEffectType == ITET_UNIQUE_OWNER) { Say(this, iClientH, "Owner-bound items are upgraded the Helbreath way, not with a Blessed Upgrade Stone."); return false; }
@@ -296,4 +338,29 @@ void CGame::ValoriaAdminCraft(int iClientH, const char * pArgs)
 	}
 	if (n == 0) { Say(this, iClientH, "/vcraft: name the bag items to craft with."); return; }
 	Valoria_Craft(iClientH, sIdx, n);
+}
+
+// GM: /vrarity Item [0-4] - gives the bag item a rarity (default: a fresh drop roll) and new bonus stats.
+void CGame::ValoriaAdminRarity(int iClientH, const char * pArgs)
+{
+	CClient * p = m_pClientList[iClientH];
+	if (p == NULL || p->m_iAdminUserLevel < 4) return;
+	char cName[32] = {};
+	int r = -1;
+	sscanf(pArgs, "%31s %d", cName, &r);
+	for (int i = 0; i < MAXITEMS; i++) {
+		CItem * it = p->m_pItemList[i];
+		if (it == NULL || _stricmp(it->m_cName, cName) != 0) continue;
+		if (it->m_cItemType != ITEMTYPE_EQUIP || !Valoria::IsGearPos(it->m_cEquipPos)) { Say(this, iClientH, "/vrarity: not gear."); return; }
+		if (r < 0 || r >= Valoria::RARITY_COUNT) r = Valoria::RollRarity(dice(1, 1000000) / 1000001.0, false, p->m_val.itemFind);
+		it->m_valoria.rarity = (unsigned char)r;
+		it->m_valoria.RollBonuses(r, Valoria::IsArmourPos(it->m_cEquipPos), Valoria::ItemTier(it->m_sLevelLimit),
+			[](int lo, int hi) { return lo + (int)dice(1, hi - lo + 1) - 1; });
+		wsprintf(g_cTxt, "/vrarity: %s is now %s.", it->m_cName, Valoria::RarityName(r));
+		Say(this, iClientH, g_cTxt);
+		EnchantSendItems(iClientH);
+		if (p->m_bIsItemEquipped[i]) CalcTotalItemEffect(iClientH, -1, false);
+		return;
+	}
+	Say(this, iClientH, "/vrarity: no such item in your bag.");
 }

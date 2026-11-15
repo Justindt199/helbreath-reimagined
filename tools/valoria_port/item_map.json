@@ -666,5 +666,14 @@
  ],
  "rune_precision": [
   "RuneOfPrecision"
+ ],
+ "reforge_orb": [
+  "ReforgingOrb"
+ ],
+ "ascension_orb": [
+  "AscensionOrb"
+ ],
+ "radiant_orb": [
+  "RadiantOrb"
  ]
 }

@@ -5940,6 +5940,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			ValoriaAdminUse(iClientH, cp + 6);
 		} else if (memcmp(cp, "/vcraft ", 8) == 0) {	// GM: craft from bag items named (ValoriaUse.cpp)
 			ValoriaAdminCraft(iClientH, cp + 8);
+		} else if (memcmp(cp, "/vrarity ", 9) == 0) {	// GM: give a bag item a rarity (ValoriaUse.cpp)
+			ValoriaAdminRarity(iClientH, cp + 9);
 		} else if (memcmp(cp, "/setweather ", 12) == 0) {
 			AdminOrder_SetWeather(iClientH, cp, dwMsgSize - 21);
 		} else if (memcmp(cp, "/soccer", 7) == 0) {
@@ -7859,6 +7861,7 @@ bool CGame::_bAddClientItemList(int iClientH, class CItem * pItem, int * pDelReq
 
 	if (m_pClientList[iClientH] == NULL) return false;
 	if (pItem == NULL) return false;
+	if (!pItem->m_valoria.Empty()) m_pClientList[iClientH]->m_bValoriaItemsDirty = true;	// rarity, runes...: sent shortly
 
 
 	if ((pItem->m_cItemType == ITEMTYPE_CONSUME) || (pItem->m_cItemType == ITEMTYPE_ARROW)) {
@@ -30558,6 +30561,8 @@ void CGame::NpcDeadItemGenerator(int iNpcH, short sAttackerH, char cAttackerType
 
 		pItem->m_sTouchEffectValue3 = atoi(cTemp);
 #endif
+
+		ValoriaRollRarity(pItem, npc->m_sType, sAttackerH);	// VALORIA rarity on dropped gear (ValoriaUse.cpp)
 
 		if(m_pMapList[ npc->m_cMapIndex ]->iCheckItem(
 			npc->m_sX, npc->m_sY) == ITEMTYPE_RELIC)

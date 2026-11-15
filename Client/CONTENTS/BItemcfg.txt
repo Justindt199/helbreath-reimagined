@@ -23,3 +23,6 @@ BuildItem = StuddedLeggings(M)	0	BeastHide 2 SteelIngot 1 xxx 0 xxx 0 xxx 0 xxx 
 BuildItem = ScaleChausses(M)	0	TurtleShell 1 SteelIngot 2 FluxStone 1 xxx 0 xxx 0 xxx 0	23	60	100
 BuildItem = DragonCuisses(M)	0	DragonScale 4 AdamantiteIngot 3 StarmetalShard 1 TemperingOil 2 xxx 0 xxx 0	23	63	100
 BuildItem = AbyssalCuisses(M)	0	DemonHorn 3 BlackDragonScale 3 AdamantiteIngot 4 StarmetalShard 2 TemperingOil 2 xxx 0	23	64	100
+BuildItem = ReforgingOrb	0	ForgeDust 20 VerdantEssence 2 xxx 0 xxx 0 xxx 0 xxx 0	23	184	100
+BuildItem = AscensionOrb	0	ForgeDust 30 AzureEssence 2 VerdantEssence 3 FluxStone 1 xxx 0 xxx 0	23	185	100
+BuildItem = RadiantOrb	0	RadiantEssence 1 VioletEssence 2 DragonScale 1 TemperingOil 2 xxx 0 xxx 0	23	186	100

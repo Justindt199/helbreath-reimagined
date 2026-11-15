@@ -307,7 +307,13 @@ void EventLoop()
 			else prof::g.acc[prof::UPDATE] += dt;
 		}
 		else if (G_pGame->m_cGameMode == GAMEMODE_ONLOADING) G_pGame->UpdateScreen_OnLoading( FALSE );
-		else WaitMessage();
+		else {
+			// In the background (another window in front) the game keeps running, at about 60 updates a
+			// second: it used to stop altogether, so it stopped answering the server, which then timed the
+			// character out and the player came back to the sign-in screen.
+			MsgWaitForMultipleObjects(0, NULL, FALSE, 16, QS_ALLINPUT);
+			G_pGame->UpdateScreen();
+		}
 	}
 }
 

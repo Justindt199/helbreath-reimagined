@@ -350,6 +350,8 @@ CClient::CClient(int clientH)
 	_angelStr = _angelMag = _angelInt = _angelDex = 0;
 	m_gearStr = m_gearDex = m_gearVit = m_gearInt = m_gearMag = m_gearHP = m_gearMP = m_gearDef = m_gearCrit = 0;
 	m_gearDmgPct = 0;
+	m_gearPhysRes = m_gearMagRes = 0;
+	m_bValoriaItemsDirty = false;
 	m_dwEnchantBusy = 0;
 	m_passHpPct = m_passMpPct = m_passDefPct = m_passXpPct = 0;
 	m_dwPassiveBusy = 0;

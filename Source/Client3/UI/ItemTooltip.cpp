@@ -166,6 +166,14 @@ void CGame::BuildItemTip(ItemTip & t, const CItem * pItem, const char * pName, D
 
 	if (bManued) { t.color = RGB(172, 172, 95); if (quality.empty()) quality = "Crafted"; }
 	if (iPrefix != 0 && !bVortex) { t.color = RGB(90, 220, 90); if (quality.empty()) quality = "Enchanted"; }
+	{	// VALORIA rarity (Shared\ValoriaEnchant.h): its name and colour
+		const int r = (pItem != NULL) ? pItem->m_valoria.rarity : 0;
+		if (r > Valoria::RARITY_COMMON) {
+			const unsigned int c = Valoria::RarityRGB(r);
+			t.color = RGB((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF);
+			quality = quality.empty() ? Valoria::RarityName(r) : std::string(Valoria::RarityName(r)) + " " + quality;
+		}
+	}
 
 	char cBuf[160];
 	{

@@ -25,6 +25,9 @@
 namespace ValoriaUse {
 
 const int INFUSE_BLESSED = 100;
+const int INFUSE_REFORGE = 101;		// VALORIA's Reforging Orb: rerolls an Uncommon+ item's bonus stats
+const int INFUSE_ASCEND  = 102;		// Ascension Orb: Common..Rare one step up, plus a bonus stat
+const int INFUSE_RADIANT = 103;		// Radiant Orb: Epic to Legendary, plus a bonus stat
 const int MAX_UPGRADE    = 15;
 
 enum Buff { BUFF_STRENGTH, BUFF_IRONSKIN, BUFF_SWIFTNESS, BUFF_WISDOM, BUFF_INSIGHT, BUFF_FORTUNE, BUFF_COUNT };
@@ -78,6 +81,8 @@ inline int UseKindOf(const char * pName, int * pValue)
 		{ "RuneOfVigor", ITEMEFFECTTYPE_VALORIA_INFUSE, Valoria::MOD_VIT + 1 }, { "RuneOfIntellect", ITEMEFFECTTYPE_VALORIA_INFUSE, Valoria::MOD_INT + 1 },
 		{ "RuneOfSorcery", ITEMEFFECTTYPE_VALORIA_INFUSE, Valoria::MOD_MAG + 1 }, { "RuneOfWarding", ITEMEFFECTTYPE_VALORIA_INFUSE, Valoria::MOD_DEF + 1 },
 		{ "BlessedUpgradeStone", ITEMEFFECTTYPE_VALORIA_INFUSE, INFUSE_BLESSED },
+		{ "ReforgingOrb", ITEMEFFECTTYPE_VALORIA_INFUSE, INFUSE_REFORGE }, { "AscensionOrb", ITEMEFFECTTYPE_VALORIA_INFUSE, INFUSE_ASCEND },
+		{ "RadiantOrb", ITEMEFFECTTYPE_VALORIA_INFUSE, INFUSE_RADIANT },
 	};
 	for (size_t i = 0; i < sizeof(k) / sizeof(k[0]); i++)
 		if (strcmp(pName, k[i].name) == 0) { *pValue = k[i].v; return k[i].eff; }

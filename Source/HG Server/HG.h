@@ -302,6 +302,7 @@ public:
 	void ReqCreateCraftingHandler(int iClientH, char *pData);
 	void Valoria_Craft(int iClientH, const short * sIdx, int n);
 	void ValoriaAdminCraft(int iClientH, const char * pArgs);
+	void ValoriaAdminRarity(int iClientH, const char * pArgs);
 	bool _bDecodeCraftingConfigFileContents(char * pData, uint32 dwMsgSize);
 
 	void _SendMapStatus(int iClientH);
@@ -598,6 +599,7 @@ public:
 	void ValoriaAdminUse(int iClientH, const char * pArgs);
 	int  ValoriaBossDamage(short sAttackerH, short sNpcH, int iDamage);
 	int  ValoriaHurt(short sTargetH, short sAttackerH, char cAttackerType, int iDamage, bool bMelee);
+	void ValoriaRollRarity(class CItem * pItem, int iNpcType, short sKillerH);
 	void ValoriaOnHit(short sAttackerH, int iDamage);
 	void RequestRetrieveItemHandler(int iClientH, char * pData);
 	void RequestRetrieveGuildItem(CClient * player, char * data);

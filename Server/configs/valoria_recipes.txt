@@ -55,6 +55,9 @@ DragonHeartAmulet	46	1500	1
 FrostweaveRobe(M)	26	375	1
 ArcaneStaff	24	300	1
 LichStaff	35	1000	1
+ReforgingOrb	9	50	1
+AscensionOrb	18	200	1
+RadiantOrb	35	1250	1
 PrismaticShard	21	125	1
 AzureEssence	7	12	1
 VioletEssence	18	50	1

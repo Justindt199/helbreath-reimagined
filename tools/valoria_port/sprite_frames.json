@@ -734,5 +734,17 @@
  {
   "key": "rune_precision",
   "icon": "x_rune_white"
+ },
+ {
+  "key": "reforge_orb",
+  "icon": "x_orb_reforge"
+ },
+ {
+  "key": "ascension_orb",
+  "icon": "x_orb_ascend"
+ },
+ {
+  "key": "radiant_orb",
+  "icon": "x_orb_radiant"
  }
 ]

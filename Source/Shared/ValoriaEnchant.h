@@ -12,8 +12,10 @@
 //     accuracy, knockback, cooldown, move speed and the unique-item special effects come later.
 //
 // Wire formats (little endian, the same on every machine that runs the game):
-//   item data, 32 bytes:      6 x enchant key (uint8, Mod + 1, 0 = empty), 6 x enchant value (int16),
-//                             10 x empower level (uint8, one per Mod), 4 spare
+//   item data, 48 bytes:      6 x enchant key (uint8, Mod + 1, 0 = empty), 6 x enchant value (int16),
+//                             10 x empower level (uint8, one per Mod), 2 x rune (uint8, Mod + 1),
+//                             2 spare, rarity (uint8, 0 Common .. 4 Legendary), 4 x bonus key
+//                             (uint8, Bonus + 1, 0 = empty), 4 x bonus value (int16), 3 spare
 //   character data, 64 bytes: Enchanting XP (uint32), 10 x known tier (uint8, 0 = not learned),
 //                             10 x modifier XP (uint32), 10 spare
 //////////////////////////////////////////////////////////////////////
@@ -35,7 +37,7 @@ const int EMPOWER_MAX   = 5;
 const int ENCHANT_MAX   = 50;			// Enchanting level
 const int MOD_MAX       = 50;			// each modifier's own enchanting level
 const int CORE_MOD_MAX  = 5;
-const int ITEM_BYTES    = 32;
+const int ITEM_BYTES    = 48;		// was 32 before rarity: older saves read with the rest as zero (Common)
 const int CHAR_BYTES    = 64;
 const int GOLD_DIVISOR  = 4;
 const int MAX_TIER      = 10;
@@ -49,6 +51,68 @@ inline const char * ModName(int k)
 	return (k >= 0 && k < MOD_COUNT) ? n[k] : "?";
 }
 
+// ---- rarity (VALORIA's game_state.gd: roll_rarity, roll_bonus, bonus_pool_for) -----------------------
+// Dropped gear rolls a rarity; each step above Common adds one random bonus stat. The Reforging Orb
+// rerolls the bonuses, the Ascension Orb raises Common..Rare one step (adding a bonus), the Radiant Orb
+// Epic to Legendary. Bonuses: the Mod stats STR..crit, and on worn armour physical and magic
+// resistance (% of a hit taken off, up to RES_CAP). VALORIA's accuracy, knockback and spell cooldown
+// have no Helbreath counterpart and are left out.
+
+enum Rarity { RARITY_COMMON, RARITY_UNCOMMON, RARITY_RARE, RARITY_EPIC, RARITY_LEGENDARY, RARITY_COUNT };
+enum Bonus { BONUS_PHYS_RES = MOD_DMG, BONUS_MAG_RES, BONUS_COUNT };	// 0..MOD_CRIT are the Mod stats
+const int MAX_BONUSES = 4;		// one per step above Common
+const int RES_CAP     = 50;		// highest physical / magic resistance % gear can give
+
+inline const char * RarityName(int r)
+{
+	static const char * n[RARITY_COUNT] = { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
+	return (r >= 0 && r < RARITY_COUNT) ? n[r] : "Common";
+}
+// VALORIA's rarity colours (RARITY_COLORS), as 0xRRGGBB
+inline unsigned int RarityRGB(int r)
+{
+	static const unsigned int c[RARITY_COUNT] = { 0xE0D9C7, 0x73E673, 0x66A6FF, 0xBF73FF, 0xFF9926 };
+	return (r >= 0 && r < RARITY_COUNT) ? c[r] : c[0];
+}
+inline const char * BonusName(int k)
+{
+	if (k == BONUS_PHYS_RES) return "Physical resist %";
+	if (k == BONUS_MAG_RES) return "Magic resist %";
+	return ModName(k);
+}
+
+// A rarity from u in [0, 1): VALORIA's weights, a boss's better ones, item find raising the steps above Common.
+inline int RollRarity(double u, bool bBoss, int iItemFindPct)
+{
+	double w[RARITY_COUNT] = { 74.0, 20.0, 5.4, 0.55, 0.05 };
+	if (bBoss) { w[0] = 32.0; w[1] = 38.0; w[2] = 24.0; w[3] = 5.0; w[4] = 1.0; }
+	const double f = 1.0 + (iItemFindPct > 0 ? iItemFindPct : 0) / 100.0;
+	double total = 0;
+	for (int i = 0; i < RARITY_COUNT; i++) { if (i > 0) w[i] *= f; total += w[i]; }
+	double r = u * total;
+	for (int i = 0; i < RARITY_COUNT; i++) { r -= w[i]; if (r < 0) return i; }
+	return RARITY_COMMON;
+}
+
+// The bonus stats gear can roll (resistances only on worn armour); returns how many went into pool.
+inline int BonusPool(bool bArmour, int pool[BONUS_COUNT])
+{
+	int n = 0;
+	for (int k = MOD_STR; k <= MOD_CRIT; k++) pool[n++] = k;
+	if (bArmour) { pool[n++] = BONUS_PHYS_RES; pool[n++] = BONUS_MAG_RES; }
+	return n;
+}
+
+// One bonus stat's value at an item tier: VALORIA's roll_bonus_one, from a dice function d(lo, hi).
+template <class Dice> inline int RollBonusValue(int k, int iTier, Dice d)
+{
+	if (k == MOD_HP) return d(5, 15) * iTier;
+	if (k == MOD_MP) return d(4, 10) * iTier;
+	if (k == MOD_CRIT || k == BONUS_PHYS_RES || k == BONUS_MAG_RES) return d(1, iTier + 1);
+	if (k >= MOD_STR && k <= MOD_MAG) return d(1, (2 * iTier < CORE_MOD_MAX) ? 2 * iTier : CORE_MOD_MAX);
+	return d(1, 2 * iTier);		// defense
+}
+
 // ---- items ---------------------------------------------------------------------------------------
 
 struct ItemData {
@@ -56,10 +120,31 @@ struct ItemData {
 	short         enVal[MAX_ENCHANTS];
 	unsigned char em[MOD_COUNT];
 	unsigned char rune[MAX_RUNES];	// VALORIA runes (Rune of Might ...): modifier, MOD_NONE = empty slot
+	unsigned char rarity;				// Rarity
+	unsigned char bKey[MAX_BONUSES];	// rarity bonus stats: Bonus, MOD_NONE = empty
+	short         bVal[MAX_BONUSES];
 
 	ItemData() { Clear(); }
-	void Clear() { memset(enKey, MOD_NONE, sizeof(enKey)); memset(enVal, 0, sizeof(enVal)); memset(em, 0, sizeof(em)); memset(rune, MOD_NONE, sizeof(rune)); }
-	bool Empty() const { return Enchants() == 0 && EmpowerTotal() == 0 && Runes() == 0; }
+	void Clear() { memset(enKey, MOD_NONE, sizeof(enKey)); memset(enVal, 0, sizeof(enVal)); memset(em, 0, sizeof(em)); memset(rune, MOD_NONE, sizeof(rune));
+		rarity = RARITY_COMMON; memset(bKey, MOD_NONE, sizeof(bKey)); memset(bVal, 0, sizeof(bVal)); }
+	bool Empty() const { return Enchants() == 0 && EmpowerTotal() == 0 && Runes() == 0 && rarity == RARITY_COMMON && Bonuses() == 0; }
+	int  Bonuses() const { int n = 0; for (int i = 0; i < MAX_BONUSES; i++) if (bKey[i] < BONUS_COUNT) n++; return n; }
+	int  BonusValue(int k) const { int v = 0; for (int i = 0; i < MAX_BONUSES; i++) if (bKey[i] == k) v += bVal[i]; return v; }
+	// rolls n bonus stats, all different (VALORIA's roll_bonus); keeps any already there when bKeep
+	template <class Dice> void RollBonuses(int n, bool bArmour, int iTier, Dice d, bool bKeep = false) {
+		if (!bKeep) { memset(bKey, MOD_NONE, sizeof(bKey)); memset(bVal, 0, sizeof(bVal)); }
+		int pool[BONUS_COUNT];
+		int np = BonusPool(bArmour, pool);
+		for (int i = 0; i < np; i++) for (int j = 0; j < MAX_BONUSES; j++) if (bKey[j] == pool[i]) { pool[i--] = pool[--np]; break; }
+		for (int s = 0; s < MAX_BONUSES && n > 0 && np > 0; s++) {
+			if (bKey[s] < BONUS_COUNT) continue;
+			const int pick = d(0, np - 1);
+			bKey[s] = (unsigned char)pool[pick];
+			bVal[s] = (short)RollBonusValue(pool[pick], iTier, d);
+			pool[pick] = pool[--np];
+			n--;
+		}
+	}
 	int  Runes() const { int n = 0; for (int i = 0; i < MAX_RUNES; i++) if (rune[i] < MOD_COUNT) n++; return n; }
 	int  Enchants() const { int n = 0; for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] < MOD_COUNT) n++; return n; }
 	int  EnchantSlotOf(int k) const { for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] == k) return i; return -1; }
@@ -72,6 +157,9 @@ struct ItemData {
 		for (int i = 0; i < MAX_ENCHANTS; i++) { p[6 + i*2] = (unsigned char)(enVal[i] & 0xFF); p[7 + i*2] = (unsigned char)((enVal[i] >> 8) & 0xFF); }
 		for (int k = 0; k < MOD_COUNT; k++) p[18 + k] = em[k];
 		for (int i = 0; i < MAX_RUNES; i++) p[28 + i] = (rune[i] < MOD_COUNT) ? (unsigned char)(rune[i] + 1) : 0;
+		p[32] = rarity;
+		for (int i = 0; i < MAX_BONUSES; i++) p[33 + i] = (bKey[i] < BONUS_COUNT) ? (unsigned char)(bKey[i] + 1) : 0;
+		for (int i = 0; i < MAX_BONUSES; i++) { p[37 + i*2] = (unsigned char)(bVal[i] & 0xFF); p[38 + i*2] = (unsigned char)((bVal[i] >> 8) & 0xFF); }
 	}
 	void Read(const unsigned char * p) {
 		for (int i = 0; i < MAX_ENCHANTS; i++) enKey[i] = (p[i] >= 1 && p[i] <= MOD_COUNT) ? (unsigned char)(p[i] - 1) : MOD_NONE;
@@ -79,6 +167,11 @@ struct ItemData {
 		for (int k = 0; k < MOD_COUNT; k++) em[k] = (p[18 + k] <= EMPOWER_MAX) ? p[18 + k] : EMPOWER_MAX;
 		for (int i = 0; i < MAX_RUNES; i++) rune[i] = (p[28 + i] >= 1 && p[28 + i] <= MOD_COUNT) ? (unsigned char)(p[28 + i] - 1) : MOD_NONE;
 		for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] == MOD_NONE) enVal[i] = 0;
+		rarity = (p[32] < RARITY_COUNT) ? p[32] : (unsigned char)RARITY_COMMON;
+		for (int i = 0; i < MAX_BONUSES; i++) {
+			bKey[i] = (p[33 + i] >= 1 && p[33 + i] <= BONUS_COUNT) ? (unsigned char)(p[33 + i] - 1) : MOD_NONE;
+			bVal[i] = (bKey[i] == MOD_NONE) ? 0 : (short)(p[37 + i*2] | (p[38 + i*2] << 8));
+		}
 	}
 };
 
@@ -230,7 +323,7 @@ inline unsigned int SkillXP(int n)						{ const int v = (int)floor(n * SKILL_XP_
 
 namespace Valoria {
 // Character data saved between the game server and the login server: each bag item record is 67
-// bytes and each warehouse item record 62, followed by the item's 32 VALORIA bytes.
+// bytes and each warehouse item record 62, followed by the item's ITEM_BYTES VALORIA bytes.
 const int BAG_RECORD  = 67 + ITEM_BYTES;
 const int BANK_RECORD = 62 + ITEM_BYTES;
 }
@@ -266,6 +359,10 @@ inline int ItemBonus(const ItemData & d, int k, int iItemTier)
 	int v = (k < ENCHANTABLE) ? d.EnchantValue(k) : 0;
 	if (d.em[k] > 0) v += (IsCore(k) ? CoreMod(k, d.em[k]) : d.em[k] * EmpowerStep(k, iItemTier));
 	for (int i = 0; i < MAX_RUNES; i++) if (d.rune[i] == k) v += RuneAmount(k, iItemTier);
+	if (k <= MOD_CRIT) v += d.BonusValue(k);		// rarity bonus stats
 	return v;
 }
+
+// Physical (bMagic false) or magic resistance % an item's rarity bonuses give while it is worn.
+inline int ItemResist(const ItemData & d, bool bMagic) { return d.BonusValue(bMagic ? BONUS_MAG_RES : BONUS_PHYS_RES); }
 }
