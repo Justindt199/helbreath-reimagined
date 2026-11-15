@@ -153,6 +153,8 @@ private:
 	float S(float v) const { return v * m_fScale; }
 	unsigned int Px(float size) const;
 	void _Rect(sf::RenderWindow & w, const Rect & r, unsigned int fill, unsigned int outline = 0, float outlineWidth = 0, float radius = 0);
+	// VALORIA's stone (CONTENTS\ui): 0 panel, 1 button, 2 button under the mouse; false without the picture
+	bool _Stone(sf::RenderWindow & w, const Rect & r, int iKind);
 	void _Text(sf::RenderWindow & w, const std::string & s, float x, float yCenter, float size, unsigned int color, int align = 0, bool bold = false);
 	float _TextWidth(const std::string & s, float size, bool bold = false);
 	float _CapCenter(unsigned int px, bool bold);

@@ -14351,6 +14351,7 @@ void CGame::ClearContents_OnCreateNewAccount()
 
 void CGame::ChangeGameMode(char cMode)
 {
+	m_Renderer.m_bStoneInk = false;	// (set while a classic window or screen is drawn)
 	m_cPrevGameMode = m_cGameMode;
 	m_cGameMode = cMode;
 	m_cGameModeCount = 0;
@@ -18222,6 +18223,15 @@ bool CGame::DrawStoneClassic(char cType, int sX, int sY, int iFrame)
 		R.TitleCentered(x0, y0 + 2, x1, y0 + 26, kTitles[iFrame], RGB(242, 199, 102), 15);
 		return true;
 	case SPRID_INTERFACE_ND_GAME1:
+		if (iFrame == 0) {	// the system menu: its boxes and the two volume tracks were painted in
+			static const short kBox[][4] = { {120, 62, 235, 77}, {77, 84, 108, 99}, {172, 84, 203, 99},
+				{77, 105, 108, 120}, {172, 105, 203, 120}, {199, 157, 235, 172}, {90, 179, 126, 194}, {199, 179, 235, 194} };
+			R.StonePanel(x0, y0, x1, y1);
+			for (const auto & k : kBox) R.Slate(x0 + k[0], y0 + k[1], x0 + k[2], y0 + k[3]);
+			R.Slate(x0 + 130, y0 + 128, x0 + 237, y0 + 133);	// sound volume track
+			R.Slate(x0 + 130, y0 + 144, x0 + 237, y0 + 149);	// music volume track
+			return true;
+		}
 		if (iFrame == 1) { R.StonePanel(x0, y0, x1, y1); return true; }
 		if (iFrame == 2) { R.Slate(x0 + 6, y0 + 6, x1 - 6, y1 - 6); return true; }
 		return false;
@@ -18235,10 +18245,28 @@ bool CGame::DrawStoneClassic(char cType, int sX, int sY, int iFrame)
 		if (iFrame == 3) { R.Slate(x0, y0, x1, y1); return true; }
 		return false;
 	case SPRID_INTERFACE_ND_GAME4:
-		if (iFrame == 1) { R.StonePanel(x0, y0, x1, y1); return true; }
+		if (iFrame == 0) {	// change password: its four fields were painted in (its title is DialogText 13)
+			R.StonePanel(x0, y0, x1, y1);
+			for (int i = 0; i < 4; i++) R.Slate(x0 + 157, y0 + 40 + 24 * i, x0 + 268, y0 + 59 + 24 * i);
+			return true;
+		}
+		if (iFrame >= 1 && iFrame <= 3) { R.StonePanel(x0, y0, x1, y1); return true; }	// spells; message boxes
 		return false;
 	case SPRID_INTERFACE_ND_CRUSADE:
 		if (iFrame == 0) { R.StonePanel(x0, y0, x1, y1); return true; }
+		return false;
+	case SPRID_INTERFACE_ND_NEWEXCHANGE:
+		if (iFrame == 0) {	// the exchange: its title and the two four-column tables were painted in
+			R.StonePanel(x0, y0, x1, y1);
+			R.TitleCentered(x0, y0 + 4, x1, y0 + 26, "Exchange Item", RGB(242, 199, 102), 15);
+			static const short kTable[2][5] = { {14, 76, 135, 193, 250}, {270, 328, 387, 446, 503} };
+			for (const auto & t : kTable) {
+				R.Slate(x0 + t[0], y0 + 30, x0 + t[4], y0 + 205);
+				R.FillPanel(x0 + t[0] + 1, y0 + 55, x0 + t[4] - 1, y0 + 56, 0, RGB(107, 97, 84), 200);	// under the name
+				for (int c = 1; c < 4; c++) R.FillPanel(x0 + t[c], y0 + 56, x0 + t[c] + 1, y0 + 204, 0, RGB(107, 97, 84), 160);
+			}
+			return true;
+		}
 		return false;
 	}
 	return false;
@@ -28557,6 +28585,7 @@ void CGame::UpdateScreen_OnChangePassword()
 	UpdateScreen_OnSelectCharacter(0, 0, 0, 0, TRUE);
 	m_Renderer.DrawShadowBox(0,0,639,479);//SelectCharacter
 
+	m_Renderer.m_bStoneInk = true;	// parchment-era ink on stone (CRenderer::StoneInk)
 	DrawNewDialogBox(SPRID_INTERFACE_ND_GAME4, 153, 112, 0);
 	DrawNewDialogBox(SPRID_INTERFACE_ND_TEXT , 153, 112, 13);
 	DrawNewDialogBox(SPRID_INTERFACE_ND_GAME4, 153 + 157, 112 + 109, 7);//
@@ -28661,6 +28690,7 @@ void CGame::UpdateScreen_OnChangePassword()
 	if ((msX >= 197) && (msX <= 197 + BTNSZX) && (msY >= 320) && (msY <= 320 + BTNSZY)) m_cCurFocus = 5;
 	if ((msX >= 370) && (msX <= 370 + BTNSZX) && (msY >= 320) && (msY <= 320 + BTNSZY)) m_cCurFocus = 6;
 
+	m_Renderer.m_bStoneInk = false;
 	m_Renderer.iFlip();
 }
 

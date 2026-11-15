@@ -406,6 +406,41 @@ void CSettingsMenu::_Wrap(const std::string & s, float size, float width, std::v
 // Shape helpers
 //////////////////////////////////////////////////////////////////////
 
+bool CSettingsMenu::_Stone(sf::RenderWindow & w, const Rect & r, int iKind)
+{
+	// the same pictures and carved edges as the game's windows (CRenderer::StoneBox), 9-sliced
+	static const struct { const char * file; int mx, my; float k; } kStone[3] = {
+		{ "CONTENTS\\ui\\panel.png", 24, 24, 0.75f }, { "CONTENTS\\ui\\button.png", 16, 9, 0.7f },
+		{ "CONTENTS\\ui\\button_hover.png", 16, 9, 0.7f } };
+	static sf::Texture tex[3];
+	static int state[3] = { 0, 0, 0 };	// 0 not tried, 1 loaded, -1 missing
+	if (iKind < 0 || iKind > 2) return false;
+	if (state[iKind] == 0) {
+		state[iKind] = tex[iKind].loadFromFile(kStone[iKind].file) ? 1 : -1;
+		if (state[iKind] == 1) tex[iKind].setSmooth(true);
+	}
+	if (state[iKind] != 1) return false;
+	const float x0 = std::round(m_fOX + S(r.x)), y0 = std::round(m_fOY + S(r.y));
+	const float x1 = std::round(m_fOX + S(r.x + r.w)), y1 = std::round(m_fOY + S(r.y + r.h));
+	if (x1 <= x0 || y1 <= y0) return true;
+	const int tw = (int)tex[iKind].getSize().x, th = (int)tex[iKind].getSize().y;
+	const int mx = kStone[iKind].mx, my = kStone[iKind].my;
+	float ex = S(mx * kStone[iKind].k * 0.5f) * 2.f, ey = S(my * kStone[iKind].k * 0.5f) * 2.f;
+	ex = std::min(ex, (x1 - x0) / 2.f); ey = std::min(ey, (y1 - y0) / 2.f);
+	const int sxs[4] = { 0, mx, tw - mx, tw }, sys[4] = { 0, my, th - my, th };
+	const float dxs[4] = { x0, x0 + ex, x1 - ex, x1 }, dys[4] = { y0, y0 + ey, y1 - ey, y1 };
+	for (int row = 0; row < 3; row++) for (int col = 0; col < 3; col++) {
+		const int sw = sxs[col + 1] - sxs[col], sh = sys[row + 1] - sys[row];
+		const float dw = dxs[col + 1] - dxs[col], dh = dys[row + 1] - dys[row];
+		if (sw <= 0 || sh <= 0 || dw <= 0.f || dh <= 0.f) continue;
+		sf::Sprite piece(tex[iKind], sf::IntRect({ sxs[col], sys[row] }, { sw, sh }));
+		piece.setPosition({ dxs[col], dys[row] });
+		piece.setScale({ dw / sw, dh / sh });
+		w.draw(piece);
+	}
+	return true;
+}
+
 void CSettingsMenu::_Rect(sf::RenderWindow & w, const Rect & r, unsigned int fill, unsigned int outline, float outlineWidth, float radius)
 {
 	const float x0 = std::round(m_fOX + S(r.x)), y0 = std::round(m_fOY + S(r.y));
@@ -886,8 +921,9 @@ void CSettingsMenu::_DrawItem(sf::RenderWindow & w, const ItemLayout & il, bool 
 
 	case ITEM_BUTTON: {
 		const std::string cap = item.text ? item.text() : item.label;
-		_Rect(w, il.control, (bHover && bEnabled) ? kButtonHover : kButton, bEnabled ? kButtonEdge : kCtlEdge, 1.f, 7.f);
-		_Text(w, cap, il.control.x + il.control.w / 2.f, cy, kLabelSize, bEnabled ? kButtonText : kTextOff, 1);
+		if (!bEnabled || !_Stone(w, il.control, (bHover && bEnabled) ? 2 : 1))
+			_Rect(w, il.control, (bHover && bEnabled) ? kButtonHover : kButton, bEnabled ? kButtonEdge : kCtlEdge, 1.f, 7.f);
+		_Text(w, cap, il.control.x + il.control.w / 2.f, cy, kLabelSize, bEnabled ? (bHover ? 0xFFF2C7FF : 0xF5DB9EFF) : kTextOff, 1);
 		break; }
 
 	case ITEM_INFO: {
@@ -1037,7 +1073,7 @@ void CSettingsMenu::Draw(sf::RenderWindow & window)
 		window.draw(dim);
 	}
 	_Rect(window, { 4.f, 10.f, kW, kH }, kShadow, 0, 0, kRadius);
-	_Rect(window, { 0.f, 0.f, kW, kH }, kPanel, kPanelEdge, 1.f, kRadius);
+	if (!_Stone(window, { 0.f, 0.f, kW, kH }, 0)) _Rect(window, { 0.f, 0.f, kW, kH }, kPanel, kPanelEdge, 1.f, kRadius);
 	if (m_pFont == NULL) { _DrawCursor(window, (float)iWinX, (float)iWinY); return; }
 
 	// Title bar: a faint gold tint, the title on the left, the clock and close button on the right
@@ -1100,7 +1136,9 @@ void CSettingsMenu::Draw(sf::RenderWindow & window)
 		if (!bOn)          { fill = 0x00000000; edge = 0xFFFFFF14; text = kTextOff; }
 		else if (b.danger) { fill = bHover ? kDangerHover : kDanger; edge = kDangerEdge; text = kDangerText; }
 		else               { fill = bHover ? kButtonHover : kButton; edge = kButtonEdge; text = kButtonText; }
-		_Rect(window, r, fill, edge, 1.f, 7.f);
+		if (!bOn || !_Stone(window, r, bHover ? 2 : 1)) _Rect(window, r, fill, edge, 1.f, 7.f);
+		else if (b.danger) text = kDangerText;
+		else text = bHover ? 0xFFF2C7FF : 0xF5DB9EFF;	// VALORIA's button lettering
 		_Text(window, b.label ? b.label() : "", r.x + r.w / 2.f, r.y + r.h / 2.f, kLabelSize, text, 1);
 	}
 

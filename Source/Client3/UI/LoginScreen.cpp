@@ -224,16 +224,16 @@ void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, i
 	{
 		const bool bReady = strlen(pAccount) > 0 && strlen(pPassword) > 0 && bNameOk && bPwOk;
 		const bool bOn = InRect(rcGo, msX, msY) || m_cCurFocus == 3;
-		R.FillPanel(rcGo.left, rcGo.top, rcGo.right, rcGo.bottom, 7,
-			bReady ? (bOn ? RGB(250, 214, 128) : RGB(232, 188, 92)) : RGB(120, 104, 70), bReady ? 255 : 180);
+		R.StoneButton(rcGo.left, rcGo.top, rcGo.right, rcGo.bottom, bReady ? 1 : 0);	// gold-rimmed once it can go
 		const char * pGo = "CONNECT";
-		Bold(R, (rcGo.left + rcGo.right - Width(R, pGo, 15)) / 2, rcGo.top + 8, pGo, RGB(30, 22, 8), 15);
+		Bold(R, (rcGo.left + rcGo.right - Width(R, pGo, 15)) / 2, rcGo.top + 8, pGo,
+			bReady ? (bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)) : RGB(150, 144, 130), 15);
 	}
 	const struct { const RECT * rc; const char * label; bool on; } btn[2] = {
 		{ &rcNew, "Create account", InRect(rcNew, msX, msY) || m_cCurFocus == 4 }, { &rcQuit, "Quit", InRect(rcQuit, msX, msY) } };
 	for (int i = 0; i < 2; i++) {
 		const RECT & rc = *btn[i].rc;
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), btn[i].on ? 36 : 16, RGB(255, 255, 255), btn[i].on ? 70 : 40);
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, btn[i].on ? 1 : 0);
 		R.TextOutSized((rc.left + rc.right - Width(R, btn[i].label, 12)) / 2, rc.top + 5, btn[i].label, btn[i].on ? kWhite : RGB(220, 224, 230), 12);
 	}
 
@@ -406,7 +406,7 @@ void CGame::_Draw_OnCreateAccount(const char * const * pField, const bool * bOk,
 		{ &rcBack, "Back to sign in", InRect(rcBack, msX, msY) || m_cCurFocus == 9 } };
 	for (int i = 0; i < 2; i++) {
 		const RECT & rc = *btn[i].rc;
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), btn[i].on ? 36 : 16, RGB(255, 255, 255), btn[i].on ? 70 : 40);
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, btn[i].on ? 1 : 0);
 		R.TextOutSized((rc.left + rc.right - Width(R, btn[i].label, 12)) / 2, rc.top + 4, btn[i].label, btn[i].on ? kWhite : RGB(220, 224, 230), 12);
 	}
 
