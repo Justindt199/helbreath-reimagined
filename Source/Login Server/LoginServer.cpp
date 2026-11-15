@@ -1,5 +1,45 @@
+#include "..\Shared\ValoriaEnchant.h"
+#include <string>
 #include "LoginServer.h"
 #include "..\shared\buffer.h"
+
+//=============================================================================
+// VALORIA enchanting data (..\Shared\ValoriaEnchant.h) is kept in the database as hex text:
+// char_database.ValoriaEnchant (64 bytes) and item.Valoria (32 bytes, NULL when the item has none).
+static void ValoriaHexToBytes(const char * pHex, unsigned char * pOut, int iBytes)
+{
+	memset(pOut, 0, iBytes);
+	if (pHex == NULL) return;
+	for (int i = 0; i < iBytes && pHex[i*2] && pHex[i*2+1]; i++) {
+		unsigned v = 0;
+		for (int j = 0; j < 2; j++) {
+			const char c = pHex[i*2+j];
+			v <<= 4;
+			if (c >= '0' && c <= '9') v |= (unsigned)(c - '0');
+			else if (c >= 'a' && c <= 'f') v |= (unsigned)(c - 'a' + 10);
+			else if (c >= 'A' && c <= 'F') v |= (unsigned)(c - 'A' + 10);
+		}
+		pOut[i] = (unsigned char)v;
+	}
+}
+
+static void ValoriaBytesToHex(const unsigned char * p, int iBytes, char * pOut)
+{
+	static const char kHex[] = "0123456789abcdef";
+	for (int i = 0; i < iBytes; i++) { pOut[i*2] = kHex[p[i] >> 4]; pOut[i*2+1] = kHex[p[i] & 15]; }
+	pOut[iBytes*2] = 0;
+}
+
+// The SQL value for an item's 32 VALORIA bytes: NULL for an item without enchantments.
+static std::string ValoriaItemSQL(const unsigned char * p)
+{
+	Valoria::ItemData d;
+	d.Read(p);
+	if (d.Empty()) return "NULL";
+	char cHex[Valoria::ITEM_BYTES * 2 + 1];
+	ValoriaBytesToHex(p, Valoria::ITEM_BYTES, cHex);
+	return std::string("'") + cHex + "'";
+}
 
 //=============================================================================
 CLoginServer::CLoginServer()
@@ -2239,7 +2279,8 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 	MYSQL_FIELD *field[100];
 	MYSQL_ROW myRow, SkillRow[MAXSKILLS], ItemRow[MAXITEMS], BankItemRow[MAXBANKITEMS];
 	st_mysql_res    *QueryResult = NULL;
-	static long charIndexEnd = 510;	// 454 + Most Wanted fields (WantedStreak, WantedLastKill, BestStreak, StreaksEnded) + Rebirth fields (470-506)
+	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes at 510, then the item lists
+	const long charIndexEnd = 510 + Valoria::CHAR_BYTES;	// 454 + Most Wanted fields (WantedStreak, WantedLastKill, BestStreak, StreaksEnded) + Rebirth fields (470-506)
 
 	PutOffsetValue(Data, 200, BYTESIZE, 3);//lu_pool
 	ZeroMemory(QueryConsult, sizeof(QueryConsult));
@@ -2358,6 +2399,7 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 		else if(IsSame(field[f]->name, "AltMag"))             PutOffsetValue(Data, 502, DWORDSIZE, atoul(myRow[f]));
 		else if(IsSame(field[f]->name, "AltChr"))             PutOffsetValue(Data, 506, DWORDSIZE, atoul(myRow[f]));
 		else if(IsSame(field[f]->name, "Profile"))          SafeCopy(CharProfile, myRow[f]);
+		else if(IsSame(field[f]->name, "ValoriaEnchant"))   ValoriaHexToBytes(myRow[f], (unsigned char *)(Data + 510), Valoria::CHAR_BYTES);
 	}
 	if(CharID == NULL){
 		ZeroMemory(log, sizeof(log));
@@ -2417,7 +2459,7 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 	{
 		BYTE FIItemName, FIItemCount, FIItemType, FIID1, FIID2, FIID3, FIItemColor;
 		BYTE FIItemEffect1, FIItemEffect2, FIItemEffect3, FIItemLifeSpan, FIItemAttribute, FISocket1, FISocket2, FISocket3;
-		BYTE FIItemEquip, FIItemPosX, FIItemPosY, FIItemID;
+		BYTE FIItemEquip, FIItemPosX, FIItemPosY, FIItemID, FIValoria = 255;
 		mysql_field_seek(QueryResult, 0);
 		for(BYTE b = 0; b < NFields; b++){
 			field[b] = mysql_fetch_field(QueryResult);
@@ -2440,11 +2482,12 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 			else if(IsSame(field[b]->name, "ItemPosX"))  FIItemPosX = b;
 			else if(IsSame(field[b]->name, "ItemPosY"))  FIItemPosY = b;
 			else if(IsSame(field[b]->name, "ItemID"))  FIItemID = b;
+			else if(IsSame(field[b]->name, "Valoria")) FIValoria = b;
 		}
 
 		for(int b = 0; b < NItems; b++)
 		{
-			WORD IndexForItem = (WORD)(charIndexEnd+1 + (b*67));
+			WORD IndexForItem = (WORD)(charIndexEnd+1 + (b*Valoria::BAG_RECORD));
 
 			ItemRow[b] = mysql_fetch_row(QueryResult);
 			SafeCopy((Data + IndexForItem), ItemRow[b][FIItemName], strlen(ItemRow[b][FIItemName]));
@@ -2476,6 +2519,7 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 			PutOffsetValue(Data, IndexForItem +55, WORDSIZE, atoi(ItemRow[b][FIItemPosX]));
 			PutOffsetValue(Data, IndexForItem +57, WORDSIZE, atoi(ItemRow[b][FIItemPosY]));
 			PutOffsetValue(Data, IndexForItem +59, I64SIZE, atoull(ItemRow[b][FIItemID]));
+			if (FIValoria != 255) ValoriaHexToBytes(ItemRow[b][FIValoria], (unsigned char *)(Data + IndexForItem + 67), Valoria::ITEM_BYTES);
 		}
 	}
 
@@ -2487,10 +2531,10 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 	NFields = (BYTE)mysql_num_fields(QueryResult);
 	NRows = (WORD)mysql_num_rows(QueryResult);
 	NBankItems = (BYTE)NRows;
-	WORD BankItemIndex = (WORD)(charIndexEnd+1 + (NItems*67)+1);
+	WORD BankItemIndex = (WORD)(charIndexEnd+1 + (NItems*Valoria::BAG_RECORD)+1);
 	PutOffsetValue(Data, BankItemIndex, BYTESIZE, NBankItems);
 	if(NBankItems > 0){
-		BYTE FIBItemName, FIBItemCount, FIBItemType, FIBID1, FIBID2, FIBID3, FIBItemColor, FIBItemID;
+		BYTE FIBItemName, FIBItemCount, FIBItemType, FIBID1, FIBID2, FIBID3, FIBItemColor, FIBItemID, FIBValoria = 255;
 		BYTE FIBItemEffect1, FIBItemEffect2, FIBItemEffect3, FIBItemLifeSpan, FIBItemAttribute, FISocket1, FISocket2, FISocket3;
 		mysql_field_seek(QueryResult, 0);
 		for(BYTE b = 0; b < NFields; b++){
@@ -2511,9 +2555,10 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 			else if(IsSame(field[b]->name, "Socket2")) FISocket2 = b;
 			else if(IsSame(field[b]->name, "Socket3")) FISocket3 = b;
 			else if(IsSame(field[b]->name, "ItemID")) FIBItemID = b;
+			else if(IsSame(field[b]->name, "Valoria")) FIBValoria = b;
 		}
 		for(int b = 0; b < NBankItems; b++){
-			WORD IndexForItem = (WORD)(BankItemIndex+1 + (b*62));
+			WORD IndexForItem = (WORD)(BankItemIndex+1 + (b*Valoria::BANK_RECORD));
 
 			BankItemRow[b] = mysql_fetch_row(QueryResult);
 			SafeCopy((Data + IndexForItem), BankItemRow[b][FIBItemName], strlen(BankItemRow[b][FIBItemName]));
@@ -2542,9 +2587,10 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 			else
 				PutOffsetValue(Data, IndexForItem +53, BYTESIZE, SG_NONE);
 			PutOffsetValue(Data, IndexForItem +54, DWORDSIZE, atoull(BankItemRow[b][FIBItemID]));
+			if (FIBValoria != 255) ValoriaHexToBytes(BankItemRow[b][FIBValoria], (unsigned char *)(Data + IndexForItem + 62), Valoria::ITEM_BYTES);
 		}
 	}
-	InfoSize = (WORD)(BankItemIndex +(NBankItems*62)+2);
+	InfoSize = (WORD)(BankItemIndex +(NBankItems*Valoria::BANK_RECORD)+2);
 	if(strlen(CharProfile) == 0){
 		SafeCopy(Data+InfoSize, "__________");
 		SAFEFREERESULT(QueryResult);
@@ -2897,7 +2943,11 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	pQueryResult = mysql_store_result(&myConn);
 	SAFEFREERESULT(pQueryResult);
 
-	NItems = bGetOffsetValue(cp, charIndexEnd+224);
+	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes after the skills, then the item lists
+	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES;
+	char cValoriaHex[Valoria::CHAR_BYTES * 2 + 1];
+	ValoriaBytesToHex((const unsigned char *)(cp + charIndexEnd + 224), Valoria::CHAR_BYTES, cValoriaHex);
+	NItems = bGetOffsetValue(cp, itemsAt);
 	CurItemID = (GetLastInsertedItemID(myConn)+1);
 	DeleteAllItemsFromChar(CharID, myConn, bIsBankModified);
 	ItemInfo = new cItem;
@@ -2905,11 +2955,11 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	{
 		itemQuery.append("INSERT INTO `item` ( `CharID` , `ItemName`, `Count` , `ItemType`, `ID1`, `ID2`, `ID3`, `Color`, \
 			`Effect1`, `Effect2`, `Effect3`, `LifeSpan`, `Attribute`, `Socket1`, `Socket2`, `Socket3`, `ItemEquip`, \
-			`ItemPosX`, `ItemPosY`, `ItemID`, `ItemPos`) VALUES");
+			`ItemPosX`, `ItemPosY`, `ItemID`, `ItemPos`, `Valoria`) VALUES");
 
 		for(w = 0; w < NItems; w++)
 		{
-			IndexForItem = (WORD)(charIndexEnd+225 + (w*67));
+			IndexForItem = (WORD)(itemsAt+1 + (w*Valoria::BAG_RECORD));
 			ZeroMemory(ItemInfo->ItemName, sizeof(ItemInfo->ItemName));
 			SafeCopy(ItemInfo->ItemName, cp+IndexForItem, 20);
 			if(strlen(ItemInfo->ItemName) == 0) continue;
@@ -2961,7 +3011,8 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 				sprintf(QueryConsult, "NULL,", ItemInfo->socket3);
 			itemQuery.append(QueryConsult);
 
-			sprintf(QueryConsult, "%d,%d,%d,%I64u,'BAG')", ItemInfo->IsItemEquipped, ItemInfo->ItemPosX, ItemInfo->ItemPosY, ItemInfo->ItemUniqueID);
+			sprintf(QueryConsult, "%d,%d,%d,%I64u,'BAG',%s)", ItemInfo->IsItemEquipped, ItemInfo->ItemPosX, ItemInfo->ItemPosY, ItemInfo->ItemUniqueID,
+				ValoriaItemSQL((const unsigned char *)(cp + IndexForItem + 67)).c_str());
 			itemQuery.append(QueryConsult);
 			DeleteItemOnDB(ItemInfo, CharID, myConn);
 		}
@@ -2970,14 +3021,14 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 		pQueryResult = mysql_store_result(&myConn);
 		SAFEFREERESULT(pQueryResult);
 	}
-	Index = (WORD)(charIndexEnd+225+(NItems*67));
+	Index = (WORD)(itemsAt+1+(NItems*Valoria::BAG_RECORD));
 	NBankItems = bGetOffsetValue(cp, Index);
 	if(NBankItems > 0){
 		itemQuery.clear();
 		itemQuery.append("INSERT INTO `item` ( `CharID` , `ItemName`, `Count` , `ItemType`, `ID1`, `ID2`, `ID3`, \
-			`Color`, `Effect1`, `Effect2`, `Effect3`, `LifeSpan`, `Attribute`, `Socket1`, `Socket2`, `Socket3`, `ItemID`, `ItemPos`) VALUES ");
+			`Color`, `Effect1`, `Effect2`, `Effect3`, `LifeSpan`, `Attribute`, `Socket1`, `Socket2`, `Socket3`, `ItemID`, `ItemPos`, `Valoria`) VALUES ");
 		for(w = 0; w < NBankItems; w++){
-			IndexForItem = (WORD)(Index+1+(w*62));
+			IndexForItem = (WORD)(Index+1+(w*Valoria::BANK_RECORD));
 			ZeroMemory(ItemInfo->ItemName, sizeof(ItemInfo->ItemName));
 			SafeCopy(ItemInfo->ItemName, cp+IndexForItem, 20);
 			if(strlen(ItemInfo->ItemName) == 0) continue;
@@ -3026,7 +3077,7 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 				sprintf(QueryConsult, "NULL,", ItemInfo->socket3);
 			itemQuery.append(QueryConsult);
 
-			sprintf(QueryConsult, "%I64u, 'WH')", ItemInfo->ItemUniqueID);
+			sprintf(QueryConsult, "%I64u, 'WH',%s)", ItemInfo->ItemUniqueID, ValoriaItemSQL((const unsigned char *)(cp + IndexForItem + 62)).c_str());
 			itemQuery.append(QueryConsult);
 			DeleteItemOnDB(ItemInfo, CharID, myConn);
 		}
@@ -3037,7 +3088,7 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	}
 
 	SAFEDELETE(ItemInfo);
-	Index += ((NBankItems*62)+1);
+	Index += ((NBankItems*Valoria::BANK_RECORD)+1);
 	ZeroMemory(Profile, sizeof(Profile));
 	SafeCopy(Profile, (cp+Index), strlen(cp+Index));
 	ZeroMemory(QueryConsult, sizeof(QueryConsult));
@@ -3056,6 +3107,12 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	//char cTxt[50];
 	//sprintf(cTxt, "save bench: %u", timeGetTime() - bench);
 	//PutLogList(cTxt, WARN_MSG);
+
+	// VALORIA enchanting
+	sprintf(QueryConsult, "UPDATE `char_database` SET `ValoriaEnchant` = '%s' WHERE `CharID` = '%lu' LIMIT 1;", cValoriaHex, CharID);
+	if(ProcessQuery(&myConn, QueryConsult) == -1) return;
+	pQueryResult = mysql_store_result(&myConn);
+	SAFEFREERESULT(pQueryResult);
 }
 //=============================================================================
 BYTE CLoginServer::CheckDupItem(cItem *Item, MYSQL myConn, BOOL bBank)

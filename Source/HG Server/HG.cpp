@@ -1736,6 +1736,8 @@ void CGame::PlayerMapEntry(int iClientH, bool setRecallTime)
 	WantedOnMapEntry(iClientH);	// Most Wanted: your streak and who is wanted (Wanted.cpp)
 	BountyOnMapEntry(iClientH);	// bounties on the board, owed gold (Bounty.cpp)
 	RebirthOnMapEntry(iClientH);	// rebirth levels (Rebirth.cpp)
+	EnchantSendStats(iClientH);	// VALORIA enchanting: your Enchanting and your items' enchantments (Enchanting.cpp)
+	EnchantSendItems(iClientH);
 }
 
 // Largest number of bytes WriteTileData can write for one tile (owner + corpse + item + dynamic object).
@@ -4504,17 +4506,19 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 	player->m_iAltLevel    = (int)dwGetOffsetValue(pData, 477);
 	player->m_iAltExp      = (int)dwGetOffsetValue(pData, 481);
 	for (i = 0; i < 6; i++) player->m_altStat[i] = (int)dwGetOffsetValue(pData, 485 + i*4);
-	static long charIndexEnd = 509;
+	// VALORIA enchanting (Shared\ValoriaEnchant.h): 64 bytes at 509, then the item lists
+	player->m_enchant.Read((const unsigned char *)(pData + 509));
+	const long charIndexEnd = 509 + Valoria::CHAR_BYTES;
 
 	for (i = 0; i < MAXITEMEQUIPPOS; i++) player->m_sItemEquipmentStatus[i] = -1;
 	for (i = 0; i < MAXITEMS; i++) player->m_bIsItemEquipped[i] = false;
 	NItems = bGetOffsetValue(pData, charIndexEnd);
-	NBankItems = bGetOffsetValue(pData, (charIndexEnd+1 + (NItems*67)+1));
+	NBankItems = bGetOffsetValue(pData, (charIndexEnd+1 + (NItems*Valoria::BAG_RECORD)+1));
 	if(NItems > MAXITEMS || NBankItems > MAXBANKITEMS) return false;
 	if(NItems > 0)
 		for(BYTE b = 0; b < NItems; b++)
 		{
-			uint16 IndexForItem = (charIndexEnd+1 + (b*67));
+			uint16 IndexForItem = (charIndexEnd+1 + (b*Valoria::BAG_RECORD));
 			ZeroMemory(ItemName, sizeof(ItemName));
 			SafeCopy(ItemName, pData+IndexForItem, 20);
 			item = player->m_pItemList[b] = new CItem;
@@ -4551,6 +4555,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 			item->m_sockets[0] = bGetOffsetValue(pData, (IndexForItem+51));
 			item->m_sockets[1] = bGetOffsetValue(pData, (IndexForItem+52));
 			item->m_sockets[2] = bGetOffsetValue(pData, (IndexForItem+53));
+			item->m_valoria.Read((const unsigned char *)(pData + IndexForItem + 67));
 
 			if(item->m_sTouchEffectType == ITET_UNIQUE_OWNER)
 			{
@@ -4611,11 +4616,11 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 			item->ItemUniqueID = ullGetOffsetValue(pData, (IndexForItem+59));
 			if (player->m_ItemPosList[b].y < -10) player->m_ItemPosList[b].y = -10;
 		}
-		BankItemIndex = (charIndexEnd+1 + (NItems*67)+1);
+		BankItemIndex = (charIndexEnd+1 + (NItems*Valoria::BAG_RECORD)+1);
 		if(NBankItems > 0)
 			for(BYTE b = 0; b < NBankItems; b++)
 			{
-				uint16 IndexForItem = (BankItemIndex+1 + (b*62));
+				uint16 IndexForItem = (BankItemIndex+1 + (b*Valoria::BANK_RECORD));
 				ZeroMemory(ItemName, sizeof(ItemName));
 				SafeCopy(ItemName, pData+IndexForItem, 20);
 				item = player->m_pItemInBankList[b] = new CItem;
@@ -4652,6 +4657,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 				item->m_sockets[0] = bGetOffsetValue(pData, (IndexForItem+51));
 				item->m_sockets[1] = bGetOffsetValue(pData, (IndexForItem+52));
 				item->m_sockets[2] = bGetOffsetValue(pData, (IndexForItem+53));
+				item->m_valoria.Read((const unsigned char *)(pData + IndexForItem + 62));
 				item->ItemUniqueID = ullGetOffsetValue(pData, (IndexForItem+54));
 
 				if(item->IsManued() && (item->m_sIDnum > ITEM_MAGICSAPPHIRE ||  item->m_sIDnum < ITEM_MAGINDIAMOND)) //Quick hack. TODO: Fix Endu for Magic jewels
@@ -4689,7 +4695,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 					SAFEDELETE(player->m_pItemInBankList[b]);
 				}
 			}
-		uint16 InfoSize = (BankItemIndex + (NBankItems*62)+2);
+		uint16 InfoSize = (BankItemIndex + (NBankItems*Valoria::BANK_RECORD)+2);
 		ZeroMemory(player->m_cProfile, sizeof(player->m_cProfile));
 		SafeCopy(player->m_cProfile, pData+InfoSize, strlen(pData+InfoSize));
 
@@ -4904,6 +4910,9 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 		PutOffsetValue(pData, charIndexEnd+124+(i*4),DWORDSIZE, m_pClientList[iClientH]->m_iSkillSSN[i]);
 	}
 
+	// VALORIA enchanting (Shared\ValoriaEnchant.h): 64 bytes after the skills, then the item lists
+	m_pClientList[iClientH]->m_enchant.Write((unsigned char *)(pData + charIndexEnd + 224));
+	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES;	// item count, then the bag items
 	NItems = 0;
 	NBankItems = 0;
 
@@ -4921,7 +4930,7 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 			continue;
 		}
 
-		IndexForItem = (charIndexEnd+225 + (NItems*67));//475
+		IndexForItem = (itemsAt+1 + (NItems*Valoria::BAG_RECORD));
 		ZeroMemory(pData+IndexForItem, 20);
 		SafeCopy(pData+IndexForItem, item->m_cName);
 		PutOffsetValue(pData, (IndexForItem+20), DWORDSIZE, item->m_dwCount);
@@ -4942,11 +4951,12 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 		PutOffsetValue(pData, (IndexForItem+55), WORDSIZE, m_pClientList[iClientH]->m_ItemPosList[i].x);
 		PutOffsetValue(pData, (IndexForItem+57), WORDSIZE, m_pClientList[iClientH]->m_ItemPosList[i].y);
 		PutOffsetValue(pData, (IndexForItem+59), I64SIZE, item->ItemUniqueID);
+		item->m_valoria.Write((unsigned char *)(pData + IndexForItem + 67));
 		NItems++;
 	}
-	PutOffsetValue(pData, charIndexEnd+224, BYTESIZE, NItems);
+	PutOffsetValue(pData, itemsAt, BYTESIZE, NItems);
 
-	Index = charIndexEnd+225+(NItems*67);
+	Index = itemsAt+1+(NItems*Valoria::BAG_RECORD);
 	if(m_pClientList[iClientH]->m_bIsBankModified)
 	{
 		for(i = 0; i < MAXBANKITEMS; i++)
@@ -4963,7 +4973,7 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 				continue;
 			}
 
-			IndexForItem = (Index+1+(NBankItems*62));
+			IndexForItem = (Index+1+(NBankItems*Valoria::BANK_RECORD));
 			ZeroMemory(pData+IndexForItem, 20);
 			SafeCopy(pData+IndexForItem, item->m_cName);
 			PutOffsetValue(pData, (IndexForItem+20), DWORDSIZE, item->m_dwCount);
@@ -4981,12 +4991,13 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 			PutOffsetValue(pData, (IndexForItem+52), BYTESIZE, item->m_sockets[1]);
 			PutOffsetValue(pData, (IndexForItem+53), BYTESIZE, item->m_sockets[2]);
 			PutOffsetValue(pData, (IndexForItem+54), I64SIZE, item->ItemUniqueID);
+			item->m_valoria.Write((unsigned char *)(pData + IndexForItem + 62));
 
 			NBankItems++;
 		}
 	}
 	PutOffsetValue(pData, Index, BYTESIZE, NBankItems);
-	Index += (NBankItems*62)+1;
+	Index += (NBankItems*Valoria::BANK_RECORD)+1;
 	if(strlen(m_pClientList[iClientH]->m_cProfile) == 0){
 		SafeCopy(pData+Index, "__________");
 		return (Index+12);
@@ -7033,6 +7044,10 @@ void CGame::MsgProcess()
 
 			case MSGID_REQUEST_REBIRTH:
 				RebirthRequest(iClientH, pData + 4);
+				break;
+
+			case MSGID_REQUEST_ENCHANT:	// VALORIA enchanting (Enchanting.cpp)
+				EnchantRequest(iClientH, pData + 4);
 				break;
 
 			case MSGID_REQUEST_PING:
@@ -17166,6 +17181,7 @@ RRIH_NOQUANTITY:;
 					m_pClientList[iClientH]->m_cArrowIndex = _iGetArrowItemIndex(iClientH);
 
 					iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cMsg, 8);
+					EnchantItemMoved(iClientH, m_pClientList[iClientH]->m_pItemList[i]);	// VALORIA enchantments (Enchanting.cpp)
 
 					m_pClientList[iClientH]->m_bIsBankModified = true ;
 
@@ -20580,6 +20596,7 @@ bool CGame::bSetItemToBankItem(int iClientH, CItem * pItem)
 				Push(cp, pItem->m_sockets[i]);
 			}
 			int iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, 56 + MAXITEMSOCKETS);
+			EnchantItemMoved(iClientH, pItem);	// VALORIA enchantments (Enchanting.cpp)
 
 #ifdef TAIWANLOG
 			_bItemLog(ITEMLOG_DEPOSIT, iClientH, (int) -1, pItem);
@@ -22347,6 +22364,7 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 		player->m_gearInt += pB->iint; player->m_gearMag += pB->mag;  player->m_gearHP  += pB->hp;
 		player->m_gearMP  += pB->mp;   player->m_gearDef += pB->def;  player->m_gearCrit += pB->crit;
 	}
+	EnchantGearBonus(iClientH);	// VALORIA enchantments and empowering on worn gear (Enchanting.cpp)
 
 	if ( (player->m_sItemEquipmentStatus[EQUIPPOS_RHAND]   != -1) &&
 		(player->m_sItemEquipmentStatus[EQUIPPOS_TWOHAND] != -1) ) {
@@ -27894,6 +27912,7 @@ void CGame::SendItemNotifyMsg(int iClientH, uint16 wMsgType, CItem *pItem, int i
 		}
 
 		iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, 53 + MAXITEMSOCKETS);
+		EnchantItemMoved(iClientH, pItem);	// VALORIA enchantments (Enchanting.cpp)
 		break;
 
 	case NOTIFY_ITEMPURCHASED:
@@ -34521,6 +34540,7 @@ bool CGame::bCopyItemContents(CItem * pCopy, CItem *pOriginal)
 	pCopy->m_sItemSpecEffectValue3 = pOriginal->m_sItemSpecEffectValue3;
 	pCopy->m_wCurLifeSpan = pOriginal->m_wCurLifeSpan;
 	pCopy->m_dwAttribute = pOriginal->m_dwAttribute;
+	pCopy->m_valoria = pOriginal->m_valoria;	// VALORIA enchantments
 
 	return true;
 }
@@ -37900,6 +37920,18 @@ void CGame::RequestSendMail(CClient * player, char * data, uint32 size)
 	if(player->GetItemCount(ITEM_GOLD) < sendCost)
 		return;
 	
+	{	// VALORIA: enchanted or empowered items can't be mailed (mail keeps only Helbreath's item fields)
+		char * scan = cp;
+		for (int i = 0; i < nitems; i++) {
+			uint8 index; uint32 count;
+			Pop(scan, index); Pop(scan, count);
+			if (index < MAXITEMS && player->m_pItemList[index] != NULL && !player->m_pItemList[index]->m_valoria.Empty()) {
+				char cMsg[] = "Enchanted or empowered items can't be sent by mail.";
+				ShowClientMsg(player->m_handle, cMsg);
+				return;
+			}
+		}
+	}
 	char * writep = data + size;
 	CItem * item;
 	for(int i = 0; i < nitems; i++)

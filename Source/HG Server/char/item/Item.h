@@ -5,6 +5,7 @@
 #if !defined(AFX_ITEM_H__211A1360_91B9_11D2_B143_00001C7030A6__INCLUDED_)
 #define AFX_ITEM_H__211A1360_91B9_11D2_B143_00001C7030A6__INCLUDED_
 
+#include "..\..\..\Shared\ValoriaEnchant.h"
 #include <windows.h>
 #include "..\..\..\shared\common.h"
 #include "..\..\..\shared\maths.h"
@@ -265,6 +266,7 @@ public:
 	int  m_wCurLifeSpan;
 	uint32 m_dwAttribute;
 	uint8 m_sockets[MAXITEMSOCKETS];
+	Valoria::ItemData m_valoria;	// VALORIA enchantments and empower levels (Shared\ValoriaEnchant.h)
 
 	bool m_disabled;
 };

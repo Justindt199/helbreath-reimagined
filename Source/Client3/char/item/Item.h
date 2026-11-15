@@ -5,6 +5,7 @@
 #if !defined(AFX_ITEM_H__211A1360_91B9_11D2_B143_00001C7030A6__INCLUDED_)
 #define AFX_ITEM_H__211A1360_91B9_11D2_B143_00001C7030A6__INCLUDED_
 
+#include "..\..\..\Shared\ValoriaEnchant.h"
 #include <windows.h>
 #include "..\..\..\shared\common.h"
 #include "..\..\..\shared\items.h"
@@ -164,6 +165,7 @@ public:
 	DWORD m_dwCount;
 	DWORD m_dwAttribute;
 	uint8 m_sockets[MAXITEMSOCKETS];
+	Valoria::ItemData m_valoria;	// VALORIA enchantments and empower levels (UI\EnchantPanel.cpp)
 	ItemUID ItemUniqueID;
 	uint32 m_serverPtr;
 

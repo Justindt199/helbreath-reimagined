@@ -24,7 +24,8 @@ const COLORREF kOk		= RGB(110, 210, 120);
 const COLORREF kBad		= RGB(255, 110, 100);
 
 const int kMaxRebirth = 20;
-const int kMaxLevel = 180;
+const int kMaxLevel = MAXLEVEL;	// the max level (Shared\version.h)
+const std::string kMaxLevelText = std::to_string(MAXLEVEL);
 const unsigned kSwitchGold = 50000;
 
 void Bold(CRenderer & r, int x, int y, const char * s, COLORREF c, int iPx)
@@ -112,7 +113,7 @@ void CGame::NotifyMsg_RebirthEvent(char * pData)
 		}
 		break;
 	case REBIRTHRES_COMPLETED:
-		AddColoredEvent(tag + who + " finished " + ChatSpan(kPurple, cR) + " and is back at level 180!");
+		AddColoredEvent(tag + who + " finished " + ChatSpan(kPurple, cR) + " and is back at level " + kMaxLevelText + "!");
 		if (bMe) {
 			wsprintf(G_cTxt, "Rebirth %d complete!", (int)r);
 			SetTopMsg(G_cTxt, 6);
@@ -129,7 +130,7 @@ void CGame::NotifyMsg_RebirthEvent(char * pData)
 	default: {
 		const char * p = "Rebirth isn't possible right now.";
 		switch (code) {
-		case REBIRTHRES_LEVEL:			p = "You must be level 180 to be reborn."; break;
+		case REBIRTHRES_LEVEL:			wsprintf(G_cTxt, "You must be level %d to be reborn.", kMaxLevel); p = G_cTxt; break;
 		case REBIRTHRES_BUILDING:		p = "You must be inside the City Hall."; break;
 		case REBIRTHRES_GOLD:			p = "You don't have enough gold."; break;
 		case REBIRTHRES_MAJESTIC:		p = "You don't have enough Majestic points."; break;
@@ -203,8 +204,8 @@ void CGame::DrawDialogBox_Rebirth()
 		Bold(R, X + 16, y, cTxt, kWhite, 13);
 		y += 20;
 		const int iRebLevel = (m_iRebirthMode == 1) ? m_iLevel : m_iRebirthAltLevel;
-		wsprintf(cTxt, m_iRebirthMode == 1 ? "Level %d of 180. Normal Mode lets you play your level %d character."
-			: "Your rebirth waits at level %d of 180.", iRebLevel, m_iRebirthAltLevel);
+		wsprintf(cTxt, m_iRebirthMode == 1 ? "Level %d of %d. Normal Mode lets you play your level %d character."
+			: "Your rebirth waits at level %d of %d.", iRebLevel, kMaxLevel, m_iRebirthAltLevel);
 		R.TextOutSized(X + 16, y, cTxt, kGrey, 10);
 	}
 	y = Y + 110;
@@ -217,7 +218,7 @@ void CGame::DrawDialogBox_Rebirth()
 	std::vector<Req> reqs;
 	if (m_iRebirthMode == 0) {
 		const unsigned g = RebirthGold(Rn);
-		reqs.push_back({ "Level 180", std::to_string(m_iLevel), m_iLevel >= kMaxLevel, true });
+		reqs.push_back({ "Level " + kMaxLevelText, std::to_string(m_iLevel), m_iLevel >= kMaxLevel, true });
 		reqs.push_back({ "Inside the City Hall", bInHall ? "yes" : "no", bInHall, true });
 		reqs.push_back({ Commas(g) + " gold", Commas(dwGold), dwGold >= g, true });
 		reqs.push_back({ std::to_string(5 * Rn) + " Majestic points", std::to_string(m_iGizonItemUpgradeLeft), m_iGizonItemUpgradeLeft >= 5 * Rn, true });
@@ -255,9 +256,9 @@ void CGame::DrawDialogBox_Rebirth()
 		lines.push_back("Items (unequipped), skills and spells are kept");
 		const int iPct = (int)floor(pow(0.8, (double)Rn) * 1000.0 + 0.5);
 		char c[64];
-		wsprintf(c, "XP x%d.%d%% until you reach level 180 again", iPct / 10, iPct % 10);
+		wsprintf(c, "XP x%d.%d%% until you reach level %d again", iPct / 10, iPct % 10, kMaxLevel);
 		lines.push_back(c);
-		lines.push_back("Normal Mode: play your level 180 character meanwhile");
+		lines.push_back("Normal Mode: play your level " + kMaxLevelText + " character meanwhile");
 	}
 	else {
 		lines.push_back(m_iRebirthMode == 1 ? "You play your full-level character; the rebirth waits" : "You go back to your rebirth where you left it");

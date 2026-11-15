@@ -666,5 +666,9 @@
  {
   "key": "runestone_of_the_ridge",
   "icon": "u_runestone_of_the_ridge"
+ },
+ {
+  "key": "enchanters_tome",
+  "icon": "obj_x_tome"
  }
 ]

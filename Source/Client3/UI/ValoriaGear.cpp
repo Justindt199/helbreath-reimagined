@@ -41,8 +41,21 @@ int CGame::GearBonus(int iKind) const
 		if (m_pItemList[i] == NULL || !m_bIsItemEquipped[i]) continue;
 		std::map<std::string, GearRow>::const_iterator it = g_gear.find(m_pItemList[i]->m_cName);
 		if (it != g_gear.end()) iSum += it->second.v[iKind];
+		// VALORIA enchantments and empowering on worn gear (UI\EnchantPanel.cpp); GEAR_* follows Valoria::Mod
+		iSum += Valoria::ItemBonus(m_pItemList[i]->m_valoria, iKind, Valoria::ItemTier(m_pItemList[i]->m_sLevelLimit));
 	}
 	return iSum;
+}
+
+// The VALORIA stats of an item kind, in Valoria::Mod order (STR..CRIT); false when it has none.
+bool CGame::GearRowOf(const char * pName, int base[Valoria::MOD_CRIT + 1]) const
+{
+	if (!g_bLoaded) LoadGear();
+	for (int k = 0; k <= Valoria::MOD_CRIT; k++) base[k] = 0;
+	std::map<std::string, GearRow>::const_iterator it = g_gear.find(pName);
+	if (it == g_gear.end()) return false;
+	for (int k = 0; k <= Valoria::MOD_CRIT && k < GEAR_COUNT; k++) base[k] = it->second.v[k];
+	return true;
 }
 
 // m_stat already holds STR / DEX / INT / MAG with the angel bonus but without gear; the server's

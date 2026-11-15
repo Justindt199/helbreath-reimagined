@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Unit.h"
+#include "..\..\Shared\ValoriaEnchant.h"
 #include "..\net\XSocket.h"
 #include "item\Item.h"
 #include "Magic.h"
@@ -443,6 +444,9 @@ private:
 public:
 	// VALORIA gear bonuses of the equipped items (CGame::CalcTotalItemEffect, Valoria.h)
 	int m_gearStr, m_gearDex, m_gearVit, m_gearInt, m_gearMag, m_gearHP, m_gearMP, m_gearDef, m_gearCrit;
+	int m_gearDmgPct;				// VALORIA empowered weapon damage, % (HG Server\Enchanting.cpp)
+	Valoria::CharData m_enchant;	// VALORIA Enchanting: XP, learned modifiers and their levels (Shared\ValoriaEnchant.h)
+	DWORD m_dwEnchantBusy;			// last enchanting request (anti-spam)
 
 	CParty * _party;
 	PartyStatus _partyStatus;

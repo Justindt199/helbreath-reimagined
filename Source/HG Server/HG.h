@@ -572,6 +572,15 @@ public:
 	void RebirthSwapSets(int h);
 	void RebirthResult(int h, int iCode);
 	void RebirthAnnounce(int iType, int h);
+
+	// VALORIA enchanting (Enchanting.cpp)
+	void EnchantRequest(int iClientH, char * pData);
+	void EnchantSendStats(int iClientH);
+	void EnchantSendItems(int iClientH);
+	void EnchantItemMoved(int iClientH, class CItem * pItem);
+	void EnchantGearBonus(int iClientH);
+	void EnchantAddXP(int iClientH, int n);
+	void EnchantAddModXP(int iClientH, int k, int n);
 	void RequestRetrieveItemHandler(int iClientH, char * pData);
 	void RequestRetrieveGuildItem(CClient * player, char * data);
 	void HandlePingMap(const CClient * player, char * data) const;

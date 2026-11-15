@@ -349,6 +349,8 @@ CClient::CClient(int clientH)
 
 	_angelStr = _angelMag = _angelInt = _angelDex = 0;
 	m_gearStr = m_gearDex = m_gearVit = m_gearInt = m_gearMag = m_gearHP = m_gearMP = m_gearDef = m_gearCrit = 0;
+	m_gearDmgPct = 0;
+	m_dwEnchantBusy = 0;
 }
 
 CClient::~CClient()

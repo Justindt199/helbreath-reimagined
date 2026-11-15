@@ -258,6 +258,7 @@
     <ClCompile Include="Wanted.cpp" />
     <ClCompile Include="Bounty.cpp" />
     <ClCompile Include="Rebirth.cpp" />
+    <ClCompile Include="Enchanting.cpp" />
     <ClCompile Include="DropManager.cpp" />
     <ClCompile Include="HG.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>

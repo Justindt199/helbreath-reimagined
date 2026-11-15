@@ -224,6 +224,8 @@ void CGame::BuildItemTip(ItemTip & t, const CItem * pItem, const char * pName, D
 		t.bonus.push_back({ cBuf, "crafted", RGB(214, 206, 140) });
 	}
 
+	EnchantTipLines(t, pItem);	// VALORIA enchantments and empowering (UI\EnchantPanel.cpp)
+
 	// socketed gems, and sockets still free
 	for (int k = 0; k < MAXITEMSOCKETS; k++) {
 		const uint8 g = sockets[k];

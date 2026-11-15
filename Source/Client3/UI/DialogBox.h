@@ -76,7 +76,8 @@ enum dialogIDs
 	DIALOG_YESNO,
 	DIALOG_MOSTWANTED = 64,
 	DIALOG_BOUNTY = 65,
-	DIALOG_REBIRTH = 66
+	DIALOG_REBIRTH = 66,
+	DIALOG_ENCHANT = 67		// VALORIA enchanting (UI\EnchantPanel.cpp)
 };
 
 // The NPC window (dialog 20, UI\NpcQueryPanel.cpp): its width, the id of its close button, and its

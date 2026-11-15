@@ -716,6 +716,10 @@ void CGame::SetupDialogBoxes()
 	m_dialogBoxes[DIALOG_REBIRTH].SetupDialog(DIALOG_REBIRTH, 100, 40, REBIRTHWIN_W, REBIRTHWIN_H);
 	m_dialogBoxes[DIALOG_REBIRTH].SetupHandlers(GAMEFUNCT(DrawDialogBox_Rebirth), GAMEFUNCT(DlgBoxClick_Rebirth));
 
+	// VALORIA enchanting (UI\EnchantPanel.cpp)
+	m_dialogBoxes[DIALOG_ENCHANT].SetupDialog(DIALOG_ENCHANT, 80, 30, ENCHANTWIN_W, ENCHANTWIN_H);
+	m_dialogBoxes[DIALOG_ENCHANT].SetupHandlers(GAMEFUNCT(DrawDialogBox_Enchant), GAMEFUNCT(DlgBoxClick_Enchant));
+
 	for(int i = 0; i < MAXDIALOGBOX; i++)
 	{		
 		m_dialogBoxes[i].SetMode(0); //Setup default buttons
@@ -1446,6 +1450,13 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 		{
 		case MSGID_REQUEST_REBIRTH:	// 1 = rebirth, 2 = Normal Mode / resume (UI\RebirthPanel.cpp)
 			*wp = wCommand;
+			iRet = m_pGSock->iSendMsg(cMsg, cp - cMsg, cKey);
+			break;
+
+		case MSGID_REQUEST_ENCHANT:	// VALORIA enchanting (UI\EnchantPanel.cpp): action, item index, modifier
+			*wp = wCommand;
+			Push(cp, (uint8)iV1);
+			Push(cp, (uint8)iV2);
 			iRet = m_pGSock->iSendMsg(cMsg, cp - cMsg, cKey);
 			break;
 
@@ -4348,6 +4359,7 @@ void CGame::InitGameSettings()
 	m_wanted.clear(); m_wantedPos.clear(); m_wantedTags.clear();
 	m_iWantedStreak = m_iWantedBest = m_iWantedEnded = 0;
 	m_rebirthOf.clear(); m_iRebirth = m_iRebirthMode = m_iRebirthAltLevel = 0; m_dwRebirthConfirmAt = 0;
+	m_enchant.Clear(); m_iEnchantSel = -1; m_iEnchantScroll = 0; m_dwEnchantConfirmAt = 0;	// VALORIA enchanting
 	m_bounties.clear(); m_bountyBackers.clear(); m_cBountySel[0] = 0; m_dwBountyClaims = m_dwBountyClaimGold = 0;
 
 	m_adminLevel = 0;
@@ -16748,6 +16760,7 @@ static const char * ProfDialogName(int i)
 	if (i == DIALOG_MOSTWANTED) return "Most wanted";
 	if (i == DIALOG_BOUNTY) return "Bounty board";
 	if (i == DIALOG_REBIRTH) return "Rebirth";
+	if (i == DIALOG_ENCHANT) return "Enchanting";
 	return "Window";
 }
 
@@ -27538,6 +27551,10 @@ void CGame::NotifyMsgHandler(char * pData)
 	case NOTIFY_REBIRTHINFO:  NotifyMsg_RebirthInfo((char *)pData); break;
 	case NOTIFY_REBIRTHEVENT: NotifyMsg_RebirthEvent((char *)pData); break;
 
+	// VALORIA enchanting (UI\EnchantPanel.cpp)
+	case NOTIFY_ENCHANTSTATS: NotifyMsg_EnchantStats((char *)pData); break;
+	case NOTIFY_ENCHANTITEMS: NotifyMsg_EnchantItems((char *)pData); break;
+
 	// Clock and ping (UI\ClockPing.cpp)
 	case NOTIFY_PONG: NotifyMsg_Pong((char *)pData); break;
 	case NOTIFY_NPCHEALTH: NotifyMsg_NpcHealth((char *)pData); break;
@@ -28225,6 +28242,10 @@ void CGame::DlgBoxDoubleClick_Inventory()
 					AddEventList(cTxt, 10);
 			}	}
 
+			if (m_pItemList[cItemID]->m_cItemType == ITEMTYPE_USE_SKILL_ENABLEDIALOGBOX && strcmp(m_pItemList[cItemID]->m_cName, "EnchantersTome") == 0)
+			{	OpenEnchantWindow();	// VALORIA enchanting (UI\EnchantPanel.cpp)
+				return;
+			}
 			if (m_pItemList[cItemID]->m_cItemType == ITEMTYPE_USE_SKILL_ENABLEDIALOGBOX)
 			{	if (_bIsItemOnHand() == TRUE)
 				{	AddEventList(BDLBBOX_DOUBLE_CLICK_INVENTORY4, 10);//"Your hands should be free to use this item."
@@ -37406,6 +37427,10 @@ void CGame::DlgBoxClick_Magic()
 		m_dialogBoxes[3].sView = 8;
 	else if (onButton == 19)
 		m_dialogBoxes[3].sView = 9;
+	else if (onButton == 22)
+	{	OpenEnchantWindow();	// VALORIA enchanting (UI\EnchantPanel.cpp)
+		return;
+	}
 	else if (onButton == 20)
 	{	
 		// VALORIA recipes: no alchemy skill needed first

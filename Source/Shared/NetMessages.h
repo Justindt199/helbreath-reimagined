@@ -338,7 +338,11 @@ enum NetMessages_Notify
 	NOTIFY_PONG,			// answer to MSGID_REQUEST_PING: the client's time echoed, server hour, minute, second
 
 	// Monster health bars: HG Server HG.cpp -> Client3 UI\NpcLabels.cpp
-	NOTIFY_NPCHEALTH		// a monster's health changed other than by a hit (healing): uint16 object id (40000+), uint8 percent
+	NOTIFY_NPCHEALTH,		// a monster's health changed other than by a hit (healing): uint16 object id (40000+), uint8 percent
+
+	// VALORIA enchanting: HG Server Enchanting.cpp -> Client3 UI\EnchantPanel.cpp
+	NOTIFY_ENCHANTSTATS,	// your Enchanting: 64 bytes (Shared\ValoriaEnchant.h CharData)
+	NOTIFY_ENCHANTITEMS		// every bag / warehouse item with enchantments: uint8 count, then uint8 0 bag / 1 warehouse, uint8 index, 32 bytes
 };
 
 enum { REBIRTHRES_REBORN = 1, REBIRTHRES_PAUSED, REBIRTHRES_RESUMED, REBIRTHRES_COMPLETED,
@@ -713,6 +717,7 @@ enum {
 	MSGID_REQUEST_BOUNTY,		// client -> server: bounty board (HG Server Bounty.cpp)
 	MSGID_REQUEST_REBIRTH,		// client -> server: 1 = rebirth, 2 = switch Normal Mode / rebirth (HG Server Rebirth.cpp)
 	MSGID_REQUEST_PING,			// client -> server: uint32 client time; answered with NOTIFY_PONG (Client3 UI\ClockPing.cpp)
+	MSGID_REQUEST_ENCHANT,		// client -> server: uint16 1 enchant / 2 disenchant / 3 empower / 4 lesson, uint8 item, uint8 modifier (HG Server Enchanting.cpp)
 	MSGID_MAX
 };
 

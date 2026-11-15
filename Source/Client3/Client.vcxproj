@@ -264,6 +264,7 @@
     <ClCompile Include="UI\WantedSystem.cpp" />
     <ClCompile Include="UI\BountyBoard.cpp" />
     <ClCompile Include="UI\RebirthPanel.cpp" />
+    <ClCompile Include="UI\EnchantPanel.cpp" />
     <ClCompile Include="UI\NpcQueryPanel.cpp" />
     <ClCompile Include="UI\BottomBar.cpp" />
     <ClCompile Include="UI\ValoriaGear.cpp" />

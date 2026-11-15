@@ -50,6 +50,7 @@ const int kNumX1[10] = { 38, 56, 81, 101, 116, 137, 165, 197, 217, 239 };
 void CGame::MagicButtonRect(int id, RECT * pRc)
 {
 	if (id == 20) SetRect(pRc, RBTNPOSX, 285, RBTNPOSX + BTNSZX, 285 + BTNSZY);		// Alchemy
+	else if (id == 22) SetRect(pRc, LBTNPOSX, 285, LBTNPOSX + BTNSZX, 285 + BTNSZY);	// Enchant (UI\EnchantPanel.cpp)
 	else SetRect(pRc, MAGICWIN_W - 28, 4, MAGICWIN_W - 6, 26);						// close
 }
 
@@ -133,5 +134,13 @@ void CGame::DrawMagicPanel(int iChance, int onButton)
 		const bool bOn = bTop && (onButton == 20);
 		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 70 : 40);
 		Centered(R, rc.left, rc.right, rc.top + 3, "Alchemy", bOn ? kWhite : RGB(220, 224, 230), 12);
+	}
+	// Enchant (VALORIA enchanting, UI\EnchantPanel.cpp)
+	MagicButtonRect(22, &rc);
+	OffsetRect(&rc, X, Y);
+	{
+		const bool bOn = bTop && (onButton == 22);
+		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(196, 160, 255), bOn ? 60 : 26, RGB(196, 160, 255), bOn ? 120 : 70);
+		Centered(R, rc.left, rc.right, rc.top + 3, "Enchant", bOn ? kWhite : RGB(220, 214, 240), 12);
 	}
 }

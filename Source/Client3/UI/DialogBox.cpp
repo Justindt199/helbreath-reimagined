@@ -424,6 +424,7 @@ void CDialogBox::SetMode(char mode)
 		AddButton(198, 217, 240, 268, 18);
 		AddButton(218, 239, 240, 268, 19);
 		AddButton(RBTNPOSX, RBTNPOSX + BTNSZX, 285, 285 + BTNSZY, 20);
+		AddButton(LBTNPOSX, LBTNPOSX + BTNSZX, 285, 285 + BTNSZY, 22);	// Enchant (UI\EnchantPanel.cpp)
 		AddButton(230, 252, 4, 26, 21);		// close
 		break;
 
@@ -1176,6 +1177,9 @@ void CDialogBox::SetMode(char mode)
 		break;
 
 	case DIALOG_REBIRTH:	// Rebirth: drawn and clicked in code (UI\RebirthPanel.cpp), no fixed buttons
+		break;
+
+	case DIALOG_ENCHANT:	// VALORIA enchanting: drawn and clicked in code (UI\EnchantPanel.cpp), no fixed buttons
 		break;
 
 	case DIALOG_BOUNTY:	// Bounty board: drawn and clicked in code (UI\BountyBoard.cpp), no fixed buttons

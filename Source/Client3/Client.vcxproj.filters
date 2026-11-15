@@ -297,6 +297,9 @@
     <ClCompile Include="UI\RebirthPanel.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="UI\EnchantPanel.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
     <ClCompile Include="UI\NpcQueryPanel.cpp">
       <Filter>ui</Filter>
     </ClCompile>

@@ -436,6 +436,12 @@ int calculateAttackEffect(short sTargetH, char cTargetType, short sAttackerH, ch
 			}
 		}
 
+		// VALORIA empowered weapon damage (Enchanting.cpp): +6% a level
+		if (wWeaponType >= 1 && g_clientList[sAttackerH]->m_gearDmgPct > 0) {
+			iAP_SM += (iAP_SM * g_clientList[sAttackerH]->m_gearDmgPct + 50) / 100;
+			iAP_L  += (iAP_L  * g_clientList[sAttackerH]->m_gearDmgPct + 50) / 100;
+		}
+
 		if (g_clientList[sAttackerH]->m_heroArmourBonus == 1) {
 			iAttackerHitRatio += 100;
 			iAP_SM += 5;

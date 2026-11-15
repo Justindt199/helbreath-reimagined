@@ -396,6 +396,11 @@ bool CGuild::AddToWarehouse(CItem * item, CClient * player)
 	if(_warehouse.size() >= maxGWHItems[ m_upgrades[GU_WAREHOUSE] ] || 
 		(player && !player->m_bIsOnWarehouse) || item->m_disabled)
 		return false;
+	if(!item->m_valoria.Empty())	// VALORIA: the guild warehouse keeps only Helbreath's item fields
+	{
+		if(player) { char cMsg[] = "Enchanted or empowered items can't go in the guild warehouse."; g_game->ShowClientMsg(player->m_handle, cMsg); }
+		return false;
+	}
 
 	if(item->m_sTouchEffectType != 0 &&
 		item->m_sTouchEffectValue1 == player->m_sCharIDnum1 &&

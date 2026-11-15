@@ -31,6 +31,7 @@
 #include "..\shared\NetMessages.h"
 #include "..\shared\npcType.h"
 #include "..\shared\maths.h"
+#include "..\shared\ValoriaEnchant.h"
 
 #include "GlobalDef.h"
 #include "Engine\Renderer.h"
@@ -70,7 +71,7 @@
 #define RBTNPOSX			154
 #define BTNPOSY			292
 
-#define MAXDIALOGBOX		67
+#define MAXDIALOGBOX		68
 
 
 #define INDEX4_MSGID		0
@@ -487,6 +488,21 @@ public:
 	void RebirthButtonRect(int id, RECT * pRc);
 	void DrawDialogBox_Rebirth();
 	void DlgBoxClick_Rebirth();
+
+	// VALORIA enchanting (UI\EnchantPanel.cpp)
+	enum { ENCHANTWIN_W = 480, ENCHANTWIN_H = 440 };
+	Valoria::CharData m_enchant;
+	int  m_iEnchantTab = 0, m_iEnchantSel = -1, m_iEnchantScroll = 0;
+	DWORD m_dwEnchantConfirmAt = 0;
+	void NotifyMsg_EnchantStats(char * pData);
+	void NotifyMsg_EnchantItems(char * pData);
+	void OpenEnchantWindow();
+	std::string ItemDisplayName(const char * pName) const;
+	void EnchantItemMods(const class CItem * it, bool has[Valoria::MOD_COUNT]) const;
+	void EnchantTipLines(ItemTip & t, const class CItem * it);
+	void DrawDialogBox_Enchant();
+	void DlgBoxClick_Enchant();
+	bool GearRowOf(const char * pName, int base[Valoria::MOD_CRIT + 1]) const;	// UI\ValoriaGear.cpp
 	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED };
 	void  CharDollOrigin(short & sX, short & sY);	// where the paper doll's pivot math starts
 	void  DrawCharPanelBack();
