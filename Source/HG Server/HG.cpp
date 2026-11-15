@@ -5934,6 +5934,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			AdminOrder_DisconnectAll(iClientH);
 		} else if (memcmp(cp, "/createitem ", 12) == 0 || memcmp(cp, "/ci ", 4) == 0) {
 			AdminOrder_CreateItem(iClientH, cp, dwMsgSize - 21);
+		} else if (memcmp(cp, "/vuse ", 6) == 0) {	// GM: use a VALORIA item by name (ValoriaUse.cpp)
+			ValoriaAdminUse(iClientH, cp + 6);
 		} else if (memcmp(cp, "/setweather ", 12) == 0) {
 			AdminOrder_SetWeather(iClientH, cp, dwMsgSize - 21);
 		} else if (memcmp(cp, "/soccer", 7) == 0) {

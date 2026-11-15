@@ -150,3 +150,30 @@ bool CGame::ValoriaInfuse(int iClientH, short sItemIndex, short sDest)
 	if (p->m_bIsItemEquipped[sDest]) CalcTotalItemEffect(iClientH, -1, false);
 	return true;
 }
+
+// GM (admin level 4): "/vuse ElixirOfStrength" or "/vuse RuneOfMight LongSword" uses a bag item by name,
+// on the named bag item, the same way a double-click does.
+void CGame::ValoriaAdminUse(int iClientH, const char * pArgs)
+{
+	CClient * p = m_pClientList[iClientH];
+	if (p == NULL || p->m_iAdminUserLevel < 4) return;
+	char cUse[32] = {}, cDest[32] = {};
+	sscanf(pArgs, "%31s %31s", cUse, cDest);
+	short sUse = -1, sDest = -1;
+	for (int i = 0; i < MAXITEMS; i++) {
+		CItem * it = p->m_pItemList[i];
+		if (it == NULL) continue;
+		if (sUse < 0 && _stricmp(it->m_cName, cUse) == 0) sUse = (short)i;
+		else if (sDest < 0 && cDest[0] && _stricmp(it->m_cName, cDest) == 0 && !p->m_bIsItemEquipped[i]) sDest = (short)i;
+	}
+	if (sUse < 0) { Say(this, iClientH, "/vuse: no such item in your bag."); return; }
+	CItem * it = p->m_pItemList[sUse];
+	bool bUsed = false;
+	if (it->m_sItemEffectType == ITEMEFFECTTYPE_VALORIA_BUFF) bUsed = ValoriaUseBuff(iClientH, it->m_sItemEffectValue1, it->m_sLevelLimit);
+	else if (it->m_sItemEffectType == ITEMEFFECTTYPE_VALORIA_INFUSE) {
+		if (sDest < 0) { Say(this, iClientH, "/vuse: name the bag item to use it on."); return; }
+		bUsed = ValoriaInfuse(iClientH, sUse, sDest);
+	}
+	else { Say(this, iClientH, "/vuse: not a VALORIA usable item."); return; }
+	if (bUsed) ItemDepleteHandler(iClientH, sUse, true);
+}
