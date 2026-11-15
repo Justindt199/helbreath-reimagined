@@ -300,6 +300,8 @@ public:
 	bool bStockMsgToGateServer(char * pData, uint32 dwSize);
 	
 	void ReqCreateCraftingHandler(int iClientH, char *pData);
+	void Valoria_Craft(int iClientH, const short * sIdx, int n);
+	void ValoriaAdminCraft(int iClientH, const char * pArgs);
 	bool _bDecodeCraftingConfigFileContents(char * pData, uint32 dwMsgSize);
 
 	void _SendMapStatus(int iClientH);

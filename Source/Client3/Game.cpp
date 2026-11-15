@@ -36270,7 +36270,7 @@ static void DrawCraftingBackdrop(CRenderer & R, int sX, int sY, bool bOnTry)
 {
 	R.StonePanel(sX, sY, sX + 240, sY + 210);
 	R.TitleOut(sX + 14, sY + 8, "CRAFTING", RGB(232, 188, 92), 14);
-	R.TextOutSized(sX + 14, sY + 28, "Drop the materials here", RGB(200, 205, 213), 10);
+	R.TextOutSized(sX + 14, sY + 154, "Drop the materials here", RGB(200, 205, 213), 10);	// under the slots
 	static const int at[6][2] = { {60, 63}, {115, 48}, {160, 63}, {70, 108}, {115, 123}, {170, 108} };
 	for (int i = 0; i < 6; i++) {
 		const int cx = sX + at[i][0], cy = sY + at[i][1];

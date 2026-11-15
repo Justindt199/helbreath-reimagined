@@ -271,3 +271,29 @@ void CGame::ValoriaAdminUse(int iClientH, const char * pArgs)
 	else { Say(this, iClientH, "/vuse: not a VALORIA usable item."); return; }
 	if (bUsed) ItemDepleteHandler(iClientH, sUse, true);
 }
+
+// GM: /vcraft Item [Item ...] - crafts from the bag items named, as if they were dropped into the
+// Crafting Vessel's window (Valoria_Craft). Names as in the item list, e.g. /vcraft VerdantEssence.
+void CGame::ValoriaAdminCraft(int iClientH, const char * pArgs)
+{
+	CClient * p = m_pClientList[iClientH];
+	if (p == NULL || p->m_iAdminUserLevel < 4) return;
+	char cNames[6][32] = {};
+	const int iNames = sscanf(pArgs, "%31s %31s %31s %31s %31s %31s", cNames[0], cNames[1], cNames[2], cNames[3], cNames[4], cNames[5]);
+	short sIdx[6];
+	int n = 0;
+	for (int k = 0; k < iNames && k < 6; k++) {
+		short s = -1;
+		for (int i = 0; i < MAXITEMS && s < 0; i++) {
+			CItem * it = p->m_pItemList[i];
+			if (it == NULL || it->m_disabled || p->m_bIsItemEquipped[i] || _stricmp(it->m_cName, cNames[k]) != 0) continue;
+			bool bDup = false;
+			for (int j = 0; j < n; j++) if (sIdx[j] == i) bDup = true;
+			if (!bDup) s = (short)i;
+		}
+		if (s < 0) { Say(this, iClientH, "/vcraft: an item named is not in your bag."); return; }
+		sIdx[n++] = s;
+	}
+	if (n == 0) { Say(this, iClientH, "/vcraft: name the bag items to craft with."); return; }
+	Valoria_Craft(iClientH, sIdx, n);
+}

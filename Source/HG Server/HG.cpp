@@ -5938,6 +5938,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			AdminOrder_CreateItem(iClientH, cp, dwMsgSize - 21);
 		} else if (memcmp(cp, "/vuse ", 6) == 0) {	// GM: use a VALORIA item by name (ValoriaUse.cpp)
 			ValoriaAdminUse(iClientH, cp + 6);
+		} else if (memcmp(cp, "/vcraft ", 8) == 0) {	// GM: craft from bag items named (ValoriaUse.cpp)
+			ValoriaAdminCraft(iClientH, cp + 8);
 		} else if (memcmp(cp, "/setweather ", 12) == 0) {
 			AdminOrder_SetWeather(iClientH, cp, dwMsgSize - 21);
 		} else if (memcmp(cp, "/soccer", 7) == 0) {
@@ -38445,14 +38447,20 @@ bool CGame::_bDecodeCraftingConfigFileContents(char *pData, uint32 dwMsgSize)
 void CGame::ReqCreateCraftingHandler(int iClientH, char *pData)
 {	// Crafting: VALORIA jewellery, staves, robes and essences (see "VALORIA recipes" above)
 	short sIdx[6];
-	char  cName[21], cType;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	m_pClientList[iClientH]->m_iSkillMsgRecvCount++;
 
 	const int n = Valoria_ReadSlots(iClientH, pData + 11 + 20, sIdx);
 	if (n < 0) return;
+	Valoria_Craft(iClientH, sIdx, n);
+}
 
+// Crafts from these bag slots: the best matching crafting recipe (see Valoria_RecipeSize).
+// Shared by the Crafting Vessel and the GM's /vcraft.
+void CGame::Valoria_Craft(int iClientH, const short * sIdx, int n)
+{
+	char cName[21], cType;
 	int iBest = -1, iBestSize = 0;
 	for (int i = 0; i < MAXCRAFTING; i++)
 		if (m_pCraftingConfigList[i] != NULL) {
