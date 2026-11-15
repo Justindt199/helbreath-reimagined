@@ -587,6 +587,8 @@ public:
 	void PassiveBonus(int iClientH);
 	// VALORIA usable items (ValoriaUse.cpp)
 	void ValoriaSendBuffs(int iClientH);
+	void ValoriaSaveBuffs(int iClientH, unsigned char * pPassive);
+	void ValoriaLoadBuffs(CClient * p, const unsigned char * pPassive);
 	bool ValoriaUseBuff(int iClientH, int iBuff, int iLevelLimit);
 	void ValoriaBuffBonus(int iClientH);
 	void ValoriaBuffTick(int iClientH);

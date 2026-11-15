@@ -13,6 +13,7 @@
 #include "..\shared\NetMessages.h"
 #include "..\shared\buffer.h"
 #include "..\shared\ValoriaUse.h"
+#include "..\shared\ValoriaPassives.h"
 #include "..\shared\Maths.h"
 #include "..\shared\npcType.h"
 #include "char\Npc.h"
@@ -22,6 +23,35 @@
 extern char g_cTxt[512];
 
 using namespace ValoriaUse;
+
+// Buffs carry over log out: the time each has left is saved in the passive tree block's spare bytes
+// (char_database.ValoriaPassive), one byte per buff in 5-second steps, so up to 21 minutes.
+const int BUFF_SAVE_AT = 40;
+const int BUFF_SAVE_STEP = 5;
+static_assert(BUFF_SAVE_AT > ValoriaPassive::BIT_BYTES && BUFF_SAVE_AT + BUFF_COUNT <= ValoriaPassive::DATA_BYTES,
+	"saved buffs must sit in the passive block's spare bytes");
+
+void CGame::ValoriaSaveBuffs(int iClientH, unsigned char * pPassive)
+{
+	CClient * p = m_pClientList[iClientH];
+	if (p == NULL) return;
+	const uint32 t = timeGetTime();
+	for (int b = 0; b < BUFF_COUNT; b++) {
+		uint32 left = (p->m_valBuffEnd[b] != 0 && (int)(p->m_valBuffEnd[b] - t) > 0) ? (p->m_valBuffEnd[b] - t + 999) / 1000 : 0;
+		left = (left + BUFF_SAVE_STEP - 1) / BUFF_SAVE_STEP;
+		pPassive[BUFF_SAVE_AT + b] = (unsigned char)(left > 255 ? 255 : left);
+	}
+}
+
+void CGame::ValoriaLoadBuffs(CClient * p, const unsigned char * pPassive)
+{
+	if (p == NULL) return;
+	const uint32 t = timeGetTime();
+	for (int b = 0; b < BUFF_COUNT; b++) {
+		const uint32 left = (uint32)pPassive[BUFF_SAVE_AT + b] * BUFF_SAVE_STEP;
+		p->m_valBuffEnd[b] = left ? t + left * 1000 : 0;
+	}
+}
 
 namespace {
 void Say(CGame * g, int h, const char * s)

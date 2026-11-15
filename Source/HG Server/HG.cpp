@@ -4514,6 +4514,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 	// 48 bytes after it, then the item lists
 	player->m_enchant.Read((const unsigned char *)(pData + 509));
 	player->m_passive.Read((const unsigned char *)(pData + 509 + Valoria::CHAR_BYTES));
+	ValoriaLoadBuffs(player, (const unsigned char *)(pData + 509 + Valoria::CHAR_BYTES));	// elixirs still running at log out
 	const long charIndexEnd = 509 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;
 
 	for (i = 0; i < MAXITEMEQUIPPOS; i++) player->m_sItemEquipmentStatus[i] = -1;
@@ -4919,6 +4920,7 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 	// VALORIA enchanting (Shared\ValoriaEnchant.h): 64 bytes after the skills, then the item lists
 	m_pClientList[iClientH]->m_enchant.Write((unsigned char *)(pData + charIndexEnd + 224));
 	m_pClientList[iClientH]->m_passive.Write((unsigned char *)(pData + charIndexEnd + 224 + Valoria::CHAR_BYTES));	// passive tree, 48 bytes
+	ValoriaSaveBuffs(iClientH, (unsigned char *)(pData + charIndexEnd + 224 + Valoria::CHAR_BYTES));	// buff time left, in its spare bytes
 	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;	// item count, then the bag items
 	NItems = 0;
 	NBankItems = 0;
