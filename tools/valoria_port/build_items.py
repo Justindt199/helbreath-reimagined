@@ -56,6 +56,8 @@ PASSIVE_RELICS = {'passive_tome', 'refund_orb'}
 USE_BUFFS = [('elixir_strength', 0), ('elixir_ironskin', 1), ('elixir_swiftness', 2), ('elixir_wisdom', 3), ('xp_scroll', 4)]
 USE_INFUSE = [('rune_might', 1), ('rune_agility', 2), ('rune_vigor', 3), ('rune_intellect', 4), ('rune_sorcery', 5),
               ('rune_warding', 8), ('blessed_stone', 100)]
+# Added once crit and gold / item find worked in Helbreath: after the others, so item numbers stay put.
+USE_LATER = [('elixir_fortune', 'RedPotion', dict(type=3, eff=36, v1=5)), ('rune_precision', 'Dye(Indigo)', dict(eff=35, v1=9, dur=1))]
 DROPPED_TYPES = {'gloves'}               # Helbreath has no glove slot
 
 # Template for each weapon (worn look, swing speed, skill, dice count). Order matters: first match wins.
@@ -310,6 +312,11 @@ def main():
         frames.append({'key': key, 'icon': v['icon']})
         item_map[key] = [new_row('Dye(Indigo)', internal_name(v, key), v['name'], v, frame,
                                  eff=35, v1=mod, v2=0, dur=1)]
+    for key, tmpl, extra in USE_LATER:
+        v = items[key]
+        frame = len(frames)
+        frames.append({'key': key, 'icon': v['icon']})
+        item_map[key] = [new_row(tmpl, internal_name(v, key), v['name'], v, frame, v2=0, v3=0, v4=0, v5=0, v6=0, **extra)]
 
     # ---- item rows: ItemValoria1.cfg, ItemValoria2.cfg, ... (the login server sends each one separately)
     replace_block(ITEM_CFG, [])                                   # older versions wrote them into Item3.cfg

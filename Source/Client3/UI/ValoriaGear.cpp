@@ -77,7 +77,8 @@ int CGame::MaxMP() const
 
 int CGame::MaxSP() const
 {
-	return m_iLevel * 2 + (m_stat[STAT_STR] + GearBonus(GEAR_STR)) * 2;
+	const int iSP = m_iLevel * 2 + (m_stat[STAT_STR] + GearBonus(GEAR_STR)) * 2;
+	return iSP + iSP * PassiveTotal(ValoriaPassive::PM_SP_PCT) / 100;	// VALORIA passive tree
 }
 
 int CGame::GearStatBonus(int iStat) const

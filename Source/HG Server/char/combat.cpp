@@ -441,6 +441,11 @@ int calculateAttackEffect(short sTargetH, char cTargetType, short sAttackerH, ch
 			iAP_SM += (iAP_SM * g_clientList[sAttackerH]->m_gearDmgPct + 50) / 100;
 			iAP_L  += (iAP_L  * g_clientList[sAttackerH]->m_gearDmgPct + 50) / 100;
 		}
+		// VALORIA boss damage (ValoriaUse.cpp)
+		if (cTargetType == OWNERTYPE_NPC) {
+			iAP_SM = g_game->ValoriaBossDamage(sAttackerH, sTargetH, iAP_SM);
+			iAP_L  = g_game->ValoriaBossDamage(sAttackerH, sTargetH, iAP_L);
+		}
 
 		if (g_clientList[sAttackerH]->m_heroArmourBonus == 1) {
 			iAttackerHitRatio += 100;
@@ -494,6 +499,12 @@ int calculateAttackEffect(short sTargetH, char cTargetType, short sAttackerH, ch
 				iAP_SM += (iAP_SM/5); iAP_L += (iAP_L/5);
 				iAttackerHitRatio +=  50;
 				break;
+			}
+
+			// VALORIA crit damage: a critical strike hits this much % harder
+			if (g_clientList[sAttackerH]->m_val.critDmg > 0) {
+				iAP_SM += iAP_SM * g_clientList[sAttackerH]->m_val.critDmg / 100;
+				iAP_L  += iAP_L  * g_clientList[sAttackerH]->m_val.critDmg / 100;
 			}
 
 			iAttackerHitRatio += 100;
@@ -1347,6 +1358,10 @@ int calculateAttackEffect(short sTargetH, char cTargetType, short sAttackerH, ch
 						}
 				}
 
+				// VALORIA dodge, damage taken, thorns (ValoriaUse.cpp): a dodged blow does nothing
+				iAP_SM = g_game->ValoriaHurt(sTargetH, sAttackerH, cAttackerType, iAP_SM, true);
+				if (iAP_SM <= 0) return 0;
+				if (cAttackerType == OWNERTYPE_PLAYER) g_game->ValoriaOnHit(sAttackerH, iAP_SM);	// life / mana steal, crit recharge
 				if (cAttackerType == OWNERTYPE_PLAYER) g_game->WantedNoteHit(sTargetH, sAttackerH);	// Most Wanted reward shares
 				g_clientList[sTargetH]->m_iHP -= iAP_SM;
 				g_clientList[sTargetH]->m_lastDamageTime = dwTime;
@@ -1546,6 +1561,7 @@ CAE_SKIPDAMAGEMOVE:;
 				g_game->RemoveFromDelayEventList(sTargetH, OWNERTYPE_NPC, MAGICTYPE_PROTECT);					  
 			}
 
+			if (cAttackerType == OWNERTYPE_PLAYER) g_game->ValoriaOnHit(sAttackerH, iDamage);	// VALORIA life / mana steal, crit recharge
 			g_npcList[sTargetH]->ReduceHP( iDamage );
 
 			if (g_npcList[sTargetH]->m_iHP <= 0) {

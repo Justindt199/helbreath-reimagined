@@ -726,5 +726,13 @@
  {
   "key": "blessed_stone",
   "icon": "x_stone_blessed"
+ },
+ {
+  "key": "elixir_fortune",
+  "icon": "e_gold"
+ },
+ {
+  "key": "rune_precision",
+  "icon": "x_rune_white"
  }
 ]

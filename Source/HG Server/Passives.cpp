@@ -62,6 +62,7 @@ void CGame::PassiveBonus(int iClientH)
 	CClient * p = m_pClientList[iClientH];
 	if (p == NULL) return;
 	p->m_passHpPct = p->m_passMpPct = p->m_passDefPct = p->m_passXpPct = 0;
+	memset(&p->m_val, 0, sizeof(p->m_val));
 	if (!p->m_passive.Active(p->m_iLevel)) return;
 	int t[PM_COUNT];
 	p->m_passive.Totals(t);
@@ -78,6 +79,12 @@ void CGame::PassiveBonus(int iClientH)
 	p->m_passMpPct  = t[PM_MP_PCT];
 	p->m_passDefPct = t[PM_DEF_PCT];
 	p->m_passXpPct  = t[PM_XP];
+	p->m_gearCrit  += t[PM_CRIT];		// crit charge chance: ValoriaBuffBonus
+	CClient::ValoriaCombat & v = p->m_val;
+	v.critDmg = t[PM_CRIT_DMG];   v.spellDmg = t[PM_SPELL_DMG]; v.dodge = t[PM_DODGE];     v.dmgRed = t[PM_DMG_RED];
+	v.lifeSteal = t[PM_LIFESTEAL]; v.manaSteal = t[PM_MP_STEAL]; v.thorns = t[PM_THORNS];  v.regen = t[PM_REGEN];
+	v.mpRegen = t[PM_MP_REGEN];   v.spPct = t[PM_SP_PCT];       v.bossDmg = t[PM_BOSS_DMG]; v.goldFind = t[PM_GOLD_FIND];
+	v.itemFind = t[PM_ITEM_FIND];
 }
 
 //////////////////////////////////////////////////////////////////////

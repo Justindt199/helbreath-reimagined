@@ -38,6 +38,7 @@ ElixirOfStrength	10	20	1
 ElixirOfIronSkin	14	20	1
 ElixirOfSwiftness	14	20	1
 ElixirOfWisdom	10	20	1
+ElixirOfFortune	10	30	1
 ScrollOfInsight	24	50	1
 RubyRing	14	75	1
 SapphireRing	14	75	1
@@ -64,5 +65,6 @@ RuneOfSorcery	18	125	1
 RuneOfIntellect	18	125	1
 RuneOfVigor	21	150	1
 RuneOfWarding	21	150	1
+RuneOfPrecision	28	300	1
 ArchmageStaff	46	2500	1
 TemperingOil	21	30	2

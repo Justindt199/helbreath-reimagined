@@ -660,5 +660,11 @@
  ],
  "blessed_stone": [
   "BlessedUpgradeStone"
+ ],
+ "elixir_fortune": [
+  "ElixirOfFortune"
+ ],
+ "rune_precision": [
+  "RuneOfPrecision"
  ]
 }

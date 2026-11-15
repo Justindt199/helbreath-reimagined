@@ -354,6 +354,7 @@ CClient::CClient(int clientH)
 	m_passHpPct = m_passMpPct = m_passDefPct = m_passXpPct = 0;
 	m_dwPassiveBusy = 0;
 	memset(m_valBuffEnd, 0, sizeof(m_valBuffEnd));
+	memset(&m_val, 0, sizeof(m_val));
 }
 
 CClient::~CClient()
@@ -715,6 +716,7 @@ int CClient::GetMaxSP() const
 	int iRet;
 
 	iRet = (2*GetStr()) + (2*m_iLevel);
+	iRet += iRet * m_val.spPct / 100;	// VALORIA passive tree
 
 	return iRet;
 }
@@ -1369,6 +1371,7 @@ float CClient::GetDropFactor() const
 	if(HasPartyHuntBonus())
 		factor *= 0.80f;
 
+	if (m_val.itemFind > 0) factor /= 1.0f + m_val.itemFind / 100.0f;	// VALORIA item find: makes 'nothing' rarer
 	return factor;
 }
  bool CClient::IsHeldWinner() const

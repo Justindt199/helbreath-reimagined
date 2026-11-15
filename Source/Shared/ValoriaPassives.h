@@ -8,8 +8,8 @@
 //   * An Orb of Unmaking returns every point (the tree goes back to the root). Nothing else refunds.
 //   * While more points are spent than the character has (after a rebirth, or in the other rebirth set),
 //     the tree is kept but gives nothing until the level catches up.
-//   * Active now: STR, DEX, VIT, INT, MAG, max HP, max MP, defense, damage %, max HP %, max MP %,
-//     defense %, XP %. The other VALORIA modifiers are shown in the tree and come with later stages.
+//   * Active: everything but move speed and attack speed, which show in the tree as coming later.
+//     How each works in Helbreath: HG Server\ValoriaUse.cpp (ValoriaHurt, ValoriaOnHit) and Passives.cpp.
 //
 // Wire format, 48 bytes: 38 bytes of taken bits (node i = byte i/8, bit i%8), Tomes read (uint8), 9 spare.
 //////////////////////////////////////////////////////////////////////
@@ -25,7 +25,6 @@ namespace ValoriaPassive {
 const int DATA_BYTES = 48;
 const int BIT_BYTES  = (NODE_COUNT + 7) / 8;	// 38
 const int MAX_TOMES  = 255;
-const int ACTIVE_MODS = PM_XP + 1;			// PM_STR .. PM_XP work in Helbreath Reimagined now
 
 inline const char * ModName(int k)
 {
@@ -45,7 +44,9 @@ inline bool ModIsPercent(int k)
 	}
 }
 
-inline bool ModActive(int k) { return k >= 0 && k < ACTIVE_MODS; }
+// Every modifier works except move speed and attack speed (Helbreath's movement and attack timing
+// is client-driven and checked by the server; they need their own stage).
+inline bool ModActive(int k) { return k >= 0 && k < PM_COUNT && k != PM_SPEED && k != PM_ATK_SPD; }
 
 // "+2 STR", "+3% Damage", "-8% Max HP"; damage reduction reads as "-1% Damage taken".
 inline void ModText(int k, int v, char * pOut, int iSize)

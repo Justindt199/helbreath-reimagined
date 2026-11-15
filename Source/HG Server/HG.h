@@ -592,6 +592,9 @@ public:
 	void ValoriaBuffTick(int iClientH);
 	bool ValoriaInfuse(int iClientH, short sItemIndex, short sDest);
 	void ValoriaAdminUse(int iClientH, const char * pArgs);
+	int  ValoriaBossDamage(short sAttackerH, short sNpcH, int iDamage);
+	int  ValoriaHurt(short sTargetH, short sAttackerH, char cAttackerType, int iDamage, bool bMelee);
+	void ValoriaOnHit(short sAttackerH, int iDamage);
 	void RequestRetrieveItemHandler(int iClientH, char * pData);
 	void RequestRetrieveGuildItem(CClient * player, char * data);
 	void HandlePingMap(const CClient * player, char * data) const;

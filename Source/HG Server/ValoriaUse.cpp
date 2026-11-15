@@ -13,6 +13,9 @@
 #include "..\shared\NetMessages.h"
 #include "..\shared\buffer.h"
 #include "..\shared\ValoriaUse.h"
+#include "..\shared\Maths.h"
+#include "..\shared\npcType.h"
+#include "char\Npc.h"
 
 #include <cstring>
 
@@ -84,6 +87,66 @@ void CGame::ValoriaBuffBonus(int iClientH)
 		p->m_gearMag += d.mag;
 		p->m_gearDef += d.def;
 		p->m_passXpPct += d.xpPct;
+		p->m_val.goldFind += d.goldPct;
+		p->m_val.itemFind += d.itemPct;
+	}
+	// VALORIA crit (gear, enchantments, runes, passives): each 1% gives 0.4% chance that a landed hit wins
+	// back a critical charge, at most 25% (VALORIA's CRIT_CHARGE_SHARE and CRIT_CAP)
+	p->m_val.critCharge = (p->m_gearCrit * 2 / 5 < 25) ? p->m_gearCrit * 2 / 5 : 25;
+}
+
+// A Helbreath boss (the same five that drop the passive relics: tools/valoria_port/build_passives.py).
+static bool IsBoss(int iType)
+{
+	return iType == NPC_HELLCLAW || iType == NPC_TIGERWORM || iType == NPC_WYVERN || iType == NPC_FIRE_WYVERN || iType == NPC_ABADDON;
+}
+
+// Boss damage: the extra a player's blow or spell does to a boss.
+int CGame::ValoriaBossDamage(short sAttackerH, short sNpcH, int iDamage)
+{
+	CClient * p = m_pClientList[sAttackerH];
+	if (p == NULL || p->m_val.bossDmg <= 0 || m_pNpcList[sNpcH] == NULL || !IsBoss(m_pNpcList[sNpcH]->m_sType)) return iDamage;
+	return iDamage + iDamage * p->m_val.bossDmg / 100;
+}
+
+// A player is about to take iDamage. Returns what they take: 0 when they dodge (melee only).
+// Damage taken lowers it; thorns hit the attacker back for a fixed amount (melee only, never lethal).
+int CGame::ValoriaHurt(short sTargetH, short sAttackerH, char cAttackerType, int iDamage, bool bMelee)
+{
+	CClient * p = m_pClientList[sTargetH];
+	if (p == NULL || iDamage <= 0) return iDamage;
+	const CClient::ValoriaCombat & v = p->m_val;
+	if (bMelee && v.dodge > 0 && dice(1, 100) <= v.dodge) return 0;
+	if (v.dmgRed > 0) { iDamage -= iDamage * v.dmgRed / 100; if (iDamage < 1) iDamage = 1; }
+	if (bMelee && v.thorns > 0) {
+		if (cAttackerType == OWNERTYPE_PLAYER && m_pClientList[sAttackerH] != NULL && m_pClientList[sAttackerH]->m_iHP > 1) {
+			CClient * a = m_pClientList[sAttackerH];
+			a->m_iHP = (a->m_iHP - v.thorns > 1) ? a->m_iHP - v.thorns : 1;
+			SendNotifyMsg(NULL, sAttackerH, NOTIFY_HP, NULL, NULL, NULL, NULL);
+		}
+		else if (cAttackerType == OWNERTYPE_NPC && m_pNpcList[sAttackerH] != NULL && m_pNpcList[sAttackerH]->m_iHP > 1)
+			m_pNpcList[sAttackerH]->m_iHP = (m_pNpcList[sAttackerH]->m_iHP - v.thorns > 1) ? m_pNpcList[sAttackerH]->m_iHP - v.thorns : 1;
+	}
+	return iDamage;
+}
+
+// A player's blow or spell landed for iDamage: crit recharge, life steal, mana steal.
+void CGame::ValoriaOnHit(short sAttackerH, int iDamage)
+{
+	CClient * p = m_pClientList[sAttackerH];
+	if (p == NULL || iDamage <= 0 || p->m_bIsKilled) return;
+	const CClient::ValoriaCombat & v = p->m_val;
+	if (v.critCharge > 0 && p->m_iSuperAttackLeft < p->m_iLevel / 10 && dice(1, 100) <= v.critCharge) {
+		p->m_iSuperAttackLeft++;
+		SendNotifyMsg(NULL, sAttackerH, NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
+	}
+	if (v.lifeSteal > 0 && p->m_iHP < p->GetMaxHP()) {
+		const int heal = (iDamage * v.lifeSteal + 50) / 100;
+		if (heal > 0) { p->m_iHP = (p->m_iHP + heal < p->GetMaxHP()) ? p->m_iHP + heal : p->GetMaxHP(); SendNotifyMsg(NULL, sAttackerH, NOTIFY_HP, NULL, NULL, NULL, NULL); }
+	}
+	if (v.manaSteal > 0 && p->m_iMP < p->GetMaxMP()) {
+		const int mana = (iDamage * v.manaSteal + 50) / 100;
+		if (mana > 0) { p->m_iMP = (p->m_iMP + mana < p->GetMaxMP()) ? p->m_iMP + mana : p->GetMaxMP(); SendNotifyMsg(NULL, sAttackerH, NOTIFY_MP, NULL, NULL, NULL, NULL); }
 	}
 }
 

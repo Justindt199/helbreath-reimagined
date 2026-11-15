@@ -452,6 +452,9 @@ public:
 	ValoriaPassive::Data m_passive;	// VALORIA passive tree: taken nodes, Tomes read (Shared\ValoriaPassives.h)
 	int m_passHpPct, m_passMpPct, m_passDefPct, m_passXpPct;	// the tree's % bonuses (Passives.cpp PassiveBonus)
 	DWORD m_dwPassiveBusy;			// last passive tree request (anti-spam)
+	// VALORIA combat bonuses from the passive tree and buffs (Passives.cpp sets them, ValoriaUse.cpp uses them)
+	struct ValoriaCombat { int critCharge, critDmg, bossDmg, spellDmg, dodge, dmgRed, lifeSteal, manaSteal, thorns,
+		regen, mpRegen, spPct, goldFind, itemFind; } m_val;
 	DWORD m_valBuffEnd[ValoriaUse::BUFF_COUNT];	// VALORIA elixirs / Scroll of Insight: when each ends, 0 = off (ValoriaUse.cpp)
 
 	CParty * _party;

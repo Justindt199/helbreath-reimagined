@@ -243,7 +243,7 @@ inline bool IsArmourPos(int pos)	{ return pos == 1 || pos == 2 || pos == 3 || po
 
 // Modifiers that do something in Helbreath Reimagined yet. Crit is stored on VALORIA gear but not
 // used in combat, so it can't be enchanted, learned or empowered until it is.
-inline bool ModActive(int k)		{ return k >= 0 && k < MOD_COUNT && k != MOD_CRIT; }
+inline bool ModActive(int k)		{ return k >= 0 && k < MOD_COUNT; }
 
 // The modifiers an item has, so the ones Empower can raise and Disenchant teaches: its own VALORIA
 // stats (base[] in Mod order, STR..CRIT, from valoria_gear.txt), its enchantments, defense on armour

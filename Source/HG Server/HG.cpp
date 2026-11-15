@@ -11748,6 +11748,7 @@ void CGame::TimeHitPointsUp(int iClientH)
 			iTotal += (int)dV1;
 		}
 
+		iTotal += m_pClientList[iClientH]->m_val.regen * (HPUPTIME / CLOCKS_PER_SEC);	// VALORIA HP regen: per second
 		m_pClientList[iClientH]->AddHP(iTotal); 
 	}
 
@@ -11777,6 +11778,7 @@ void CGame::TimeManaPointsUp(int iClientH)
 			iTotal += (int)dV1;
 		}
 
+		iTotal += m_pClientList[iClientH]->m_val.mpRegen * (MPUPTIME / CLOCKS_PER_SEC);	// VALORIA MP regen: per second
 		m_pClientList[iClientH]->m_iMP += iTotal;
 
 		if (m_pClientList[iClientH]->m_iMP > iMaxMP) 
@@ -19465,6 +19467,7 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
 		dTmp2 = dTmp2 / 3.3f;
 		dTmp3 = dTmp1 + (dTmp1 * (dTmp2 / 100.0f));
 		iDamage = (int)(dTmp3 +0.5f);
+		iDamage += iDamage * m_pClientList[sAttackerH]->m_val.spellDmg / 100;	// VALORIA spell damage
 
 		if (m_pClientList[sAttackerH]->m_heroArmourBonus == 2) iDamage += 4;
 
@@ -19678,6 +19681,8 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
 		}
 
 		if (cAttackerType == OWNERTYPE_PLAYER) WantedNoteHit(sTargetH, sAttackerH);	// Most Wanted reward shares
+		iDamage = ValoriaHurt(sTargetH, sAttackerH, cAttackerType, iDamage, false);	// VALORIA damage taken
+		if (cAttackerType == OWNERTYPE_PLAYER) ValoriaOnHit(sAttackerH, iDamage);
 		m_pClientList[sTargetH]->m_iHP -= iDamage;
 		m_pClientList[sTargetH]->m_lastDamageTime = dwTime;
 		if (m_pClientList[sTargetH]->m_iHP <= 0) {
@@ -19846,6 +19851,7 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
 		if (m_pNpcList[sTargetH]->m_cMagicEffectStatus[MAGICTYPE_PROTECT] == MAGICPROTECT_PFM)
 			iDamage *= PFMABSORBVAL;
 
+		if (cAttackerType == OWNERTYPE_PLAYER) { iDamage = ValoriaBossDamage(sAttackerH, sTargetH, iDamage); ValoriaOnHit(sAttackerH, iDamage); }	// VALORIA
 		m_pNpcList[sTargetH]->ReduceHP( iDamage );
 
 		if (m_pNpcList[sTargetH]->m_iHP <= 0) {
@@ -20005,6 +20011,7 @@ void CGame::Effect_Damage_Spot_DamageMove(short sAttackerH, char cAttackerType, 
 		dTmp3 = dTmp1 + (dTmp1 * (dTmp2 / 100.0f));
 		iDamage = (int)(dTmp3 +0.5f);
 		if (iDamage <= 0) iDamage = 0;
+		iDamage += iDamage * m_pClientList[sAttackerH]->m_val.spellDmg / 100;	// VALORIA spell damage
 
 		if (m_pClientList[sAttackerH]->m_heroArmourBonus == 2) iDamage += 4;
 
@@ -20213,6 +20220,8 @@ void CGame::Effect_Damage_Spot_DamageMove(short sAttackerH, char cAttackerType, 
 		}
 
 		if (cAttackerType == OWNERTYPE_PLAYER) WantedNoteHit(sTargetH, sAttackerH);	// Most Wanted reward shares
+		iDamage = ValoriaHurt(sTargetH, sAttackerH, cAttackerType, iDamage, false);	// VALORIA damage taken
+		if (cAttackerType == OWNERTYPE_PLAYER) ValoriaOnHit(sAttackerH, iDamage);
 		m_pClientList[sTargetH]->m_iHP -= iDamage;
 		m_pClientList[sTargetH]->m_lastDamageTime = dwTime;
 		if (m_pClientList[sTargetH]->m_iHP <= 0) {
@@ -20346,6 +20355,7 @@ EDSD_SKIPDAMAGEMOVE:;
 		if (m_pNpcList[sTargetH]->m_cMagicEffectStatus[MAGICTYPE_PROTECT] == MAGICPROTECT_PFM)
 			iDamage *= PFMABSORBVAL;
 
+		if (cAttackerType == OWNERTYPE_PLAYER) { iDamage = ValoriaBossDamage(sAttackerH, sTargetH, iDamage); ValoriaOnHit(sAttackerH, iDamage); }	// VALORIA
 		m_pNpcList[sTargetH]->ReduceHP( iDamage );
 
 		if (m_pNpcList[sTargetH]->m_iHP <= 0) {
@@ -30149,6 +30159,9 @@ void CGame::NpcDeadItemGenerator(int iNpcH, short sAttackerH, char cAttackerType
 			//if npc had an attribute, double gold
 			if(npc->m_cSpecialAbility != NULL) pItem->m_dwCount *= 2;
 
+			// VALORIA gold find (passives, Elixir of Fortune)
+			if (cAttackerType == OWNERTYPE_PLAYER && m_pClientList[sAttackerH]->m_val.goldFind > 0)
+				pItem->m_dwCount += pItem->m_dwCount * m_pClientList[sAttackerH]->m_val.goldFind / 100;
 			// check for items that give +gold%
 			if ((cAttackerType == OWNERTYPE_PLAYER) && (m_pClientList[sAttackerH]->m_iAddGold != NULL)) {
 				dTmp1 = (double)m_pClientList[sAttackerH]->m_iAddGold;
