@@ -143,7 +143,10 @@
 #define SELECTEDOBJTYPE_DLGBOX	1
 #define SELECTEDOBJTYPE_ITEM	2
 
-#define DOUBLECLICKTIME			300
+// A double-click: the second click within the Windows double-click time (Control Panel > Mouse,
+// 500 ms by default; HB used a fixed 300 ms, too short for many players) and within DOUBLECLICKMOVE pixels.
+#define DOUBLECLICKTIME			((DWORD)GetDoubleClickTime())
+#define DOUBLECLICKMOVE			4
 #define MAXCRUSADESTRUCTURES	300
 
 #define NONE						-1

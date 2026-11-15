@@ -31688,7 +31688,7 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			{
 				if(m_dialogBoxes[dlgID].HasDblClick() &&
 					dwTime - m_stMCursor.dwSelectClickTime < DOUBLECLICKTIME
-					&& abs(msX - m_stMCursor.sClickX) < 2 && abs(msY - m_stMCursor.sClickY) <2 )
+					&& abs(msX - m_stMCursor.sClickX) < DOUBLECLICKMOVE && abs(msY - m_stMCursor.sClickY) < DOUBLECLICKMOVE )
 				{	
 					m_stMCursor.dwSelectClickTime = m_stMCursor.dwSelectClickTime;
 					m_dialogBoxes[dlgID].OnDblClick();
@@ -31812,8 +31812,8 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			case SELECTEDOBJTYPE_ITEM:
 				dlgID = MouseOverDialog();
 				if(dlgID && m_dialogBoxes[dlgID].HasDblClick() &&
-					abs(m_stMCursor.sPrevX - msX) < 2 && 
-					abs(m_stMCursor.sPrevY - msY) < 2 &&
+					abs(m_stMCursor.sPrevX - msX) < DOUBLECLICKMOVE && 
+					abs(m_stMCursor.sPrevY - msY) < DOUBLECLICKMOVE &&
 					(dwTime - m_stMCursor.dwSelectClickTime) < DOUBLECLICKTIME)
 				{
 					m_dialogBoxes[dlgID].OnDblClick();
