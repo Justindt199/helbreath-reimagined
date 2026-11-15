@@ -195,7 +195,7 @@ void CGame::DrawCharPanelBack()
 	const int W = CHARWIN_W, H = CHARWIN_H;
 	const bool bTop = m_dialogBoxes[DIALOG_CHARACTER].IsTop();
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 
 	// title bar
 	R.TitleOut(X + kPad, Y + 9, "CHARACTER", kGold, 16);
@@ -207,7 +207,7 @@ void CGame::DrawCharPanelBack()
 	R.FillPanel(X + 1, Y + kTitleH, X + W - 1, Y + kTitleH + 1, 0, RGB(255, 255, 255), 26);
 
 	// doll box
-	R.FillPanel(X + kDollX0, Y + kDollY0, X + kDollX1, Y + kDollY1, 8, RGB(0, 0, 0), 95, RGB(255, 255, 255), 24);
+	R.Slate(X + kDollX0, Y + kDollY0, X + kDollX1, Y + kDollY1);
 	// a soft floor under the feet
 	R.FillPanel(X + (kDollX0 + kDollX1) / 2 - 46, Y + kDollY1 - 34, X + (kDollX0 + kDollX1) / 2 + 46, Y + kDollY1 - 22,
 		6, RGB(0, 0, 0), 70);
@@ -382,11 +382,11 @@ void CGame::DrawCharPanelFront(int iHoverSlot, const char * cEquipPoiStatus)
 		const bool bOn = bTop && InRect(rc, ms::X, ms::Y);
 		const int ty = rc.top + (rc.bottom - rc.top - 16) / 2;
 		if (b[i].gold) {
-			R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, bOn ? RGB(248, 208, 120) : kGold, 245);
-			Bold(R, rc.left + 16, ty, b[i].label, RGB(36, 28, 10));
+			R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, 1);	// the main button: gold-rimmed stone
+			Bold(R, rc.left + 16, ty, b[i].label, bOn ? RGB(255, 242, 199) : RGB(245, 219, 158));
 		}
 		else {
-			R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 70 : 42);
+			R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOn ? 1 : 0);
 			R.TextOut(rc.left + 13, ty, b[i].label, bOn ? RGB(255, 255, 255) : RGB(220, 224, 230));
 		}
 	}
@@ -405,7 +405,8 @@ void CGame::DrawCharPanelFront(int iHoverSlot, const char * cEquipPoiStatus)
 			cBorder = m_itemColor;
 			iBorderA = bOn ? 255 : 190;
 		}
-		R.FillPanel(bx, by, bx + kSlotSz, by + kSlotSz, 6, RGB(0, 0, 0), pItem ? 150 : 110, cBorder, iBorderA);
+		R.StoneSlot(bx, by, bx + kSlotSz, by + kSlotSz, bOn);
+		if (pItem != NULL) R.FillPanel(bx + 3, by + 3, bx + kSlotSz - 3, by + kSlotSz - 3, 2, RGB(0, 0, 0), 0, cBorder, iBorderA);	// quality edge
 		if (pItem != NULL) {
 			const int iSpr = SPRID_ITEMPACK_PIVOTPOINT + pItem->m_sSprite;
 			CSprite * pSpr = m_pSprite[iSpr];

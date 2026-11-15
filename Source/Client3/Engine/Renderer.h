@@ -173,6 +173,27 @@ public:
 	void AbortUiRecording();		// stops recording without drawing (start of a frame)
 	bool UiRecording() const { return m_bUiRec; }
 	CUiGpu * UiGpuRecorder();		// the list being recorded, or NULL
+
+	// VALORIA's stone interface: carved granite panels, stone button plaques, recessed slots and
+	// the stone housing round a bar (CONTENTS\ui\*.png, the same pictures VALORIA uses), each
+	// 9-sliced: the carved edges keep their size, the middle stretches. Drawn on the graphics card
+	// only; without the pictures (or the graphics card) the old flat panel is drawn instead.
+	enum EStone { STONE_PANEL, STONE_BUTTON, STONE_BUTTON_HOVER, STONE_BUTTON_PRESSED, STONE_SLOT,
+		STONE_SLOT_ACTIVE, STONE_BAR, STONE_COUNT };
+	void StoneBox(int iStone, int x0, int y0, int x1, int y1);
+	void StonePanel(int x0, int y0, int x1, int y1)					{ StoneBox(STONE_PANEL, x0, y0, x1, y1); }
+	void StoneSlot(int x0, int y0, int x1, int y1, bool bActive)	{ StoneBox(bActive ? STONE_SLOT_ACTIVE : STONE_SLOT, x0, y0, x1, y1); }
+	// iState: 0 normal, 1 under the mouse, 2 pressed; the label in VALORIA's button lettering
+	void StoneButton(int x0, int y0, int x1, int y1, int iState, const char * cLabel = NULL);
+	// the housing goes round [x0, x1) x [y0, y1) (a bar), a little outside it
+	void StoneBarFrame(int x0, int y0, int x1, int y1);
+	// a dark recessed box with a thin carved edge (VALORIA's "slate": lists, text boxes, tooltips)
+	void Slate(int x0, int y0, int x1, int y1, int iFillA = 235);
+	// text centred in [x0, x1) x [y0, y1) in the display font (Cinzel Decorative), drop shadow
+	void TitleCentered(int x0, int y0, int x1, int y1, const char * cStr, COLORREF rgb, int iPx);
+	// on while a classic window (once parchment) is drawn: dark text is lifted to read on stone
+	bool m_bStoneInk = false;
+	COLORREF StoneInk(COLORREF c) const;
 	int  m_iUiGpuSteps;				// steps drawn in the last frame (for the frame-time tooltip)
 
 	BOOL m_bWidescreen;		// fullscreen only: stretch the image to 16:9 instead of letterboxing

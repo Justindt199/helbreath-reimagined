@@ -96,7 +96,7 @@ void CGame::DrawDialogBox_LevelUpSetting()
 	RECT rcClose, rcApply, rcMaj, rcPlus[6], rcMinus[6];
 	LevelUpRects(&rcClose, &rcApply, &rcMaj, rcPlus, rcMinus);
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 
 	// title bar
 	R.TitleOut(X + kPad, Y + 9, "LEVEL-UP SETTINGS", kGold, 16);
@@ -185,15 +185,14 @@ void CGame::DrawDialogBox_LevelUpSetting()
 		wsprintf(cBuf, "Majestic change (%d)", m_iGizonItemUpgradeLeft);
 		const RECT & rc = rcMaj;
 		const bool bHover = bMaj && iOn == 2;
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), bMaj ? (bHover ? 36 : 16) : 6,
-			RGB(255, 255, 255), bMaj ? (bHover ? 70 : 42) : 20);
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bHover ? 1 : 0);
 		R.TextOut(rc.left + (rc.right - rc.left - Width(R, cBuf)) / 2, rc.top + 5, cBuf, bMaj ? RGB(220, 224, 230) : RGB(80, 86, 96));
 	}
 	{
 		const char * pLabel = (iPending > 0) ? "Apply" : "Done";
 		const RECT & rc = rcApply;
 		const bool bHover = iOn == 1;
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, bHover ? RGB(248, 208, 120) : kGold, 245);
-		R.TitleOut(rc.left + (rc.right - rc.left - R.TitleWidth(pLabel)) / 2, rc.top + 5, pLabel, RGB(36, 28, 10));
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, 1);	// the main button: gold-rimmed stone
+		R.TitleOut(rc.left + (rc.right - rc.left - R.TitleWidth(pLabel)) / 2, rc.top + 5, pLabel, bHover ? RGB(255, 242, 199) : RGB(245, 219, 158));
 	}
 }

@@ -189,7 +189,7 @@ void CGame::DrawDialogBox_NpcActionQuery()
 	const char onButton = dlg.OnButton();
 	RECT rc;
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 
 	// header: badge, name, kind
 	const char * pTitle = NULL;

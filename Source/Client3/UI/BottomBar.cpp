@@ -55,15 +55,16 @@ std::string Commas(long long v)
 void DrawVital(CRenderer & r, const RECT & rc, double f, COLORREF fill, COLORREF light, const char * pText, int iPx)
 {
 	const int h = rc.bottom - rc.top;
-	r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, h / 2, RGB(7, 8, 10), 255, RGB(255, 255, 255), 34);
+	r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 0, RGB(8, 8, 9), 242);	// VALORIA: a squared dark track
 	if (f < 0) f = 0;
 	if (f > 1) f = 1;
 	const int w = (int)((rc.right - rc.left - 4) * f + 0.5);
 	if (w > 0) {
-		const int fx1 = rc.left + 2 + (std::max)(w, h - 4);	// at least a round end
-		r.FillPanel(rc.left + 2, rc.top + 2, (std::min)(fx1, (int)rc.right - 2), rc.bottom - 2, (h - 4) / 2, fill, 255);
-		r.FillPanel(rc.left + 4, rc.top + 3, (std::min)(fx1, (int)rc.right - 2) - 2, rc.top + h / 2, (h - 4) / 4, light, 90);
+		const int fx1 = rc.left + 2 + w;
+		r.FillPanel(rc.left + 2, rc.top + 2, (std::min)(fx1, (int)rc.right - 2), rc.bottom - 2, 0, fill, 255);
+		r.FillPanel(rc.left + 2, rc.top + 2, (std::min)(fx1, (int)rc.right - 2), rc.top + h / 2, 0, light, 70);
 	}
+	r.StoneBarFrame(rc.left, rc.top, rc.right, rc.bottom);	// VALORIA's carved stone housing
 	if (pText && pText[0]) CentredShadow(r, rc.left, rc.right, rc.top + (h - iPx - 3) / 2, pText, kWhite, iPx);
 }
 
@@ -103,10 +104,7 @@ void CGame::DrawDialogBox_IconPanel()
 	auto At = [&](const RECT & rc) { RECT o = rc; OffsetRect(&o, X, Y); return o; };
 
 	// the panel
-	// two solid halves (the lower one as dark as black at 60 over the upper): solid fills are fast
-	R.FillPanel(X, Y, X + W, Y + ICONBAR_H / 2, 0, RGB(16, 18, 22), 255);
-	R.FillPanel(X, Y + ICONBAR_H / 2, X + W, Y + ICONBAR_H, 0, RGB(12, 14, 17), 255);
-	R.FillPanel(X, Y, X + W, Y + 1, 0, RGB(150, 128, 82), 220);
+	R.StonePanel(X, Y, X + W, Y + ICONBAR_H);	// VALORIA stone
 
 	// HP and MP
 	{
@@ -142,7 +140,7 @@ void CGame::DrawDialogBox_IconPanel()
 	// location: "Map (x, y)", centred with a pin; smaller, then shortened, if it doesn't fit
 	{
 		const RECT rc = At(L.loc);
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 7, RGB(0, 0, 0), 120, RGB(255, 255, 255), 26);
+		R.Slate(rc.left, rc.top, rc.right, rc.bottom);
 		char cCoords[32];
 		wsprintf(cCoords, " (%d, %d)", m_sPlayerX, m_sPlayerY);
 		std::string name = m_cMapMessage, text = name + cCoords;
@@ -215,8 +213,7 @@ void CGame::DrawDialogBox_IconPanel()
 	for (int k = 0; k < 6; k++) {
 		const RECT rc = At(L.btn[k]);
 		const bool bOn = (onButton == 3 + k);
-		if (bOn) R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 7, RGB(232, 192, 112), 50, kGold, 255);
-		// (no frame while idle: only the gold one on hover)
+		R.StoneSlot(rc.left, rc.top, rc.right, rc.bottom, bOn);	// VALORIA's recessed slot, gold-rimmed under the mouse
 		// the icon tile is 36 x 44 with a light edge (3 px, top / left) and a dark red one (3 px,
 		// right / bottom): show its inside, 30 x 38, centred in the slot
 		const int sx = rc.left + (rc.right - rc.left - 30) / 2 - 3, sy = rc.top + (rc.bottom - rc.top - 38) / 2 - 3;

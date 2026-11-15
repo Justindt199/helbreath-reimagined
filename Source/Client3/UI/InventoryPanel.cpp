@@ -58,7 +58,7 @@ void CGame::DrawInvPanelBack()
 	const int W = INVWIN_W, H = INVWIN_H;
 	const bool bTop = m_dialogBoxes[DIALOG_INVENTORY].IsTop();
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 
 	// title bar: name, how many items, close
 	R.TitleOut(X + kPad + 4, Y + 6, "INVENTORY", kGold, 14);
@@ -66,7 +66,7 @@ void CGame::DrawInvPanelBack()
 	for (int i = 0; i < MAXITEMS; i++) if (m_pItemList[i] != NULL) n++;
 	char cCount[24];
 	wsprintf(cCount, "%d / %d", n, MAXITEMS);
-	const int tx = X + kPad + 4 + R.TextWidthSized("INVENTORY", 14) + 10;
+	const int tx = X + kPad + 4 + R.TitleWidth("INVENTORY", 14) + 10;
 	const int cw = R.TextWidthSized(cCount, 10) + 12;
 	R.FillPanel(tx, Y + 6, tx + cw, Y + 21, 7, RGB(255, 255, 255), 22);
 	R.TextOutSized(tx + 6, Y + 7, cCount, n >= MAXITEMS ? RGB(255, 150, 140) : RGB(200, 205, 213), 10);
@@ -79,7 +79,7 @@ void CGame::DrawInvPanelBack()
 	R.FillPanel(X + 1, Y + kTitleH, X + W - 1, Y + kTitleH + 1, 0, RGB(255, 255, 255), 26);
 
 	// the bag: a dark inset with a faint warm centre
-	R.FillPanel(X + kBagX0, Y + kBagY0, X + kBagX1, Y + kBagY1, 8, RGB(0, 0, 0), 110, RGB(255, 255, 255), 22);
+	R.Slate(X + kBagX0, Y + kBagY0, X + kBagX1, Y + kBagY1);
 	R.FillPanel(X + kBagX0 + 30, Y + kBagY0 + 18, X + kBagX1 - 30, Y + kBagY1 - 18, 50, RGB(232, 170, 80), 10);
 
 }
@@ -101,7 +101,7 @@ void CGame::DrawInvItemBadges(int id, int iX, int iY)
 		DisplayCommaNumber_G_cTxt((int)p->m_dwCount);
 		const int w = R.TextWidthSized(G_cTxt, 9) + 8;
 		const int x1 = (std::max)((int)b.right + 2, (int)b.left + w), y1 = b.bottom + 2;
-		R.FillPanel(x1 - w, y1 - 13, x1, y1, 6, RGB(0, 0, 0), 190, RGB(255, 255, 255), 50);
+		R.Slate(x1 - w, y1 - 13, x1, y1);
 		R.TextOutSized(x1 - w + 4, y1 - 13, G_cTxt, kWhite, 9);
 	}
 
@@ -127,7 +127,7 @@ void CGame::DrawInvPanelFront()
 		InvButtonRect(i + 1, &rc);
 		OffsetRect(&rc, X, Y);
 		const bool bOn = bTop && InRect(rc, ms::X, ms::Y);
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 70 : 40);
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOn ? 1 : 0);
 		R.TextOutSized((rc.left + rc.right - R.TextWidthSized(kLabel[i], 12)) / 2, rc.top + 4, kLabel[i], bOn ? kWhite : RGB(220, 224, 230), 12);
 	}
 }

@@ -175,7 +175,7 @@ void CGame::DrawDialogBox_Rebirth()
 	const bool bTop = dlg.IsTop();
 	RECT rc;
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 	R.TitleOut(X + 14, Y + 8, "REBIRTH", kGold, 15);
 	RebirthButtonRect(1, &rc); OffsetRect(&rc, X, Y);
 	const bool bOnClose = bTop && InRect(rc, ms::X, ms::Y);
@@ -281,9 +281,9 @@ void CGame::DrawDialogBox_Rebirth()
 	else if (m_iRebirthMode == 0) label = (R0 >= kMaxRebirth) ? "Highest rebirth reached" : ("Be reborn - Rebirth " + std::to_string(Rn));
 	else if (m_iRebirthMode == 1) label = "Switch to Normal Mode - 50,000 gold";
 	else label = "Resume rebirth - 50,000 gold";
-	R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, bAllOk ? (bConfirm ? RGB(255, 140, 90) : kGold) : RGB(80, 76, 66), bOn ? 255 : 225);
+	R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bAllOk ? 1 : 0);
 	const int tw = R.TitleWidth(label.c_str(), 13);
-	R.TitleOut((rc.left + rc.right - tw) / 2, rc.top + 5, label.c_str(), bAllOk ? RGB(34, 26, 10) : RGB(150, 144, 130), 13);
+	R.TitleOut((rc.left + rc.right - tw) / 2, rc.top + 5, label.c_str(), bAllOk ? (bConfirm ? RGB(255, 160, 110) : bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)) : RGB(150, 144, 130), 13);
 }
 
 void CGame::DlgBoxClick_Rebirth()

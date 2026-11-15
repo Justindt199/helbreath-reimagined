@@ -394,9 +394,9 @@ void CGame::DrawItemTip(const ItemTip & t, int mx, int my, bool bAbove)
 	if (y + h > GAME_H - 2) y = GAME_H - 2 - h;
 	if (y < 2) y = 2;
 
-	R.FillPanel(x, y, x + w, y + h, 8, RGB(9, 10, 13), 242, border, 220);
+	R.FillPanel(x, y, x + w, y + h, 1, RGB(9, 10, 13), 242, border, 220);	// VALORIA slate: squared
 	// a faint tint of the quality colour behind the header
-	R.FillPanel(x + 1, y + 1, x + w - 1, y + headH, 7, border, 22);
+	R.FillPanel(x + 1, y + 1, x + w - 1, y + headH, 0, border, 22);
 
 	// header strip (chat links): "ITEM LINK - from ..."
 	if (stripH > 0) {

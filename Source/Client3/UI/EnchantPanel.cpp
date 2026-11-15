@@ -237,7 +237,7 @@ void CGame::DrawDialogBox_Enchant()
 	const int lv = EnchantLevel(c.xp);
 	char cTxt[160];
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);
+	R.StonePanel(X, Y, X + W, Y + H);
 	R.TitleOut(X + 14, Y + 8, "ENCHANTING", kGold, 15);
 	R.FillPanel(X + 1, Y + 32, X + W - 1, Y + 33, 0, RGB(255, 255, 255), 26);
 
@@ -285,12 +285,12 @@ void CGame::DrawDialogBox_Enchant()
 			R.TextOutSized(b.rc.right - 6 - R.TextWidthSized(cTxt, 10), b.rc.top + 4, cTxt, kDim, 10);
 		}
 		else {													// buttons
-			R.FillPanel(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, 5, b.enabled ? kGold : RGB(80, 76, 66), bOn ? 255 : 210);
+			R.StoneButton(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, b.enabled ? 1 : 0);
 			std::string label = b.label;
 			if (b.action == ENCH_DISENCHANT && m_dwEnchantConfirmAt != 0 && m_dwCurTime - m_dwEnchantConfirmAt < 4000) label = "Click again to confirm";
 			const int px = (b.rc.bottom - b.rc.top) > 20 ? 13 : 11;
 			const int tw = R.TitleWidth(label.c_str(), px);
-			R.TitleOut((b.rc.left + b.rc.right - tw) / 2, b.rc.top + ((b.rc.bottom - b.rc.top) > 20 ? 5 : 3), label.c_str(), b.enabled ? RGB(34, 26, 10) : RGB(150, 144, 130), px);
+			R.TitleOut((b.rc.left + b.rc.right - tw) / 2, b.rc.top + ((b.rc.bottom - b.rc.top) > 20 ? 5 : 3), label.c_str(), b.enabled ? (bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)) : RGB(150, 144, 130), px);
 		}
 	}
 

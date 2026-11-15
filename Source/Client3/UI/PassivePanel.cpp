@@ -174,7 +174,7 @@ void CGame::DrawDialogBox_Passives()
 	const int spare = d.Spare(m_iLevel), points = Points(m_iLevel, d.tomes);
 	char cTxt[200];
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 215 : 255, RGB(150, 128, 82), 150);
+	R.StonePanel(X, Y, X + W, Y + H);
 	R.TitleOut(X + 14, Y + 8, "PASSIVE SKILLS", kGold, 15);
 	R.FillPanel(X + 1, Y + 32, X + W - 1, Y + 33, 0, RGB(255, 255, 255), 26);
 
@@ -270,11 +270,10 @@ void CGame::DrawDialogBox_Passives()
 		const bool bGold = (b.action == A_ORB || b.action == A_TOME);
 		std::string label = b.label;
 		if (b.action == A_ORB && m_dwPassiveOrbAt != 0 && m_dwCurTime - m_dwPassiveOrbAt < 4000) label = "Click again: unmake all";
-		if (bGold) R.FillPanel(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, 5, b.enabled ? kGold : RGB(80, 76, 66), bOn ? 255 : 210);
-		else R.FillPanel(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, 5, RGB(255, 255, 255), bOn ? 40 : (b.enabled ? 18 : 6), RGB(255, 255, 255), b.enabled ? 50 : 20);
+		R.StoneButton(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, b.enabled && (bGold || bOn) ? 1 : 0);
 		const int tw = R.TitleWidth(label.c_str(), 11);
 		R.TitleOut((b.rc.left + b.rc.right - tw) / 2, b.rc.top + 4, label.c_str(),
-			bGold ? (b.enabled ? RGB(34, 26, 10) : RGB(150, 144, 130)) : (b.enabled ? kWhite : kDim), 11);
+			b.enabled ? (bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)) : kDim, 11);
 	}
 
 	// the totals, over the tree

@@ -32,7 +32,7 @@ void CGame::DrawSkillPanel(int onButton)
 	const bool bTop = dlg.IsTop();
 	RECT rc;
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 
 	// title bar
 	R.TitleOut(X + 14, Y + 5, "SKILLS", kGold, 14);
@@ -44,7 +44,7 @@ void CGame::DrawSkillPanel(int onButton)
 	R.FillPanel(X + 1, Y + 25, X + W - 1, Y + 26, 0, RGB(255, 255, 255), 26);
 
 	// the list, in a soft inset
-	R.FillPanel(X + 20, Y + 38, X + 232, Y + 45 + 17 * 15 + 6, 8, RGB(0, 0, 0), 90, RGB(255, 255, 255), 20);
+	R.Slate(X + 20, Y + 38, X + 232, Y + 45 + 17 * 15 + 6);
 	if (dlg.GetMode() != 0) return;
 
 	for (int line = 0, skillIndex = 0; line < 17; skillIndex++) {

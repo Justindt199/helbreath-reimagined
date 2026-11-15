@@ -17,6 +17,7 @@
 #include <vector>
 #include <functional>
 #include <climits>
+#include <cstring>
 
 #include "Renderer.h"
 #include "UiOverlay.h"
@@ -1155,6 +1156,8 @@ int CRenderer::_DrawGlyphRun(int x, int y, const wchar_t * pText, int iLen, COLO
 		: (int)std::lround(iAscent * (float)uSize / (float)kFontCharSize));
 	auto glyphAt = [&](char32_t c, unsigned int s) -> const CachedGlyph & { return b2 ? m_pImpl->GlyphFace2(c, s) : m_pImpl->GlyphSized(c, s); };
 
+	// the glyphs are drawn from the twice-as-large font, so text is spaced (and measured) by its
+	// advances, halved: the normal size's whole-pixel advances, doubled, space some fonts unevenly
 	float fPen = (float)x;
 	char32_t prev = 0;
 	for (int i = 0; i < iLen; i++) {
@@ -1163,7 +1166,7 @@ int CRenderer::_DrawGlyphRun(int x, int y, const wchar_t * pText, int iLen, COLO
 		if (cp == L'\t') cp = L' ';
 		if (cp < 32) continue;
 
-		if (prev != 0) fPen += b2 ? m_pImpl->KerningFace2(prev, cp, uSize) : m_pImpl->KerningSized(prev, cp, uSize);
+		if (prev != 0) fPen += 0.5f * (b2 ? m_pImpl->KerningFace2(prev, cp, uSize * 2) : m_pImpl->KerningSized(prev, cp, uSize * 2));
 		prev = cp;
 
 		const CachedGlyph & g = glyphAt(cp, uSize);
@@ -1174,15 +1177,27 @@ int CRenderer::_DrawGlyphRun(int x, int y, const wchar_t * pText, int iLen, COLO
 			const std::uint32_t uA = (m_iFadeA < 255) ? ((std::uint32_t)m_iFadeA << 24) : 0u;
 			if (g2.w > 0 && g2.h > 0)	// (the size is the glyph's key on the graphics card: the display font's apart)
 				m_pImpl->uiGpu->AddGlyph(uSize * 2 + (b2 ? 0x10000u : 0u), cp, g2.alpha.data(), g2.w, g2.h,
-					2 * (int)std::lround(fPen) + g2.left, 2 * iBaseline + g2.top, (m_pImpl->lut[wSrc] & 0xFFFFFFu) | uA);
+					(int)std::lround(2.f * fPen) + g2.left, 2 * iBaseline + g2.top, (m_pImpl->lut[wSrc] & 0xFFFFFFu) | uA);
 		}
-		fPen += (float)g.advance;
+		fPen += 0.5f * (float)glyphAt(cp, uSize * 2).advance;
 	}
 	return (int)std::lround(fPen) - x;
 }
 
+// The classic windows wrote dark ink for parchment; on VALORIA's stone it would not show. While
+// m_bStoneInk is on (a classic window is being drawn, CGame::DrawDialogBoxes), dark text is lifted
+// toward VALORIA's parchment lettering, keeping its hue; black (the drop shadows) stays black.
+COLORREF CRenderer::StoneInk(COLORREF c) const
+{
+	if (!m_bStoneInk || c == RGB(0, 0, 0)) return c;
+	const int r = GetRValue(c), g = GetGValue(c), b = GetBValue(c);
+	if ((std::max)(r, (std::max)(g, b)) >= 120) return c;
+	return RGB(r + (230 - r) * 3 / 4, g + (217 - g) * 3 / 4, b + (189 - b) * 3 / 4);
+}
+
 void CRenderer::TextOut(int x, int y, char const * cStr, COLORREF rgb)
 {
+	rgb = StoneInk(rgb);
 	const std::wstring w = ToWide(cStr, -1);
 	_DrawGlyphRun(x, y, w.c_str(), (int)w.size(), rgb, true);
 }
@@ -1305,9 +1320,122 @@ void CRenderer::DrawText(LPRECT pRect, char const * const pString, COLORREF rgb,
 
 void CRenderer::DrawTextEx(LPRECT pRect, char const * const pString, COLORREF rgb, DWORD flags, bool wordWrap)
 {
+	rgb = StoneInk(rgb);
 	if (pRect == NULL || pString == NULL) return;
 	const std::wstring w = ToWide(pString, -1);
 	const bool bWrap = wordWrap || (flags & DT_WORDBREAK) != 0;
 	_DrawTextLines(*pRect, w.c_str(), (int)w.size(), rgb, flags, bWrap, (flags & DT_CALCRECT) ? pRect : NULL);
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// VALORIA's stone interface (CRenderer::StoneBox and friends, see Renderer.h)
+
+namespace {
+struct StoneTex {
+	const char * file;
+	int mx, my;		// carved edge: texture pixels that do not stretch (VALORIA's UIStyle.TEX_MARGIN)
+	float k;		// texture pixels -> 2x picture pixels
+	std::vector<std::uint32_t> px;
+	int w = 0, h = 0;
+	bool tried = false;
+};
+StoneTex g_stone[CRenderer::STONE_COUNT] = {
+	{ "CONTENTS\\ui\\panel.png", 24, 24, 0.75f },
+	{ "CONTENTS\\ui\\button.png", 16, 9, 0.7f },
+	{ "CONTENTS\\ui\\button_hover.png", 16, 9, 0.7f },
+	{ "CONTENTS\\ui\\button_pressed.png", 16, 9, 0.7f },
+	{ "CONTENTS\\ui\\slot.png", 10, 10, 0.8f },
+	{ "CONTENTS\\ui\\slot_active.png", 10, 10, 0.8f },
+	{ "CONTENTS\\ui\\bar_frame.png", 11, 6, 1.0f },
+};
+StoneTex * Stone(int i)
+{
+	if (i < 0 || i >= CRenderer::STONE_COUNT) return NULL;
+	StoneTex & t = g_stone[i];
+	if (!t.tried) {
+		t.tried = true;
+		sf::Image img;
+		if (img.loadFromFile(t.file)) {
+			t.w = (int)img.getSize().x; t.h = (int)img.getSize().y;
+			t.px.resize((size_t)t.w * t.h);
+			std::memcpy(t.px.data(), img.getPixelsPtr(), t.px.size() * 4);
+		}
+	}
+	return t.w > 0 ? &t : NULL;
+}
+}
+
+void CRenderer::StoneBox(int iStone, int x0, int y0, int x1, int y1)
+{
+	if (x1 <= x0 || y1 <= y0) return;
+	CUiGpu * pG = UiGpuRecorder();
+	StoneTex * t = Stone(iStone);
+	if (pG == NULL || t == NULL) {	// no pictures: the old flat look
+		if (iStone == STONE_PANEL) FillPanel(x0, y0, x1, y1, 10, RGB(14, 16, 20), 255, RGB(150, 128, 82), 150);
+		else FillPanel(x0, y0, x1, y1, 6, RGB(20, 20, 24), 230, RGB(150, 128, 82), iStone == STONE_SLOT_ACTIVE || iStone == STONE_BUTTON_HOVER ? 220 : 110);
+		return;
+	}
+	const float X0 = 2.f * x0, Y0 = 2.f * y0, X1 = 2.f * x1, Y1 = 2.f * y1;
+	float ex = t->mx * t->k, ey = t->my * t->k;					// edge size in 2x pixels
+	if (2 * ex > X1 - X0) ex = (X1 - X0) / 2;
+	if (2 * ey > Y1 - Y0) ey = (Y1 - Y0) / 2;
+	const int sxs[4] = { 0, t->mx, t->w - t->mx, t->w }, sys[4] = { 0, t->my, t->h - t->my, t->h };
+	const float dxs[4] = { X0, X0 + ex, X1 - ex, X1 }, dys[4] = { Y0, Y0 + ey, Y1 - ey, Y1 };
+	const int W2 = 2 * RENDER_WIDTH, H2 = 2 * RENDER_HEIGHT;
+	const int fade = m_iFadeA;
+	for (int r = 0; r < 3; r++) for (int c = 0; c < 3; c++) {
+		const int sw = sxs[c + 1] - sxs[c], sh = sys[r + 1] - sys[r];
+		const float dw = dxs[c + 1] - dxs[c], dh = dys[r + 1] - dys[r];
+		if (sw <= 0 || sh <= 0 || dw <= 0.f || dh <= 0.f) continue;
+		const int sx = sxs[c], sy = sys[r];
+		auto Fill = [t, sx, sy, sw, sh, fade](std::uint32_t * out) {
+			for (int y = 0; y < sh; y++) {
+				const std::uint32_t * src = t->px.data() + (size_t)(sy + y) * t->w + sx;
+				std::uint32_t * dst = out + (size_t)y * sw;
+				if (fade >= 255) std::memcpy(dst, src, (size_t)sw * 4);
+				else for (int x = 0; x < sw; x++) {
+					const std::uint32_t p = src[x];
+					dst[x] = (p & 0x00FFFFFFu) | ((((p >> 24) * (std::uint32_t)fade) / 255u) << 24);
+				}
+			}
+		};
+		if (fade >= 255) {
+			const std::uint64_t key = 0x53544F4E45000000ull | ((std::uint64_t)iStone << 8) | (std::uint64_t)(r * 3 + c);
+			pG->AddImageCached(key, 1u, sw, sh, Fill, true, dxs[c], dys[r], dw, dh, 0, 0, W2, H2, UIBL_ALPHA);
+		}
+		else {
+			if (fade <= 0) continue;
+			std::vector<std::uint32_t> buf((size_t)sw * sh);
+			Fill(buf.data());
+			pG->AddImage(buf.data(), sw, sh, true, dxs[c], dys[r], dw, dh, 0, 0, W2, H2, UIBL_ALPHA);
+		}
+	}
+}
+
+void CRenderer::TitleCentered(int x0, int y0, int x1, int y1, const char * cStr, COLORREF rgb, int iPx)
+{
+	if (cStr == NULL || cStr[0] == 0) return;
+	const int w = TitleWidth(cStr, iPx);
+	TitleOut((x0 + x1 - w) / 2, (y0 + y1) / 2 - (iPx * 11) / 16, cStr, rgb, iPx);
+}
+
+void CRenderer::StoneButton(int x0, int y0, int x1, int y1, int iState, const char * cLabel)
+{
+	StoneBox(iState == 2 ? STONE_BUTTON_PRESSED : iState == 1 ? STONE_BUTTON_HOVER : STONE_BUTTON, x0, y0, x1, y1);
+	if (cLabel == NULL) return;
+	// VALORIA's button lettering: warm parchment, brighter under the mouse, gold when pressed
+	const COLORREF c = iState == 2 ? RGB(242, 199, 102) : iState == 1 ? RGB(255, 242, 199) : RGB(245, 219, 158);
+	const int iPx = (std::min)(13, (std::max)(9, (y1 - y0) * 11 / 20));
+	TitleCentered(x0, y0 + (iState == 2 ? 1 : 0), x1, y1 + (iState == 2 ? 1 : 0), cLabel, c, iPx);
+}
+
+void CRenderer::StoneBarFrame(int x0, int y0, int x1, int y1)
+{
+	StoneBox(STONE_BAR, x0 - 4, y0 - 3, x1 + 4, y1 + 3);	// VALORIA puts the housing 9 x 5 px outside the bar
+}
+
+void CRenderer::Slate(int x0, int y0, int x1, int y1, int iFillA)
+{
+	FillPanel(x0, y0, x1, y1, 1, RGB(8, 8, 9), iFillA, RGB(107, 97, 84), 230);
+}

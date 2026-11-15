@@ -16777,6 +16777,18 @@ static const char * ProfDialogName(int i)
 	return "Window";
 }
 
+// The windows still drawn the old way (sprites and parchment-era colours), as opposed to the ones
+// drawn in code (UI\*Panel.cpp and friends), which already use light text.
+bool CGame::IsClassicDialog(int id) const
+{
+	switch (id) {
+	case 1: case 2: case 3: case 9: case 10: case 12: case 15: case 20: case 29: case 30:
+	case DIALOG_MOSTWANTED: case DIALOG_BOUNTY: case DIALOG_REBIRTH: case DIALOG_ENCHANT: case DIALOG_PASSIVE:
+		return false;
+	}
+	return true;
+}
+
 void CGame::DrawDialogBoxes()
 {
 	int i, k, sprite, frame;
@@ -16806,7 +16818,10 @@ void CGame::DrawDialogBoxes()
 			DrawNewDialogBox(SPRID_INTERFACE_ND_TEXT, dialog->m_X, dialog->m_Y, frame, false, isTrans);
 	}
 
+		// the classic windows (once parchment, now stone) wrote dark ink: lift it (CRenderer::StoneInk)
+		m_Renderer.m_bStoneInk = IsClassicDialog(m_cDialogBoxOrder[i]);
 		dialog->Draw();
+		m_Renderer.m_bStoneInk = false;
 
 #ifdef _DEBUG
 		if (m_showBtns){
@@ -18175,11 +18190,66 @@ void CGame::ReceiveString(char *pString)
 #endif
 }
 
+// VALORIA's stone look for the classic windows (the ones drawn from GameDialog.pak / DialogText.pak):
+// a plain parchment window becomes a stone panel, a parchment text box or scroll strip a slate box,
+// a title banner a carved title, a button a stone plaque with its word. Frames with controls or
+// pictures painted in (the system menu's sliders, the exchange table, maps...) stay as they are.
+// Returns true when it drew the frame.
+bool CGame::DrawStoneClassic(char cType, int sX, int sY, int iFrame)
+{
+	static const char * const kButtons[] = {	// DialogText.pak sheet 1: even = normal, odd = under the mouse
+		"Ok", "Ok", "No", "No", "Quest", "Quest", "Continue", "Continue", "Log Out", "Log Out",
+		"Level Set.", "Level Set.", "I Agree", "I Agree", "Disagree", "Disagree", "Cancel", "Cancel", "Yes", "Yes",
+		"Change", "Change", "Connect", "Connect", "Create", "Create", "Clear", "Clear", "Reset", "Reset",
+		"Purchase", "Purchase", "Accept", "Accept", "Reject", "Reject", "Restart", "Restart", "Sell", "Sell",
+		"Decline", "Decline", "Repair", "Repair", "Party", "Party", "Upgrade", "Upgrade", "Alchemy", "Alchemy" };
+	static const char * const kTitles[] = {		// DialogText.pak sheet 0
+		NULL, "Skills", "Level Up Settings", "Party", "Quest", "Item Upgrade", "System Menu", "Magic List",
+		"Tinkering", "Exchange Item", "Repair Item", "Item for Sale", "User Agreement", "Change Password", "Spells",
+		"Commander", "Constructor", "Soldier", "City Hall", "Guild", "Notice", "Items in Storage", "History" };
+	CSprite * pSpr = m_pSprite[cType];
+	if (pSpr == NULL || iFrame < 0 || iFrame >= pSpr->m_iTotalFrame) return false;
+	const stBrush & b = pSpr->m_stBrush[iFrame];
+	const int x0 = sX + b.pvx, y0 = sY + b.pvy, x1 = x0 + b.szx, y1 = y0 + b.szy;
+	CRenderer & R = m_Renderer;
+	switch (cType) {
+	case SPRID_INTERFACE_ND_BUTTON:
+		if (iFrame >= (int)(sizeof(kButtons) / sizeof(kButtons[0]))) return false;
+		R.StoneButton(x0, y0, x1, y1, iFrame & 1, kButtons[iFrame]);
+		return true;
+	case SPRID_INTERFACE_ND_TEXT:
+		if (iFrame >= (int)(sizeof(kTitles) / sizeof(kTitles[0])) || kTitles[iFrame] == NULL) return false;
+		R.TitleCentered(x0, y0 + 2, x1, y0 + 26, kTitles[iFrame], RGB(242, 199, 102), 15);
+		return true;
+	case SPRID_INTERFACE_ND_GAME1:
+		if (iFrame == 1) { R.StonePanel(x0, y0, x1, y1); return true; }
+		if (iFrame == 2) { R.Slate(x0 + 6, y0 + 6, x1 - 6, y1 - 6); return true; }
+		return false;
+	case SPRID_INTERFACE_ND_GAME2:
+		if (iFrame == 0 || iFrame == 2) { R.StonePanel(x0, y0, x1, y1); return true; }
+		if (iFrame == 1 || iFrame == 3) { R.Slate(x0 + 6, y0 + 30, x1 - 7, y1 - 14); return true; }	// scroll strip
+		if (iFrame == 5 || iFrame == 6) { R.Slate(x0 + 4, y0 + 4, x1 - 4, y1 - 4); return true; }
+		return false;
+	case SPRID_INTERFACE_ND_GAME3:
+		if (iFrame == 0) { R.StonePanel(x0, y0, x1, y1); return true; }
+		if (iFrame == 3) { R.Slate(x0, y0, x1, y1); return true; }
+		return false;
+	case SPRID_INTERFACE_ND_GAME4:
+		if (iFrame == 1) { R.StonePanel(x0, y0, x1, y1); return true; }
+		return false;
+	case SPRID_INTERFACE_ND_CRUSADE:
+		if (iFrame == 0) { R.StonePanel(x0, y0, x1, y1); return true; }
+		return false;
+	}
+	return false;
+}
+
 void CGame::DrawNewDialogBox(char cType, int sX, int sY, int iFrame, BOOL bIsNoColorKey, BOOL bIsTrans)
 {
  DWORD dwTime = G_dwGlobalTime;
 
 	if (m_pSprite[cType] == NULL) return;
+	if (DrawStoneClassic(cType, sX, sY, iFrame)) return;
 	if (bIsNoColorKey == FALSE)
 	{	if (bIsTrans == TRUE)
 			 m_pSprite[cType]->PutTransSprite2(sX, sY, iFrame, dwTime);
@@ -28534,12 +28604,12 @@ void CGame::UpdateScreen_OnChangePassword()
 	PutAlignedString(153, 487, 288, UPDATE_SCREEN_ON_CHANGE_PASSWORD7);//"
 
 	if ( (bFlag == TRUE) && (m_cCurFocus == 5) )
-		 m_pSprite[SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(197, 320, 21, dwTime);
-	else m_pSprite[SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(197, 320, 20, dwTime);
+		 DrawNewDialogBox(SPRID_INTERFACE_ND_BUTTON, 197, 320, 21);
+	else DrawNewDialogBox(SPRID_INTERFACE_ND_BUTTON, 197, 320, 20);
 
 	if (m_cCurFocus == 6)
-		 m_pSprite[SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(370, 320, 17, dwTime);
-	else m_pSprite[SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(370, 320, 16, dwTime);
+		 DrawNewDialogBox(SPRID_INTERFACE_ND_BUTTON, 370, 320, 17);
+	else DrawNewDialogBox(SPRID_INTERFACE_ND_BUTTON, 370, 320, 16);
 
 	DrawVersion();
 	m_Mouse.UpdateMouseState(&msX, &msY, &msZ, &cLB, &cRB, &cMB);
@@ -36164,19 +36234,19 @@ void CGame::DrawDialogBox_Skill()
 }
 
 // The Crafting Vessel's window (dialog 26, modes 7 and 8). The client has no art for it
-// (SPRID_INTERFACE_CRAFTING is never loaded), so it is drawn: a panel, a ring under each of the six
-// places a dropped material shows, and a plate under "Try Now!".
+// (SPRID_INTERFACE_CRAFTING is never loaded), so it is drawn in VALORIA stone: a panel, a slot under
+// each of the six places a dropped material shows, and a button under "Try Now!".
 static void DrawCraftingBackdrop(CRenderer & R, int sX, int sY, bool bOnTry)
 {
-	R.FillPanel(sX, sY, sX + 240, sY + 210, 10, RGB(14, 16, 20), 235, RGB(150, 128, 82), 150);
+	R.StonePanel(sX, sY, sX + 240, sY + 210);
 	R.TitleOut(sX + 14, sY + 8, "CRAFTING", RGB(232, 188, 92), 14);
 	R.TextOutSized(sX + 14, sY + 28, "Drop the materials here", RGB(200, 205, 213), 10);
 	static const int at[6][2] = { {60, 63}, {115, 48}, {160, 63}, {70, 108}, {115, 123}, {170, 108} };
 	for (int i = 0; i < 6; i++) {
 		const int cx = sX + at[i][0], cy = sY + at[i][1];
-		R.FillPanel(cx - 19, cy - 19, cx + 19, cy + 19, 19, RGB(0, 0, 0), 120, RGB(232, 188, 92), 70);
+		R.StoneSlot(cx - 19, cy - 19, cx + 19, cy + 19, false);
 	}
-	R.FillPanel(sX + 55, sY + 178, sX + 150, sY + 202, 7, bOnTry ? RGB(70, 58, 34) : RGB(40, 34, 24), 230, RGB(232, 188, 92), 130);
+	R.StoneButton(sX + 55, sY + 178, sX + 150, sY + 202, bOnTry ? 1 : 0);
 }
 
 void CGame::DrawDialogBox_SkillDlg()

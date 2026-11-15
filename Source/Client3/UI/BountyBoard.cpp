@@ -280,7 +280,7 @@ void CGame::DrawDialogBox_Bounty()
 	RECT rc;
 	auto Hot = [&](int id) { BountyRect(id, &rc); OffsetRect(&rc, X, Y); return bTop && InRect(rc, ms::X, ms::Y); };
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 	R.TitleOut(X + 14, Y + 8, "BOUNTY BOARD", kGold, 15);
 
 	// tabs
@@ -354,7 +354,7 @@ void CGame::DrawDialogBox_Bounty()
 
 	// the picked bounty: who backs it, and putting gold up
 	const int by0 = Y + 216, by1 = Y + 316;
-	R.FillPanel(X + 10, by0, X + W - 10, by1, 8, RGB(0, 0, 0), 90, RGB(255, 255, 255), 20);
+	R.Slate(X + 10, by0, X + W - 10, by1);
 	const BountyEntry * sel = BountyFor(m_cBountySel);
 	if (sel != NULL) {
 		char cHead[64];
@@ -391,9 +391,8 @@ void CGame::DrawDialogBox_Bounty()
 	auto Button = [&](int id, const char * pLabel, bool bGold, bool bEnabled) {
 		const bool bOn = bEnabled && Hot(id);
 		if (!bEnabled) BountyRect(id, &rc), OffsetRect(&rc, X, Y);
-		if (bGold) R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 5, bEnabled ? RGB(232, 188, 92) : RGB(90, 84, 70), bOn ? 255 : 225);
-		else R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 5, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 80 : 45);
-		const COLORREF c = bGold ? (bEnabled ? RGB(34, 26, 10) : RGB(150, 144, 130)) : (bEnabled ? (bOn ? kWhite : RGB(220, 224, 230)) : kDim);
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bEnabled && (bGold || bOn) ? 1 : 0);
+		const COLORREF c = bEnabled ? (bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)) : kDim;
 		const int tw = R.TextWidthSized(pLabel, 12);
 		if (bGold) Bold(R, (rc.left + rc.right - tw) / 2, rc.top + 3, pLabel, c, 12);
 		else R.TextOutSized((rc.left + rc.right - tw) / 2, rc.top + 3, pLabel, c, 12);

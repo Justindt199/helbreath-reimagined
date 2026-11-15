@@ -33,7 +33,7 @@ float Ease(float u) { u = Clamp01(u); return u * u * (3.f - 2.f * u); }
 
 void Panel(CRenderer & r, const RECT & rc)
 {
-	r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 10, RGB(10, 12, 16), 215, RGB(170, 140, 84), 150);
+	r.StonePanel(rc.left, rc.top, rc.right, rc.bottom);
 }
 
 // cuts the text with ".." so it fits iMaxW pixels
@@ -59,8 +59,8 @@ void CenterText(CRenderer & r, int cx, int y, const char * s, COLORREF c, int iP
 void Button(CRenderer & r, const RECT & rc, const char * pLabel, int iStyle, bool bOn)
 {
 	if (iStyle == 1) {
-		r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 7, bOn ? RGB(250, 214, 128) : RGB(232, 188, 92), 255);
-		r.TitleOut((rc.left + rc.right - r.TitleWidth(pLabel, 13)) / 2, rc.top + 6, pLabel, kInk, 13);
+		r.StoneButton(rc.left, rc.top, rc.right, rc.bottom, 1);	// the main button: gold-rimmed stone
+		r.TitleOut((rc.left + rc.right - r.TitleWidth(pLabel, 13)) / 2, rc.top + 6, pLabel, bOn ? RGB(255, 242, 199) : RGB(245, 219, 158), 13);
 	}
 	else if (iStyle == 2) {
 		r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 7, RGB(255, 255, 255), 8, RGB(255, 255, 255), 24);
@@ -75,9 +75,8 @@ void Button(CRenderer & r, const RECT & rc, const char * pLabel, int iStyle, boo
 // a small choice: gold when chosen
 void Chip(CRenderer & r, const RECT & rc, const char * pLabel, bool bSel, bool bOn)
 {
-	if (bSel) r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 5, RGB(232, 188, 92), 255);
-	else r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 5, RGB(255, 255, 255), bOn ? 30 : 12, RGB(255, 255, 255), bOn ? 90 : 45);
-	r.TextOutSized((rc.left + rc.right - Width(r, pLabel, 11)) / 2, rc.top + 3, pLabel, bSel ? kInk : (bOn ? kWhite : RGB(214, 218, 226)), 11);
+	r.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bSel ? 2 : bOn ? 1 : 0);
+	r.TextOutSized((rc.left + rc.right - Width(r, pLabel, 11)) / 2, rc.top + 3, pLabel, bSel ? RGB(242, 199, 102) : (bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)), 11);
 }
 
 // a round colour swatch; the chosen one has a gold ring

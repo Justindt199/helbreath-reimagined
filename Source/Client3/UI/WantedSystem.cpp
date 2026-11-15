@@ -359,7 +359,7 @@ void CGame::DrawDialogBox_MostWanted()
 	const int W = WANTEDWIN_W, H = WANTEDWIN_H;
 	const bool bTop = m_dialogBoxes[DIALOG_MOSTWANTED].IsTop();
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 	R.TitleOut(X + 14, Y + 8, "MOST WANTED", kGold, 15);
 	RECT rc;
 	SetRect(&rc, X + W - 28, Y + 4, X + W - 6, Y + 26);
@@ -415,7 +415,7 @@ void CGame::DrawDialogBox_MostWanted()
 
 	// rewards
 	const int fy = Y + H - 58;
-	R.FillPanel(X + 10, fy, X + W - 10, Y + H - 10, 8, RGB(0, 0, 0), 90, RGB(255, 255, 255), 20);
+	R.Slate(X + 10, fy, X + W - 10, Y + H - 10);
 	R.TextOutSized(X + 20, fy + 6, "GOLD FOR BRINGING ONE DOWN", RGB(120, 126, 136), 9);
 	int x = X + 20;
 	for (int lv = 1; lv <= 5; lv++) {

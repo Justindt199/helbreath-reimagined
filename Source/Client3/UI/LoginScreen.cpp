@@ -177,7 +177,7 @@ void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, i
 	LoginRects(&rcPanel, &rcAcc, &rcPw, &rcRem, &rcGo, &rcNew, &rcQuit);
 	const int px = rcPanel.left, py = rcPanel.top;
 
-	R.FillPanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom, 12, RGB(10, 12, 16), 215, RGB(170, 140, 84), 150);
+	R.StonePanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom);
 	Title(R, px + 18, py + 16, "SIGN IN", kGold, 15);
 	R.TextOutSized(px + 18, py + 38, "Welcome back, adventurer.", kGrey, 12);
 
@@ -271,7 +271,7 @@ void CGame::_Draw_OnWelcome(int iFocus, int msX, int msY)
 	WelcomeRects(&rcPanel, &rcCreate, &rcHave, &rcQuit);
 	const int px = rcPanel.left, py = rcPanel.top;
 
-	R.FillPanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom, 12, RGB(10, 12, 16), 215, RGB(170, 140, 84), 150);
+	R.StonePanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom);
 	Title(R, px + 18, py + 16, "NEW TO HELBREATH?", kGold, 15);
 	R.TextOutSized(px + 18, py + 42, "Make a free account and your first", kGrey, 12);
 	R.TextOutSized(px + 18, py + 58, "character in about a minute.", kGrey, 12);
@@ -281,14 +281,14 @@ void CGame::_Draw_OnWelcome(int iFocus, int msX, int msY)
 		const bool bOn = InRect(rcCreate, msX, msY) || iFocus == 1;
 		const float fPulse = 0.5f + 0.5f * std::sin((timeGetTime() % 2400) / 2400.f * 6.2832f - 1.5708f);
 		R.FillPanel(rcCreate.left - 4, rcCreate.top - 4, rcCreate.right + 4, rcCreate.bottom + 4, 11, RGB(255, 210, 120), (int)(70 * fPulse));
-		R.FillPanel(rcCreate.left, rcCreate.top, rcCreate.right, rcCreate.bottom, 7, bOn ? RGB(250, 214, 128) : RGB(232, 188, 92), 255);
+		R.StoneButton(rcCreate.left, rcCreate.top, rcCreate.right, rcCreate.bottom, 1);	// the main button: gold-rimmed stone
 		const char * p = "CREATE ACCOUNT";
-		Bold(R, (rcCreate.left + rcCreate.right - Width(R, p, 15)) / 2, rcCreate.top + 8, p, RGB(30, 22, 8), 15);
+		Bold(R, (rcCreate.left + rcCreate.right - Width(R, p, 15)) / 2, rcCreate.top + 8, p, bOn ? RGB(255, 242, 199) : RGB(245, 219, 158), 15);
 	}
 	// I have an account
 	{
 		const bool bOn = InRect(rcHave, msX, msY) || iFocus == 2;
-		R.FillPanel(rcHave.left, rcHave.top, rcHave.right, rcHave.bottom, 6, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 70 : 40);
+		R.StoneButton(rcHave.left, rcHave.top, rcHave.right, rcHave.bottom, bOn ? 1 : 0);
 		const char * p = "I have an account";
 		R.TextOutSized((rcHave.left + rcHave.right - Width(R, p, 12)) / 2, rcHave.top + 6, p, bOn ? kWhite : RGB(220, 224, 230), 12);
 	}
@@ -347,7 +347,7 @@ void CGame::_Draw_OnCreateAccount(const char * const * pField, const bool * bOk,
 	CreateAccountRects(&rcPanel, rcField, &rcGo, &rcClear, &rcBack);
 	const int px = rcPanel.left, py = rcPanel.top;
 
-	R.FillPanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom, 12, RGB(10, 12, 16), 215, RGB(170, 140, 84), 150);
+	R.StonePanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom);
 	Title(R, px + 18, py + 16, "CREATE ACCOUNT", kGold, 15);
 	R.TextOutSized(px + 18, py + 38, "Choose your name and join the war.", kGrey, 12);
 
@@ -515,7 +515,7 @@ void CGame::DrawMessagePanel(const MsgPanel & m, int msX, int msY, bool bDim)
 	const MsgLayout L = LayoutMessage(R, m, GAME_W, GAME_H);
 	if (bDim) R.FillPanel(0, 0, GAME_W, GAME_H, 0, RGB(0, 0, 0), 120);
 	const RECT & p = L.rcPanel;
-	R.FillPanel(p.left, p.top, p.right, p.bottom, 12, RGB(10, 12, 16), 228, RGB(255, 255, 255), 36);
+	R.StonePanel(p.left, p.top, p.right, p.bottom);
 
 	switch (m.iIcon) {
 	case MSGICON_WAIT: {
@@ -551,7 +551,7 @@ void CGame::DrawMessagePanel(const MsgPanel & m, int msX, int msY, bool bDim)
 			Bold(R, (rc.left + rc.right - Width(R, s, 13)) / 2, rc.top + 6, s, m.bDanger ? RGB(255, 245, 240) : RGB(30, 22, 8), 13);
 		}
 		else {
-			R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 70 : 40);
+			R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOn ? 1 : 0);
 			R.TextOutSized((rc.left + rc.right - Width(R, s, 12)) / 2, rc.top + 6, s, bOn ? kWhite : RGB(220, 224, 230), 12);
 		}
 	}
@@ -565,7 +565,7 @@ void CGame::DrawQuitScreen(int iMsElapsed, int iMsTotal)
 	const int W = GAME_W, H = GAME_H;
 	const int pw = 270, ph = 150, px = W - 26 - pw, py = (H - ph) / 2 - 30;
 	const int iShow = (std::min)(255, iMsElapsed * 255 / 300);	// panel fades in over 0.3s
-	R.FillPanel(px, py, px + pw, py + ph, 12, RGB(10, 12, 16), 215 * iShow / 255, RGB(255, 255, 255), 36 * iShow / 255);
+	R.StonePanel(px, py, px + pw, py + ph);
 	if (iShow > 120) {
 		Bold(R, px + 20, py + 18, "FAREWELL, ADVENTURER", kGold, 15);
 		R.TextOutSized(px + 20, py + 44, "Thanks for playing Helbreath Unrivaled.", RGB(200, 205, 213), 12);

@@ -558,6 +558,8 @@ public:
 	void GrandMagicResult(char * pMapName, int iV1, int iV2, int iV3, int iV4, int iHP1, int iHP2, int iHP3, int iHP4) ;
 	void MeteorStrikeComing(int iCode);
 	void _Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, int iFrame = 60000);
+	bool DrawStoneClassic(char cType, int sX, int sY, int iFrame);
+	bool IsClassicDialog(int id) const;	// VALORIA's stone look for the classic windows
 	void DrawNewDialogBox(char cType, int sX, int sY, int iFrame, BOOL bIsNoColorKey = FALSE, BOOL bIsTrans = FALSE);
 	void AddMapStatusInfo(char * pData, BOOL bIsLastData);
 	void _RequestMapStatus(char * pMapName, int iMode);

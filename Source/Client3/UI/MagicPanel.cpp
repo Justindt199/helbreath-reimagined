@@ -64,7 +64,7 @@ void CGame::DrawMagicPanel(int iChance, int onButton)
 	const int iView = (m_dialogBoxes[DIALOG_MAGIC].sView >= 0 && m_dialogBoxes[DIALOG_MAGIC].sView < 10) ? m_dialogBoxes[DIALOG_MAGIC].sView : 0;
 	RECT rc;
 
-	R.FillPanel(X, Y, X + W, Y + H, 10, RGB(14, 16, 20), m_bDialogTrans ? 205 : 255, RGB(150, 128, 82), 150);	// solid unless see-through windows are on (a solid fill is much faster)
+	R.StonePanel(X, Y, X + W, Y + H);	// VALORIA stone (CRenderer::StoneBox)
 
 	// title bar
 	R.TitleOut(X + 14, Y + 8, "MAGIC", kGold, 15);
@@ -82,7 +82,7 @@ void CGame::DrawMagicPanel(int iChance, int onButton)
 	Centered(R, X, X + W, Y + 46, kCircle[iView], kGold, 13, true);
 
 	// the spell list, in a soft inset
-	R.FillPanel(X + 18, Y + 66, X + W - 18, Y + 66 + 9 * 18 + 6, 8, RGB(0, 0, 0), 90, RGB(255, 255, 255), 20);
+	R.Slate(X + 18, Y + 66, X + W - 18, Y + 66 + 9 * 18 + 6);
 	const int iPivot = iView * 10;
 	int iYloc = 0, j = 0;
 	for (int i = 0; i < 9; i++) {
@@ -111,7 +111,7 @@ void CGame::DrawMagicPanel(int iChance, int onButton)
 	// circle numerals I - X, drawn as text (the old sprites were dark ink for the parchment,
 	// tiny and with tan edges, so they looked muddy on the dark panel); the chosen one in gold,
 	// the one under the mouse in white, circles with a learned spell brighter than empty ones
-	R.FillPanel(X + 12, Y + 242, X + W - 12, Y + 266, 8, RGB(0, 0, 0), 90, RGB(255, 255, 255), 20);
+	R.Slate(X + 12, Y + 242, X + W - 12, Y + 266);
 	for (int i = 0; i < 10; i++) {
 		bool bAny = false;
 		for (int k = 0; k < 10 && !bAny; k++)
@@ -133,7 +133,7 @@ void CGame::DrawMagicPanel(int iChance, int onButton)
 	OffsetRect(&rc, X, Y);
 	{
 		const bool bOn = bTop && (onButton == 20);
-		R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 6, RGB(255, 255, 255), bOn ? 36 : 16, RGB(255, 255, 255), bOn ? 70 : 40);
+		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOn ? 1 : 0);
 		Centered(R, rc.left, rc.right, rc.top + 3, "Alchemy", bOn ? kWhite : RGB(220, 224, 230), 12);
 	}
 	// Enchant (VALORIA enchanting, UI\EnchantPanel.cpp)
