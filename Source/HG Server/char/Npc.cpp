@@ -1985,6 +1985,7 @@ void CNpc::Behavior_Death(Unit * attacker, int16 dmg)
 		}
 
 		g_game->GetExp(player->m_handle, iExp);
+		g_game->AchKill(player->m_handle, m_cNpcName);	// VALORIA achievements (Achievements.cpp)
 
 		int iQuestIndex = player->m_iQuest;
 		if (iQuestIndex) 

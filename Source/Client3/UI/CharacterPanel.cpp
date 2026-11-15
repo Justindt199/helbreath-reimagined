@@ -159,6 +159,13 @@ static void CloseRect(short X, short Y, RECT & rc)
 	SetRect(&rc, X + CGame::CHARWIN_W - 32, Y + 6, X + CGame::CHARWIN_W - 8, Y + 30);
 }
 
+// VALORIA achievements: a button in the title bar, left of the close box (UI\AchievePanel.cpp)
+static void AchieveRect(CRenderer & r, short X, short Y, RECT & rc)
+{
+	const int w = Width(r, "Achievements") + 26;
+	SetRect(&rc, X + CGame::CHARWIN_W - 40 - w, Y + 6, X + CGame::CHARWIN_W - 40, Y + 30);
+}
+
 static bool InRect(const RECT & rc, int x, int y)
 {
 	return x >= rc.left && x < rc.right && y >= rc.top && y < rc.bottom;
@@ -180,6 +187,8 @@ int CGame::CharPanelButtonAt(short msX, short msY)
 	RECT rc;
 	CloseRect(X, Y, rc);
 	if (InRect(rc, msX, msY)) return CHARBTN_CLOSE;
+	AchieveRect(m_Renderer, X, Y, rc);
+	if (InRect(rc, msX, msY)) return CHARBTN_ACHIEVE;
 	FootBtn b[5];
 	const int n = CharFooterButtons(*this, m_Renderer, X, Y, m_iGuildRank != GUILDRANK_NONE, b);
 	for (int i = 0; i < n; i++)
@@ -204,6 +213,10 @@ void CGame::DrawCharPanelBack()
 	const bool bOnClose = bTop && InRect(rc, ms::X, ms::Y);
 	if (bOnClose) R.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 5, RGB(255, 255, 255), 34);
 	R.TextOutSized(rc.left + 8, rc.top + 1, "x", bOnClose ? kWhite : kGrey, 18);
+	AchieveRect(R, X, Y, rc);
+	const bool bOnAch = bTop && InRect(rc, ms::X, ms::Y);
+	R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOnAch ? 1 : 0);
+	R.TextOut(rc.left + 13, rc.top + 4, "Achievements", bOnAch ? RGB(255, 255, 255) : RGB(220, 224, 230));
 	R.FillPanel(X + 1, Y + kTitleH, X + W - 1, Y + kTitleH + 1, 0, RGB(255, 255, 255), 26);
 
 	// doll box

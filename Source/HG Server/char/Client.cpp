@@ -352,6 +352,7 @@ CClient::CClient(int clientH)
 	m_gearDmgPct = 0;
 	m_gearPhysRes = m_gearMagRes = 0;
 	m_bValoriaItemsDirty = false;
+	m_bAchDirty = false;
 	m_dwEnchantBusy = 0;
 	m_passHpPct = m_passMpPct = m_passDefPct = m_passXpPct = 0;
 	m_dwPassiveBusy = 0;

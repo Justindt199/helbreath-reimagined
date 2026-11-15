@@ -210,6 +210,7 @@ void CGame::ValoriaBuffTick(int iClientH)
 	CClient * p = m_pClientList[iClientH];
 	if (p == NULL) return;
 	if (p->m_bValoriaItemsDirty) { p->m_bValoriaItemsDirty = false; EnchantSendItems(iClientH); }	// after the item itself arrived
+	if (p->m_bAchDirty) { p->m_bAchDirty = false; EnchantSendStats(iClientH); }	// achievement counters (Achievements.cpp)
 	const uint32 t = timeGetTime();
 	bool bEnded = false;
 	for (int b = 0; b < BUFF_COUNT; b++) {

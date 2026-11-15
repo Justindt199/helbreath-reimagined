@@ -2199,7 +2199,7 @@ BOOL CLoginServer::IsMapAvailable(char *MapName, char *GameServerIP, WORD *GameS
 //=============================================================================
 void CLoginServer::ProcessRequestPlayerData(char *Data, BYTE GSID, MYSQL myConn)
 {
-	char SendBuff[20000], AccName[15], AccPwd[15], CharName[15], log[300];
+	char SendBuff[28000], AccName[15], AccPwd[15], CharName[15], log[300];	// a full bag and warehouse is ~20 KB (under the game server's 30,000)
 	_ADDRESS ClientIP;
 	WORD *wp, AccountID, CharInfoSize = 0;
 	DWORD *dwp;

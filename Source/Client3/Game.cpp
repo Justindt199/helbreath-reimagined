@@ -724,6 +724,10 @@ void CGame::SetupDialogBoxes()
 	m_dialogBoxes[DIALOG_PASSIVE].SetupDialog(DIALOG_PASSIVE, 60, 20, PASSIVEWIN_W, PASSIVEWIN_H);
 	m_dialogBoxes[DIALOG_PASSIVE].SetupHandlers(GAMEFUNCT(DrawDialogBox_Passives), GAMEFUNCT(DlgBoxClick_Passives));
 
+	// VALORIA achievements (UI\AchievePanel.cpp)
+	m_dialogBoxes[DIALOG_ACHIEVE].SetupDialog(DIALOG_ACHIEVE, 70, 30, ACHWIN_W, ACHWIN_H);
+	m_dialogBoxes[DIALOG_ACHIEVE].SetupHandlers(GAMEFUNCT(DrawDialogBox_Achievements), GAMEFUNCT(DlgBoxClick_Achievements));
+
 	for(int i = 0; i < MAXDIALOGBOX; i++)
 	{		
 		m_dialogBoxes[i].SetMode(0); //Setup default buttons
@@ -1465,6 +1469,7 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 			break;
 
 		case MSGID_REQUEST_PASSIVE:	// VALORIA passive tree (UI\PassivePanel.cpp): action, node
+		case MSGID_REQUEST_TITLE:	// VALORIA achievement title (UI\AchievePanel.cpp): counter, tier
 			*wp = wCommand;
 			Push(cp, (uint16)iV1);
 			iRet = m_pGSock->iSendMsg(cMsg, cp - cMsg, cKey);
@@ -4371,6 +4376,7 @@ void CGame::InitGameSettings()
 	m_rebirthOf.clear(); m_iRebirth = m_iRebirthMode = m_iRebirthAltLevel = 0; m_dwRebirthConfirmAt = 0;
 	m_enchant.Clear(); m_iEnchantSel = -1; m_iEnchantScroll = 0; m_dwEnchantConfirmAt = 0;	// VALORIA enchanting
 	m_passive.Clear(); m_iPassivePick = -1; m_dwPassiveOrbAt = 0;	// VALORIA passive tree
+	m_titleOf.clear(); m_bAchSeen = false; m_iAchScroll = 0;	// VALORIA achievements
 	memset(m_dwValBuffEnd, 0, sizeof(m_dwValBuffEnd));	// VALORIA buffs
 	m_bounties.clear(); m_bountyBackers.clear(); m_cBountySel[0] = 0; m_dwBountyClaims = m_dwBountyClaimGold = 0;
 
@@ -16775,6 +16781,7 @@ static const char * ProfDialogName(int i)
 	if (i == DIALOG_REBIRTH) return "Rebirth";
 	if (i == DIALOG_ENCHANT) return "Enchanting";
 	if (i == DIALOG_PASSIVE) return "Passive skills";
+	if (i == DIALOG_ACHIEVE) return "Achievements";
 	return "Window";
 }
 
@@ -16784,7 +16791,7 @@ bool CGame::IsClassicDialog(int id) const
 {
 	switch (id) {
 	case 1: case 2: case 3: case 9: case 10: case 12: case 15: case 20: case 29: case 30:
-	case DIALOG_MOSTWANTED: case DIALOG_BOUNTY: case DIALOG_REBIRTH: case DIALOG_ENCHANT: case DIALOG_PASSIVE:
+	case DIALOG_MOSTWANTED: case DIALOG_BOUNTY: case DIALOG_REBIRTH: case DIALOG_ENCHANT: case DIALOG_PASSIVE: case DIALOG_ACHIEVE:
 		return false;
 	}
 	return true;
@@ -20888,6 +20895,9 @@ void CGame::DlgBoxClick_Character()
 	case CHARBTN_WANTED:
 		EnableDialogBox(DIALOG_MOSTWANTED);
 		PlaySound('E', 14, 5);
+		break;
+	case CHARBTN_ACHIEVE:
+		OpenAchieveWindow();	// VALORIA achievements (UI\AchievePanel.cpp)
 		break;
 	}
 }
@@ -26091,8 +26101,10 @@ void CGame::NotifyMsgHandler(char * pData)
 		break;
 
 	case NOTIFY_LEVELUP: // 0x0B16
+	{	const int iLv0 = m_iLevel;
 		NotifyMsg_LevelUp(pData);
-		break;
+		if (m_iLevel > iLv0) AchAnnounce(Valoria::ACH_LEVEL, (unsigned)iLv0, (unsigned)m_iLevel);	// VALORIA achievements
+		break; }
 
 	case NOTIFY_STATECHANGE_FAILED:		// 0x0BB6
 		m_luStat[STAT_STR] = m_luStat[STAT_VIT] = m_luStat[STAT_DEX] = m_luStat[STAT_INT] = m_luStat[STAT_MAG] = m_luStat[STAT_CHR] = 0;
@@ -27665,7 +27677,8 @@ void CGame::NotifyMsgHandler(char * pData)
 	// VALORIA enchanting (UI\EnchantPanel.cpp)
 	case NOTIFY_ENCHANTSTATS: NotifyMsg_EnchantStats((char *)pData); break;
 	case NOTIFY_ENCHANTITEMS: NotifyMsg_EnchantItems((char *)pData); break;
-	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;	// VALORIA passive tree (UI\PassivePanel.cpp)
+	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;
+	case NOTIFY_TITLEINFO: NotifyMsg_TitleInfo((char *)pData); break;	// VALORIA achievement titles (UI\AchievePanel.cpp)	// VALORIA passive tree (UI\PassivePanel.cpp)
 	case NOTIFY_VALORIABUFFS: NotifyMsg_ValoriaBuffs((char *)pData); break;	// VALORIA elixirs and scrolls (UI\ValoriaUse.cpp)
 
 	// Clock and ping (UI\ClockPing.cpp)
@@ -28881,7 +28894,9 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 		}
 		else
 		{
-			wsprintf(cTxt, "%s", pName);
+			const char * pTitle = TitleOf(pName);	// VALORIA achievement title (UI\AchievePanel.cpp)
+			if (pTitle != NULL) wsprintf(cTxt, "%s %s", pTitle, pName);
+			else wsprintf(cTxt, "%s", pName);
 		}
 
 		if(m_iPartyStatus)

@@ -73,7 +73,7 @@
 #define RBTNPOSX			154
 #define BTNPOSY			292
 
-#define MAXDIALOGBOX		69
+#define MAXDIALOGBOX		70
 
 
 #define INDEX4_MSGID		0
@@ -522,13 +522,28 @@ public:
 	void DrawDialogBox_Passives();
 	void DlgBoxClick_Passives();
 
+	// VALORIA achievements (UI\AchievePanel.cpp)
+	enum { ACHWIN_W = 600, ACHWIN_H = 440 };
+	struct TitleMark { char name[12]; int counter, tier; };
+	std::vector<TitleMark> m_titleOf;
+	int  m_iAchCat = 0, m_iAchScroll = 0;
+	bool m_bAchSeen = false;			// the first counters after entering the world aren't announced
+	unsigned int AchProgress(int iCounter) const;
+	int  AchUnlockedCount() const;
+	const char * TitleOf(const char * pName) const;
+	void AchAnnounce(int iCounter, unsigned int before, unsigned int after);
+	void NotifyMsg_TitleInfo(char * pData);
+	void OpenAchieveWindow();
+	void DrawDialogBox_Achievements();
+	void DlgBoxClick_Achievements();
+
 	// VALORIA usable items: elixir / scroll buffs, rune and stone tooltips (UI\ValoriaUse.cpp)
 	DWORD m_dwValBuffEnd[ValoriaUse::BUFF_COUNT] = {};
 	void NotifyMsg_ValoriaBuffs(char * pData);
 	int  ValoriaBuffTotal(int iKind) const;
 	void DrawValoriaBuffs();
 	void ValoriaUseTipLines(ItemTip & t, const CItem * it);
-	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED };
+	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED, CHARBTN_ACHIEVE };
 	void  CharDollOrigin(short & sX, short & sY);	// where the paper doll's pivot math starts
 	void  DrawCharPanelBack();
 	void  DrawCharPanelFront(int iHoverSlot, const char * cEquipPoiStatus);

@@ -589,6 +589,13 @@ public:
 	void EnchantAddModXP(int iClientH, int k, int n);
 	// VALORIA passive tree (Passives.cpp)
 	void PassiveRequest(int iClientH, char * pData);
+	// VALORIA achievements (Achievements.cpp)
+	void AchAdd(int iClientH, int iCounter, unsigned int n = 1);
+	void AchKill(int iClientH, const char * pNpcName);
+	void AchSendTitle(int iToH, int h);
+	void AchOnMapEntry(int h);
+	void AchTitleRequest(int iClientH, char * pData);
+	void AchAdmin(int iClientH, const char * pArgs);
 	void PassiveSendState(int iClientH);
 	void PassiveBonus(int iClientH);
 	// VALORIA usable items (ValoriaUse.cpp)

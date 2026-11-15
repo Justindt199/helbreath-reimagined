@@ -6,6 +6,6 @@ ALTER TABLE `item` ADD COLUMN IF NOT EXISTS `Valoria` varchar(64) DEFAULT NULL A
 ALTER TABLE `char_database` ADD COLUMN IF NOT EXISTS `ValoriaPassive` varchar(96) DEFAULT NULL AFTER `ValoriaEnchant`;
 -- VALORIA item rarity: an item's VALORIA data grew from 32 to 48 bytes (96 hex digits)
 ALTER TABLE `item` MODIFY COLUMN `Valoria` varchar(96) DEFAULT NULL;
--- VALORIA life skills: a character's VALORIA data grew from 64 to 80 bytes (160 hex digits)
-ALTER TABLE `char_database` MODIFY COLUMN `ValoriaEnchant` varchar(160) DEFAULT NULL;
+-- VALORIA life skills and achievements: a character's VALORIA data grew from 64 to 356 bytes (712 hex digits)
+ALTER TABLE `char_database` MODIFY COLUMN `ValoriaEnchant` varchar(720) DEFAULT NULL;
 SELECT 'VALORIA enchanting, passive tree and rarity columns ready' AS status;

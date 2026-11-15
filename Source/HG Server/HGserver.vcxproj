@@ -260,6 +260,7 @@
     <ClCompile Include="Rebirth.cpp" />
     <ClCompile Include="Enchanting.cpp" />
     <ClCompile Include="Passives.cpp" />
+    <ClCompile Include="Achievements.cpp" />
     <ClCompile Include="ValoriaUse.cpp" />
     <ClCompile Include="DropManager.cpp" />
     <ClCompile Include="HG.cpp">

@@ -448,6 +448,7 @@ public:
 	int m_gearStr, m_gearDex, m_gearVit, m_gearInt, m_gearMag, m_gearHP, m_gearMP, m_gearDef, m_gearCrit;
 	int m_gearDmgPct;				// VALORIA empowered weapon damage, % (HG Server\Enchanting.cpp)
 	int m_gearPhysRes, m_gearMagRes;	// VALORIA rarity bonuses: % of a physical / magic hit taken off (capped)
+	bool m_bAchDirty;				// achievement counters changed: send them (ValoriaBuffTick)
 	bool m_bValoriaItemsDirty;		// an item with VALORIA data arrived: send the item data (ValoriaBuffTick)
 	Valoria::CharData m_enchant;	// VALORIA Enchanting: XP, learned modifiers and their levels (Shared\ValoriaEnchant.h)
 	DWORD m_dwEnchantBusy;			// last enchanting request (anti-spam)

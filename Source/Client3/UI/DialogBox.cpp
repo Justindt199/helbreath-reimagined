@@ -1186,6 +1186,9 @@ void CDialogBox::SetMode(char mode)
 	case DIALOG_PASSIVE:	// VALORIA passive tree: drawn and clicked in code (UI\PassivePanel.cpp), no fixed buttons
 		break;
 
+	case DIALOG_ACHIEVE:	// VALORIA achievements: drawn and clicked in code (UI\AchievePanel.cpp), no fixed buttons
+		break;
+
 	case DIALOG_BOUNTY:	// Bounty board: drawn and clicked in code (UI\BountyBoard.cpp), no fixed buttons
 		break;
 

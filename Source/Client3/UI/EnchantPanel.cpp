@@ -60,7 +60,12 @@ struct Btn { RECT rc; int action; int idx; int key; bool enabled; std::string la
 
 void CGame::NotifyMsg_EnchantStats(char * pData)
 {
+	const Valoria::CharData old = m_enchant;
 	m_enchant.Read((const unsigned char *)(pData + INDEX2_MSGTYPE + 2));
+	if (m_bAchSeen)		// VALORIA achievements: announce what the new counters unlocked (UI\AchievePanel.cpp)
+		for (int c = 0; c < Valoria::ACH_SAVED; c++)
+			if (m_enchant.ach[c] > old.ach[c]) AchAnnounce(c, old.ach[c], m_enchant.ach[c]);
+	m_bAchSeen = true;
 }
 
 void CGame::NotifyMsg_EnchantItems(char * pData)

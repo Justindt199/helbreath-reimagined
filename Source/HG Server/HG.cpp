@@ -1737,6 +1737,7 @@ void CGame::PlayerMapEntry(int iClientH, bool setRecallTime)
 	WantedOnMapEntry(iClientH);	// Most Wanted: your streak and who is wanted (Wanted.cpp)
 	BountyOnMapEntry(iClientH);	// bounties on the board, owed gold (Bounty.cpp)
 	RebirthOnMapEntry(iClientH);	// rebirth levels (Rebirth.cpp)
+	AchOnMapEntry(iClientH);		// VALORIA achievement titles (Achievements.cpp)
 	EnchantSendStats(iClientH);	// VALORIA enchanting: your Enchanting and your items' enchantments (Enchanting.cpp)
 	PassiveSendState(iClientH);	// VALORIA passive tree (Passives.cpp)
 	ValoriaSendBuffs(iClientH);	// VALORIA elixirs and scrolls (ValoriaUse.cpp)
@@ -5940,6 +5941,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			ValoriaAdminUse(iClientH, cp + 6);
 		} else if (memcmp(cp, "/vcraft ", 8) == 0) {	// GM: craft from bag items named (ValoriaUse.cpp)
 			ValoriaAdminCraft(iClientH, cp + 8);
+		} else if (memcmp(cp, "/vach ", 6) == 0) {	// GM: add to an achievement counter (Achievements.cpp)
+			AchAdmin(iClientH, cp + 6);
 		} else if (memcmp(cp, "/vrarity ", 9) == 0) {	// GM: give a bag item a rarity (ValoriaUse.cpp)
 			ValoriaAdminRarity(iClientH, cp + 9);
 		} else if (memcmp(cp, "/setweather ", 12) == 0) {
@@ -7067,6 +7070,10 @@ void CGame::MsgProcess()
 
 			case MSGID_REQUEST_PASSIVE:	// VALORIA passive tree (Passives.cpp)
 				PassiveRequest(iClientH, pData + 4);
+				break;
+
+			case MSGID_REQUEST_TITLE:	// VALORIA achievement titles (Achievements.cpp)
+				AchTitleRequest(iClientH, pData + 4);
 				break;
 
 			case MSGID_REQUEST_PING:
@@ -17301,7 +17308,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 
 			if (iGetExpLevel(m_pClientList[iClientH]->m_iExp) >= iEK_Level) {
 				m_pClientList[iAttackerH]->m_iEnemyKillCount++;
-				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++;
+				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++; AchAdd(iAttackerH, Valoria::ACH_ENEMY);
 				m_pClientList[iAttackerH]->ApplyElo(m_pClientList[iClientH]);
 			}
 
@@ -17317,7 +17324,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 
 			if (iGetExpLevel(m_pClientList[iClientH]->m_iExp) >= iEK_Level) {
 				m_pClientList[iAttackerH]->m_iEnemyKillCount++;
-				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++;
+				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++; AchAdd(iAttackerH, Valoria::ACH_ENEMY);
 				m_pClientList[iAttackerH]->ApplyElo(m_pClientList[iClientH]);
 			}
 
@@ -17348,7 +17355,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 
 			if (iGetExpLevel(m_pClientList[iClientH]->m_iExp) >= iEK_Level) {
 				m_pClientList[iAttackerH]->m_iEnemyKillCount++;
-				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++;
+				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++; AchAdd(iAttackerH, Valoria::ACH_ENEMY);
 				m_pClientList[iAttackerH]->ApplyElo(m_pClientList[iClientH]);
 			}
 
@@ -17363,7 +17370,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 
 			if (iGetExpLevel(m_pClientList[iClientH]->m_iExp) >= iEK_Level) {
 				m_pClientList[iAttackerH]->m_iEnemyKillCount++;
-				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++;
+				m_pClientList[iAttackerH]->m_iEnemyKillTotalCount++; AchAdd(iAttackerH, Valoria::ACH_ENEMY);
 				m_pClientList[iAttackerH]->ApplyElo(m_pClientList[iClientH]);
 			}
 
@@ -41140,7 +41147,7 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 				player->Notify(NULL, NOTIFY_QUESTREWARD, 4, 1, player->m_iQuestRewardAmount, 
 					m_pItemConfigList[player->m_iQuestRewardType]->m_cName, player->m_iContribution);
 
-				LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+				LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel)); AchAdd(iClientH, Valoria::ACH_QUEST);	// Slayer XP, a quest done
 				_ClearQuestStatus(iClientH);
 			} 
 			else {
@@ -41158,7 +41165,7 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 			player->m_iExpStock += player->m_iQuestRewardAmount * 5 * player->m_iLevel;
 			player->m_iContribution += m_pQuestConfigList[player->m_iQuest]->m_iContribution;
 			SendNotifyMsg(NULL, iClientH, NOTIFY_QUESTREWARD, 4, 1, player->m_iQuestRewardAmount, "exp", player->m_iContribution);
-			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel)); AchAdd(iClientH, Valoria::ACH_QUEST);	// Slayer XP, a quest done
 				_ClearQuestStatus(iClientH);
 		}
 		else if (player->m_iQuestRewardType == -1) 
@@ -41166,7 +41173,7 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 			player->m_iExpStock += player->m_iQuestRewardAmount;
 			player->m_iContribution += m_pQuestConfigList[player->m_iQuest]->m_iContribution;
 			player->Notify(NULL, NOTIFY_QUESTREWARD, 4, 1, player->m_iQuestRewardAmount, "exp", player->m_iContribution);
-			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel)); AchAdd(iClientH, Valoria::ACH_QUEST);	// Slayer XP, a quest done
 				_ClearQuestStatus(iClientH);
 		}
 		else {
@@ -41174,7 +41181,7 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 
 			player->Notify(NULL, NOTIFY_QUESTREWARD, 4, 1, 0, "                     ", m_pClientList[iClientH]->m_iContribution);
 
-			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel)); AchAdd(iClientH, Valoria::ACH_QUEST);	// Slayer XP, a quest done
 				_ClearQuestStatus(iClientH);
 		}
 	} else {

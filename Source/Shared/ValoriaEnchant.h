@@ -38,7 +38,7 @@ const int ENCHANT_MAX   = 50;			// Enchanting level
 const int MOD_MAX       = 50;			// each modifier's own enchanting level
 const int CORE_MOD_MAX  = 5;
 const int ITEM_BYTES    = 48;		// was 32 before rarity: older saves read with the rest as zero (Common)
-const int CHAR_BYTES    = 80;		// was 64 before the life skills: older saves read them as 0 XP
+const int CHAR_BYTES    = 356;		// 64 before the life skills, 80 before achievements: older saves read the new parts as 0
 const int GOLD_DIVISOR  = 4;
 const int MAX_TIER      = 10;
 const double SKILL_XP_MULT = 0.5;		// VALORIA's skill XP multiplier
@@ -213,14 +213,21 @@ inline bool PerkForgeRarity(int lv, int s)	{ return (s == LIFE_SMITHING && lv >=
 inline int PerkSlayerDmgPct(int slayerLv)	{ return slayerLv / 2; }		// Slayer: +1% against your quest target per 2 levels
 inline int PerkSlayerGoldPct(int slayerLv)	{ return slayerLv >= 25 ? 25 : 0; }	// Slayer 25: quest gold +25%
 
+// Achievements (ValoriaAchieveData.h): each is a counter reaching a number. Kill counters 0-63 are one
+// monster each (Ach::kTargets), then these; ACH_LEVEL is the character's level, not saved.
+const int ACH_KILL_SLOTS = 64;
+enum { ACH_TOTAL = 64, ACH_ENEMY, ACH_QUEST, ACH_SIDE, ACH_SAVED, ACH_LEVEL = ACH_SAVED, ACH_COUNTERS };
+
 struct CharData {
 	unsigned int  xp;					// Enchanting XP
 	unsigned char known[MOD_COUNT];		// highest tier each modifier was learned at (0 = not known)
 	unsigned int  modXp[MOD_COUNT];		// each modifier's own enchanting XP
 	unsigned int  lifeXp[LIFE_COUNT];	// life skill XP (Life)
+	unsigned int  ach[ACH_SAVED];		// achievement counters (bytes 80-351)
+	unsigned char titleCounter, titleTier;	// the title shown before your name (tier 0 = none)
 
 	CharData() { Clear(); }
-	void Clear() { xp = 0; memset(known, 0, sizeof(known)); memset(modXp, 0, sizeof(modXp)); memset(lifeXp, 0, sizeof(lifeXp)); }
+	void Clear() { xp = 0; memset(known, 0, sizeof(known)); memset(modXp, 0, sizeof(modXp)); memset(lifeXp, 0, sizeof(lifeXp)); memset(ach, 0, sizeof(ach)); titleCounter = titleTier = 0; }
 	int  LifeLv(int s) const { return (s >= 0 && s < LIFE_COUNT) ? LifeLevel(lifeXp[s]) : 1; }
 
 	void Write(unsigned char * p) const {
@@ -231,6 +238,9 @@ struct CharData {
 			for (int b = 0; b < 4; b++) p[14 + k*4 + b] = (unsigned char)((modXp[k] >> (8*b)) & 0xFF);
 		for (int s = 0; s < LIFE_COUNT; s++)
 			for (int b = 0; b < 4; b++) p[64 + s*4 + b] = (unsigned char)((lifeXp[s] >> (8*b)) & 0xFF);
+		for (int c = 0; c < ACH_SAVED; c++)
+			for (int b = 0; b < 4; b++) p[80 + c*4 + b] = (unsigned char)((ach[c] >> (8*b)) & 0xFF);
+		p[352] = titleCounter; p[353] = titleTier;
 	}
 	void Read(const unsigned char * p) {
 		xp = 0;
@@ -244,6 +254,11 @@ struct CharData {
 			lifeXp[s] = 0;
 			for (int b = 0; b < 4; b++) lifeXp[s] |= (unsigned int)p[64 + s*4 + b] << (8*b);
 		}
+		for (int c = 0; c < ACH_SAVED; c++) {
+			ach[c] = 0;
+			for (int b = 0; b < 4; b++) ach[c] |= (unsigned int)p[80 + c*4 + b] << (8*b);
+		}
+		titleCounter = p[352]; titleTier = p[353];
 	}
 };
 
