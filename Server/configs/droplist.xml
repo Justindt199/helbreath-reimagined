@@ -66,6 +66,7 @@
 			<item_t name="RingoftheAbaddon" prob="3"/>
 			<item_t name="OrbOfUnmaking" prob="3"/><!-- VALORIA passive relic -->
 			<item_t name="TomeOfTheUnboundPath" prob="3"/><!-- VALORIA passive relic -->
+			<item_t name="BlessedUpgradeStone" prob="3"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Amphis">
@@ -248,6 +249,7 @@
 			<item_t name="Excaliber" prob="3"/>
 			<item_t name="OrbOfUnmaking" prob="3"/><!-- VALORIA passive relic -->
 			<item_t name="TomeOfTheUnboundPath" prob="3"/><!-- VALORIA passive relic -->
+			<item_t name="BlessedUpgradeStone" prob="3"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Frost">
@@ -387,6 +389,7 @@
 			<item_t name="NecklaceOfXelima" prob="1"/>
 			<item_t name="OrbOfUnmaking" prob="1"/><!-- VALORIA passive relic -->
 			<item_t name="TomeOfTheUnboundPath" prob="1"/><!-- VALORIA passive relic -->
+			<item_t name="BlessedUpgradeStone" prob="1"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Ice-Golem">
@@ -678,6 +681,7 @@
 			<item_t name="RingoftheAbaddon" prob="4"/>
 			<item_t name="OrbOfUnmaking" prob="4"/><!-- VALORIA passive relic -->
 			<item_t name="TomeOfTheUnboundPath" prob="4"/><!-- VALORIA passive relic -->
+			<item_t name="BlessedUpgradeStone" prob="4"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Troll">
@@ -779,6 +783,7 @@
 			<item_t name="StormBringer" prob="3"/>
 			<item_t name="OrbOfUnmaking" prob="3"/><!-- VALORIA passive relic -->
 			<item_t name="TomeOfTheUnboundPath" prob="3"/><!-- VALORIA passive relic -->
+			<item_t name="BlessedUpgradeStone" prob="3"/><!-- VALORIA passive relic -->
 		</tier_t>
 	</npc_t>
 	<npc_t name="Zombie">

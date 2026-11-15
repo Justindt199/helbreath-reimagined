@@ -678,5 +678,53 @@
  {
   "key": "refund_orb",
   "icon": "x_orb_unmake"
+ },
+ {
+  "key": "elixir_strength",
+  "icon": "mx_elixir_strength"
+ },
+ {
+  "key": "elixir_ironskin",
+  "icon": "mx_elixir_ironskin"
+ },
+ {
+  "key": "elixir_swiftness",
+  "icon": "mx_elixir_swiftness"
+ },
+ {
+  "key": "elixir_wisdom",
+  "icon": "e_blue"
+ },
+ {
+  "key": "xp_scroll",
+  "icon": "sc_insight"
+ },
+ {
+  "key": "rune_might",
+  "icon": "x_rune_red"
+ },
+ {
+  "key": "rune_agility",
+  "icon": "x_rune_green"
+ },
+ {
+  "key": "rune_vigor",
+  "icon": "x_rune_purple"
+ },
+ {
+  "key": "rune_intellect",
+  "icon": "x_rune_gold"
+ },
+ {
+  "key": "rune_sorcery",
+  "icon": "x_rune_blue"
+ },
+ {
+  "key": "rune_warding",
+  "icon": "x_rune_grey"
+ },
+ {
+  "key": "blessed_stone",
+  "icon": "x_stone_blessed"
  }
 ]

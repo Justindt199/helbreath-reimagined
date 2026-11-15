@@ -116,7 +116,7 @@ def add_drops(relics):
 def main():
     nodes = json.load(open(os.path.join(HERE, 'valoria_data', 'passives.json')))['nodes']
     item_map = json.load(open(os.path.join(HERE, 'item_map.json')))
-    relics = [item_map['refund_orb'][0], item_map['passive_tome'][0]]
+    relics = [item_map['refund_orb'][0], item_map['passive_tome'][0], item_map['blessed_stone'][0]]
     n = build_header(nodes)
     print('wrote', OUT_H, n, 'nodes')
     for a in add_drops(relics):

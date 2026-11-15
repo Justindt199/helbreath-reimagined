@@ -345,7 +345,8 @@ enum NetMessages_Notify
 	NOTIFY_ENCHANTITEMS,	// every bag / warehouse item with enchantments: uint8 count, then uint8 0 bag / 1 warehouse, uint8 index, 32 bytes
 
 	// VALORIA passive tree: HG Server Passives.cpp -> Client3 UI\PassivePanel.cpp
-	NOTIFY_PASSIVES			// your passive tree: 48 bytes (Shared\ValoriaPassives.h Data)
+	NOTIFY_PASSIVES,		// your passive tree: 48 bytes (Shared\ValoriaPassives.h Data)
+	NOTIFY_VALORIABUFFS		// your elixir / scroll buffs: uint8 count, then uint8 buff, uint16 seconds left (Shared\ValoriaUse.h)
 };
 
 enum { REBIRTHRES_REBORN = 1, REBIRTHRES_PAUSED, REBIRTHRES_RESUMED, REBIRTHRES_COMPLETED,

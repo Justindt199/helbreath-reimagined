@@ -270,7 +270,7 @@ void CGame::EnchantRequest(int iClientH, char * pData)
 				iNew++;
 			}
 		}
-		const int shards = DisenchantShards(tier, d.EmpowerTotal());
+		const int shards = DisenchantShards(tier, d.EmpowerTotal(), d.Runes());
 		wsprintf(cTxt, "Disenchanted %s -> %d Mystic Shard%s (+%d Enchanting XP)", it->m_cName, shards, shards == 1 ? "" : "s", (int)SkillXP(DisenchantXP(tier, iNew)));
 		ItemDepleteHandler(iClientH, idx, false);
 		CItem * pShard = new CItem;

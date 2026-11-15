@@ -1739,6 +1739,7 @@ void CGame::PlayerMapEntry(int iClientH, bool setRecallTime)
 	RebirthOnMapEntry(iClientH);	// rebirth levels (Rebirth.cpp)
 	EnchantSendStats(iClientH);	// VALORIA enchanting: your Enchanting and your items' enchantments (Enchanting.cpp)
 	PassiveSendState(iClientH);	// VALORIA passive tree (Passives.cpp)
+	ValoriaSendBuffs(iClientH);	// VALORIA elixirs and scrolls (ValoriaUse.cpp)
 	EnchantSendItems(iClientH);
 }
 
@@ -2486,6 +2487,7 @@ void CGame::CheckClientResponseTime()
 
 	for (i = 1; i < MAXCLIENTS; i++) {
 		if (m_pClientList[i] != NULL) {
+			ValoriaBuffTick(i);	// VALORIA elixirs and scrolls (ValoriaUse.cpp)
 
 			if ((dwTime - m_pClientList[i]->m_dwTime) > CLIENTTIMEOUT ) {
 				if (m_pClientList[i]->m_bIsInitComplete == true) {
@@ -18952,6 +18954,10 @@ void CGame::UseItemHandler(int iClientH, short sItemIndex, short dX, short dY, s
 
 
 		switch (item->m_sItemEffectType) {
+		case ITEMEFFECTTYPE_VALORIA_BUFF:	// VALORIA elixirs and scrolls (ValoriaUse.cpp)
+			if (!ValoriaUseBuff(iClientH, item->m_sItemEffectValue1, item->m_sLevelLimit)) depleteItem = false;
+			break;
+
 		case ITEMEFFECTTYPE_WARM: 
 
 
@@ -22378,6 +22384,7 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, bool bNotify)
 	}
 	EnchantGearBonus(iClientH);	// VALORIA enchantments and empowering on worn gear (Enchanting.cpp)
 	PassiveBonus(iClientH);		// VALORIA passive tree (Passives.cpp)
+	ValoriaBuffBonus(iClientH);	// VALORIA elixirs and scrolls (ValoriaUse.cpp)
 
 	if ( (player->m_sItemEquipmentStatus[EQUIPPOS_RHAND]   != -1) &&
 		(player->m_sItemEquipmentStatus[EQUIPPOS_TWOHAND] != -1) ) {
@@ -24985,11 +24992,14 @@ int CGame::Valoria_ReadSlots(int iClientH, char * cp, short * sIdx)
 }
 
 // -1 if an ingredient is missing or short, or a placed item isn't one of the recipe's ingredients; otherwise
-// the recipe's total number of ingredients (when two recipes match, the bigger one is made).
+// the recipe's total number of ingredients, plus EXACT when the placed stacks are exactly the recipe's
+// amounts. When several recipes match, the biggest result is made: an exact match first, then the bigger.
 int CGame::Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const short * sArray)
 {
+	const int EXACT = 100000;
 	CClient * p = m_pClientList[iClientH];
 	int iTotal = 0;
+	bool bExact = true;
 	for (int k = 0; k < 6; k++) {
 		const int id = sArray[k*2], need = sArray[k*2+1];
 		if (id < 0 || need <= 0) continue;
@@ -24997,6 +25007,7 @@ int CGame::Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const sho
 		for (int i = 0; i < n; i++)
 			if ((int)p->m_pItemList[sIdx[i]]->m_sIDnum == id) dwHave += p->m_pItemList[sIdx[i]]->m_dwCount;
 		if (dwHave < (uint32)need) return -1;
+		if (dwHave != (uint32)need) bExact = false;
 		iTotal += need;
 	}
 	for (int i = 0; i < n; i++) {
@@ -25005,7 +25016,7 @@ int CGame::Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const sho
 			if (sArray[k*2+1] > 0 && sArray[k*2] == (int)p->m_pItemList[sIdx[i]]->m_sIDnum) bUsed = true;
 		if (!bUsed) return -1;
 	}
-	return (iTotal > 0) ? iTotal : -1;
+	return (iTotal > 0) ? iTotal + (bExact ? EXACT : 0) : -1;
 }
 
 // Checks the level and gold, uses up the ingredients and the gold and gives the items. Returns VRES_*.
@@ -25996,6 +26007,9 @@ bool CGame::_bDepleteDestTypeItemUseEffect(int iClientH, int dX, int dY, short s
 
 	switch (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sItemEffectType)
 	{
+	case ITEMEFFECTTYPE_VALORIA_INFUSE:	// VALORIA runes and the Blessed Upgrade Stone (ValoriaUse.cpp)
+		return ValoriaInfuse(iClientH, sItemIndex, sDestItemID);
+
 	case ITEMEFFECTTYPE_OCCUPYFLAG:
 		if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sItemEffectValue2)
 			m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sItemSpecEffectValue1 = 100;

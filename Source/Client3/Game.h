@@ -33,6 +33,7 @@
 #include "..\shared\maths.h"
 #include "..\shared\ValoriaEnchant.h"
 #include "..\shared\ValoriaPassives.h"
+#include "..\shared\ValoriaUse.h"
 
 #include "GlobalDef.h"
 #include "Engine\Renderer.h"
@@ -516,6 +517,13 @@ public:
 	void OpenPassiveWindow();
 	void DrawDialogBox_Passives();
 	void DlgBoxClick_Passives();
+
+	// VALORIA usable items: elixir / scroll buffs, rune and stone tooltips (UI\ValoriaUse.cpp)
+	DWORD m_dwValBuffEnd[ValoriaUse::BUFF_COUNT] = {};
+	void NotifyMsg_ValoriaBuffs(char * pData);
+	int  ValoriaBuffTotal(int iKind) const;
+	void DrawValoriaBuffs();
+	void ValoriaUseTipLines(ItemTip & t, const CItem * it);
 	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED };
 	void  CharDollOrigin(short & sX, short & sY);	// where the paper doll's pivot math starts
 	void  DrawCharPanelBack();

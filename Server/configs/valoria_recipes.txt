@@ -34,6 +34,11 @@ DragonCuisses(M)	44	2250	1
 AbyssalCuisses(M)	49	3750	1
 FrostwRobeBottoms(M)	26	250	1
 GrilledFish	2	1	1
+ElixirOfStrength	10	20	1
+ElixirOfIronSkin	14	20	1
+ElixirOfSwiftness	14	20	1
+ElixirOfWisdom	10	20	1
+ScrollOfInsight	24	50	1
 RubyRing	14	75	1
 SapphireRing	14	75	1
 EmeraldRing	14	75	1
@@ -53,5 +58,11 @@ PrismaticShard	21	125	1
 AzureEssence	7	12	1
 VioletEssence	18	50	1
 RadiantEssence	28	250	1
+RuneOfMight	18	125	1
+RuneOfAgility	18	125	1
+RuneOfSorcery	18	125	1
+RuneOfIntellect	18	125	1
+RuneOfVigor	21	150	1
+RuneOfWarding	21	150	1
 ArchmageStaff	46	2500	1
 TemperingOil	21	30	2

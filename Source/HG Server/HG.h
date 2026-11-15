@@ -585,6 +585,12 @@ public:
 	void PassiveRequest(int iClientH, char * pData);
 	void PassiveSendState(int iClientH);
 	void PassiveBonus(int iClientH);
+	// VALORIA usable items (ValoriaUse.cpp)
+	void ValoriaSendBuffs(int iClientH);
+	bool ValoriaUseBuff(int iClientH, int iBuff, int iLevelLimit);
+	void ValoriaBuffBonus(int iClientH);
+	void ValoriaBuffTick(int iClientH);
+	bool ValoriaInfuse(int iClientH, short sItemIndex, short sDest);
 	void RequestRetrieveItemHandler(int iClientH, char * pData);
 	void RequestRetrieveGuildItem(CClient * player, char * data);
 	void HandlePingMap(const CClient * player, char * data) const;

@@ -225,6 +225,7 @@ void CGame::BuildItemTip(ItemTip & t, const CItem * pItem, const char * pName, D
 	}
 
 	EnchantTipLines(t, pItem);	// VALORIA enchantments and empowering (UI\EnchantPanel.cpp)
+	ValoriaUseTipLines(t, pItem);	// VALORIA runes, elixirs, scrolls, Blessed Upgrade Stone (UI\ValoriaUse.cpp)
 
 	// socketed gems, and sockets still free
 	for (int k = 0; k < MAXITEMSOCKETS; k++) {

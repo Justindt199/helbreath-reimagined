@@ -46,6 +46,7 @@ int CGame::GearBonus(int iKind) const
 	}
 	// VALORIA passive tree (UI\PassivePanel.cpp): GEAR_STR .. GEAR_DEF follow PM_STR .. PM_DEF
 	if (iKind <= GEAR_DEF) iSum += PassiveTotal(iKind);
+	iSum += ValoriaBuffTotal(iKind);	// VALORIA elixirs (UI\ValoriaUse.cpp)
 	return iSum;
 }
 

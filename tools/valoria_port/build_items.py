@@ -52,6 +52,10 @@ LATER_TYPES = {'enhance', 'elixir', 'quest', 'relic'}
 LATER_IDS = {'crypt_scroll', 'xp_scroll', 'smith_luck_scroll'}
 # Relics the passive tree uses (Source/Shared/ValoriaPassives.h): ported now, the other relics later.
 PASSIVE_RELICS = {'passive_tome', 'refund_orb'}
+# Usable items (Source/Shared/ValoriaUse.h): buff number / Valoria modifier + 1 (100 = Blessed Upgrade Stone).
+USE_BUFFS = [('elixir_strength', 0), ('elixir_ironskin', 1), ('elixir_swiftness', 2), ('elixir_wisdom', 3), ('xp_scroll', 4)]
+USE_INFUSE = [('rune_might', 1), ('rune_agility', 2), ('rune_vigor', 3), ('rune_intellect', 4), ('rune_sorcery', 5),
+              ('rune_warding', 8), ('blessed_stone', 100)]
 DROPPED_TYPES = {'gloves'}               # Helbreath has no glove slot
 
 # Template for each weapon (worn look, swing speed, skill, dice count). Order matters: first match wins.
@@ -290,6 +294,22 @@ def main():
         frame = len(frames)
         frames.append({'key': key, 'icon': v['icon']})
         item_map[key] = [new_row('Ruby', internal_name(v, key), v['name'], v, frame)]
+
+    # VALORIA's usable items (Source/Shared/ValoriaUse.h): elixirs and the Scroll of Insight give a timed
+    # buff (effect 36, value 1 = buff); runes and the Blessed Upgrade Stone are used on gear like a dye
+    # (effect 35, value 1 = modifier + 1, or 100 for the stone). Added last, so older item numbers stay put.
+    for key, buff in USE_BUFFS:
+        v = items[key]
+        frame = len(frames)
+        frames.append({'key': key, 'icon': v['icon']})
+        item_map[key] = [new_row('RedPotion', internal_name(v, key), v['name'], v, frame,
+                                 type=3, eff=36, v1=buff, v2=0, v3=0, v4=0, v5=0, v6=0)]
+    for key, mod in USE_INFUSE:
+        v = items[key]
+        frame = len(frames)
+        frames.append({'key': key, 'icon': v['icon']})
+        item_map[key] = [new_row('Dye(Indigo)', internal_name(v, key), v['name'], v, frame,
+                                 eff=35, v1=mod, v2=0, dur=1)]
 
     # ---- item rows: ItemValoria1.cfg, ItemValoria2.cfg, ... (the login server sends each one separately)
     replace_block(ITEM_CFG, [])                                   # older versions wrote them into Item3.cfg

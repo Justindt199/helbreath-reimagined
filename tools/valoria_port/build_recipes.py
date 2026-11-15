@@ -39,6 +39,9 @@ ALCHEMY_TYPES = {'potion', 'elixir', 'food'}
 SLOTS = 6
 
 
+# Items Justin wants found, not made: the Blessed Upgrade Stone is a super-rare boss drop (build_passives.py).
+DROP_ONLY = {'blessed_stone'}
+
 def all_items():
     rows = {}
     for f in sorted(os.listdir(CFG_DIR)):
@@ -59,6 +62,8 @@ def main():
 
     build, potion, craft, extra, skipped = [], [], [], [], []
     for r in recipes:
+        if r['out'] in DROP_ONLY:
+            skipped.append((r['out'], ['boss drop only'])); continue
         missing = [k for k in [r['out']] + list(r['in']) if k not in imap]
         if missing:
             skipped.append((r['out'], missing)); continue
@@ -78,11 +83,12 @@ def main():
         extra.append((out, level, gold, qty))
 
     # Alchemy and Crafting find the recipe from the ingredients alone. When two use the same ingredients,
-    # the game server makes the bigger one the placed stacks can pay for, so their sizes must differ.
+    # the game server makes the one whose amounts exactly match the placed stacks, otherwise the bigger
+    # one the stacks can pay for; so two recipes may not have exactly the same amounts.
     for lst, what in ((potion, 'Alchemy'), (craft, 'Crafting')):
         seen = {}
         for out, ins in lst:
-            key = (frozenset(i for _, i, _ in ins), sum(n for _, _, n in ins))
+            key = frozenset((i, n) for _, i, n in ins)
             if key in seen: sys.exit('%s recipes %s and %s use the same ingredients and amount' % (what, seen[key], out))
             seen[key] = out
 

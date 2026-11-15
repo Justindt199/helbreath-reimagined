@@ -624,5 +624,41 @@
  ],
  "refund_orb": [
   "OrbOfUnmaking"
+ ],
+ "elixir_strength": [
+  "ElixirOfStrength"
+ ],
+ "elixir_ironskin": [
+  "ElixirOfIronSkin"
+ ],
+ "elixir_swiftness": [
+  "ElixirOfSwiftness"
+ ],
+ "elixir_wisdom": [
+  "ElixirOfWisdom"
+ ],
+ "xp_scroll": [
+  "ScrollOfInsight"
+ ],
+ "rune_might": [
+  "RuneOfMight"
+ ],
+ "rune_agility": [
+  "RuneOfAgility"
+ ],
+ "rune_vigor": [
+  "RuneOfVigor"
+ ],
+ "rune_intellect": [
+  "RuneOfIntellect"
+ ],
+ "rune_sorcery": [
+  "RuneOfSorcery"
+ ],
+ "rune_warding": [
+  "RuneOfWarding"
+ ],
+ "blessed_stone": [
+  "BlessedUpgradeStone"
  ]
 }

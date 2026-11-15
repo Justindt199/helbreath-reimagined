@@ -16,6 +16,7 @@
 #include "Unit.h"
 #include "..\..\Shared\ValoriaEnchant.h"
 #include "..\..\Shared\ValoriaPassives.h"
+#include "..\..\Shared\ValoriaUse.h"
 #include "..\net\XSocket.h"
 #include "item\Item.h"
 #include "Magic.h"
@@ -451,6 +452,7 @@ public:
 	ValoriaPassive::Data m_passive;	// VALORIA passive tree: taken nodes, Tomes read (Shared\ValoriaPassives.h)
 	int m_passHpPct, m_passMpPct, m_passDefPct, m_passXpPct;	// the tree's % bonuses (Passives.cpp PassiveBonus)
 	DWORD m_dwPassiveBusy;			// last passive tree request (anti-spam)
+	DWORD m_valBuffEnd[ValoriaUse::BUFF_COUNT];	// VALORIA elixirs / Scroll of Insight: when each ends, 0 = off (ValoriaUse.cpp)
 
 	CParty * _party;
 	PartyStatus _partyStatus;

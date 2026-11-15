@@ -124,7 +124,8 @@ void CGame::EnchantTipLines(ItemTip & t, const CItem * it)
 	}
 	for (int k = 0; k < MOD_COUNT; k++) {
 		if (d.em[k] == 0) continue;
-		const int v = ItemBonus(d, k, tier) - ((k < ENCHANTABLE) ? d.EnchantValue(k) : 0);
+		int v = ItemBonus(d, k, tier) - ((k < ENCHANTABLE) ? d.EnchantValue(k) : 0);
+		for (int i = 0; i < MAX_RUNES; i++) if (d.rune[i] == k) v -= RuneAmount(k, tier);	// runes: UI\ValoriaUse.cpp
 		wsprintf(cBuf, "+%d %s (empowered %d/%d)", v, ModName(k), (int)d.em[k], EMPOWER_MAX);
 		t.bonus.push_back({ cBuf, "empowered", RGB(160, 200, 255) });
 	}
@@ -362,7 +363,7 @@ void CGame::DrawDialogBox_Enchant()
 				if (bNew) iNew++;
 				teach += std::string(teach.empty() ? "" : ", ") + ModName(k) + (bNew ? " (new)" : "");
 			}
-			const int sh = DisenchantShards(tier, d.EmpowerTotal());
+			const int sh = DisenchantShards(tier, d.EmpowerTotal(), d.Runes());
 			wsprintf(cTxt, "Unravels into %d Mystic Shard%s", sh, sh == 1 ? "" : "s");
 			R.TextOutSized(rx, y, cTxt, kWhite, 11); y += 18;
 			wsprintf(cTxt, "+%u Enchanting XP", SkillXP(DisenchantXP(tier, iNew)));

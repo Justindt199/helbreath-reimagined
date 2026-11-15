@@ -4371,6 +4371,7 @@ void CGame::InitGameSettings()
 	m_rebirthOf.clear(); m_iRebirth = m_iRebirthMode = m_iRebirthAltLevel = 0; m_dwRebirthConfirmAt = 0;
 	m_enchant.Clear(); m_iEnchantSel = -1; m_iEnchantScroll = 0; m_dwEnchantConfirmAt = 0;	// VALORIA enchanting
 	m_passive.Clear(); m_iPassivePick = -1; m_dwPassiveOrbAt = 0;	// VALORIA passive tree
+	memset(m_dwValBuffEnd, 0, sizeof(m_dwValBuffEnd));	// VALORIA buffs
 	m_bounties.clear(); m_bountyBackers.clear(); m_cBountySel[0] = 0; m_dwBountyClaims = m_dwBountyClaimGold = 0;
 
 	m_adminLevel = 0;
@@ -27567,6 +27568,7 @@ void CGame::NotifyMsgHandler(char * pData)
 	case NOTIFY_ENCHANTSTATS: NotifyMsg_EnchantStats((char *)pData); break;
 	case NOTIFY_ENCHANTITEMS: NotifyMsg_EnchantItems((char *)pData); break;
 	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;	// VALORIA passive tree (UI\PassivePanel.cpp)
+	case NOTIFY_VALORIABUFFS: NotifyMsg_ValoriaBuffs((char *)pData); break;	// VALORIA elixirs and scrolls (UI\ValoriaUse.cpp)
 
 	// Clock and ping (UI\ClockPing.cpp)
 	case NOTIFY_PONG: NotifyMsg_Pong((char *)pData); break;
@@ -31151,6 +31153,7 @@ void CGame::UpdateScreen_OnGame()
 	ClockPingTick(m_dwCurTime);	// clock and ping panel, top-left (UI\ClockPing.cpp)
 	if (iUpdateRet != 0)
 	{	DrawClockPing();
+		DrawValoriaBuffs();	// VALORIA elixir / scroll buffs under the clock (UI\ValoriaUse.cpp)
 		ShowEventList(m_dwCurTime);
 	}
 

@@ -30,6 +30,7 @@ const unsigned char MOD_NONE = 255;
 
 const int ENCHANTABLE   = MOD_CRIT + 1;	// weapon damage can be empowered, not enchanted
 const int MAX_ENCHANTS  = 6;
+const int MAX_RUNES     = 2;	// VALORIA: runes an item can hold (bytes 28-29 of ItemData)
 const int EMPOWER_MAX   = 5;
 const int ENCHANT_MAX   = 50;			// Enchanting level
 const int MOD_MAX       = 50;			// each modifier's own enchanting level
@@ -54,10 +55,12 @@ struct ItemData {
 	unsigned char enKey[MAX_ENCHANTS];
 	short         enVal[MAX_ENCHANTS];
 	unsigned char em[MOD_COUNT];
+	unsigned char rune[MAX_RUNES];	// VALORIA runes (Rune of Might ...): modifier, MOD_NONE = empty slot
 
 	ItemData() { Clear(); }
-	void Clear() { memset(enKey, MOD_NONE, sizeof(enKey)); memset(enVal, 0, sizeof(enVal)); memset(em, 0, sizeof(em)); }
-	bool Empty() const { return Enchants() == 0 && EmpowerTotal() == 0; }
+	void Clear() { memset(enKey, MOD_NONE, sizeof(enKey)); memset(enVal, 0, sizeof(enVal)); memset(em, 0, sizeof(em)); memset(rune, MOD_NONE, sizeof(rune)); }
+	bool Empty() const { return Enchants() == 0 && EmpowerTotal() == 0 && Runes() == 0; }
+	int  Runes() const { int n = 0; for (int i = 0; i < MAX_RUNES; i++) if (rune[i] < MOD_COUNT) n++; return n; }
 	int  Enchants() const { int n = 0; for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] < MOD_COUNT) n++; return n; }
 	int  EnchantSlotOf(int k) const { for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] == k) return i; return -1; }
 	int  EnchantValue(int k) const { const int s = EnchantSlotOf(k); return s < 0 ? 0 : enVal[s]; }
@@ -68,11 +71,13 @@ struct ItemData {
 		for (int i = 0; i < MAX_ENCHANTS; i++) p[i] = (enKey[i] < MOD_COUNT) ? (unsigned char)(enKey[i] + 1) : 0;	// 0 = empty, so all-zero bytes are an item without enchantments
 		for (int i = 0; i < MAX_ENCHANTS; i++) { p[6 + i*2] = (unsigned char)(enVal[i] & 0xFF); p[7 + i*2] = (unsigned char)((enVal[i] >> 8) & 0xFF); }
 		for (int k = 0; k < MOD_COUNT; k++) p[18 + k] = em[k];
+		for (int i = 0; i < MAX_RUNES; i++) p[28 + i] = (rune[i] < MOD_COUNT) ? (unsigned char)(rune[i] + 1) : 0;
 	}
 	void Read(const unsigned char * p) {
 		for (int i = 0; i < MAX_ENCHANTS; i++) enKey[i] = (p[i] >= 1 && p[i] <= MOD_COUNT) ? (unsigned char)(p[i] - 1) : MOD_NONE;
 		for (int i = 0; i < MAX_ENCHANTS; i++) enVal[i] = (short)(p[6 + i*2] | (p[7 + i*2] << 8));
 		for (int k = 0; k < MOD_COUNT; k++) em[k] = (p[18 + k] <= EMPOWER_MAX) ? p[18 + k] : EMPOWER_MAX;
+		for (int i = 0; i < MAX_RUNES; i++) rune[i] = (p[28 + i] >= 1 && p[28 + i] <= MOD_COUNT) ? (unsigned char)(p[28 + i] - 1) : MOD_NONE;
 		for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] == MOD_NONE) enVal[i] = 0;
 	}
 };
@@ -200,9 +205,18 @@ inline Cost EmpowerCost(int iItemTier, int lvl)
 }
 
 // Mystic Shards from disenchanting (no rarity or runes in Helbreath, so no Prismatic Shards).
-inline int DisenchantShards(int iItemTier, int iEmpowerTotal)
+// VALORIA rune_amount: what one rune adds, by the item's tier.
+inline int RuneAmount(int k, int iItemTier)
 {
-	const int n = iItemTier / 2 + iEmpowerTotal / 2;
+	if (IsCore(k)) return (2 + iItemTier < CORE_MOD_MAX) ? 2 + iItemTier : CORE_MOD_MAX;
+	if (k == MOD_CRIT) return 1 + iItemTier / 2;
+	if (k == MOD_DEF) return 1 + iItemTier;
+	return 2 + iItemTier;
+}
+
+inline int DisenchantShards(int iItemTier, int iEmpowerTotal, int iRunes = 0)
+{
+	const int n = iItemTier / 2 + 2 * iRunes + iEmpowerTotal / 2;
 	return n < 1 ? 1 : n;
 }
 
@@ -239,6 +253,7 @@ inline void ItemMods(const ItemData & d, const int * base, int iEquipPos, bool h
 	for (int k = 0; k < MOD_COUNT; k++) has[k] = false;
 	if (base != 0) for (int k = 0; k <= MOD_CRIT; k++) if (base[k] != 0) has[k] = true;
 	for (int i = 0; i < MAX_ENCHANTS; i++) if (d.enKey[i] < MOD_COUNT) has[d.enKey[i]] = true;
+	for (int i = 0; i < MAX_RUNES; i++) if (d.rune[i] < MOD_COUNT) has[d.rune[i]] = true;
 	if (IsArmourPos(iEquipPos)) has[MOD_DEF] = true;
 	if (IsWeaponPos(iEquipPos)) has[MOD_DMG] = true;
 	for (int k = 0; k < MOD_COUNT; k++) if (!ModActive(k)) has[k] = false;
@@ -250,6 +265,7 @@ inline int ItemBonus(const ItemData & d, int k, int iItemTier)
 	if (!ModActive(k)) return 0;
 	int v = (k < ENCHANTABLE) ? d.EnchantValue(k) : 0;
 	if (d.em[k] > 0) v += (IsCore(k) ? CoreMod(k, d.em[k]) : d.em[k] * EmpowerStep(k, iItemTier));
+	for (int i = 0; i < MAX_RUNES; i++) if (d.rune[i] == k) v += RuneAmount(k, iItemTier);
 	return v;
 }
 }

@@ -353,6 +353,7 @@ CClient::CClient(int clientH)
 	m_dwEnchantBusy = 0;
 	m_passHpPct = m_passMpPct = m_passDefPct = m_passXpPct = 0;
 	m_dwPassiveBusy = 0;
+	memset(m_valBuffEnd, 0, sizeof(m_valBuffEnd));
 }
 
 CClient::~CClient()

@@ -303,6 +303,9 @@
     <ClCompile Include="UI\PassivePanel.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="UI\ValoriaUse.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
     <ClCompile Include="UI\NpcQueryPanel.cpp">
       <Filter>ui</Filter>
     </ClCompile>
