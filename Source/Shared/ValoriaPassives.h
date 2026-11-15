@@ -30,7 +30,7 @@ inline const char * ModName(int k)
 {
 	static const char * n[PM_COUNT] = { "STR", "DEX", "VIT", "INT", "MAG", "Max HP", "Max MP", "Defense",
 		"Damage", "Max HP", "Max MP", "Defense", "XP", "Crit chance", "Crit damage", "Spell damage",
-		"Attack speed", "Dodge", "Move speed", "HP regen", "MP regen", "Damage taken", "Max SP", "Item find",
+		"Dodge", "HP regen", "MP regen", "Damage taken", "Max SP", "Item find",
 		"Gold find", "Boss damage", "Life steal", "Mana steal", "Thorns" };
 	return (k >= 0 && k < PM_COUNT) ? n[k] : "?";
 }
@@ -46,7 +46,7 @@ inline bool ModIsPercent(int k)
 
 // Every modifier works except move speed and attack speed (Helbreath's movement and attack timing
 // is client-driven and checked by the server; they need their own stage).
-inline bool ModActive(int k) { return k >= 0 && k < PM_COUNT && k != PM_SPEED && k != PM_ATK_SPD; }
+inline bool ModActive(int k) { return k >= 0 && k < PM_COUNT; }
 
 // "+2 STR", "+3% Damage", "-8% Max HP"; damage reduction reads as "-1% Damage taken".
 inline void ModText(int k, int v, char * pOut, int iSize)

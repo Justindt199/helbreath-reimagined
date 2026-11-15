@@ -25,12 +25,23 @@ DROPLIST = os.path.join(ROOT, 'Server', 'configs', 'droplist.xml')
 
 # Order matters: it is the PMod enum in ValoriaPassives.h and the client's display order.
 MODS = ['str', 'dex', 'vit', 'int', 'mag', 'hp', 'mp', 'def', 'dmg_pct', 'hp_pct', 'mp_pct', 'def_pct', 'xp',
-        'crit', 'crit_dmg', 'spell_dmg', 'atk_spd', 'dodge', 'speed', 'regen', 'mp_regen', 'dmg_red', 'sp_pct',
+        'crit', 'crit_dmg', 'spell_dmg', 'dodge', 'regen', 'mp_regen', 'dmg_red', 'sp_pct',
         'item_find', 'gold_find', 'boss_dmg', 'lifesteal', 'mp_steal', 'thorns']
 KINDS = ['root', 'small', 'notable', 'keystone']
 BRANCHES = ['', 'might', 'finesse', 'arcana']
 BOSSES = ['Abaddon', 'Hellclaw', 'Tigerworm', 'Wyvern', 'Fire-Wyvern']
 RELIC_MARK = '<!-- VALORIA passive relic -->'
+# Helbreath keeps move and attack speed as they are (Justin's call): VALORIA's attack speed becomes crit chance and
+# its move speed becomes dodge, point for point, drawbacks included (Titan's Grip: -5 crit, Juggernaut: -5 dodge).
+SWAP = {'atk_spd': 'crit', 'speed': 'dodge'}
+
+
+def swap_mods(mods):
+    out = {}
+    for m, x in mods.items():
+        m = SWAP.get(m, m)
+        out[m] = out.get(m, 0) + x
+    return {m: x for m, x in out.items() if x}
 
 
 def whole(x):
@@ -115,6 +126,7 @@ def add_drops(relics):
 
 def main():
     nodes = json.load(open(os.path.join(HERE, 'valoria_data', 'passives.json')))['nodes']
+    for v in nodes.values(): v['mods'] = swap_mods(v['mods'])
     item_map = json.load(open(os.path.join(HERE, 'item_map.json')))
     relics = [item_map['refund_orb'][0], item_map['passive_tome'][0], item_map['blessed_stone'][0]]
     n = build_header(nodes)

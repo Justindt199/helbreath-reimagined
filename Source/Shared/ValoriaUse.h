@@ -33,20 +33,20 @@ struct BuffDef {
 	const char * name;
 	int seconds;
 	int str, dex, intl, mag, def;	// Valoria modifiers
-	int xpPct, speedPct;			// speed: shown, works in a later stage
+	int xpPct, dodge;				// dodge: % chance to avoid a melee hit
 	int goldPct, itemPct;			// gold find, item find
 };
 
 static const BuffDef BUFFS[BUFF_COUNT] = {
 	{ "Elixir of Strength",  180, 10, 0,  0,  0,  0,  0,  0 },
 	{ "Elixir of Iron Skin", 180,  0, 0,  0,  0, 15,  0,  0 },
-	{ "Elixir of Swiftness", 180,  0, 5,  0,  0,  0,  0, 30 },
+	{ "Elixir of Swiftness", 180,  0, 5,  0,  0,  0,  0,  5 },
 	{ "Elixir of Wisdom",    180,  0, 0, 15, 15,  0,  0,  0 },
 	{ "Scroll of Insight",   600,  0, 0,  0,  0,  0, 50,  0 },
 	{ "Elixir of Fortune",   300,  0, 0,  0,  0,  0,  0,  0, 50, 50 },
 };
 
-// The buff's lines for tooltips: "+10 STR", "+50% XP", "+30% Move speed (coming later)".
+// The buff's lines for tooltips: "+10 STR", "+50% XP", "+5% Dodge".
 inline int BuffLines(int b, char out[4][48])
 {
 	if (b < 0 || b >= BUFF_COUNT) return 0;
@@ -60,7 +60,7 @@ inline int BuffLines(int b, char out[4][48])
 	if (d.xpPct) _snprintf(out[n++], 47, "+%d%% XP", d.xpPct);
 	if (d.goldPct && n < 4) _snprintf(out[n++], 47, "+%d%% Gold find", d.goldPct);
 	if (d.itemPct && n < 4) _snprintf(out[n++], 47, "+%d%% Item find", d.itemPct);
-	if (d.speedPct && n < 4) _snprintf(out[n++], 47, "+%d%% Move speed (coming later)", d.speedPct);
+	if (d.dodge && n < 4) _snprintf(out[n++], 47, "+%d%% Dodge", d.dodge);
 	for (int i = 0; i < n; i++) out[i][47] = 0;
 	return n;
 }

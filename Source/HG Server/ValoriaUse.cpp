@@ -89,6 +89,7 @@ void CGame::ValoriaBuffBonus(int iClientH)
 		p->m_passXpPct += d.xpPct;
 		p->m_val.goldFind += d.goldPct;
 		p->m_val.itemFind += d.itemPct;
+		p->m_val.dodge += d.dodge;
 	}
 	// VALORIA crit (gear, enchantments, runes, passives): each 1% gives 0.4% chance that a landed hit wins
 	// back a critical charge, at most 25% (VALORIA's CRIT_CHARGE_SHARE and CRIT_CAP)
