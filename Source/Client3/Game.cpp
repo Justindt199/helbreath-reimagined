@@ -36163,6 +36163,22 @@ void CGame::DrawDialogBox_Skill()
 	DrawSkillPanel(m_dialogBoxes[15].OnButton());
 }
 
+// The Crafting Vessel's window (dialog 26, modes 7 and 8). The client has no art for it
+// (SPRID_INTERFACE_CRAFTING is never loaded), so it is drawn: a panel, a ring under each of the six
+// places a dropped material shows, and a plate under "Try Now!".
+static void DrawCraftingBackdrop(CRenderer & R, int sX, int sY, bool bOnTry)
+{
+	R.FillPanel(sX, sY, sX + 240, sY + 210, 10, RGB(14, 16, 20), 235, RGB(150, 128, 82), 150);
+	R.TitleOut(sX + 14, sY + 8, "CRAFTING", RGB(232, 188, 92), 14);
+	R.TextOutSized(sX + 14, sY + 28, "Drop the materials here", RGB(200, 205, 213), 10);
+	static const int at[6][2] = { {60, 63}, {115, 48}, {160, 63}, {70, 108}, {115, 123}, {170, 108} };
+	for (int i = 0; i < 6; i++) {
+		const int cx = sX + at[i][0], cy = sY + at[i][1];
+		R.FillPanel(cx - 19, cy - 19, cx + 19, cy + 19, 19, RGB(0, 0, 0), 120, RGB(232, 188, 92), 70);
+	}
+	R.FillPanel(sX + 55, sY + 178, sX + 150, sY + 202, 7, bOnTry ? RGB(70, 58, 34) : RGB(40, 34, 24), 230, RGB(232, 188, 92), 130);
+}
+
 void CGame::DrawDialogBox_SkillDlg()
 {
  int i, iLoc ,iAdjX, iAdjY;
@@ -36677,7 +36693,7 @@ void CGame::DrawDialogBox_SkillDlg()
 		{	sX = m_dialogBoxes[26].m_X;
 			sY = m_dialogBoxes[26].m_Y;		
 		}
-		m_pSprite[SPRID_INTERFACE_CRAFTING]->PutSpriteFast(sX, sY, 0, dwTime);
+		DrawCraftingBackdrop(m_Renderer, sX, sY, onButton == 1);	// the client has no crafting window art
 
 		if (m_dialogBoxes[26].sV1 != -1)
 			m_pSprite[SPRID_ITEMPACK_PIVOTPOINT +
@@ -36721,7 +36737,7 @@ void CGame::DrawDialogBox_SkillDlg()
 		{	sX = m_dialogBoxes[26].m_X;
 			sY = m_dialogBoxes[26].m_Y;
 		}
-		m_pSprite[SPRID_INTERFACE_CRAFTING]->PutSpriteFast(sX, sY, 0, dwTime);
+		DrawCraftingBackdrop(m_Renderer, sX, sY, onButton == 1);	// the client has no crafting window art
 
 		if (m_dialogBoxes[26].sV1 != -1)
 		{	m_pSprite[SPRID_ITEMPACK_PIVOTPOINT +
