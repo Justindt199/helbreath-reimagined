@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helbreath Reimagined Server Data</title>
+<style>
+@font-face { font-family: "VDecoBold"; src: url("fonts/CinzelDecorative-Bold.ttf") format("truetype"); font-display: swap; }
+:root {
+  --bg: #121013; --panel: #1b181c; --raise: #252027; --line: #3a3238; --ink: #ece4d6; --muted: #a39788;
+  --gold: #d9a441; --edit: #5fb6e8; --good: #77c47a; --warn: #e0a24a; --bad: #e06a55;
+  --display: "VDecoBold", "Cinzel", Georgia, serif; --body: "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--edit); outline-offset: 2px; }
+.app { display: grid; grid-template-rows: auto auto 1fr; height: 100%; }
+header { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding: 14px 20px 10px; border-bottom: 1px solid var(--line); background: var(--panel); }
+h1 { font: 700 21px/1.1 var(--display); letter-spacing: .05em; color: var(--gold); margin: 0; }
+.sub { color: var(--muted); font-size: 13px; margin-top: 3px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chip { display: inline-flex; gap: 6px; align-items: center; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; color: var(--muted); background: var(--bg); }
+.chip b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.chip.live::before, .chip.off::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--good); }
+.chip.off::before { background: var(--warn); }
+.chip.pend { border-color: var(--edit); color: var(--edit); cursor: pointer; background: none; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 8px 20px; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 2px; flex-wrap: wrap; }
+.tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 6px 11px; cursor: pointer; color: var(--muted); font-weight: 600; }
+.tab[aria-selected="true"] { color: var(--gold); border-bottom-color: var(--gold); }
+.tab small { font-weight: 400; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.tab .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--edit); margin-left: 5px; vertical-align: middle; }
+input[type=search], .fin, select { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; }
+input[type=search] { width: 240px; max-width: 100%; margin-left: auto; }
+main { display: grid; grid-template-columns: minmax(0, 1fr) 420px; min-height: 0; }
+.tablewrap { overflow: auto; min-height: 0; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13px; }
+th { position: sticky; top: 0; z-index: 1; background: var(--panel); text-align: left; font-weight: 600; color: var(--muted); padding: 7px 10px; border-bottom: 1px solid var(--line); cursor: pointer; white-space: nowrap; user-select: none; }
+th.num, td.num { text-align: right; }
+th[aria-sort] { color: var(--gold); }
+td { padding: 6px 10px; border-bottom: 1px solid #262126; white-space: nowrap; font-variant-numeric: tabular-nums; }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--raise); }
+tbody tr[aria-selected="true"] td { background: #1d2a33; }
+td.ed { color: var(--edit); }
+.nm { font-weight: 600; }
+.mini { color: var(--muted); font-size: 12px; }
+.tag { display: inline-block; padding: 0 7px; border-radius: 999px; font-size: 11px; border: 1px solid var(--edit); color: var(--edit); margin-left: 6px; vertical-align: 1px; }
+.tag.ok { border-color: var(--good); color: var(--good); }
+.more { padding: 12px; text-align: center; color: var(--muted); }
+aside { border-left: 1px solid var(--line); background: var(--panel); overflow: auto; min-height: 0; }
+.empty { padding: 30px 22px; color: var(--muted); }
+.edh { padding: 16px 18px 10px; border-bottom: 1px solid var(--line); }
+.edh h2 { font: 700 17px/1.2 var(--display); color: var(--gold); margin: 0; letter-spacing: .03em; word-break: break-word; }
+.edh .mini { margin-top: 4px; }
+.fgrid { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 6px 10px; align-items: center; padding: 14px 18px; }
+.fgrid label { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fgrid .fin { width: 100%; padding: 4px 8px; font-variant-numeric: tabular-nums; }
+.fgrid .fin.chg { border-color: var(--edit); color: var(--edit); }
+.fgrid .fin[readonly] { color: var(--muted); border-style: dashed; }
+.fgrid .hint { grid-column: 2; margin-top: -4px; font-size: 11.5px; color: var(--muted); }
+.fgrid .was { grid-column: 2; margin-top: -4px; font-size: 11.5px; color: var(--edit); }
+.acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 4px 18px 18px; }
+.btn { border: 1px solid var(--line); background: var(--raise); border-radius: 6px; padding: 6px 13px; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.btn.pri { background: var(--gold); color: #1b1408; border-color: var(--gold); font-weight: 700; }
+.btn.sm { padding: 3px 9px; font-size: 12.5px; }
+.btn:disabled { opacity: .45; cursor: default; }
+.msg { padding: 0 18px 14px; font-size: 13px; }
+.msg.ok { color: var(--good); } .msg.err { color: var(--bad); }
+.note { margin: 0 18px 18px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); font-size: 12.5px; }
+.changes { padding: 16px 20px; display: grid; gap: 10px; align-content: start; }
+.change { border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; background: var(--panel); }
+.change h3 { margin: 0 0 6px; font-size: 14px; display: flex; gap: 8px; align-items: center; }
+.change h3 .btn { margin-left: auto; }
+.change .row { display: grid; grid-template-columns: 160px 1fr; gap: 2px 10px; font-size: 13px; }
+.change .from { color: var(--muted); text-decoration: line-through; margin-right: 8px; }
+.change .to { color: var(--edit); }
+h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; margin: 8px 0 0; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } aside { border-left: 0; border-top: 1px solid var(--line); max-height: 55vh; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <h1>Helbreath Reimagined · Server Data</h1>
+      <div class="sub">Every item, monster, drop, spell, recipe, quest and teleport on the server. Change a value and save: it goes onto the server with the next update.</div>
+    </div>
+    <div class="chips" id="chips"></div>
+  </header>
+  <div class="bar">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <input type="search" id="q" placeholder="Search this tab…" aria-label="Search">
+  </div>
+  <main>
+    <div class="tablewrap" id="tablewrap"></div>
+    <aside id="editor"></aside>
+  </main>
+</div>
+<script type="application/json" id="gamedata">__DATA__</script>
+<script>
+(() => {
+  const DATA = JSON.parse(document.getElementById("gamedata").textContent);
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const ITEMNAME = DATA.itemNames;
+
+  // what each tab shows in its table; every field shows in the editor
+  const TABS = [
+    { k: "items", label: "Items", cols: ["id", "name", "item type", "equip slot", "level needed", "effect", "value 1", "value 2", "price", "weight", "durability"], title: "name" },
+    { k: "monsters", label: "Monsters", cols: ["name", "hit dice", "defense", "hit ratio", "exp dice", "attack dice", "attack range dice", "magic level", "magic resist", "regen time"], title: "name" },
+    { k: "drops", label: "Drops", cols: ["monster", "tier", "tier chance", "item", "weight", "share of tier"], title: r => r.f.item + " from " + r.f.monster },
+    { k: "spells", label: "Spells", cols: ["id", "name", "mana cost", "int needed", "gold cost", "delay", "duration", "value 1", "value 2", "value 3"], title: "name" },
+    { k: "alchemy", label: "Alchemy", cols: ["id", "name", "@ingredients", "skill", "difficulty"], title: "name" },
+    { k: "crafting", label: "Crafting", cols: ["id", "name", "@ingredients", "skill", "difficulty"], title: "name" },
+    { k: "forging", label: "Forging", cols: ["name", "skill", "@materials", "max skill", "chance"], title: "name" },
+    { k: "quests", label: "Quests", cols: null, title: r => "Quest " + r.id },
+    { k: "teleports", label: "Teleports", cols: ["npc", "name", "map", "x", "y", "cost", "min level", "max level", "side"], title: r => r.f.npc + " → " + r.f.map },
+  ];
+  // fields that name a row: changing them would break what points at it
+  const LOCKED = { items: ["id", "name"], monsters: ["name"], spells: ["id"], quests: ["n"], alchemy: ["id"], crafting: ["id"], forging: ["name"],
+    drops: ["monster", "tier", "item", "share of tier"], teleports: [] };
+  const HINTS = {
+    "item type": { 0: "none", 1: "equip", 2: "apply", 3: "use (used up)", 4: "install", 5: "consume", 6: "arrow", 7: "eat", 8: "use skill", 9: "use (kept)", 10: "opens a window", 11: "use on an item", 12: "material" },
+    "equip slot": { 0: "none", 1: "head", 2: "body", 3: "arms", 4: "legs", 5: "feet", 6: "neck", 7: "left hand", 8: "right hand", 9: "both hands", 10: "ring", 11: "ring", 12: "back", 13: "full body" },
+    "gender": { 0: "any", 1: "male", 2: "female" },
+  };
+  const NOTES = {
+    drops: "Weight is the item's share of its tier: an item with weight 10 in a tier whose weights add up to 1000 drops 1% of the times that tier is picked. Tier chance is out of 1000.",
+    alchemy: "VALORIA recipes. Ingredients are item numbers: the name is shown under each one.",
+    crafting: "VALORIA recipes. Ingredients are item numbers: the name is shown under each one.",
+    forging: "VALORIA recipes. Materials are item numbers: the name is shown under each one.",
+    items: "Values 1–6 mean different things for each effect (damage dice for weapons, defense for armour, the amount for potions…).",
+  };
+
+  const ROWS = {}; const BYKEY = new Map();
+  for (const t of TABS) {
+    ROWS[t.k] = (DATA.rows[t.k] || []).map(([id, f]) => ({ kind: t.k, id, f }));
+    for (const r of ROWS[t.k]) BYKEY.set(t.k + "|" + r.id, r);
+    if (!t.cols) t.cols = Object.keys((ROWS[t.k][0] || { f: {} }).f).slice(0, 10);
+  }
+  const fieldsOf = kind => Object.keys((ROWS[kind][0] || { f: {} }).f);
+
+  // ---- state
+  let tab = "items", sel = null, q = "", sortKey = null, sortDir = 1, limit = 300;
+  let db = null, canWrite = false, edits = {}, loaded = false, msg = "", msgKind = "";
+  const docId = (kind, id) => kind + "~" + String(id).replace(/[^A-Za-z0-9_.()-]/g, c => "_" + c.charCodeAt(0).toString(16));
+  const editOf = r => edits[docId(r.kind, r.id)];
+  const pendingEdit = r => { const e = editOf(r); return e && e.status === "pending" ? e : null; };
+  const eff = r => { const e = pendingEdit(r); return e ? { ...r.f, ...e.fields } : r.f; };
+  const tdef = k => TABS.find(t => t.k === k);
+  const titleOf = r => { const t = tdef(r.kind).title; return typeof t === "function" ? t(r) : r.f[t]; };
+  const pending = () => Object.values(edits).filter(e => e.status === "pending");
+
+  function ingr(f, word) {
+    const out = [];
+    for (let i = 1; i <= 6; i++) {
+      const id = f[`${word} ${i}`], n = f[`amount ${i}`];
+      if (id && id !== "-1" && id !== "0") out.push(`${n}× ${ITEMNAME[id] || "#" + id}`);
+    }
+    return out.join(", ");
+  }
+  function cell(r, c) {
+    const v = eff(r);
+    if (c === "@ingredients") return ingr(v, "ingredient");
+    if (c === "@materials") return ingr(v, "material");
+    return v[c];
+  }
+
+  // ---- header + tabs
+  function renderChips() {
+    const p = pending().length;
+    $("#chips").innerHTML =
+      `<span class="chip ${db ? "live" : "off"}">${db ? (canWrite ? "Saving on" : "Read only") : (loaded ? "Not connected" : "Connecting…")}</span>` +
+      `<span class="chip"><b>${ROWS.items.length}</b> items</span><span class="chip"><b>${ROWS.monsters.length}</b> monsters</span>` +
+      (p ? `<button class="chip pend" id="pendchip"><b>${p}</b> change${p === 1 ? "" : "s"} waiting for the next update</button>` : "") +
+      `<span class="chip">Data from ${esc(DATA.built)}</span>`;
+    const pc = $("#pendchip"); if (pc) pc.onclick = () => go("changes");
+  }
+  function renderTabs() {
+    const pk = new Set(pending().map(e => e.kind));
+    $("#tabs").innerHTML = TABS.map(t => `<button class="tab" role="tab" data-k="${t.k}" aria-selected="${tab === t.k}">${t.label}<small>${ROWS[t.k].length}</small>${pk.has(t.k) ? '<span class="dot" title="Has saved changes"></span>' : ""}</button>`).join("")
+      + `<button class="tab" role="tab" data-k="changes" aria-selected="${tab === "changes"}">Changes<small>${pending().length}</small></button>`;
+    for (const b of document.querySelectorAll(".tab")) b.onclick = () => go(b.dataset.k);
+  }
+  function go(k) { tab = k; sel = null; sortKey = null; limit = 300; renderAll(); try { history.replaceState(null, "", "#" + k); } catch {} }
+
+  // ---- table
+  function rowsFor() {
+    let rows = ROWS[tab] || [];
+    if (q) { const s = q.toLowerCase(); rows = rows.filter(r => Object.values(eff(r)).some(v => String(v).toLowerCase().includes(s)) || (tab !== "items" && Object.values(r.f).some(v => ITEMNAME[v] && ITEMNAME[v].toLowerCase().includes(s)))); }
+    if (sortKey) rows = [...rows].sort((a, b) => { const x = cell(a, sortKey), y = cell(b, sortKey); const nx = Number(x), ny = Number(y); const c = (!isNaN(nx) && !isNaN(ny)) ? nx - ny : String(x).localeCompare(String(y)); return c * sortDir; });
+    return rows;
+  }
+  function renderTable() {
+    const w = $("#tablewrap");
+    if (tab === "changes") { renderChanges(); return; }
+    const t = tdef(tab), rows = rowsFor();
+    const isNum = c => { const v = ROWS[tab][0] && cell(ROWS[tab][0], c); return v !== undefined && v !== "" && !isNaN(Number(v)); };
+    const label = c => c === "@ingredients" ? "ingredients" : c === "@materials" ? "materials" : c;
+    w.innerHTML = `<table><thead><tr>${t.cols.map(c => `<th data-c="${esc(c)}" class="${isNum(c) ? "num" : ""}" ${sortKey === c ? `aria-sort="${sortDir > 0 ? "ascending" : "descending"}"` : ""}>${esc(label(c))}${sortKey === c ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("")}</tr></thead><tbody>${
+      rows.slice(0, limit).map(r => { const e = pendingEdit(r); return `<tr data-k="${esc(r.kind + "|" + r.id)}" aria-selected="${sel === r.kind + "|" + r.id}">${t.cols.map((c, i) => {
+        const chg = e && c in e.fields;
+        const v = cell(r, c);
+        return `<td class="${isNum(c) ? "num" : ""} ${chg ? "ed" : ""}">${i === 1 || (t.cols[0] === c && !isNum(c)) ? `<span class="nm">${esc(v)}</span>` : esc(v)}${i === 0 && e ? '<span class="tag">changed</span>' : ""}</td>`; }).join("")}</tr>`; }).join("")
+    }</tbody></table>${rows.length > limit ? `<div class="more"><button class="btn sm" id="moreb">Show ${Math.min(500, rows.length - limit)} more of ${rows.length - limit}</button></div>` : rows.length ? "" : '<div class="more">Nothing matches.</div>'}`;
+    for (const th of w.querySelectorAll("th")) th.onclick = () => { const c = th.dataset.c; if (sortKey === c) sortDir = -sortDir; else { sortKey = c; sortDir = 1; } renderTable(); };
+    for (const tr of w.querySelectorAll("tbody tr")) tr.onclick = () => { sel = tr.dataset.k; msg = ""; for (const x of w.querySelectorAll("tbody tr")) x.setAttribute("aria-selected", x === tr); renderEditor(); };
+    const mb = $("#moreb"); if (mb) mb.onclick = () => { limit += 500; renderTable(); };
+  }
+
+  // ---- editor: every field of the picked row
+  function renderEditor() {
+    const a = $("#editor");
+    if (tab === "changes") { a.innerHTML = '<div class="empty">Changes saved here go onto the server the next time Claude updates it: ask for "apply the dashboard changes".</div>'; return; }
+    const r = sel && BYKEY.get(sel);
+    if (!r) { a.innerHTML = `<div class="empty">Pick a row to see and change every value it has.</div>${NOTES[tab] ? `<div class="note">${esc(NOTES[tab])}</div>` : ""}`; return; }
+    const e = pendingEdit(r), v = eff(r), lock = new Set(LOCKED[r.kind] || []);
+    const fields = fieldsOf(r.kind);
+    a.innerHTML = `<div class="edh"><h2>${esc(titleOf(r))}</h2><div class="mini">${esc(tdef(r.kind).label)} · ${esc(r.id)}${e ? ' <span class="tag">saved change waiting</span>' : ""}</div></div>
+      <form id="edform"><div class="fgrid">${fields.map(k => {
+        const val = v[k] ?? "", ro = !canWrite || lock.has(k) || k === "share of tier";
+        const hint = (HINTS[k] && HINTS[k][val] !== undefined) ? HINTS[k][val] : (/^(ingredient|material) \d$/.test(k) && ITEMNAME[val]) ? ITEMNAME[val] : "";
+        return `<label for="f_${esc(k)}" title="${esc(k)}">${esc(k)}</label><input class="fin ${e && k in e.fields ? "chg" : ""}" id="f_${esc(k)}" data-f="${esc(k)}" value="${esc(val)}" ${ro ? "readonly" : ""} autocomplete="off">`
+          + (e && k in e.fields ? `<div class="was">in game now: ${esc(r.f[k])}</div>` : "") + (hint ? `<div class="hint">${esc(hint)}</div>` : "");
+      }).join("")}</div>
+      <div class="acts"><button class="btn pri" type="submit" ${canWrite ? "" : "disabled"}>Save change</button>${e ? '<button class="btn" type="button" id="revert">Back to the in-game values</button>' : ""}</div></form>
+      ${msg ? `<div class="msg ${msgKind}">${esc(msg)}</div>` : ""}
+      ${canWrite ? "" : `<div class="note">${db ? "You can look but not change values in this view." : "Changes can't be saved in this view: open the dashboard on claude.ai while signed in."}</div>`}
+      ${NOTES[r.kind] ? `<div class="note">${esc(NOTES[r.kind])}</div>` : ""}`;
+    $("#edform").onsubmit = ev => { ev.preventDefault(); save(r); };
+    for (const inp of a.querySelectorAll("input.fin")) inp.oninput = () => inp.classList.toggle("chg", inp.value.trim() !== String(r.f[inp.dataset.f] ?? ""));
+    const rv = $("#revert"); if (rv) rv.onclick = () => store(r, {});
+  }
+  function save(r) {
+    const fields = {}, lock = new Set(LOCKED[r.kind] || []);
+    for (const inp of document.querySelectorAll("#edform input.fin")) {
+      const k = inp.dataset.f, nv = inp.value.trim();
+      if (lock.has(k) || k === "share of tier") continue;
+      if (nv === "" || /\s/.test(nv)) { msg = `"${k}" can't be empty or have spaces in it.`; msgKind = "err"; renderEditor(); return; }
+      if (r.kind === "drops" && !/^\d+$/.test(nv)) { msg = `"${k}" must be a whole number.`; msgKind = "err"; renderEditor(); return; }
+      if (nv !== String(r.f[k] ?? "")) fields[k] = nv;
+    }
+    store(r, fields);
+  }
+  async function store(r, fields) {
+    if (!db || !canWrite) return;
+    const id = docId(r.kind, r.id);
+    try {
+      if (!Object.keys(fields).length) { await db.doc("edits/" + id).delete(); delete edits[id]; msg = "Back to the in-game values."; }
+      else {
+        const base = {}; for (const k of Object.keys(fields)) base[k] = r.f[k];
+        const doc = { kind: r.kind, id: r.id, name: String(titleOf(r)), fields, base, status: "pending", updatedAt: new Date().toISOString() };
+        await db.doc("edits/" + id).set(doc); edits[id] = doc;
+        msg = "Saved. It goes onto the server with the next update.";
+      }
+      msgKind = "ok";
+    } catch (err) { msg = "Couldn't save: " + (err && err.message || "the store didn't answer"); msgKind = "err"; }
+    renderChips(); renderTabs(); renderTable(); renderEditor();
+  }
+
+  // ---- changes
+  function renderChanges() {
+    const w = $("#tablewrap");
+    const all = Object.values(edits).sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
+    const p = all.filter(e => e.status === "pending"), done = all.filter(e => e.status === "applied").slice(0, 40), bad = all.filter(e => e.status === "failed");
+    const card = e => { const r = BYKEY.get(e.kind + "|" + e.id);
+      return `<div class="change"><h3>${esc(e.name || e.id)} <span class="mini">${esc((tdef(e.kind) || { label: e.kind }).label)}</span>${e.status === "applied" ? '<span class="tag ok">on the server</span>' : e.status === "failed" ? '<span class="tag" style="border-color:var(--bad);color:var(--bad)">couldn\'t apply</span>' : ""}
+        ${e.status === "pending" && canWrite && r ? `<button class="btn sm" data-undo="${esc(e.kind + "|" + e.id)}">Undo</button>` : ""}${e.status === "pending" && r ? `<button class="btn sm" data-open="${esc(e.kind + "|" + e.id)}">Open</button>` : ""}</h3>
+        <div class="row">${Object.entries(e.fields).map(([k, v]) => `<span class="mini">${esc(k)}</span><span><span class="from">${esc((e.base || {})[k] ?? "")}</span><span class="to">${esc(v)}</span></span>`).join("")}</div>${e.note ? `<div class="mini" style="margin-top:6px">${esc(e.note)}</div>` : ""}</div>`; };
+    w.innerHTML = `<div class="changes">
+      <h4>Waiting for the next update (${p.length})</h4>${p.length ? p.map(card).join("") : '<div class="mini">Nothing waiting. Pick a tab, change a value and save it.</div>'}
+      ${bad.length ? `<h4>Couldn't be applied (${bad.length})</h4>${bad.map(card).join("")}` : ""}
+      ${done.length ? `<h4>Recently put on the server</h4>${done.map(card).join("")}` : ""}</div>`;
+    for (const b of w.querySelectorAll("[data-undo]")) b.onclick = () => store(BYKEY.get(b.dataset.undo), {});
+    for (const b of w.querySelectorAll("[data-open]")) b.onclick = () => { const [k] = b.dataset.open.split("|"); tab = k; sel = b.dataset.open; renderAll(); };
+  }
+
+  function renderAll() { renderChips(); renderTabs(); renderTable(); renderEditor(); }
+  $("#q").oninput = ev => { q = ev.target.value.trim(); limit = 300; renderTable(); };
+
+  // ---- shared store (window.claude): saved edits, kept for Claude to put on the server
+  async function connect() {
+    const timer = setTimeout(() => { loaded = true; renderChips(); }, 10000);
+    try { db = await window.claude?.use?.("db"); } catch { db = null; }
+    canWrite = !!db;
+    try { const user = await window.claude?.use?.("user"); if (user && user.can) { const ok = await user.can("data.write"); if (ok === false) canWrite = false; } } catch {}
+    loaded = true;
+    if (!db) { clearTimeout(timer); renderAll(); return; }
+    try {
+      db.collection("edits").onSnapshot(snap => {
+        clearTimeout(timer);
+        const next = {}; for (const d of snap.docs) if (d.exists) next[d.id] = d.data();
+        edits = next; renderChips(); renderTabs(); if (tab === "changes") renderTable(); else { renderTable(); renderEditor(); }
+      }, () => { clearTimeout(timer); renderChips(); });
+    } catch { clearTimeout(timer); }
+    renderAll();
+  }
+
+  const h = (location.hash || "").slice(1);
+  if (h && (tdef(h) || h === "changes")) tab = h;
+  renderAll();
+  connect();
+})();
+</script>
+</body>
+</html>
