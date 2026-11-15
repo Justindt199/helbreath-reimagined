@@ -2,6 +2,7 @@
 #include <string>
 #include "LoginServer.h"
 #include "..\shared\buffer.h"
+#include "..\Shared\LogHash.h"
 
 //=============================================================================
 // VALORIA enchanting data (..\Shared\ValoriaEnchant.h) is kept in the database as hex text:
@@ -1075,7 +1076,7 @@ BYTE CLoginServer::CheckAccountLogin(char *AccName, char *AccPwd, MYSQL myConn)
 			}
 			else if(IsSame(field[b]->name, "password") && !IsSame(myRow[b], AccPwd)){
 				ZeroMemory(Txt, sizeof(Txt));
-                sprintf(Txt, "(!)Wrong password: Account[ %s ] - Correct Password[ %s ] - Password received[ %s ]", AccName, myRow[b], AccPwd);
+                sprintf(Txt, "(!)Wrong password: Account[ %s ] - Correct Password[ %s ] - Password received[ %s ]", AccName, LogPw(myRow[b]).c_str(), LogPw(AccPwd).c_str());
                 PutLogList(Txt, WARN_MSG);
 				SAFEFREERESULT(QueryResult);
 				return PASSWORDISWRONG;
@@ -2223,7 +2224,7 @@ void CLoginServer::ProcessRequestPlayerData(char *Data, BYTE GSID, MYSQL myConn)
 		{
 			*wp = LOGRESMSGTYPE_REJECT;
 			ZeroMemory(log, sizeof(log));
-			sprintf(log, "(!!!) Wrong data: Account(%s) pwd[%s/%s] charname[%s/%s] IP[%s/%s] GSID[%d/%d]", AccName, AccPwd, Client[AccountID]->AccountPassword, CharName, Client[AccountID]->CharName, ClientIP, Client[AccountID]->ClientIP, Client[AccountID]->ConnectedServerID, GameServerSocket[GSID]->GSID);
+			sprintf(log, "(!!!) Wrong data: Account(%s) pwd[%s/%s] charname[%s/%s] IP[%s/%s] GSID[%d/%d]", AccName, LogPw(AccPwd).c_str(), LogPw(Client[AccountID]->AccountPassword).c_str(), CharName, Client[AccountID]->CharName, ClientIP, Client[AccountID]->ClientIP, Client[AccountID]->ConnectedServerID, GameServerSocket[GSID]->GSID);
 			PutLogList(log, WARN_MSG, TRUE, ERROR_LOGFILE);
 			SAFEDELETE(Client[AccountID]);
 		}
@@ -2711,7 +2712,7 @@ void CLoginServer::ProcessClientLogout(char *Data, BOOL save, BYTE GSID, MYSQL m
 	 ZeroMemory(LogTxt, sizeof(LogTxt));
 	 if(!IsAccountInUse(AccName, &AccountID)) PutLogList("(!) Account not even in use by the system. (deleted?)", WARN_MSG, TRUE, ERROR_LOGFILE);
 	 else {
-		 sprintf(LogTxt, "(!) CharName[%s][%s], AccName[%s][%s], AccPwd[%s][%s]", CharName, Client[AccountID]->CharName, AccName, Client[AccountID]->AccountName, AccPwd, Client[AccountID]->AccountPassword);
+		 sprintf(LogTxt, "(!) CharName[%s][%s], AccName[%s][%s], AccPwd[%s][%s]", CharName, Client[AccountID]->CharName, AccName, Client[AccountID]->AccountName, LogPw(AccPwd).c_str(), LogPw(Client[AccountID]->AccountPassword).c_str());
 		 PutLogList(LogTxt, WARN_MSG, TRUE, ERROR_LOGFILE);
 	 }
  }
@@ -2736,7 +2737,7 @@ void CLoginServer::ConfirmCharEnterGame(char *Data, BYTE GSID)
            if(!IsSame(AccPwd, Client[AccountID]->AccountPassword) || Client[AccountID]->ConnectedServerID != GameServerSocket[GSID]->GSID)
               {
                ZeroMemory(log, sizeof(log));
-               sprintf(log, "(!!!) Wrong data: Account(%s) pwd[%s/%s] IP[%s/%s] GSID[%d/%d]", AccName, AccPwd, Client[AccountID]->AccountPassword, ClientIP, Client[AccountID]->ClientIP, Client[AccountID]->ConnectedServerID, GameServerSocket[GSID]->GSID);
+               sprintf(log, "(!!!) Wrong data: Account(%s) pwd[%s/%s] IP[%s/%s] GSID[%d/%d]", AccName, LogPw(AccPwd).c_str(), LogPw(Client[AccountID]->AccountPassword).c_str(), ClientIP, Client[AccountID]->ClientIP, Client[AccountID]->ConnectedServerID, GameServerSocket[GSID]->GSID);
                PutLogList(log, WARN_MSG, TRUE, ERROR_LOGFILE);
                RequestForceDisconnect(Client[AccountID], 10);
               }
@@ -5041,7 +5042,7 @@ void CLoginServer::SendLoginConfirmation(char * accName, char * accPass, char * 
 	SendMsgToGS(GSID, sendData, pData - sendData);
 
 	char Txt[120];
-	wsprintf(Txt, "Sent confirmed Login: IP(%s) Acc(%s / %s) Char(%s)", IP, accName, accPass, charName);
+	wsprintf(Txt, "Sent confirmed Login: IP(%s) Acc(%s / %s) Char(%s)", IP, accName, LogPw(accPass).c_str(), charName);
 	PutLogFileList(Txt, CONNECTION_LOGFILE);
 }
 

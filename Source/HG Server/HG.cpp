@@ -5,6 +5,7 @@
 #include <direct.h>
 
 #include "..\shared\buffer.h"
+#include "..\shared\LogHash.h"
 #include "..\shared\magicid.h"
 #include "HG.h"
 #include "mgrs\GuildMgr.h"
@@ -271,7 +272,7 @@ bool CGame::bAccept(class XSocket * pXSock)
 				
 				for(List<ConfirmedLogin>::iterator it = confirmedLogins.begin(); it != confirmedLogins.end(); ++it)
 				{
-					wsprintf(g_cTxt,"   Logins list: %s %s %s %s", it->ip, it->accName, it->accPass, it->playerName);
+					wsprintf(g_cTxt,"   Logins list: %s %s %s %s", it->ip, it->accName, LogPw(it->accPass).c_str(), it->playerName);
 					PutLogList(g_cTxt);
 				}
 				delete pTmpSock;
@@ -7329,7 +7330,7 @@ void CGame::MsgProcess()
 				login.timeReceived = timeGetTime();
 
 				confirmedLogins.push_back(login);
-				wsprintf(g_cTxt,"(!) Confirmed client: %s (%s / %s - %s)", login.ip, login.accName, login.accPass, login.playerName);
+				wsprintf(g_cTxt,"(!) Confirmed client: %s (%s / %s - %s)", login.ip, login.accName, LogPw(login.accPass).c_str(), login.playerName);
 				PutLogList(g_cTxt);
 				break;
 
