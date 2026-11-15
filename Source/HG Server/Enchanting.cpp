@@ -80,7 +80,7 @@ void Say(CGame * g, int h, const char * s)
 //////////////////////////////////////////////////////////////////////
 // To the client
 
-// Your Enchanting: XP, learned modifiers and their XP (64 bytes).
+// Your Enchanting and life skills: XP, learned modifiers and their XP, life skill XP (CHAR_BYTES).
 void CGame::EnchantSendStats(int iClientH)
 {
 	CClient * p = m_pClientList[iClientH];
@@ -93,7 +93,7 @@ void CGame::EnchantSendStats(int iClientH)
 }
 
 // The enchantments of every item in the bag and the warehouse: the client clears its own copy and
-// takes these (uint8 count, then per item: uint8 0 = bag / 1 = warehouse, uint8 index, 32 bytes).
+// takes these (uint8 count, then per item: uint8 0 = bag / 1 = warehouse, uint8 index, ITEM_BYTES).
 void CGame::EnchantSendItems(int iClientH)
 {
 	CClient * p = m_pClientList[iClientH];
@@ -165,6 +165,27 @@ bool PayItems(CGame * g, int h, char * pName, uint32 n)
 	g->SetItemCount(h, pName, have - n);
 	return true;
 }
+}
+
+// A life skill event (VALORIA's skill_event): base + per tier XP, SKILL_XP_MULT applied; announces a new level.
+void CGame::LifeAddXP(int iClientH, const LifeEvent & e, int iTier)
+{
+	CClient * p = m_pClientList[iClientH];
+	if (p == NULL || e.skill < 0 || e.skill >= LIFE_COUNT) return;
+	const int before = p->m_enchant.LifeLv(e.skill);
+	p->m_enchant.lifeXp[e.skill] += SkillXP(e.base + e.perTier * (iTier > 0 ? iTier : 0));
+	const int after = p->m_enchant.LifeLv(e.skill);
+	if (after > before) {
+		wsprintf(g_cTxt, "%s level %d!", LifeName(e.skill), after);
+		ShowClientMsg(iClientH, g_cTxt);
+	}
+	EnchantSendStats(iClientH);
+}
+
+int CGame::LifeLv(int iClientH, int iSkill) const
+{
+	const CClient * p = m_pClientList[iClientH];
+	return p ? p->m_enchant.LifeLv(iSkill) : 1;
 }
 
 // Adds Enchanting XP (SKILL_XP_MULT applied) and announces a new level.

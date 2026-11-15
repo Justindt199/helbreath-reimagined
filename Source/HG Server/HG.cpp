@@ -4510,7 +4510,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 	player->m_iAltLevel    = (int)dwGetOffsetValue(pData, 477);
 	player->m_iAltExp      = (int)dwGetOffsetValue(pData, 481);
 	for (i = 0; i < 6; i++) player->m_altStat[i] = (int)dwGetOffsetValue(pData, 485 + i*4);
-	// VALORIA enchanting (Shared\ValoriaEnchant.h) 64 bytes at 509, the passive tree (Shared\ValoriaPassives.h)
+	// VALORIA enchanting (Shared\ValoriaEnchant.h) CHAR_BYTES at 509, the passive tree (Shared\ValoriaPassives.h)
 	// 48 bytes after it, then the item lists
 	player->m_enchant.Read((const unsigned char *)(pData + 509));
 	player->m_passive.Read((const unsigned char *)(pData + 509 + Valoria::CHAR_BYTES));
@@ -4917,7 +4917,7 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 		PutOffsetValue(pData, charIndexEnd+124+(i*4),DWORDSIZE, m_pClientList[iClientH]->m_iSkillSSN[i]);
 	}
 
-	// VALORIA enchanting (Shared\ValoriaEnchant.h): 64 bytes after the skills, then the item lists
+	// VALORIA enchanting (Shared\ValoriaEnchant.h): CHAR_BYTES after the skills, then the item lists
 	m_pClientList[iClientH]->m_enchant.Write((unsigned char *)(pData + charIndexEnd + 224));
 	m_pClientList[iClientH]->m_passive.Write((unsigned char *)(pData + charIndexEnd + 224 + Valoria::CHAR_BYTES));	// passive tree, 48 bytes
 	ValoriaSaveBuffs(iClientH, (unsigned char *)(pData + charIndexEnd + 224 + Valoria::CHAR_BYTES));	// buff time left, in its spare bytes
@@ -25039,11 +25039,15 @@ int CGame::Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const sho
 }
 
 // Checks the level and gold, uses up the ingredients and the gold and gives the items. Returns VRES_*.
-int CGame::Valoria_MakeRecipe(int iClientH, const char * pName, const short * sIdx, int n, const short * sArray, char * pItemType)
+int CGame::Valoria_MakeRecipe(int iClientH, const char * pName, const short * sIdx, int n, const short * sArray, char * pItemType, int iLife)
 {
 	CClient * p = m_pClientList[iClientH];
 	const ValoriaRecipe * r = Valoria_FindRecipe(pName);
-	const int iLevel = r ? r->level : 0, iGold = r ? r->gold : 0, iQty = (r && r->qty > 0) ? r->qty : 1;
+	const int iLevel = r ? r->level : 0;
+	const int iSkillLv = (iLife >= 0) ? p->m_enchant.LifeLv(iLife) : 1;
+	// Crafting: 1% less gold per 4 levels (up to 15%)
+	const int iGold = (r ? r->gold : 0) * (100 - (iLife == Valoria::LIFE_CRAFTING ? Valoria::PerkCraftDiscountPct(iSkillLv) : 0)) / 100;
+	int iQty = (r && r->qty > 0) ? r->qty : 1;
 	char cTxt[120];
 
 	if (p->m_iLevel < iLevel) {
@@ -25090,6 +25094,11 @@ int CGame::Valoria_MakeRecipe(int iClientH, const char * pName, const short * sI
 	if (iGold > 0) SetItemCount(iClientH, "Gold", dwGold - iGold);
 
 	const bool bStacks = (pFirst->m_cItemType == ITEMTYPE_CONSUME) || (pFirst->m_cItemType == ITEMTYPE_ARROW);
+	// Alchemy: 1% a level to brew one extra
+	if (iLife == Valoria::LIFE_ALCHEMY && dice(1, 100) <= Valoria::PerkExtraBrewPct(iSkillLv)) {
+		iQty++;
+		ShowClientMsg(iClientH, "A careful brew: one extra!");
+	}
 	for (int q = 0; q < (bStacks ? 1 : iQty); q++) {
 		CItem * pItem = pFirst;
 		if (q > 0) {
@@ -25102,8 +25111,21 @@ int CGame::Valoria_MakeRecipe(int iClientH, const char * pName, const short * sI
 			pItem->m_sTouchEffectValue1 = dice(1,100000);
 			pItem->m_sTouchEffectValue2 = dice(1,100000);
 			pItem->m_sTouchEffectValue3 = timeGetTime();
+			// VALORIA: crafted gear is at least Uncommon; Smithing 20 / Crafting 30 roll again for Rare
+			if (Valoria::IsGearPos(pItem->m_cEquipPos)) {
+				int rr = Valoria::RollRarity(dice(1, 1000000) / 1000001.0, false, p->m_val.itemFind);
+				if (rr < Valoria::RARITY_UNCOMMON) rr = Valoria::RARITY_UNCOMMON;
+				if (iLife >= 0 && Valoria::PerkForgeRarity(iSkillLv, iLife) && rr < Valoria::RARITY_RARE && dice(1, 4) == 1) rr = Valoria::RARITY_RARE;
+				pItem->m_valoria.rarity = (unsigned char)rr;
+				pItem->m_valoria.RollBonuses(rr, Valoria::IsArmourPos(pItem->m_cEquipPos), Valoria::ItemTier(pItem->m_sLevelLimit),
+					[](int lo, int hi) { return lo + (int)dice(1, hi - lo + 1) - 1; });
+			}
 		}
 		bAddItem(iClientH, pItem);
+	}
+	if (iLife >= 0) {	// the skill this trains (VALORIA's skill_event)
+		static const Valoria::LifeEvent * kEvent[Valoria::LIFE_COUNT] = { &Valoria::LIFE_FORGE, &Valoria::LIFE_CRAFT, &Valoria::LIFE_BREW, NULL };
+		if (kEvent[iLife] != NULL) LifeAddXP(iClientH, *kEvent[iLife], Valoria::ItemTier(iLevel));
 	}
 	return VRES_OK;
 }
@@ -25132,7 +25154,7 @@ void CGame::ReqCreatePortionHandler(int iClientH, char *pData)
 
 	ZeroMemory(cName, sizeof(cName));
 	memcpy(cName, m_pPortionConfigList[iBest]->m_cName, 20);
-	if (Valoria_MakeRecipe(iClientH, cName, sIdx, n, m_pPortionConfigList[iBest]->m_sArray, &cType) != VRES_OK) return;
+	if (Valoria_MakeRecipe(iClientH, cName, sIdx, n, m_pPortionConfigList[iBest]->m_sArray, &cType, Valoria::LIFE_ALCHEMY) != VRES_OK) return;
 
 	SendNotifyMsg(NULL, iClientH, NOTIFY_PORTIONSUCCESS, NULL, NULL, NULL, cName);
 	CalculateSSN_SkillIndex(iClientH, SKILL_ALCHEMY, 1);
@@ -29072,7 +29094,7 @@ void CGame::BuildItemHandler(int iClientH, char *pData)
 				sArray[k*2+1] = (short)m_pBuildItemList[i]->m_iMaterialItemCount[k];
 			}
 			if ((Valoria_RecipeSize(iClientH, sIdx, n, sArray) < 0) ||
-				(Valoria_MakeRecipe(iClientH, cName, sIdx, n, sArray, &cType) != VRES_OK)) {
+				(Valoria_MakeRecipe(iClientH, cName, sIdx, n, sArray, &cType, Valoria::LIFE_SMITHING) != VRES_OK)) {
 				SendNotifyMsg(NULL, iClientH, NOTIFY_BUILDITEMFAIL, NULL, NULL, NULL, NULL);
 				return;
 			}
@@ -38479,7 +38501,7 @@ void CGame::Valoria_Craft(int iClientH, const short * sIdx, int n)
 
 	ZeroMemory(cName, sizeof(cName));
 	memcpy(cName, m_pCraftingConfigList[iBest]->m_cName, 20);
-	if (Valoria_MakeRecipe(iClientH, cName, sIdx, n, m_pCraftingConfigList[iBest]->m_sArray, &cType) != VRES_OK) return;
+	if (Valoria_MakeRecipe(iClientH, cName, sIdx, n, m_pCraftingConfigList[iBest]->m_sArray, &cType, Valoria::LIFE_CRAFTING) != VRES_OK) return;
 
 	SendNotifyMsg(NULL, iClientH, NOTIFY_CRAFTING_SUCCESS, NULL, NULL, NULL, NULL);
 	const ValoriaRecipe * r = Valoria_FindRecipe(cName);
@@ -41102,6 +41124,8 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 			CItem * item = new class CItem;
 			item->InitItemAttr(m_pItemConfigList[player->m_iQuestRewardType]->m_cName);
 			item->m_dwCount = player->m_iQuestRewardAmount;
+			if (strcmp(item->m_cName, "Gold") == 0)	// VALORIA Slayer 25: quest gold +25%
+				item->m_dwCount += item->m_dwCount * Valoria::PerkSlayerGoldPct(player->m_enchant.LifeLv(Valoria::LIFE_SLAYER)) / 100;
 			if(_bCheckItemReceiveCondition(iClientH, item))
 			{
 				_bAddClientItemList(iClientH, item, &iEraseReq);
@@ -41116,6 +41140,7 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 				player->Notify(NULL, NOTIFY_QUESTREWARD, 4, 1, player->m_iQuestRewardAmount, 
 					m_pItemConfigList[player->m_iQuestRewardType]->m_cName, player->m_iContribution);
 
+				LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
 				_ClearQuestStatus(iClientH);
 			} 
 			else {
@@ -41133,21 +41158,24 @@ void CGame::RequestAcceptQuestHandler(int iClientH, char * pData, uint32 dwMsgSi
 			player->m_iExpStock += player->m_iQuestRewardAmount * 5 * player->m_iLevel;
 			player->m_iContribution += m_pQuestConfigList[player->m_iQuest]->m_iContribution;
 			SendNotifyMsg(NULL, iClientH, NOTIFY_QUESTREWARD, 4, 1, player->m_iQuestRewardAmount, "exp", player->m_iContribution);
-			_ClearQuestStatus(iClientH);
+			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+				_ClearQuestStatus(iClientH);
 		}
 		else if (player->m_iQuestRewardType == -1) 
 		{
 			player->m_iExpStock += player->m_iQuestRewardAmount;
 			player->m_iContribution += m_pQuestConfigList[player->m_iQuest]->m_iContribution;
 			player->Notify(NULL, NOTIFY_QUESTREWARD, 4, 1, player->m_iQuestRewardAmount, "exp", player->m_iContribution);
-			_ClearQuestStatus(iClientH);
+			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+				_ClearQuestStatus(iClientH);
 		}
 		else {
 			m_pClientList[iClientH]->m_iContribution += m_pQuestConfigList[player->m_iQuest]->m_iContribution;
 
 			player->Notify(NULL, NOTIFY_QUESTREWARD, 4, 1, 0, "                     ", m_pClientList[iClientH]->m_iContribution);
 
-			_ClearQuestStatus(iClientH);
+			LifeAddXP(iClientH, Valoria::LIFE_BOUNTY, Valoria::ItemTier(player->m_iLevel));	// Slayer: a hunt handed in
+				_ClearQuestStatus(iClientH);
 		}
 	} else {
 		_ClearQuestStatus(iClientH);

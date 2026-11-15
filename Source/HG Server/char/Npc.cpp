@@ -1997,6 +1997,7 @@ void CNpc::Behavior_Death(Unit * attacker, int16 dmg)
 					if ( (player->m_bQuestMatchFlag_Loc == true) &&
 						(g_game->m_pQuestConfigList[iQuestIndex]->m_iTargetType == m_sType) ) {
 							player->m_iCurQuestCount++;
+							g_game->LifeAddXP(player->m_handle, Valoria::LIFE_KILL, Valoria::ItemTier(player->m_iLevel));	// Slayer
 							char cQuestRemain = (g_game->m_pQuestConfigList[player->m_iQuest]->m_iMaxCount - player->m_iCurQuestCount);
 							player->Notify(NULL, NOTIFY_QUESTCOUNTER, cQuestRemain, NULL, NULL, NULL);
 							g_game->_bCheckIsQuestCompleted(player->m_handle);

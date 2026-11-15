@@ -7,7 +7,7 @@
 
 //=============================================================================
 // VALORIA enchanting data (..\Shared\ValoriaEnchant.h) is kept in the database as hex text:
-// char_database.ValoriaEnchant (64 bytes) and item.Valoria (32 bytes, NULL when the item has none).
+// char_database.ValoriaEnchant (Valoria::CHAR_BYTES) and item.Valoria (Valoria::ITEM_BYTES, NULL when the item has none).
 // The passive tree (..\Shared\ValoriaPassives.h) the same way: char_database.ValoriaPassive (48 bytes).
 static void ValoriaHexToBytes(const char * pHex, unsigned char * pOut, int iBytes)
 {
@@ -2282,7 +2282,7 @@ WORD CLoginServer::GetCharacterInfo(char *CharName, char *Data, MYSQL myConn)
 	MYSQL_FIELD *field[100];
 	MYSQL_ROW myRow, SkillRow[MAXSKILLS], ItemRow[MAXITEMS], BankItemRow[MAXBANKITEMS];
 	st_mysql_res    *QueryResult = NULL;
-	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes at 510, the passive tree 48 bytes after it
+	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): CHAR_BYTES at 510, the passive tree 48 bytes after it
 	// (..\Shared\ValoriaPassives.h), then the item lists
 	const long charIndexEnd = 510 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;	// 454 + Most Wanted fields (WantedStreak, WantedLastKill, BestStreak, StreaksEnded) + Rebirth fields (470-506)
 
@@ -2948,7 +2948,7 @@ void CLoginServer::SaveCharacter(char* Data, MYSQL myConn)
 	pQueryResult = mysql_store_result(&myConn);
 	SAFEFREERESULT(pQueryResult);
 
-	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): 64 bytes after the skills, the passive tree 48 bytes
+	// VALORIA enchanting (..\Shared\ValoriaEnchant.h): CHAR_BYTES after the skills, the passive tree 48 bytes
 	// after it (..\Shared\ValoriaPassives.h), then the item lists
 	const long itemsAt = charIndexEnd + 224 + Valoria::CHAR_BYTES + ValoriaPassive::DATA_BYTES;
 	char cValoriaHex[Valoria::CHAR_BYTES * 2 + 1], cPassiveHex[ValoriaPassive::DATA_BYTES * 2 + 1];

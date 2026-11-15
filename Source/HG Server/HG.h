@@ -211,6 +211,7 @@ class CIni;
 #define MAXHELDENIAN				10
 #define MAXHELDENIANSUMMONPOINT		12000	
 
+namespace Valoria { struct LifeEvent; }
 class CGame  
 {
 public:
@@ -446,7 +447,7 @@ public:
 	enum { VRES_OK, VRES_NOMATCH, VRES_LEVEL, VRES_GOLD };
 	int  Valoria_ReadSlots(int iClientH, char * cp, short * sIdx);
 	int  Valoria_RecipeSize(int iClientH, const short * sIdx, int n, const short * sArray);
-	int  Valoria_MakeRecipe(int iClientH, const char * pName, const short * sIdx, int n, const short * sArray, char * pItemType);
+	int  Valoria_MakeRecipe(int iClientH, const char * pName, const short * sIdx, int n, const short * sArray, char * pItemType, int iLife = -1);
 	void _CheckAttackType(int iClientH, short * spType);
 	bool bOnClose();
 	void AdminOrder_SetInvi(int iClientH);
@@ -583,6 +584,8 @@ public:
 	void EnchantItemMoved(int iClientH, class CItem * pItem);
 	void EnchantGearBonus(int iClientH);
 	void EnchantAddXP(int iClientH, int n);
+	void LifeAddXP(int iClientH, const Valoria::LifeEvent & e, int iTier);	// VALORIA life skills (Enchanting.cpp)
+	int  LifeLv(int iClientH, int iSkill) const;
 	void EnchantAddModXP(int iClientH, int k, int n);
 	// VALORIA passive tree (Passives.cpp)
 	void PassiveRequest(int iClientH, char * pData);

@@ -16,8 +16,8 @@
 //                             10 x empower level (uint8, one per Mod), 2 x rune (uint8, Mod + 1),
 //                             2 spare, rarity (uint8, 0 Common .. 4 Legendary), 4 x bonus key
 //                             (uint8, Bonus + 1, 0 = empty), 4 x bonus value (int16), 3 spare
-//   character data, 64 bytes: Enchanting XP (uint32), 10 x known tier (uint8, 0 = not learned),
-//                             10 x modifier XP (uint32), 10 spare
+//   character data, 80 bytes: Enchanting XP (uint32), 10 x known tier (uint8, 0 = not learned),
+//                             10 x modifier XP (uint32), 10 spare, 4 x life skill XP (uint32, Life)
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -38,7 +38,7 @@ const int ENCHANT_MAX   = 50;			// Enchanting level
 const int MOD_MAX       = 50;			// each modifier's own enchanting level
 const int CORE_MOD_MAX  = 5;
 const int ITEM_BYTES    = 48;		// was 32 before rarity: older saves read with the rest as zero (Common)
-const int CHAR_BYTES    = 64;
+const int CHAR_BYTES    = 80;		// was 64 before the life skills: older saves read them as 0 XP
 const int GOLD_DIVISOR  = 4;
 const int MAX_TIER      = 10;
 const double SKILL_XP_MULT = 0.5;		// VALORIA's skill XP multiplier
@@ -184,13 +184,44 @@ inline int ItemTier(int iLevelLimit)
 
 // ---- the character's Enchanting --------------------------------------------------------------------
 
+// ---- life skills (VALORIA's skills.json; they replace Helbreath's Alchemy / Manufacturing / Crafting) ----
+// Levels 1..LIFE_MAX, XP for a level: LIFE_CURVE * (level - 1)^2. Enchanting is the fifth skill; it keeps
+// its own XP and levels (CharData::xp, EnchantLevel).
+enum Life { LIFE_SMITHING, LIFE_CRAFTING, LIFE_ALCHEMY, LIFE_SLAYER, LIFE_COUNT };
+const int LIFE_MAX   = 60;
+const int LIFE_CURVE = 60;
+
+inline const char * LifeName(int s)
+{
+	static const char * n[LIFE_COUNT] = { "Smithing & Forging", "Crafting", "Alchemy", "Slayer" };
+	return (s >= 0 && s < LIFE_COUNT) ? n[s] : "?";
+}
+inline unsigned int LifeXPTotal(int lv) { return lv <= 1 ? 0u : (unsigned int)(LIFE_CURVE * (lv - 1) * (lv - 1)); }
+inline int LifeLevel(unsigned int xp) { int lv = 1; while (lv < LIFE_MAX && xp >= LifeXPTotal(lv + 1)) lv++; return lv; }
+// XP for a skill event: VALORIA's [base, per tier] (skills.json "xp"), times SKILL_XP_MULT (SkillXP)
+struct LifeEvent { int skill, base, perTier; };
+const LifeEvent LIFE_FORGE   = { LIFE_SMITHING, 30, 20 };	// made at the Blacksmith (Manufacture)
+const LifeEvent LIFE_UPGRADE = { LIFE_SMITHING, 40, 0 };	// upgraded gear (Blessed Upgrade Stone)
+const LifeEvent LIFE_CRAFT   = { LIFE_CRAFTING, 30, 20 };	// made in the Crafting Vessel
+const LifeEvent LIFE_BREW    = { LIFE_ALCHEMY, 25, 15 };	// brewed in the Alchemy Pot
+const LifeEvent LIFE_KILL    = { LIFE_SLAYER, 12, 6 };		// killed a City Hall quest target
+const LifeEvent LIFE_BOUNTY  = { LIFE_SLAYER, 150, 40 };	// handed in a City Hall hunting quest
+// Perks (skills.json "perks"):
+inline int PerkCraftDiscountPct(int craftingLv) { const int v = craftingLv / 4; return v > 15 ? 15 : v; }	// Crafting: 1% per 4 levels
+inline int PerkExtraBrewPct(int alchemyLv)	{ return alchemyLv; }			// Alchemy: 1% per level to brew one extra
+inline bool PerkForgeRarity(int lv, int s)	{ return (s == LIFE_SMITHING && lv >= 20) || (s == LIFE_CRAFTING && lv >= 30); }	// a second roll for Rare
+inline int PerkSlayerDmgPct(int slayerLv)	{ return slayerLv / 2; }		// Slayer: +1% against your quest target per 2 levels
+inline int PerkSlayerGoldPct(int slayerLv)	{ return slayerLv >= 25 ? 25 : 0; }	// Slayer 25: quest gold +25%
+
 struct CharData {
 	unsigned int  xp;					// Enchanting XP
 	unsigned char known[MOD_COUNT];		// highest tier each modifier was learned at (0 = not known)
 	unsigned int  modXp[MOD_COUNT];		// each modifier's own enchanting XP
+	unsigned int  lifeXp[LIFE_COUNT];	// life skill XP (Life)
 
 	CharData() { Clear(); }
-	void Clear() { xp = 0; memset(known, 0, sizeof(known)); memset(modXp, 0, sizeof(modXp)); }
+	void Clear() { xp = 0; memset(known, 0, sizeof(known)); memset(modXp, 0, sizeof(modXp)); memset(lifeXp, 0, sizeof(lifeXp)); }
+	int  LifeLv(int s) const { return (s >= 0 && s < LIFE_COUNT) ? LifeLevel(lifeXp[s]) : 1; }
 
 	void Write(unsigned char * p) const {
 		memset(p, 0, CHAR_BYTES);
@@ -198,6 +229,8 @@ struct CharData {
 		for (int k = 0; k < MOD_COUNT; k++) p[4 + k] = known[k];
 		for (int k = 0; k < MOD_COUNT; k++)
 			for (int b = 0; b < 4; b++) p[14 + k*4 + b] = (unsigned char)((modXp[k] >> (8*b)) & 0xFF);
+		for (int s = 0; s < LIFE_COUNT; s++)
+			for (int b = 0; b < 4; b++) p[64 + s*4 + b] = (unsigned char)((lifeXp[s] >> (8*b)) & 0xFF);
 	}
 	void Read(const unsigned char * p) {
 		xp = 0;
@@ -206,6 +239,10 @@ struct CharData {
 		for (int k = 0; k < MOD_COUNT; k++) {
 			modXp[k] = 0;
 			for (int b = 0; b < 4; b++) modXp[k] |= (unsigned int)p[14 + k*4 + b] << (8*b);
+		}
+		for (int s = 0; s < LIFE_COUNT; s++) {
+			lifeXp[s] = 0;
+			for (int b = 0; b < 4; b++) lifeXp[s] |= (unsigned int)p[64 + s*4 + b] << (8*b);
 		}
 	}
 };

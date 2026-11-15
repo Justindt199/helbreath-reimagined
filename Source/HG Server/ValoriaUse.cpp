@@ -9,6 +9,7 @@
 #include "HG.h"
 #include "char\Client.h"
 #include "char\item\Item.h"
+#include "char\Quest.h"
 #include "net\MessageIndex.h"
 #include "..\shared\NetMessages.h"
 #include "..\shared\buffer.h"
@@ -149,8 +150,14 @@ void CGame::ValoriaRollRarity(CItem * pItem, int iNpcType, short sKillerH)
 int CGame::ValoriaBossDamage(short sAttackerH, short sNpcH, int iDamage)
 {
 	CClient * p = m_pClientList[sAttackerH];
-	if (p == NULL || p->m_val.bossDmg <= 0 || m_pNpcList[sNpcH] == NULL || !IsBoss(m_pNpcList[sNpcH]->m_sType)) return iDamage;
-	return iDamage + iDamage * p->m_val.bossDmg / 100;
+	if (p == NULL || m_pNpcList[sNpcH] == NULL) return iDamage;
+	int pct = 0;
+	if (p->m_val.bossDmg > 0 && IsBoss(m_pNpcList[sNpcH]->m_sType)) pct += p->m_val.bossDmg;
+	// Slayer: +1% per 2 levels against the monster your City Hall hunting quest is for
+	if (p->m_iQuest > 0 && m_pQuestConfigList[p->m_iQuest] != NULL && m_pQuestConfigList[p->m_iQuest]->m_iType == QUESTTYPE_MONSTERHUNT
+		&& m_pQuestConfigList[p->m_iQuest]->m_iTargetType == m_pNpcList[sNpcH]->m_sType)
+		pct += Valoria::PerkSlayerDmgPct(p->m_enchant.LifeLv(Valoria::LIFE_SLAYER));
+	return pct > 0 ? iDamage + iDamage * pct / 100 : iDamage;
 }
 
 // A player is about to take iDamage. Returns what they take: 0 when they dodge (melee only).
@@ -263,6 +270,7 @@ bool CGame::ValoriaInfuse(int iClientH, short sItemIndex, short sDest)
 		if (pDest->m_sTouchEffectType == ITET_UNIQUE_OWNER) { Say(this, iClientH, "Owner-bound items are upgraded the Helbreath way, not with a Blessed Upgrade Stone."); return false; }
 		if (lvl >= MAX_UPGRADE) { Say(this, iClientH, "That item is already +15."); return false; }
 		pDest->m_dwAttribute = (pDest->m_dwAttribute & 0x0FFFFFFF) | ((uint32)(lvl + 1) << 28);
+		LifeAddXP(iClientH, Valoria::LIFE_UPGRADE, Valoria::ItemTier(pDest->m_sLevelLimit));	// Smithing
 		SendNotifyMsg(NULL, iClientH, NOTIFY_ITEMATTRIBUTECHANGE, sDest, pDest->m_dwAttribute, NULL, NULL);
 		wsprintf(g_cTxt, "Blessed Upgrade Stone: your item is now +%d.", lvl + 1);
 		Say(this, iClientH, g_cTxt);

@@ -23,6 +23,14 @@ void CGame::SkillCloseRect(RECT * pRc)
 	SetRect(pRc, SKILLWIN_W - 26, 2, SKILLWIN_W - 4, 22);
 }
 
+// Helbreath's skills the window lists: all but Alchemy, Manufacturing and Crafting, which VALORIA's life
+// skills replaced (listed below them).
+CSkill * CGame::ShownSkill(int i) const
+{
+	if (i < 0 || i >= MAXSKILLTYPE || i == 12 || i == 13 || i == 15) return NULL;
+	return m_pSkillCfgList[i];
+}
+
 void CGame::DrawSkillPanel(int onButton)
 {
 	CRenderer & R = m_Renderer;
@@ -49,7 +57,7 @@ void CGame::DrawSkillPanel(int onButton)
 
 	for (int line = 0, skillIndex = 0; line < 17; skillIndex++) {
 		if (line >= MAXSKILLTYPE || skillIndex + dlg.sView >= MAXSKILLTYPE) break;
-		CSkill * p = m_pSkillCfgList[skillIndex + dlg.sView];
+		CSkill * p = ShownSkill(skillIndex + dlg.sView);
 		if (p == NULL) continue;
 		char cName[64], cPct[16];
 		wsprintf(cName, "%s", p->m_cName);
@@ -78,11 +86,41 @@ void CGame::DrawSkillPanel(int onButton)
 	}
 
 	int iTotalLines = 0;
-	for (int i = 0; i < MAXSKILLTYPE; i++) if (m_pSkillCfgList[i] != NULL) iTotalLines++;
+	for (int i = 0; i < MAXSKILLTYPE; i++) if (ShownSkill(i) != NULL) iTotalLines++;
 	const Point pointerLoc = dlg.HandleScroll(17, iTotalLines);
 	if (iTotalLines > 17) {
 		// track and thumb, where the old scroll bar was
 		R.FillPanel(X + 237, Y + 32, X + 245, Y + 316, 4, RGB(255, 255, 255), 18, RGB(255, 255, 255), 30);
 		R.FillPanel(pointerLoc.x - 5, pointerLoc.y - 5, pointerLoc.x + 8, pointerLoc.y + 9, 5, RGB(232, 192, 112), 230, RGB(255, 236, 190), 120);
+	}
+
+	// VALORIA's life skills (Shared\ValoriaEnchant.h): level and progress to the next
+	R.TitleOut(X + 22, Y + 316, "LIFE SKILLS", kGold, 12);
+	R.Slate(X + 20, Y + 334, X + 232, Y + 334 + 5 * 20 + 6);
+	for (int s = 0; s <= Valoria::LIFE_COUNT; s++) {
+		const bool bEnch = (s == Valoria::LIFE_COUNT);	// Enchanting: its own XP and levels
+		const char * pName = bEnch ? "Enchanting" : Valoria::LifeName(s);
+		int lv, maxLv;
+		double f;
+		if (bEnch) {
+			const unsigned int xp = m_enchant.xp;
+			lv = Valoria::EnchantLevel(xp); maxLv = Valoria::ENCHANT_MAX;
+			const unsigned int a = Valoria::EnchantXPTotal(lv), b = Valoria::EnchantXPTotal(lv + 1);
+			f = (lv >= maxLv || b <= a) ? 1.0 : (double)(xp - a) / (double)(b - a);
+		}
+		else {
+			const unsigned int xp = m_enchant.lifeXp[s];
+			lv = Valoria::LifeLevel(xp); maxLv = Valoria::LIFE_MAX;
+			const unsigned int a = Valoria::LifeXPTotal(lv), b = Valoria::LifeXPTotal(lv + 1);
+			f = (lv >= maxLv || b <= a) ? 1.0 : (double)(xp - a) / (double)(b - a);
+		}
+		const int ry = Y + 339 + s * 20;
+		char cLv[16];
+		wsprintf(cLv, "Lv %d", lv);
+		R.TextOut(X + 30, ry, pName, RGB(214, 218, 226));
+		R.TextOut(X + 222 - R.GetTextExtent(cLv).cx, ry, cLv, lv >= maxLv ? kGold : RGB(214, 218, 226));
+		R.FillPanel(X + 30, ry + 15, X + 222, ry + 17, 0, RGB(255, 255, 255), 22);
+		const int w = (int)(192 * (f < 0 ? 0 : (f > 1 ? 1 : f)));
+		if (w > 0) R.FillPanel(X + 30, ry + 15, X + 30 + w, ry + 17, 0, kGold, 200);
 	}
 }

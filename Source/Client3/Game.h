@@ -403,7 +403,8 @@ public:
 	void MagicButtonRect(int id, RECT * pRc);
 	void DrawMagicPanel(int iChance, int onButton);
 	// skills list drawn in code (UI\SkillPanel.cpp)
-	enum { SKILLWIN_W = 258, SKILLWIN_H = 339 };
+	enum { SKILLWIN_W = 258, SKILLWIN_H = 445 };	// 339 + the life skills (UI\SkillPanel.cpp)
+	class CSkill * ShownSkill(int i) const;	// a Helbreath skill the Skills window lists, or NULL
 	void SkillCloseRect(RECT * pRc);
 	void DrawSkillPanel(int onButton);
 	void InvButtonRect(int id, RECT * pRc);

@@ -38016,7 +38016,7 @@ void CGame::DlgBoxClick_Skill()
 	{
 		for(int i = 0, skill = 0; i < MAXSKILLTYPE; i++)
 		{
-			if(m_pSkillCfgList[i + m_dialogBoxes[15].sView] != NULL) { //FIXME
+			if(ShownSkill(i + m_dialogBoxes[15].sView) != NULL) { //FIXME
 				if(++skill != skillIndex) continue;
 				skillIndex = i;
 				if (onButton >= 1 && onButton <= 17)
@@ -40203,6 +40203,7 @@ void CGame::NotifyMsg_Skill(char *pData)
 	cp += 2;
 	_RemoveChatMsgListByObjectID(m_sPlayerObjectID);
 	if(!m_pSkillCfgList[sSkillIndex]) return;
+	if (ShownSkill(sSkillIndex) == NULL) { m_pSkillCfgList[sSkillIndex]->m_iLevel = sValue; return; }	// replaced by a life skill: no message
 	if (m_pSkillCfgList[sSkillIndex]->m_iLevel < sValue)
 	{	wsprintf(cTxt, NOTIFYMSG_SKILL1, m_pSkillCfgList[sSkillIndex]->m_cName, sValue - m_pSkillCfgList[sSkillIndex]->m_iLevel);
 		AddEventList(cTxt, 10);
