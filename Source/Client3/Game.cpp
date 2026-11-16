@@ -14715,6 +14715,11 @@ void CGame::DrawBackground(short sDivX, short sModX, short sDivY, short sModY)
 		struct TileStep { CSprite * pSpr; short sSpr, sFrame, sX, sY; };
 		static std::vector<TileStep> s_tiles;
 		s_tiles.clear();
+		// HD grass (CONTENTS\world\grass.png): one big seamless picture laid under the view, in place of
+		// the plain grass tiles (maptiles1 sheet 0, the 6 x 4 block of frames 20-25 ... 80-85). Every
+		// other tile is drawn over it as before. Take the picture away and the old grass is back.
+		const int iGrassSpan = m_bHdGround ? m_Renderer.GroundSpan() : 0;
+		bool bGrass = false;
 		indexY = sDivY+m_pMapData->m_sPivotY;
 		for (iy = -sModY; iy < iyMax ; iy += 32)
 		{
@@ -14723,7 +14728,8 @@ void CGame::DrawBackground(short sDivX, short sModX, short sDivY, short sModY)
 			{	if (indexX >= 0 && indexY >= 0 && indexX < m_pMapData->m_sMapSizeX && indexY < m_pMapData->m_sMapSizeY) {
 					sSpr      = m_pMapData->m_tile[indexX][indexY].m_sTileSprite;
 					sSprFrame = m_pMapData->m_tile[indexX][indexY].m_sTileSpriteFrame;
-					if (m_pTileSpr[sSpr] != NULL) s_tiles.push_back({ m_pTileSpr[sSpr], sSpr, sSprFrame, (short)(ix - 16), (short)(iy - 16) });
+					if (iGrassSpan > 0 && sSpr == 0 && sSprFrame >= 20 && sSprFrame < 100 && sSprFrame % 20 < 6) bGrass = true;
+					else if (m_pTileSpr[sSpr] != NULL) s_tiles.push_back({ m_pTileSpr[sSpr], sSpr, sSprFrame, (short)(ix - 16), (short)(iy - 16) });
 				}
 				indexX++;
 			}
@@ -14731,6 +14737,15 @@ void CGame::DrawBackground(short sDivX, short sModX, short sDivY, short sModY)
 		}
 		std::stable_sort(s_tiles.begin(), s_tiles.end(), [](const TileStep & a, const TileStep & b) { return a.pSpr < b.pSpr; });
 		SetRect(&m_Renderer.m_rcClipArea, 0, 0, GAME_W, GAME_H);
+		if (bGrass) {
+			extern char G_cSpriteShadeDegree;
+			const COLORREF tint = (G_cSpriteShadeDegree == 2) ? RGB(120, 120, 150) : RGB(255, 255, 255);	// night without the light pass
+			const int tx0 = sDivX + m_pMapData->m_sPivotX, ty0 = sDivY + m_pMapData->m_sPivotY, n = iGrassSpan / 32;
+			const int bx = -sModX - 16 - (((tx0 % n) + n) % n) * 32, by = -sModY - 16 - (((ty0 % n) + n) % n) * 32;
+			for (int gy = by; gy < iyMax; gy += iGrassSpan)
+				for (int gx = bx; gx < GAME_W + 48; gx += iGrassSpan)
+					m_Renderer.WorldImage(2, gx, gy, gx + iGrassSpan, gy + iGrassSpan, tint, 255);
+		}
 		for (const TileStep & t : s_tiles) {
 			t.pSpr->PutSpriteFastNoColorKey(t.sX, t.sY, t.sFrame, m_dwCurTime);
 			NightLightsWindows(t.sSpr, t.sFrame, t.sX, t.sY);	// buildings drawn as ground tiles: their lit windows

@@ -1366,11 +1366,12 @@ StoneTex * Stone(int i)
 }
 }
 
-void CRenderer::WorldImage(int iPic, int x0, int y0, int x1, int y1, COLORREF tint, int iAlpha)
+namespace {
+StoneTex * WorldPic(int iPic)
 {
-	static StoneTex pics[2] = { { "CONTENTS\\world\\shrine.png", 0, 0, 1.f }, { "CONTENTS\\world\\chest.png", 0, 0, 1.f } };
-	CUiGpu * pG = UiGpuRecorder();
-	if (pG == NULL || iPic < 0 || iPic > 1 || iAlpha <= 0) return;
+	static StoneTex pics[3] = { { "CONTENTS\\world\\shrine.png", 0, 0, 1.f }, { "CONTENTS\\world\\chest.png", 0, 0, 1.f },
+		{ "CONTENTS\\world\\grass.png", 0, 0, 1.f } };
+	if (iPic < 0 || iPic > 2) return NULL;
 	StoneTex * t = &pics[iPic];
 	if (!t->tried) {
 		t->tried = true;
@@ -1381,7 +1382,23 @@ void CRenderer::WorldImage(int iPic, int x0, int y0, int x1, int y1, COLORREF ti
 			std::memcpy(t->px.data(), img.getPixelsPtr(), t->px.size() * 4);
 		}
 	}
-	if (t->w <= 0) return;
+	return t->w > 0 ? t : NULL;
+}
+}
+
+// The HD grass (CONTENTS\\world\\grass.png, 64 picture pixels to a ground tile): how many game pixels
+// it covers each way, or 0 when the picture is missing (Game.cpp DrawBackground).
+int CRenderer::GroundSpan()
+{
+	StoneTex * t = (UiGpuRecorder() != NULL) ? WorldPic(2) : NULL;
+	return (t != NULL && t->w == t->h && t->w % 64 == 0) ? t->w / 2 : 0;
+}
+
+void CRenderer::WorldImage(int iPic, int x0, int y0, int x1, int y1, COLORREF tint, int iAlpha)
+{
+	CUiGpu * pG = UiGpuRecorder();
+	StoneTex * t = WorldPic(iPic);
+	if (pG == NULL || t == NULL || iAlpha <= 0) return;
 	const std::uint32_t tr = GetRValue(tint), tg = GetGValue(tint), tb = GetBValue(tint), ta = (std::uint32_t)(iAlpha > 255 ? 255 : iAlpha);
 	auto Fill = [t, tr, tg, tb, ta](std::uint32_t * out) {
 		const size_t n = (size_t)t->w * t->h;

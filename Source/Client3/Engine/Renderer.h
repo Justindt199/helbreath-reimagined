@@ -183,7 +183,8 @@ public:
 	void StoneBox(int iStone, int x0, int y0, int x1, int y1);
 	// A picture of the world (0 shrine, 1 chest: CONTENTS\world\*.png) drawn into the rectangle, its colours
 	// multiplied by tint, at iAlpha of 255 (UI\WorldProps.cpp).
-	void WorldImage(int iPic, int x0, int y0, int x1, int y1, COLORREF tint, int iAlpha);
+	void WorldImage(int iPic, int x0, int y0, int x1, int y1, COLORREF tint, int iAlpha);	// 2 = the HD grass
+	int  GroundSpan();
 	void StonePanel(int x0, int y0, int x1, int y1)					{ StoneBox(STONE_PANEL, x0, y0, x1, y1); }
 	void StoneSlot(int x0, int y0, int x1, int y1, bool bActive)	{ StoneBox(bActive ? STONE_SLOT_ACTIVE : STONE_SLOT, x0, y0, x1, y1); }
 	// iState: 0 normal, 1 under the mouse, 2 pressed; the label in VALORIA's button lettering
