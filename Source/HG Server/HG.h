@@ -596,6 +596,7 @@ public:
 	void AchOnMapEntry(int h);
 	void AchTitleRequest(int iClientH, char * pData);
 	void AchAdmin(int iClientH, const char * pArgs);
+	void AchAdminKill(int iClientH);
 	// VALORIA shrines and chests (WorldProps.cpp)
 	void WorldSendProp(int iToH, int iProp);
 	void WorldOnMapEntry(int h);

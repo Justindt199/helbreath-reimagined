@@ -15,12 +15,14 @@
 
 #include "HG.h"
 #include "char\Client.h"
+#include "char\Npc.h"
 #include "net\MessageIndex.h"
 #include "..\shared\NetMessages.h"
 #include "..\shared\buffer.h"
 #include "..\shared\ValoriaAchieveData.h"
 
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 using namespace Valoria;
@@ -119,6 +121,24 @@ void CGame::AchTitleRequest(int iClientH, char * pData)
 	EnchantSendStats(iClientH);
 	for (int i = 1; i < MAXCLIENTS; i++)
 		if (m_pClientList[i] != NULL && m_pClientList[i]->m_bIsInitComplete) AchSendTitle(i, iClientH);
+}
+
+// GM: /vkill kills the monsters within 8 tiles as your own kills (testing kill counters and quests).
+void CGame::AchAdminKill(int iClientH)
+{
+	CClient * p = m_pClientList[iClientH];
+	if (p == NULL || p->m_iAdminUserLevel < 4) return;
+	int n = 0;
+	for (int i = 1; i < MAXNPCS; i++) {
+		CNpc * m = m_pNpcList[i];
+		if (m == NULL || m->m_bIsKilled || m->m_cMapIndex != p->m_cMapIndex) continue;
+		if (abs(m->m_sX - p->m_sX) > 8 || abs(m->m_sY - p->m_sY) > 8 || SlotOfNpc(m->m_cNpcName) < 0) continue;
+		m->ReduceHP(m->m_iHP);
+		NpcKilledHandler((short)iClientH, OWNERTYPE_PLAYER, i, 1);
+		n++;
+	}
+	wsprintf(g_cTxt, "/vkill: %d monsters.", n);
+	Say(this, iClientH, g_cTxt);
 }
 
 // GM: /vach <counter> [amount] adds to one of your achievement counters (testing).

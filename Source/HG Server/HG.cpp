@@ -5943,6 +5943,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			ValoriaAdminCraft(iClientH, cp + 8);
 		} else if (memcmp(cp, "/vside ", 7) == 0) {	// GM: fill a side quest's objectives (SideQuests.cpp)
 			SideAdmin(iClientH, cp + 7);
+		} else if (memcmp(cp, "/vkill", 6) == 0) {	// GM: kill the monsters around you as your own kills (Achievements.cpp)
+			AchAdminKill(iClientH);
 		} else if (memcmp(cp, "/vach ", 6) == 0) {	// GM: add to an achievement counter (Achievements.cpp)
 			AchAdmin(iClientH, cp + 6);
 		} else if (memcmp(cp, "/vrarity ", 9) == 0) {	// GM: give a bag item a rarity (ValoriaUse.cpp)
