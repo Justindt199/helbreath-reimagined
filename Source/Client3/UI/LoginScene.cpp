@@ -331,8 +331,12 @@ void CGame::DrawLoginScene()
 	const char * pName = bElvine ? "E L V I N E" : "A R E S D E N";
 	R.m_iFadeA = (int)(255 * (1.f - fDip));
 	R.m_iFace = 1;
-	R.TextOutSized(31, GAME_H - 37, pName, RGB(0, 0, 0), 14);
-	R.TextOutSized(30, GAME_H - 38, pName, bElvine ? kElvine : kAresden, 14);
+	if (LoginModule(LM_TOWN).show) {	// bottom left, unless login_layout.cfg moves it
+		int tx, ty;
+		LoginPlace(LM_TOWN, R.TextWidthSized(pName, 14), 14, &tx, &ty);
+		R.TextOutSized(tx + 1, ty + 1, pName, RGB(0, 0, 0), 14);
+		R.TextOutSized(tx, ty, pName, bElvine ? kElvine : kAresden, 14);
+	}
 	R.m_iFace = 0;
 	R.m_iFadeA = 255;
 }
@@ -342,6 +346,7 @@ void CGame::DrawLoginScene()
 
 void CGame::DrawLoginLogo()
 {
+	if (!LoginModule(LM_LOGO).show) return;	// login_layout.cfg (UI\LoginLayout.cpp)
 	DrawLogoAt(LoadHandover(), 1.f);	// gliding into the corner straight after loading
 }
 
@@ -355,8 +360,8 @@ void CGame::DrawLogoAt(float k, float fAlpha)
 	const bool bDisplay = R.HasDisplayFont();
 	// sizes in 2 px steps, so the glyphs are cached at a few sizes only
 	const int iPx = ((int)(60.f - 18.f * k + 0.5f) & ~1) + (bDisplay ? 0 : 2), iSmall = (k < 0.5f) ? 16 : 14;
-	const char * pSmall = "H E L B R E A T H";
-	const char * pBig = "UNRIVALED";
+	const char * pSmall = LoginModule(LM_LOGO).text.c_str();	// login_layout.cfg (UI\LoginLayout.cpp)
+	const char * pBig = LoginModule(LM_LOGO).text2.c_str();
 	const int n = (int)strlen(pBig), iStep = bDisplay ? 1 : 2;
 	R.m_iFace = 1;			// the display font (fonts\display.ttf), when there is one
 	int wBig = 0;
@@ -364,7 +369,9 @@ void CGame::DrawLogoAt(float k, float fAlpha)
 	const int wSmall = R.TextWidthSized(pSmall, iSmall);
 	// in the middle (a little above it) while loading; top left over the town
 	const float fxC = (GAME_W - wBig) / 2.f, fbyC = GAME_H * 0.38f - iPx * 0.8f;
-	const int x = (int)(fxC + (26.f - fxC) * k), by = (int)(fbyC + (38.f - fbyC) * k);
+	int iLogoX, iLogoY;				// where it rests over the town: 26, 20 unless login_layout.cfg moves it
+	LoginPlace(LM_LOGO, wBig, 60, &iLogoX, &iLogoY);
+	const int x = (int)(fxC + (iLogoX - fxC) * k), by = (int)(fbyC + (iLogoY + 18 - fbyC) * k);
 	const int iGap = (int)(30.f - 12.f * k), sx = x + 1 + (int)((wBig - wSmall) / 2.f * (1.f - k));
 	R.m_iFadeA = (int)(255 * Clamp01(fAlpha));
 	R.TextOutSized(sx + 1, by - iGap + 1, pSmall, RGB(0, 0, 0), iSmall);

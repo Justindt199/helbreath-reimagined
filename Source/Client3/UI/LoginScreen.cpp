@@ -114,21 +114,31 @@ void CGame::DrawLoginBackdrop(bool bNews)
 	DrawLoginLogo();		// top left
 	char cVer[32];
 	wsprintf(cVer, "Client %d.%d", UPPER_VERSION, LOWER_VERSION);
-	R.TextOutSized(W - 12 - Width(R, cVer, 11), H - 18, cVer, kDim, 11);
-	const int iNewsY = 104;
+	if (LoginModule(LM_VERSION).show) {		// bottom right, unless login_layout.cfg moves it
+		int vx, vy;
+		LoginPlace(LM_VERSION, Width(R, cVer, 11), 11, &vx, &vy);
+		R.TextOutSized(vx, vy, cVer, kDim, 11);
+	}
 
-	// news, top left (under the logo over the live town)
-	const std::vector<std::string> & news = NewsLines();
-	if (bNews && !news.empty()) {
-		int nw = Width(R, "NEWS", 11);
+	// news, top left under the logo over the live town (login_layout.cfg: its heading, lines and place;
+	// with no lines there, CONTENTS\news.txt)
+	const LoginMod & nm = LoginModule(LM_NEWS);
+	std::vector<std::string> news;
+	for (int i = 0; i < 4; i++) if (!nm.line[i].empty()) news.push_back(nm.line[i]);
+	if (news.empty()) news = NewsLines();
+	if (bNews && nm.show && !news.empty()) {
+		const char * pHead = nm.text.c_str();
+		int nw = Width(R, pHead, 11);
 		for (size_t i = 0; i < news.size(); i++) nw = (std::max)(nw, Width(R, news[i].c_str(), i == 0 ? 0 : 12));
 		nw = (std::min)(nw + 24, W / 2);
-		const int nh = 26 + (int)news.size() * 16 + 6, ny = iNewsY;
-		R.FillPanel(20, ny, 20 + nw, ny + nh, 8, RGB(10, 12, 16), 160, RGB(255, 255, 255), 26);
-		R.TextOutSized(32, ny + 6, "NEWS", kGold, 11);
+		const int nh = 26 + (int)news.size() * 16 + 6;
+		int nx, ny;
+		LoginPlace(LM_NEWS, nw, nh, &nx, &ny);
+		R.FillPanel(nx, ny, nx + nw, ny + nh, 8, RGB(10, 12, 16), 160, RGB(255, 255, 255), 26);
+		R.TextOutSized(nx + 12, ny + 6, pHead, kGold, 11);
 		for (size_t i = 0; i < news.size(); i++) {
-			if (i == 0) R.TextOut(32, ny + 22, news[i].c_str(), kWhite);
-			else R.TextOutSized(32, ny + 24 + (int)i * 16, news[i].c_str(), kGrey, 12);
+			if (i == 0) R.TextOut(nx + 12, ny + 22, news[i].c_str(), kWhite);
+			else R.TextOutSized(nx + 12, ny + 24 + (int)i * 16, news[i].c_str(), kGrey, 12);
 		}
 	}
 }
@@ -152,17 +162,21 @@ void CGame::UpdateScreen_OnLoading_Progress()
 
 void CGame::LoginRects(RECT * pPanel, RECT * pAcc, RECT * pPw, RECT * pRemember, RECT * pConnect, RECT * pCreate, RECT * pQuit)
 {
-	const int W = GAME_W, H = GAME_H;
-	const int pw = 240, ph = 292, px = W - 26 - pw + m_iPanelDX, py = (H - ph) / 2 - 10 + m_iPanelDY;
-	if (pPanel) SetRect(pPanel, px, py, px + pw, py + ph);
-	const int fx0 = px + 18, fx1 = px + pw - 18;
-	if (pAcc) SetRect(pAcc, fx0, py + 78, fx1, py + 106);
-	if (pPw) SetRect(pPw, fx0, py + 132, fx1, py + 160);
-	if (pRemember) SetRect(pRemember, fx0, py + 170, fx0 + 140, py + 188);
-	if (pConnect) SetRect(pConnect, fx0, py + 198, fx1, py + 232);
-	const int half = (fx1 - fx0 - 8) / 2;
-	if (pCreate) SetRect(pCreate, fx0, py + 240, fx0 + half, py + 264);
-	if (pQuit) SetRect(pQuit, fx1 - half, py + 240, fx1, py + 264);
+	// from login_layout.cfg (UI\LoginLayout.cpp): the panel on the screen, the rest inside the panel.
+	// A piece that is not shown gets an empty rectangle: it is neither drawn nor clicked.
+	const LoginMod & p = LoginModule(LM_PANEL);
+	int px, py;
+	LoginPlace(LM_PANEL, p.w, p.h, &px, &py);
+	px += m_iPanelDX; py += m_iPanelDY;
+	if (pPanel) SetRect(pPanel, px, py, px + p.w, py + p.h);
+	const struct { RECT * rc; int mod; } k[6] = { { pAcc, LM_ACCOUNT }, { pPw, LM_PASSWORD }, { pRemember, LM_REMEMBER },
+		{ pConnect, LM_CONNECT }, { pCreate, LM_CREATE }, { pQuit, LM_QUIT } };
+	for (int i = 0; i < 6; i++) {
+		if (k[i].rc == NULL) continue;
+		const LoginMod & m = LoginModule(k[i].mod);
+		if (m.show) SetRect(k[i].rc, px + m.x, py + m.y, px + m.x + m.w, py + m.y + m.h);
+		else SetRect(k[i].rc, 0, 0, 0, 0);
+	}
 }
 
 void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, int iFrame)
@@ -178,15 +192,15 @@ void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, i
 	const int px = rcPanel.left, py = rcPanel.top;
 
 	R.StonePanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom);
-	Title(R, px + 18, py + 16, "SIGN IN", kGold, 15);
-	R.TextOutSized(px + 18, py + 38, "Welcome back, adventurer.", kGrey, 12);
+	Title(R, px + 18, py + 16, LoginModule(LM_PANEL).text.c_str(), kGold, 15);
+	R.TextOutSized(px + 18, py + 38, LoginModule(LM_PANEL).text2.c_str(), kGrey, 12);
 
 	// account and password boxes; the one being typed in is outlined in gold
 	const bool bNameOk = (strlen(pAccount) > 0 && m_Misc.bCheckValidName(pAccount) != FALSE) || strlen(pAccount) == 0;
 	const bool bPwOk = (strlen(pPassword) > 0 && m_Misc.bCheckValidString(pPassword) != FALSE) || strlen(pPassword) == 0;
 	const bool bCaret = ((G_dwGlobalTime / 450) % 2) == 0;
 	const struct { const RECT * rc; const char * label; bool focus; } box[2] = {
-		{ &rcAcc, "ACCOUNT", m_cCurFocus == 1 }, { &rcPw, "PASSWORD", m_cCurFocus == 2 } };
+		{ &rcAcc, LoginModule(LM_ACCOUNT).text.c_str(), m_cCurFocus == 1 }, { &rcPw, LoginModule(LM_PASSWORD).text.c_str(), m_cCurFocus == 2 } };
 	for (int i = 0; i < 2; i++) {
 		const RECT & rc = *box[i].rc;
 		R.TextOutSized(rc.left, rc.top - 18, box[i].label, kGrey, 11);
@@ -209,7 +223,7 @@ void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, i
 	}
 
 	// remember account
-	{
+	if (rcRem.right > rcRem.left) {
 		const bool bOn = InRect(rcRem, msX, msY);
 		const int cx = rcRem.left, cy = rcRem.top + 2;
 		if (m_bRememberAccount) {
@@ -217,7 +231,7 @@ void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, i
 			R.FillPanel(cx + 4, cy + 4, cx + 10, cy + 10, 1, RGB(26, 20, 8), 255);
 		}
 		else R.FillPanel(cx, cy, cx + 14, cy + 14, 3, RGB(0, 0, 0), 90, RGB(255, 255, 255), bOn ? 120 : 70);
-		R.TextOutSized(cx + 21, cy, "Remember account", bOn ? kWhite : RGB(185, 192, 201), 12);
+		R.TextOutSized(cx + 21, cy, LoginModule(LM_REMEMBER).text.c_str(), bOn ? kWhite : RGB(185, 192, 201), 12);
 	}
 
 	// Connect, Create account, Quit
@@ -225,16 +239,17 @@ void CGame::_Draw_OnLogin(char * pAccount, char * pPassword, int msX, int msY, i
 		const bool bReady = strlen(pAccount) > 0 && strlen(pPassword) > 0 && bNameOk && bPwOk;
 		const bool bOn = InRect(rcGo, msX, msY) || m_cCurFocus == 3;
 		R.StoneButton(rcGo.left, rcGo.top, rcGo.right, rcGo.bottom, bReady ? 1 : 0);	// gold-rimmed once it can go
-		const char * pGo = "CONNECT";
-		Bold(R, (rcGo.left + rcGo.right - Width(R, pGo, 15)) / 2, rcGo.top + 8, pGo,
+		const char * pGo = LoginModule(LM_CONNECT).text.c_str();
+		Bold(R, (rcGo.left + rcGo.right - Width(R, pGo, 15)) / 2, (rcGo.top + rcGo.bottom) / 2 - 9, pGo,
 			bReady ? (bOn ? RGB(255, 242, 199) : RGB(245, 219, 158)) : RGB(150, 144, 130), 15);
 	}
 	const struct { const RECT * rc; const char * label; bool on; } btn[2] = {
-		{ &rcNew, "Create account", InRect(rcNew, msX, msY) || m_cCurFocus == 4 }, { &rcQuit, "Quit", InRect(rcQuit, msX, msY) } };
+		{ &rcNew, LoginModule(LM_CREATE).text.c_str(), InRect(rcNew, msX, msY) || m_cCurFocus == 4 }, { &rcQuit, LoginModule(LM_QUIT).text.c_str(), InRect(rcQuit, msX, msY) } };
 	for (int i = 0; i < 2; i++) {
 		const RECT & rc = *btn[i].rc;
+		if (rc.right <= rc.left) continue;
 		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, btn[i].on ? 1 : 0);
-		R.TextOutSized((rc.left + rc.right - Width(R, btn[i].label, 12)) / 2, rc.top + 5, btn[i].label, btn[i].on ? kWhite : RGB(220, 224, 230), 12);
+		R.TextOutSized((rc.left + rc.right - Width(R, btn[i].label, 12)) / 2, (rc.top + rc.bottom) / 2 - 7, btn[i].label, btn[i].on ? kWhite : RGB(220, 224, 230), 12);
 	}
 
 	R.m_iFadeA = 255;

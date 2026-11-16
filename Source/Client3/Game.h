@@ -866,6 +866,11 @@ public:
 	void UpdateScreen_OnLoading_Progress();
 	// loading / sign-in screens drawn in code (UI\LoginScreen.cpp)
 	void DrawLoginBackdrop(bool bNews);
+	// the sign-in screen's pieces: where they go and what they say (UI\LoginLayout.cpp, CONTENTS\login_layout.cfg)
+	enum { LM_LOGO, LM_NEWS, LM_TOWN, LM_VERSION, LM_PANEL, LM_ACCOUNT, LM_PASSWORD, LM_REMEMBER, LM_CONNECT, LM_CREATE, LM_QUIT, LM_COUNT };
+	struct LoginMod { int anchor = 0, x = 0, y = 0, w = 0, h = 0; bool show = true; std::string text, text2, line[4]; };
+	static const LoginMod & LoginModule(int i);
+	void LoginPlace(int i, int w, int h, int * px, int * py);
 	void LoginRects(RECT * pPanel, RECT * pAcc, RECT * pPw, RECT * pRemember, RECT * pConnect, RECT * pCreate, RECT * pQuit);
 	void CreateAccountRects(RECT * pPanel, RECT * pField, RECT * pCreate, RECT * pClear, RECT * pBack);
 	void _Draw_OnCreateAccount(const char * const * pField, const bool * bOk, const bool * bGood, const char * const * pHint,

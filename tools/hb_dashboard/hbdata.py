@@ -14,6 +14,8 @@ Kinds and where they live (paths from the repo root):
   forging    Server/Login Server/Config/BuildItem.cfg    id = item made       (VALORIA recipes)
   teleports  Server/Login Server/Config/Teleport.cfg     id = row number
   drops      Server/configs/droplist.xml                 id = monster|tier number|item, field = chance
+  login      Client/CONTENTS/login_layout.cfg            id = piece of the sign-in screen ([logo], [panel] ...),
+                                                         fields = its 'key = value' lines (the game reads the file itself)
 """
 import glob, os, re
 
@@ -78,6 +80,9 @@ def tokens(rest):
 
 def rows(kind):
     """Yields (id, fields dict, file, line number) for every row of a kind."""
+    if kind == 'login':
+        yield from login_rows()
+        return
     if kind == 'drops':
         yield from drop_rows()
         return
@@ -99,6 +104,8 @@ def rows(kind):
 
 def set_field(kind, rid, field, value):
     """Changes one value of one row in its file. Returns the old value, or raises KeyError."""
+    if kind == 'login':
+        return set_login(rid, field, value)
     if kind == 'drops':
         return set_drop(rid, field, value)
     names = FIELDS[kind] if FIELDS[kind] is not None else quest_fields()
@@ -170,4 +177,54 @@ def set_drop(rid, field, value):
     return old
 
 
-KINDS = ['items', 'monsters', 'drops', 'spells', 'alchemy', 'crafting', 'forging', 'quests', 'teleports']
+# ---- login_layout.cfg: [piece] sections of 'key = value' lines (Source/Client3/UI/LoginLayout.cpp reads it)
+LOGIN = os.path.join(ROOT, 'Client', 'CONTENTS', 'login_layout.cfg')
+ANCHORS = ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right']
+KV = re.compile(r'^(\s*)([a-z][a-z0-9 ]*?)(\s*=[ \t]*)(.*?)(\s*)$')
+
+
+def login_rows():
+    cur, f, at = None, {}, 0
+    for ln, line in enumerate(read(LOGIN).splitlines()):
+        t = line.strip()
+        if t.startswith('[') and t.endswith(']'):
+            if cur:
+                yield cur, f, LOGIN, at
+            cur, f, at = t[1:-1].strip(), {}, ln
+        elif cur and not t.startswith('//'):
+            m = KV.match(line)
+            if m:
+                f[m.group(2)] = m.group(4)
+    if cur:
+        yield cur, f, LOGIN, at
+
+
+def set_login(rid, field, value):
+    value = str(value).strip()
+    if field in ('x', 'y', 'width', 'height'):
+        value = str(int(value))
+        if field in ('width', 'height') and int(value) < 1:
+            raise ValueError(f'login {rid} {field}: must be 1 or more')
+    elif field == 'anchor' and value not in ANCHORS:
+        raise ValueError(f'login {rid}: anchor must be one of {", ".join(ANCHORS)}')
+    elif field == 'show' and value not in ('yes', 'no'):
+        raise ValueError(f'login {rid}: show must be yes or no')
+    elif '\n' in value or '\r' in value or len(value) > 120:
+        raise ValueError(f'login {rid} {field}: one line of up to 120 characters')
+    lines = read(LOGIN).split('\n')
+    cur = None
+    for i, raw in enumerate(lines):
+        line = raw.rstrip('\r')
+        t = line.strip()
+        if t.startswith('[') and t.endswith(']'):
+            cur = t[1:-1].strip()
+        elif cur == rid and not t.startswith('//'):
+            m = KV.match(line)
+            if m and m.group(2) == field:
+                lines[i] = m.group(1) + m.group(2) + (' = ' + value if value else ' =') + ('\r' if raw.endswith('\r') else '')
+                write(LOGIN, '\n'.join(lines))
+                return m.group(4)
+    raise KeyError(f'login {rid}: no field "{field}"')
+
+
+KINDS = ['items', 'monsters', 'drops', 'spells', 'alchemy', 'crafting', 'forging', 'quests', 'teleports', 'login']

@@ -312,6 +312,9 @@
     <ClCompile Include="UI\WorldProps.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="UI\LoginLayout.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
     <ClCompile Include="UI\ValoriaUse.cpp">
       <Filter>ui</Filter>
     </ClCompile>

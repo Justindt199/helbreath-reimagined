@@ -81,6 +81,38 @@ aside { border-left: 1px solid var(--line); background: var(--panel); overflow: 
 .change .to { color: var(--edit); }
 h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; margin: 8px 0 0; }
 @media (max-width: 900px) { main { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } aside { border-left: 0; border-top: 1px solid var(--line); max-height: 55vh; } }
+
+  /* Login screen tab: the sign-in screen as movable pieces */
+  .stagewrap { padding: 14px 16px 24px; }
+  .stagebar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; color: var(--muted); font-size: 13px; }
+  .stagebar select { background: var(--raise); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font: inherit; }
+  .stagefit { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #000; }
+  .stage { position: relative; transform-origin: 0 0; overflow: hidden; user-select: none; -webkit-user-select: none; font-family: Georgia, "Times New Roman", serif;
+    background: radial-gradient(ellipse at 30% 60%, #2f4a22 0%, #1d3017 45%, #10190f 100%); }
+  .stage::before { content: "the live town plays here"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,.13); font-size: 13px; letter-spacing: .08em; }
+  .lm { position: absolute; cursor: grab; touch-action: none; outline: 1px dashed rgba(255,255,255,.22); outline-offset: 2px; white-space: nowrap; }
+  .lm:hover { outline-color: var(--gold); }
+  .lm[aria-selected="true"] { outline: 2px solid var(--edit); }
+  .lm.moved::after { content: ""; position: absolute; right: -5px; top: -5px; width: 8px; height: 8px; border-radius: 50%; background: var(--edit); }
+  .lm.hid { opacity: .28; }
+  .lm.drag { cursor: grabbing; }
+  .lm-logo .s { font-size: 14px; color: #d9c48f; text-shadow: 1px 1px 0 #000; }
+  .lm-logo .b { font-family: var(--display); font-size: 42px; line-height: 44px; color: #f2cf73; text-shadow: 2px 2px 0 #000; letter-spacing: 1px; }
+  .lm-news { background: rgba(10,12,16,.63); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 6px 12px 8px; }
+  .lm-news .h { font-size: 11px; color: #f2cf73; line-height: 16px; } .lm-news .l1 { font-size: 15px; color: #f0f2f5; line-height: 18px; font-weight: 700; } .lm-news .l { font-size: 12px; color: #9aa2ac; line-height: 16px; }
+  .lm-town { font-family: var(--display); font-size: 14px; line-height: 14px; color: #e0906a; text-shadow: 1px 1px 0 #000; }
+  .lm-version { font-size: 11px; line-height: 11px; color: #6f7782; }
+  .lm-panel { background: linear-gradient(#34302c, #24211f); border: 2px solid #6b6154; border-radius: 4px; box-shadow: inset 0 0 0 1px #17130f, 0 6px 22px rgba(0,0,0,.5); }
+  .lm-panel > .t { position: absolute; left: 18px; top: 14px; font-family: var(--display); font-size: 15px; color: #f2cf73; pointer-events: none; }
+  .lm-panel > .st { position: absolute; left: 18px; top: 38px; font-size: 12px; color: #9aa2ac; pointer-events: none; }
+  .lm-box { background: rgba(0,0,0,.47); border: 1px solid rgba(255,255,255,.16); border-radius: 6px; }
+  .lm-box .lb, .lm-remember { font-size: 11px; color: #9aa2ac; }
+  .lm-box .lb { position: absolute; left: 0; top: -18px; }
+  .lm-remember { font-size: 12px; color: #b9c0c9; display: flex; align-items: center; gap: 7px; }
+  .lm-remember i { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.35); display: inline-block; }
+  .lm-btn { background: linear-gradient(#4a443d, #322e2a); border: 1px solid #7a6c58; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #dce0e6; }
+  .lm-connect { font-size: 15px; font-weight: 700; color: #96907f; }
+  select.fin { appearance: auto; }
 </style>
 </head>
 <body>
@@ -88,7 +120,7 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
   <header>
     <div>
       <h1>Helbreath Reimagined · Server Data</h1>
-      <div class="sub">Every item, monster, drop, spell, recipe, quest and teleport on the server. Change a value and save: it goes onto the server with the next update.</div>
+      <div class="sub">Every item, monster, drop, spell, recipe, quest and teleport on the server, and the sign-in screen's layout. Change a value and save: it goes into the game with the next update.</div>
     </div>
     <div class="chips" id="chips"></div>
   </header>
@@ -120,10 +152,18 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
     { k: "forging", label: "Forging", cols: ["name", "skill", "@materials", "max skill", "chance"], title: "name" },
     { k: "quests", label: "Quests", cols: null, title: r => "Quest " + r.id },
     { k: "teleports", label: "Teleports", cols: ["npc", "name", "map", "x", "y", "cost", "min level", "max level", "side"], title: r => r.f.npc + " → " + r.f.map },
+    { k: "login", label: "Login screen", cols: ["x", "y"], title: r => LM_LABEL[r.id] || r.id },
   ];
+  // the sign-in screen's pieces (Client/CONTENTS/login_layout.cfg): the first five sit on the screen, the rest inside the panel
+  const LM_LABEL = { logo: "Logo", news: "News box", town: "Town name", version: "Version text", panel: "Sign-in panel", account: "Account box",
+    password: "Password box", remember: "Remember account", connect: "Connect button", create: "Create account button", quit: "Quit button" };
+  const LM_INSIDE = ["account", "password", "remember", "connect", "create", "quit"];
+  const ANCHORS = ["top-left", "top", "top-right", "left", "center", "right", "bottom-left", "bottom", "bottom-right"];
+  const STAGES = [[854, 480, "16:9 screen"], [640, 480, "4:3 screen"], [1120, 480, "21:9 screen"]];
+  let stage = 0;
   // fields that name a row: changing them would break what points at it
   const LOCKED = { items: ["id", "name"], monsters: ["name"], spells: ["id"], quests: ["n"], alchemy: ["id"], crafting: ["id"], forging: ["name"],
-    drops: ["monster", "tier", "item", "share of tier"], teleports: [] };
+    drops: ["monster", "tier", "item", "share of tier"], teleports: [], login: [] };
   const HINTS = {
     "item type": { 0: "none", 1: "equip", 2: "apply", 3: "use (used up)", 4: "install", 5: "consume", 6: "arrow", 7: "eat", 8: "use skill", 9: "use (kept)", 10: "opens a window", 11: "use on an item", 12: "material" },
     "equip slot": { 0: "none", 1: "head", 2: "body", 3: "arms", 4: "legs", 5: "feet", 6: "neck", 7: "left hand", 8: "right hand", 9: "both hands", 10: "ring", 11: "ring", 12: "back", 13: "full body" },
@@ -135,6 +175,7 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
     crafting: "VALORIA recipes. Ingredients are item numbers: the name is shown under each one.",
     forging: "VALORIA recipes. Materials are item numbers: the name is shown under each one.",
     items: "Values 1–6 mean different things for each effect (damage dice for weapons, defense for armour, the amount for potions…).",
+    login: "Drag a piece to move it, or pick it and nudge it with the arrow keys (Shift = 10 at a time). Anchor is the point of the screen a piece keeps its distance from, so it stays put on wider and narrower screens; the pieces inside the panel move with the panel. The sign-in screen is always 480 high.",
   };
 
   const ROWS = {}; const BYKEY = new Map();
@@ -199,6 +240,7 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
   function renderTable() {
     const w = $("#tablewrap");
     if (tab === "changes") { renderChanges(); return; }
+    if (tab === "login") { renderStage(); return; }
     const t = tdef(tab), rows = rowsFor();
     const isNum = c => { const v = ROWS[tab][0] && cell(ROWS[tab][0], c); return v !== undefined && v !== "" && !isNaN(Number(v)); };
     const label = c => c === "@ingredients" ? "ingredients" : c === "@materials" ? "materials" : c;
@@ -213,18 +255,87 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
     const mb = $("#moreb"); if (mb) mb.onclick = () => { limit += 500; renderTable(); };
   }
 
+  // ---- login screen: the pieces where the game draws them, to drag about
+  const lmRow = id => BYKEY.get("login|" + id);
+  const lmNum = (v, d) => { const n = parseInt(v, 10); return isNaN(n) ? d : n; };
+  function lmHtml(id, v) {
+    const cls = `lm lm-${id}${LM_INSIDE.includes(id) && id !== "remember" && !["connect", "create", "quit"].includes(id) ? " lm-box" : ""}${["connect", "create", "quit"].includes(id) ? " lm-btn" : ""}${v.show === "no" ? " hid" : ""}${pendingEdit(lmRow(id)) ? " moved" : ""}`;
+    const at = `class="${cls}" data-m="${id}" tabindex="0" role="button" aria-label="${esc(LM_LABEL[id])}" aria-selected="${sel === "login|" + id}"`;
+    if (id === "logo") return `<div ${at}><div class="s">${esc(v.text)}</div><div class="b">${esc(v["text 2"])}</div></div>`;
+    if (id === "news") { const ls = [1, 2, 3, 4].map(i => v["line " + i]).filter(Boolean);
+      return `<div ${at}><div class="h">${esc(v.text)}</div>${ls.map((l, i) => `<div class="${i ? "l" : "l1"}">${esc(l)}</div>`).join("") || '<div class="l">(news.txt)</div>'}</div>`; }
+    if (id === "town") return `<div ${at}>A R E S D E N</div>`;
+    if (id === "version") return `<div ${at}>Client version</div>`;
+    if (id === "panel") return `<div ${at} style="width:${lmNum(v.width, 240)}px;height:${lmNum(v.height, 292)}px"><div class="t">${esc(v.text)}</div><div class="st">${esc(v["text 2"])}</div>${LM_INSIDE.map(c => lmHtml(c, eff(lmRow(c)))).join("")}</div>`;
+    const box = `left:${lmNum(v.x, 0)}px;top:${lmNum(v.y, 0)}px;` + (v.width !== undefined ? `width:${lmNum(v.width, 98)}px;height:${lmNum(v.height, 24)}px` : "");
+    if (id === "remember") return `<div ${at} style="${box}"><i></i>${esc(v.text)}</div>`;
+    if (id === "account" || id === "password") return `<div ${at} style="${box}"><span class="lb">${esc(v.text)}</span></div>`;
+    return `<div ${at} style="${box}">${esc(v.text)}</div>`;
+  }
+  function lmPlace(el, v, W, H) {      // as the game does: the anchor point of the screen, the same point of the piece, then x and y
+    const a = Math.max(0, ANCHORS.indexOf(v.anchor)), col = a % 3, row = Math.floor(a / 3), w = el.offsetWidth, h = el.offsetHeight;
+    el.style.left = (Math.floor(W * col / 2) - Math.floor(w * col / 2) + lmNum(v.x, 0)) + "px";
+    el.style.top = (Math.floor(H * row / 2) - Math.floor(h * row / 2) + lmNum(v.y, 0)) + "px";
+  }
+  function renderStage() {
+    const w = $("#tablewrap"), [W, H] = STAGES[stage];
+    if (!ROWS.login.length) { w.innerHTML = '<div class="more">This copy of the dashboard has no sign-in screen layout in it.</div>'; return; }
+    const n = pending().filter(e => e.kind === "login").length;
+    w.innerHTML = `<div class="stagewrap"><div class="stagebar"><label for="stsel">Preview on a</label><select id="stsel">${STAGES.map((s, i) => `<option value="${i}" ${i === stage ? "selected" : ""}>${s[2]} (${s[0]} × ${s[1]})</option>`).join("")}</select>
+      <span>Drag the pieces. Blue dot = moved or changed, waiting for the next update.</span>${n && canWrite ? `<button class="btn sm" id="lmreset">Put all ${n} back</button>` : ""}</div>
+      <div class="stagefit" id="stfit"><div class="stage" id="stage" style="width:${W}px;height:${H}px">${["logo", "news", "town", "version", "panel"].map(id => lmHtml(id, eff(lmRow(id)))).join("")}</div></div></div>`;
+    const st = $("#stage"), fit = $("#stfit");
+    const k = Math.min(1.6, (fit.clientWidth || W) / W);
+    st.style.transform = `scale(${k})`; fit.style.height = Math.round(H * k) + "px";
+    for (const id of ["logo", "news", "town", "version", "panel"]) lmPlace(st.querySelector(`[data-m="${id}"]`), eff(lmRow(id)), W, H);
+    $("#stsel").onchange = ev => { stage = +ev.target.value; renderStage(); };
+    const rs = $("#lmreset"); if (rs) rs.onclick = async () => { for (const e of pending().filter(e => e.kind === "login")) await store(lmRow(e.id), {}, true); renderAll(); };
+    for (const el of st.querySelectorAll(".lm")) {
+      const id = el.dataset.m, r = lmRow(id);
+      el.onpointerdown = ev => {
+        ev.stopPropagation(); ev.preventDefault();
+        if (sel !== r.kind + "|" + id) { sel = r.kind + "|" + id; msg = ""; for (const x of st.querySelectorAll(".lm")) x.setAttribute("aria-selected", x === el); renderEditor(); }
+        el.focus({ preventScroll: true });
+        if (!canWrite) return;
+        const v = eff(r), x0 = lmNum(v.x, 0), y0 = lmNum(v.y, 0), l0 = parseFloat(el.style.left), t0 = parseFloat(el.style.top), sx = ev.clientX, sy = ev.clientY;
+        let dx = 0, dy = 0;
+        el.setPointerCapture(ev.pointerId); el.classList.add("drag");
+        el.onpointermove = mv => { dx = Math.round((mv.clientX - sx) / k); dy = Math.round((mv.clientY - sy) / k); el.style.left = (l0 + dx) + "px"; el.style.top = (t0 + dy) + "px"; };
+        el.onpointerup = el.onpointercancel = () => { el.onpointermove = el.onpointerup = el.onpointercancel = null; el.classList.remove("drag");
+          if (dx || dy) lmMove(r, x0 + dx, y0 + dy); };
+      };
+      el.onkeydown = ev => {
+        const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[ev.key];
+        if (!d || !canWrite) return;
+        ev.preventDefault(); ev.stopPropagation();
+        const v = eff(r), s = ev.shiftKey ? 10 : 1;
+        sel = r.kind + "|" + id; lmMove(r, lmNum(v.x, 0) + d[0] * s, lmNum(v.y, 0) + d[1] * s, id);
+      };
+    }
+  }
+  // a piece moved: keep it with whatever else is already changed on it
+  async function lmMove(r, x, y, refocus) {
+    const e = pendingEdit(r), fields = { ...(e ? e.fields : {}), x: String(x), y: String(y) };
+    for (const k of Object.keys(fields)) if (fields[k] === String(r.f[k] ?? "")) delete fields[k];
+    await store(r, fields, true);
+    if (refocus) { const el = document.querySelector(`.lm[data-m="${refocus}"]`); if (el) el.focus({ preventScroll: true }); }
+  }
+
   // ---- editor: every field of the picked row
   function renderEditor() {
     const a = $("#editor");
     if (tab === "changes") { a.innerHTML = '<div class="empty">Changes saved here go onto the server the next time Claude updates it: ask for "apply the dashboard changes".</div>'; return; }
     const r = sel && BYKEY.get(sel);
-    if (!r) { a.innerHTML = `<div class="empty">Pick a row to see and change every value it has.</div>${NOTES[tab] ? `<div class="note">${esc(NOTES[tab])}</div>` : ""}`; return; }
+    if (!r) { a.innerHTML = `<div class="empty">${tab === "login" ? "Pick a piece of the sign-in screen to change its words, size, anchor or whether it shows." : "Pick a row to see and change every value it has."}</div>${NOTES[tab] ? `<div class="note">${esc(NOTES[tab])}</div>` : ""}`; return; }
     const e = pendingEdit(r), v = eff(r), lock = new Set(LOCKED[r.kind] || []);
-    const fields = fieldsOf(r.kind);
+    const fields = r.kind === "login" ? Object.keys(r.f) : fieldsOf(r.kind);
     a.innerHTML = `<div class="edh"><h2>${esc(titleOf(r))}</h2><div class="mini">${esc(tdef(r.kind).label)} · ${esc(r.id)}${e ? ' <span class="tag">saved change waiting</span>' : ""}</div></div>
       <form id="edform"><div class="fgrid">${fields.map(k => {
         const val = v[k] ?? "", ro = !canWrite || lock.has(k) || k === "share of tier";
         const hint = (HINTS[k] && HINTS[k][val] !== undefined) ? HINTS[k][val] : (/^(ingredient|material) \d$/.test(k) && ITEMNAME[val]) ? ITEMNAME[val] : "";
+        const opts = r.kind === "login" && k === "anchor" ? ANCHORS : r.kind === "login" && k === "show" ? ["yes", "no"] : null;
+        if (opts) return `<label for="f_${esc(k)}" title="${esc(k)}">${esc(k)}</label><select class="fin ${e && k in e.fields ? "chg" : ""}" id="f_${esc(k)}" data-f="${esc(k)}" ${ro ? "disabled" : ""}>${opts.map(o => `<option ${o === val ? "selected" : ""}>${o}</option>`).join("")}</select>`
+          + (e && k in e.fields ? `<div class="was">in game now: ${esc(r.f[k])}</div>` : "");
         return `<label for="f_${esc(k)}" title="${esc(k)}">${esc(k)}</label><input class="fin ${e && k in e.fields ? "chg" : ""}" id="f_${esc(k)}" data-f="${esc(k)}" value="${esc(val)}" ${ro ? "readonly" : ""} autocomplete="off">`
           + (e && k in e.fields ? `<div class="was">in game now: ${esc(r.f[k])}</div>` : "") + (hint ? `<div class="hint">${esc(hint)}</div>` : "");
       }).join("")}</div>
@@ -233,21 +344,29 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
       ${canWrite ? "" : `<div class="note">${db ? "You can look but not change values in this view." : "Changes can't be saved in this view: open the dashboard on claude.ai while signed in."}</div>`}
       ${NOTES[r.kind] ? `<div class="note">${esc(NOTES[r.kind])}</div>` : ""}`;
     $("#edform").onsubmit = ev => { ev.preventDefault(); save(r); };
-    for (const inp of a.querySelectorAll("input.fin")) inp.oninput = () => inp.classList.toggle("chg", inp.value.trim() !== String(r.f[inp.dataset.f] ?? ""));
+    for (const inp of a.querySelectorAll(".fin")) inp.oninput = () => inp.classList.toggle("chg", inp.value.trim() !== String(r.f[inp.dataset.f] ?? ""));
     const rv = $("#revert"); if (rv) rv.onclick = () => store(r, {});
   }
   function save(r) {
     const fields = {}, lock = new Set(LOCKED[r.kind] || []);
-    for (const inp of document.querySelectorAll("#edform input.fin")) {
+    for (const inp of document.querySelectorAll("#edform .fin")) {
       const k = inp.dataset.f, nv = inp.value.trim();
       if (lock.has(k) || k === "share of tier") continue;
+      if (r.kind === "login") {      // words may have spaces or be left empty; places and sizes are whole numbers
+        const isSize = k === "width" || k === "height";
+        if ((k === "x" || k === "y" || isSize) && !/^-?\d+$/.test(nv)) { msg = `"${k}" must be a whole number.`; msgKind = "err"; renderEditor(); return; }
+        if (isSize && +nv < 1) { msg = `"${k}" must be 1 or more.`; msgKind = "err"; renderEditor(); return; }
+        if (nv.length > 120) { msg = `"${k}" can be 120 characters at most.`; msgKind = "err"; renderEditor(); return; }
+        if (nv !== String(r.f[k] ?? "")) fields[k] = nv;
+        continue;
+      }
       if (nv === "" || /\s/.test(nv)) { msg = `"${k}" can't be empty or have spaces in it.`; msgKind = "err"; renderEditor(); return; }
       if (r.kind === "drops" && !/^\d+$/.test(nv)) { msg = `"${k}" must be a whole number.`; msgKind = "err"; renderEditor(); return; }
       if (nv !== String(r.f[k] ?? "")) fields[k] = nv;
     }
     store(r, fields);
   }
-  async function store(r, fields) {
+  async function store(r, fields, quiet) {
     if (!db || !canWrite) return;
     const id = docId(r.kind, r.id);
     try {
@@ -256,7 +375,7 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
         const base = {}; for (const k of Object.keys(fields)) base[k] = r.f[k];
         const doc = { kind: r.kind, id: r.id, name: String(titleOf(r)), fields, base, status: "pending", updatedAt: new Date().toISOString() };
         await db.doc("edits/" + id).set(doc); edits[id] = doc;
-        msg = "Saved. It goes onto the server with the next update.";
+        msg = r.kind === "login" ? "Saved. It goes into the game with the next update." : "Saved. It goes onto the server with the next update.";
       }
       msgKind = "ok";
     } catch (err) { msg = "Couldn't save: " + (err && err.message || "the store didn't answer"); msgKind = "err"; }
@@ -281,6 +400,7 @@ h4 { font: 700 13px var(--display); color: var(--gold); letter-spacing: .05em; m
   }
 
   function renderAll() { renderChips(); renderTabs(); renderTable(); renderEditor(); }
+  window.addEventListener("resize", () => { if (tab === "login") renderStage(); });
   $("#q").oninput = ev => { q = ev.target.value.trim(); limit = 300; renderTable(); };
 
   // ---- shared store (window.claude): saved edits, kept for Claude to put on the server

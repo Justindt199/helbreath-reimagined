@@ -269,6 +269,7 @@
     <ClCompile Include="UI\AchievePanel.cpp" />
     <ClCompile Include="UI\SideQuestPanel.cpp" />
     <ClCompile Include="UI\WorldProps.cpp" />
+    <ClCompile Include="UI\LoginLayout.cpp" />
     <ClCompile Include="UI\ValoriaUse.cpp" />
     <ClCompile Include="UI\NpcQueryPanel.cpp" />
     <ClCompile Include="UI\BottomBar.cpp" />
