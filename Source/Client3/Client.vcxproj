@@ -267,6 +267,7 @@
     <ClCompile Include="UI\EnchantPanel.cpp" />
     <ClCompile Include="UI\PassivePanel.cpp" />
     <ClCompile Include="UI\AchievePanel.cpp" />
+    <ClCompile Include="UI\SideQuestPanel.cpp" />
     <ClCompile Include="UI\ValoriaUse.cpp" />
     <ClCompile Include="UI\NpcQueryPanel.cpp" />
     <ClCompile Include="UI\BottomBar.cpp" />

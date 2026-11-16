@@ -38,7 +38,7 @@ const int ENCHANT_MAX   = 50;			// Enchanting level
 const int MOD_MAX       = 50;			// each modifier's own enchanting level
 const int CORE_MOD_MAX  = 5;
 const int ITEM_BYTES    = 48;		// was 32 before rarity: older saves read with the rest as zero (Common)
-const int CHAR_BYTES    = 356;		// 64 before the life skills, 80 before achievements: older saves read the new parts as 0
+const int CHAR_BYTES    = 432;		// 64 before life skills, 80 before achievements, 356 before side quests: older saves read the new parts as 0
 const int GOLD_DIVISOR  = 4;
 const int MAX_TIER      = 10;
 const double SKILL_XP_MULT = 0.5;		// VALORIA's skill XP multiplier
@@ -217,6 +217,9 @@ inline int PerkSlayerGoldPct(int slayerLv)	{ return slayerLv >= 25 ? 25 : 0; }	/
 // monster each (Ach::kTargets), then these; ACH_LEVEL is the character's level, not saved.
 const int ACH_KILL_SLOTS = 64;
 enum { ACH_TOTAL = 64, ACH_ENEMY, ACH_QUEST, ACH_SIDE, ACH_SAVED, ACH_LEVEL = ACH_SAVED, ACH_COUNTERS };
+// Side quests (ValoriaSideQuests.h): each quest's state, and the progress of the ones taken.
+const int SIDE_SLOTS = 48, SIDE_ACTIVE = 3, SIDE_OBJ = 4;
+enum { SIDE_NONE = 0, SIDE_TAKEN, SIDE_DONE };
 
 struct CharData {
 	unsigned int  xp;					// Enchanting XP
@@ -225,9 +228,14 @@ struct CharData {
 	unsigned int  lifeXp[LIFE_COUNT];	// life skill XP (Life)
 	unsigned int  ach[ACH_SAVED];		// achievement counters (bytes 80-351)
 	unsigned char titleCounter, titleTier;	// the title shown before your name (tier 0 = none)
+	unsigned char sideState[SIDE_SLOTS];		// SIDE_* per quest (bytes 356-403)
+	unsigned char sideQuest[SIDE_ACTIVE];		// the quests taken (0xFF = free slot), then their progress (404-430)
+	unsigned short sideProg[SIDE_ACTIVE][SIDE_OBJ];
+	int SideSlotOf(int q) const { for (int a = 0; a < SIDE_ACTIVE; a++) if (sideQuest[a] == q) return a; return -1; }
 
 	CharData() { Clear(); }
-	void Clear() { xp = 0; memset(known, 0, sizeof(known)); memset(modXp, 0, sizeof(modXp)); memset(lifeXp, 0, sizeof(lifeXp)); memset(ach, 0, sizeof(ach)); titleCounter = titleTier = 0; }
+	void Clear() { xp = 0; memset(known, 0, sizeof(known)); memset(modXp, 0, sizeof(modXp)); memset(lifeXp, 0, sizeof(lifeXp)); memset(ach, 0, sizeof(ach)); titleCounter = titleTier = 0;
+		memset(sideState, 0, sizeof(sideState)); memset(sideQuest, 0xFF, sizeof(sideQuest)); memset(sideProg, 0, sizeof(sideProg)); }
 	int  LifeLv(int s) const { return (s >= 0 && s < LIFE_COUNT) ? LifeLevel(lifeXp[s]) : 1; }
 
 	void Write(unsigned char * p) const {
@@ -241,6 +249,11 @@ struct CharData {
 		for (int c = 0; c < ACH_SAVED; c++)
 			for (int b = 0; b < 4; b++) p[80 + c*4 + b] = (unsigned char)((ach[c] >> (8*b)) & 0xFF);
 		p[352] = titleCounter; p[353] = titleTier;
+		for (int q = 0; q < SIDE_SLOTS; q++) p[356 + q] = sideState[q];
+		for (int a = 0; a < SIDE_ACTIVE; a++) {
+			p[404 + a*9] = (unsigned char)(sideQuest[a] + 1);	// 0 = free, so old saves read as free
+			for (int o = 0; o < SIDE_OBJ; o++) { p[405 + a*9 + o*2] = (unsigned char)(sideProg[a][o] & 0xFF); p[406 + a*9 + o*2] = (unsigned char)(sideProg[a][o] >> 8); }
+		}
 	}
 	void Read(const unsigned char * p) {
 		xp = 0;
@@ -259,6 +272,11 @@ struct CharData {
 			for (int b = 0; b < 4; b++) ach[c] |= (unsigned int)p[80 + c*4 + b] << (8*b);
 		}
 		titleCounter = p[352]; titleTier = p[353];
+		for (int q = 0; q < SIDE_SLOTS; q++) sideState[q] = p[356 + q] <= SIDE_DONE ? p[356 + q] : SIDE_NONE;
+		for (int a = 0; a < SIDE_ACTIVE; a++) {
+			sideQuest[a] = (unsigned char)(p[404 + a*9] - 1);
+			for (int o = 0; o < SIDE_OBJ; o++) sideProg[a][o] = (unsigned short)(p[405 + a*9 + o*2] | (p[406 + a*9 + o*2] << 8));
+		}
 	}
 };
 

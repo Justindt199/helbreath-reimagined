@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `char_database` (
   `AltInt` int(11) unsigned NOT NULL DEFAULT '0',
   `AltMag` int(11) unsigned NOT NULL DEFAULT '0',
   `AltChr` int(11) unsigned NOT NULL DEFAULT '0',
-  `ValoriaEnchant` varchar(720) DEFAULT NULL,
+  `ValoriaEnchant` varchar(880) DEFAULT NULL,
   `ValoriaPassive` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`char_name`),
   UNIQUE KEY `CharID` (`CharID`),

@@ -73,7 +73,7 @@
 #define RBTNPOSX			154
 #define BTNPOSY			292
 
-#define MAXDIALOGBOX		70
+#define MAXDIALOGBOX		71
 
 
 #define INDEX4_MSGID		0
@@ -537,13 +537,25 @@ public:
 	void DrawDialogBox_Achievements();
 	void DlgBoxClick_Achievements();
 
+	// VALORIA side quests (UI\SideQuestPanel.cpp)
+	enum { SIDEWIN_W = 640, SIDEWIN_H = 420 };
+	int  m_iSideGiver = 0, m_iSideSel = -1;		// giver: 67 / 68 / 69, or 0 for the journal
+	DWORD m_dwSideAbandonAt = 0;
+	int  SideStatus(int q) const;
+	std::vector<int> SideList() const;
+	int  SideActions(int out[2]) const;
+	void OpenSideQuests(int iGiver);
+	void NotifyMsg_SideEvent(char * pData);
+	void DrawDialogBox_SideQuests();
+	void DlgBoxClick_SideQuests();
+
 	// VALORIA usable items: elixir / scroll buffs, rune and stone tooltips (UI\ValoriaUse.cpp)
 	DWORD m_dwValBuffEnd[ValoriaUse::BUFF_COUNT] = {};
 	void NotifyMsg_ValoriaBuffs(char * pData);
 	int  ValoriaBuffTotal(int iKind) const;
 	void DrawValoriaBuffs();
 	void ValoriaUseTipLines(ItemTip & t, const CItem * it);
-	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED, CHARBTN_ACHIEVE };
+	enum { CHARBTN_NONE = 0, CHARBTN_CLOSE, CHARBTN_QUEST, CHARBTN_PARTY, CHARBTN_GUILD, CHARBTN_LEVELUP, CHARBTN_WANTED, CHARBTN_ACHIEVE, CHARBTN_JOURNAL };
 	void  CharDollOrigin(short & sX, short & sY);	// where the paper doll's pivot math starts
 	void  DrawCharPanelBack();
 	void  DrawCharPanelFront(int iHoverSlot, const char * cEquipPoiStatus);

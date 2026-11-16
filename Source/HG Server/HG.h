@@ -596,6 +596,14 @@ public:
 	void AchOnMapEntry(int h);
 	void AchTitleRequest(int iClientH, char * pData);
 	void AchAdmin(int iClientH, const char * pArgs);
+	// VALORIA side quests (SideQuests.cpp)
+	void SideEvent(int iClientH, int iCode, int iQuest, int iObj = 0, int iValue = 0, int iXP = 0);
+	bool SideNearGiver(int iClientH, int iGiver);
+	void SideAdvance(int iClientH, int a, int o, int n);
+	void SideOnKill(int iClientH, const char * pNpcName);
+	void SideOnMap(int iClientH);
+	void SideRequest(int iClientH, char * pData);
+	void SideAdmin(int iClientH, const char * pArgs);
 	void PassiveSendState(int iClientH);
 	void PassiveBonus(int iClientH);
 	// VALORIA usable items (ValoriaUse.cpp)

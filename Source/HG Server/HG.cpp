@@ -5941,6 +5941,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			ValoriaAdminUse(iClientH, cp + 6);
 		} else if (memcmp(cp, "/vcraft ", 8) == 0) {	// GM: craft from bag items named (ValoriaUse.cpp)
 			ValoriaAdminCraft(iClientH, cp + 8);
+		} else if (memcmp(cp, "/vside ", 7) == 0) {	// GM: fill a side quest's objectives (SideQuests.cpp)
+			SideAdmin(iClientH, cp + 7);
 		} else if (memcmp(cp, "/vach ", 6) == 0) {	// GM: add to an achievement counter (Achievements.cpp)
 			AchAdmin(iClientH, cp + 6);
 		} else if (memcmp(cp, "/vrarity ", 9) == 0) {	// GM: give a bag item a rarity (ValoriaUse.cpp)
@@ -7074,6 +7076,10 @@ void CGame::MsgProcess()
 
 			case MSGID_REQUEST_TITLE:	// VALORIA achievement titles (Achievements.cpp)
 				AchTitleRequest(iClientH, pData + 4);
+				break;
+
+			case MSGID_REQUEST_SIDEQUEST:	// VALORIA side quests (SideQuests.cpp)
+				SideRequest(iClientH, pData + 4);
 				break;
 
 			case MSGID_REQUEST_PING:

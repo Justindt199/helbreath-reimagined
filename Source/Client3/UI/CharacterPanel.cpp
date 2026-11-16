@@ -166,6 +166,15 @@ static void AchieveRect(CRenderer & r, short X, short Y, RECT & rc)
 	SetRect(&rc, X + CGame::CHARWIN_W - 40 - w, Y + 6, X + CGame::CHARWIN_W - 40, Y + 30);
 }
 
+// VALORIA side quests: the Journal button, left of Achievements (UI\SideQuestPanel.cpp)
+static void JournalRect(CRenderer & r, short X, short Y, RECT & rc)
+{
+	RECT a;
+	AchieveRect(r, X, Y, a);
+	const int w = Width(r, "Journal") + 26;
+	SetRect(&rc, a.left - 6 - w, Y + 6, a.left - 6, Y + 30);
+}
+
 static bool InRect(const RECT & rc, int x, int y)
 {
 	return x >= rc.left && x < rc.right && y >= rc.top && y < rc.bottom;
@@ -189,6 +198,8 @@ int CGame::CharPanelButtonAt(short msX, short msY)
 	if (InRect(rc, msX, msY)) return CHARBTN_CLOSE;
 	AchieveRect(m_Renderer, X, Y, rc);
 	if (InRect(rc, msX, msY)) return CHARBTN_ACHIEVE;
+	JournalRect(m_Renderer, X, Y, rc);
+	if (InRect(rc, msX, msY)) return CHARBTN_JOURNAL;
 	FootBtn b[5];
 	const int n = CharFooterButtons(*this, m_Renderer, X, Y, m_iGuildRank != GUILDRANK_NONE, b);
 	for (int i = 0; i < n; i++)
@@ -217,6 +228,10 @@ void CGame::DrawCharPanelBack()
 	const bool bOnAch = bTop && InRect(rc, ms::X, ms::Y);
 	R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOnAch ? 1 : 0);
 	R.TextOut(rc.left + 13, rc.top + 4, "Achievements", bOnAch ? RGB(255, 255, 255) : RGB(220, 224, 230));
+	JournalRect(R, X, Y, rc);
+	const bool bOnJournal = bTop && InRect(rc, ms::X, ms::Y);
+	R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, bOnJournal ? 1 : 0);
+	R.TextOut(rc.left + 13, rc.top + 4, "Journal", bOnJournal ? RGB(255, 255, 255) : RGB(220, 224, 230));
 	R.FillPanel(X + 1, Y + kTitleH, X + W - 1, Y + kTitleH + 1, 0, RGB(255, 255, 255), 26);
 
 	// doll box

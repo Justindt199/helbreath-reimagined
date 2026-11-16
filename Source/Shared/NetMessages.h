@@ -347,7 +347,8 @@ enum NetMessages_Notify
 	// VALORIA passive tree: HG Server Passives.cpp -> Client3 UI\PassivePanel.cpp
 	NOTIFY_PASSIVES,		// your passive tree: 48 bytes (Shared\ValoriaPassives.h Data)
 	NOTIFY_VALORIABUFFS,	// your elixir / scroll buffs: uint8 count, then uint8 buff, uint16 seconds left (Shared\ValoriaUse.h)
-	NOTIFY_TITLEINFO		// a player's achievement title: char[10] name, uint8 counter, uint8 tier (0 = none) (HG Server Achievements.cpp)
+	NOTIFY_TITLEINFO,		// a player's achievement title: char[10] name, uint8 counter, uint8 tier (0 = none) (HG Server Achievements.cpp)
+	NOTIFY_SIDEEVENT		// side quests: uint8 code, uint8 quest, uint8 objective / reason, uint16 value, uint32 XP (HG Server SideQuests.cpp)
 };
 
 enum { REBIRTHRES_REBORN = 1, REBIRTHRES_PAUSED, REBIRTHRES_RESUMED, REBIRTHRES_COMPLETED,
@@ -725,6 +726,7 @@ enum {
 	MSGID_REQUEST_ENCHANT,		// client -> server: uint16 1 enchant / 2 disenchant / 3 empower / 4 lesson, uint8 item, uint8 modifier (HG Server Enchanting.cpp)
 	MSGID_REQUEST_PASSIVE,		// client -> server: uint16 1 take node / 2 Orb of Unmaking / 3 Tome of the Unbound Path, uint16 node (HG Server Passives.cpp)
 	MSGID_REQUEST_TITLE,		// client -> server: uint16 counter, uint16 tier (0 = no title) (HG Server Achievements.cpp)
+	MSGID_REQUEST_SIDEQUEST,	// client -> server: uint16 1 take / 2 hand in / 3 abandon, uint16 quest (HG Server SideQuests.cpp)
 	MSGID_MAX
 };
 

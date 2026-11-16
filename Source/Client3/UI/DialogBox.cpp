@@ -362,6 +362,7 @@ namespace {
 		case 9: return { true, 0, 4 };		// City Hall Officer
 		case 10: return { false, 2, 1 };	// item to the guild warehouse: Deposit
 		case 11: return { false, 2, 1 };	// repair all: Repair
+		case 12: return { true, 0, 2 };		// townsperson: Talk, Side quests
 		default: return { true, 0, 2 };
 		}
 	}
@@ -1187,6 +1188,9 @@ void CDialogBox::SetMode(char mode)
 		break;
 
 	case DIALOG_ACHIEVE:	// VALORIA achievements: drawn and clicked in code (UI\AchievePanel.cpp), no fixed buttons
+		break;
+
+	case DIALOG_SIDEQUEST:	// VALORIA side quests: drawn and clicked in code (UI\SideQuestPanel.cpp), no fixed buttons
 		break;
 
 	case DIALOG_BOUNTY:	// Bounty board: drawn and clicked in code (UI\BountyBoard.cpp), no fixed buttons

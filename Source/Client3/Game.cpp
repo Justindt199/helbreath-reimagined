@@ -728,6 +728,10 @@ void CGame::SetupDialogBoxes()
 	m_dialogBoxes[DIALOG_ACHIEVE].SetupDialog(DIALOG_ACHIEVE, 70, 30, ACHWIN_W, ACHWIN_H);
 	m_dialogBoxes[DIALOG_ACHIEVE].SetupHandlers(GAMEFUNCT(DrawDialogBox_Achievements), GAMEFUNCT(DlgBoxClick_Achievements));
 
+	// VALORIA side quests (UI\SideQuestPanel.cpp)
+	m_dialogBoxes[DIALOG_SIDEQUEST].SetupDialog(DIALOG_SIDEQUEST, 60, 30, SIDEWIN_W, SIDEWIN_H);
+	m_dialogBoxes[DIALOG_SIDEQUEST].SetupHandlers(GAMEFUNCT(DrawDialogBox_SideQuests), GAMEFUNCT(DlgBoxClick_SideQuests));
+
 	for(int i = 0; i < MAXDIALOGBOX; i++)
 	{		
 		m_dialogBoxes[i].SetMode(0); //Setup default buttons
@@ -1470,6 +1474,7 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 
 		case MSGID_REQUEST_PASSIVE:	// VALORIA passive tree (UI\PassivePanel.cpp): action, node
 		case MSGID_REQUEST_TITLE:	// VALORIA achievement title (UI\AchievePanel.cpp): counter, tier
+		case MSGID_REQUEST_SIDEQUEST:	// VALORIA side quests (UI\SideQuestPanel.cpp): action, quest
 			*wp = wCommand;
 			Push(cp, (uint16)iV1);
 			iRet = m_pGSock->iSendMsg(cMsg, cp - cMsg, cKey);
@@ -4377,6 +4382,7 @@ void CGame::InitGameSettings()
 	m_enchant.Clear(); m_iEnchantSel = -1; m_iEnchantScroll = 0; m_dwEnchantConfirmAt = 0;	// VALORIA enchanting
 	m_passive.Clear(); m_iPassivePick = -1; m_dwPassiveOrbAt = 0;	// VALORIA passive tree
 	m_titleOf.clear(); m_bAchSeen = false; m_iAchScroll = 0;	// VALORIA achievements
+	m_iSideSel = -1; m_dwSideAbandonAt = 0;	// VALORIA side quests
 	memset(m_dwValBuffEnd, 0, sizeof(m_dwValBuffEnd));	// VALORIA buffs
 	m_bounties.clear(); m_bountyBackers.clear(); m_cBountySel[0] = 0; m_dwBountyClaims = m_dwBountyClaimGold = 0;
 
@@ -16782,6 +16788,7 @@ static const char * ProfDialogName(int i)
 	if (i == DIALOG_ENCHANT) return "Enchanting";
 	if (i == DIALOG_PASSIVE) return "Passive skills";
 	if (i == DIALOG_ACHIEVE) return "Achievements";
+	if (i == DIALOG_SIDEQUEST) return "Side quests";
 	return "Window";
 }
 
@@ -16791,7 +16798,7 @@ bool CGame::IsClassicDialog(int id) const
 {
 	switch (id) {
 	case 1: case 2: case 3: case 9: case 10: case 12: case 15: case 20: case 29: case 30:
-	case DIALOG_MOSTWANTED: case DIALOG_BOUNTY: case DIALOG_REBIRTH: case DIALOG_ENCHANT: case DIALOG_PASSIVE: case DIALOG_ACHIEVE:
+	case DIALOG_MOSTWANTED: case DIALOG_BOUNTY: case DIALOG_REBIRTH: case DIALOG_ENCHANT: case DIALOG_PASSIVE: case DIALOG_ACHIEVE: case DIALOG_SIDEQUEST:
 		return false;
 	}
 	return true;
@@ -20898,6 +20905,9 @@ void CGame::DlgBoxClick_Character()
 		break;
 	case CHARBTN_ACHIEVE:
 		OpenAchieveWindow();	// VALORIA achievements (UI\AchievePanel.cpp)
+		break;
+	case CHARBTN_JOURNAL:
+		OpenSideQuests(0);		// VALORIA side quests: the ones you have taken (UI\SideQuestPanel.cpp)
 		break;
 	}
 }
@@ -27678,7 +27688,8 @@ void CGame::NotifyMsgHandler(char * pData)
 	case NOTIFY_ENCHANTSTATS: NotifyMsg_EnchantStats((char *)pData); break;
 	case NOTIFY_ENCHANTITEMS: NotifyMsg_EnchantItems((char *)pData); break;
 	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;
-	case NOTIFY_TITLEINFO: NotifyMsg_TitleInfo((char *)pData); break;	// VALORIA achievement titles (UI\AchievePanel.cpp)	// VALORIA passive tree (UI\PassivePanel.cpp)
+	case NOTIFY_TITLEINFO: NotifyMsg_TitleInfo((char *)pData); break;
+	case NOTIFY_SIDEEVENT: NotifyMsg_SideEvent((char *)pData); break;	// VALORIA side quests (UI\SideQuestPanel.cpp)	// VALORIA achievement titles (UI\AchievePanel.cpp)	// VALORIA passive tree (UI\PassivePanel.cpp)
 	case NOTIFY_VALORIABUFFS: NotifyMsg_ValoriaBuffs((char *)pData); break;	// VALORIA elixirs and scrolls (UI\ValoriaUse.cpp)
 
 	// Clock and ping (UI\ClockPing.cpp)
@@ -32336,7 +32347,7 @@ CP_SKIPMOUSEBUTTONSTATUS:;
 						case 69: // Devlin
 							if (!m_bIsCombatMode)
 							{	
-								EnableDialogBox(20, 4, NULL, NULL);
+								EnableDialogBox(20, 12, NULL, NULL);	// Talk, Side quests (UI\SideQuestPanel.cpp)
 								//m_dialogBoxes[20].//CentreOverPoint(ms::X, ms::Y);
 								m_dialogBoxes[20].sV3 = sObjectType;
 							}
@@ -37715,6 +37726,14 @@ void CGame::DlgBoxClick_NpcActionQuery()
 		}
 		break;
 
+	case 12: // townsperson: Talk, or their side quests (UI\SideQuestPanel.cpp)
+		if (onButton == 2) {
+			const int iGiver = m_dialogBoxes[20].sV3;
+			DisableDialogBox(20);
+			OpenSideQuests(iGiver);
+			break;
+		}
+		// fall through: Talk
 	case 4: // talk to npc or Unicorn
 		if ((m_bIsDialogEnabled[21] == FALSE) && onButton == 1)
 		{	switch (m_dialogBoxes[20].sV3) {

@@ -67,6 +67,7 @@ void CGame::AchKill(int iClientH, const char * pNpcName)
 	const int s = SlotOfNpc(pNpcName);
 	if (s >= 0) AchAdd(iClientH, s);
 	AchAdd(iClientH, ACH_TOTAL);
+	SideOnKill(iClientH, pNpcName);	// side quests (SideQuests.cpp)
 }
 
 void CGame::AchSendTitle(int iToH, int h)
@@ -86,6 +87,7 @@ void CGame::AchOnMapEntry(int h)
 {
 	CClient * p = m_pClientList[h];
 	if (p == NULL) return;
+	SideOnMap(h);		// side quests: maps to visit (SideQuests.cpp)
 	for (int i = 1; i < MAXCLIENTS; i++) {
 		CClient * c = m_pClientList[i];
 		if (c == NULL || i == h || !c->m_bIsInitComplete || c->m_enchant.titleTier == 0) continue;

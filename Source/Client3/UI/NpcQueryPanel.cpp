@@ -153,6 +153,9 @@ const char * CGame::NpcQueryLabel(int id)
 		return (id == 1) ? DRAW_DIALOGBOX_NPCACTION_QUERY48 : NULL;	// Deposit
 	case 4:
 		return (id == 1 && bTalk) ? DRAW_DIALOGBOX_NPCACTION_QUERY25 : NULL;	// Talk
+	case 12:	// townsperson
+		if (id == 1) return bTalk ? DRAW_DIALOGBOX_NPCACTION_QUERY25 : NULL;	// Talk
+		return (id == 2) ? "Side quests" : NULL;
 	case 5:
 		if (id == 1) return DRAW_DIALOGBOX_NPCACTION_QUERY21;	// Trade
 		if (id == 2) return DRAW_DIALOGBOX_NPCACTION_QUERY39;	// Sell
@@ -195,7 +198,7 @@ void CGame::DrawDialogBox_NpcActionQuery()
 	const char * pTitle = NULL;
 	int iKind = dlg.sV3;
 	switch (iMode) {
-	case 0: case 4: case 5: pTitle = NpcName(dlg.sV3); break;
+	case 0: case 4: case 5: case 12: pTitle = NpcName(dlg.sV3); break;
 	case 6: pTitle = DRAW_DIALOGBOX_NPCACTION_QUERY49; iKind = 90; break;
 	case 7: pTitle = DRAW_BLACKSMITH; iKind = 24; break;
 	case 8: pTitle = DRAW_SHOP; iKind = 15; break;
