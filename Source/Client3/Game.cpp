@@ -2141,6 +2141,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 	if( sDivY < 0 || sDivX < 0) return ;
 	m_wantedTags.clear();
 	m_npcLabels.clear();		// monster names and health bars, gathered as they're drawn
+	WorldPropsBegin();			// VALORIA shrines and chests on this map (UI\WorldProps.cpp)
 	m_wFocusNpcID = 0;
 	m_cFocusNpcExtra[0] = 0;
 	m_sMCX = NULL;
@@ -2157,6 +2158,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 		for (ix = -sModX-128 ; ix <= GAME_W + 128; ix += 32)
 		{	sDynamicObject = NULL;
 			bRet = FALSE;
+			if (!m_propsHere.empty() && ix >= -sModX - 96 && ix <= GAME_W + 96 && iy >= -sModY && iy <= VIEW_BOTTOM + 160) DrawWorldProp(indexX, indexY, ix, iy);
 			if ((ix >= -sModX) && (ix <= GAME_W+16) && (iy >= -sModY) && (iy <= VIEW_BOTTOM+32+16))
 			{	_tmp_wObjectID = _tmp_sOwnerType = _tmp_sAppr1 = _tmp_sAppr2 = _tmp_sAppr3 = _tmp_sAppr4 = _tmp_iStatus = NULL;
 				_tmp_cDir = _tmp_cFrame = 0;
@@ -4382,6 +4384,7 @@ void CGame::InitGameSettings()
 	m_enchant.Clear(); m_iEnchantSel = -1; m_iEnchantScroll = 0; m_dwEnchantConfirmAt = 0;	// VALORIA enchanting
 	m_passive.Clear(); m_iPassivePick = -1; m_dwPassiveOrbAt = 0;	// VALORIA passive tree
 	m_titleOf.clear(); m_bAchSeen = false; m_iAchScroll = 0;	// VALORIA achievements
+	m_propReadyAt.clear();	// VALORIA shrines and chests
 	m_iSideSel = -1; m_dwSideAbandonAt = 0;	// VALORIA side quests
 	memset(m_dwValBuffEnd, 0, sizeof(m_dwValBuffEnd));	// VALORIA buffs
 	m_bounties.clear(); m_bountyBackers.clear(); m_cBountySel[0] = 0; m_dwBountyClaims = m_dwBountyClaimGold = 0;
@@ -27689,6 +27692,7 @@ void CGame::NotifyMsgHandler(char * pData)
 	case NOTIFY_ENCHANTITEMS: NotifyMsg_EnchantItems((char *)pData); break;
 	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;
 	case NOTIFY_TITLEINFO: NotifyMsg_TitleInfo((char *)pData); break;
+	case NOTIFY_WORLDPROP: NotifyMsg_WorldProp((char *)pData); break;	// VALORIA shrines and chests (UI\WorldProps.cpp)
 	case NOTIFY_SIDEEVENT: NotifyMsg_SideEvent((char *)pData); break;	// VALORIA side quests (UI\SideQuestPanel.cpp)	// VALORIA achievement titles (UI\AchievePanel.cpp)	// VALORIA passive tree (UI\PassivePanel.cpp)
 	case NOTIFY_VALORIABUFFS: NotifyMsg_ValoriaBuffs((char *)pData); break;	// VALORIA elixirs and scrolls (UI\ValoriaUse.cpp)
 

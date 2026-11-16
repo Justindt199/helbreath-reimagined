@@ -596,6 +596,11 @@ public:
 	void AchOnMapEntry(int h);
 	void AchTitleRequest(int iClientH, char * pData);
 	void AchAdmin(int iClientH, const char * pArgs);
+	// VALORIA shrines and chests (WorldProps.cpp)
+	void WorldSendProp(int iToH, int iProp);
+	void WorldOnMapEntry(int h);
+	void WorldSpill(int iClientH, int iProp, const char * pItemName, uint32 dwCount, bool bGear);
+	void WorldTick(int iClientH);
 	// VALORIA side quests (SideQuests.cpp)
 	void SideEvent(int iClientH, int iCode, int iQuest, int iObj = 0, int iValue = 0, int iXP = 0);
 	bool SideNearGiver(int iClientH, int iGiver);

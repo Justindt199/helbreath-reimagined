@@ -1366,6 +1366,34 @@ StoneTex * Stone(int i)
 }
 }
 
+void CRenderer::WorldImage(int iPic, int x0, int y0, int x1, int y1, COLORREF tint, int iAlpha)
+{
+	static StoneTex pics[2] = { { "CONTENTS\\world\\shrine.png", 0, 0, 1.f }, { "CONTENTS\\world\\chest.png", 0, 0, 1.f } };
+	CUiGpu * pG = UiGpuRecorder();
+	if (pG == NULL || iPic < 0 || iPic > 1 || iAlpha <= 0) return;
+	StoneTex * t = &pics[iPic];
+	if (!t->tried) {
+		t->tried = true;
+		sf::Image img;
+		if (img.loadFromFile(t->file)) {
+			t->w = (int)img.getSize().x; t->h = (int)img.getSize().y;
+			t->px.resize((size_t)t->w * t->h);
+			std::memcpy(t->px.data(), img.getPixelsPtr(), t->px.size() * 4);
+		}
+	}
+	if (t->w <= 0) return;
+	const std::uint32_t tr = GetRValue(tint), tg = GetGValue(tint), tb = GetBValue(tint), ta = (std::uint32_t)(iAlpha > 255 ? 255 : iAlpha);
+	auto Fill = [t, tr, tg, tb, ta](std::uint32_t * out) {
+		const size_t n = (size_t)t->w * t->h;
+		for (size_t i = 0; i < n; i++) {
+			const std::uint32_t p = t->px[i];
+			out[i] = ((p & 0xFF) * tr / 255) | ((((p >> 8) & 0xFF) * tg / 255) << 8) | ((((p >> 16) & 0xFF) * tb / 255) << 16) | (((p >> 24) * ta / 255) << 24);
+		}
+	};
+	const std::uint64_t key = 0x574F524C00000000ull ^ ((std::uint64_t)(iPic + 1) << 56) ^ ((std::uint64_t)ta << 24) ^ (std::uint64_t)(tint & 0xFFFFFF);
+	pG->AddImageCached(key, 1u, t->w, t->h, Fill, true, 2.f * x0, 2.f * y0, 2.f * (x1 - x0), 2.f * (y1 - y0), 0, 0, 2 * RENDER_WIDTH, 2 * RENDER_HEIGHT, UIBL_ALPHA);
+}
+
 void CRenderer::StoneBox(int iStone, int x0, int y0, int x1, int y1)
 {
 	if (x1 <= x0 || y1 <= y0) return;

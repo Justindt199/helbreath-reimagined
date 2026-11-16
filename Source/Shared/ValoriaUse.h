@@ -30,7 +30,10 @@ const int INFUSE_ASCEND  = 102;		// Ascension Orb: Common..Rare one step up, plu
 const int INFUSE_RADIANT = 103;		// Radiant Orb: Epic to Legendary, plus a bonus stat
 const int MAX_UPGRADE    = 15;
 
-enum Buff { BUFF_STRENGTH, BUFF_IRONSKIN, BUFF_SWIFTNESS, BUFF_WISDOM, BUFF_INSIGHT, BUFF_FORTUNE, BUFF_COUNT };
+// The blessings are VALORIA's shrines (Shared\ValoriaWorld.h); they are not kept over log out.
+enum Buff { BUFF_STRENGTH, BUFF_IRONSKIN, BUFF_SWIFTNESS, BUFF_WISDOM, BUFF_INSIGHT, BUFF_FORTUNE,
+	BUFF_BLESS_MIGHT, BUFF_BLESS_SWIFTNESS, BUFF_BLESS_WISDOM, BUFF_BLESS_FORTUNE, BUFF_BLESS_VIGOR, BUFF_COUNT };
+const int BUFF_SAVED = BUFF_BLESS_MIGHT;	// the buffs before this one are saved at log out
 
 struct BuffDef {
 	const char * name;
@@ -38,6 +41,7 @@ struct BuffDef {
 	int str, dex, intl, mag, def;	// Valoria modifiers
 	int xpPct, dodge;				// dodge: % chance to avoid a melee hit
 	int goldPct, itemPct;			// gold find, item find
+	int vit, hp, mp;
 };
 
 static const BuffDef BUFFS[BUFF_COUNT] = {
@@ -47,6 +51,12 @@ static const BuffDef BUFFS[BUFF_COUNT] = {
 	{ "Elixir of Wisdom",    180,  0, 0, 15, 15,  0,  0,  0 },
 	{ "Scroll of Insight",   600,  0, 0,  0,  0,  0, 50,  0 },
 	{ "Elixir of Fortune",   300,  0, 0,  0,  0,  0,  0,  0, 50, 50 },
+	// VALORIA's shrine blessings (its +25% move speed is +25% dodge here, point for point)
+	{ "Blessing of Might",     240,  8, 0,  0,  0,  6,  0,  0 },
+	{ "Blessing of Swiftness", 240,  0, 6,  0,  0,  0,  0, 25 },
+	{ "Blessing of Wisdom",    240,  0, 0,  0, 10,  0,  0,  0,  0,  0,  0,  0, 40 },
+	{ "Blessing of Fortune",   240,  0, 0,  0,  0,  0,  0,  0, 40, 40 },
+	{ "Blessing of Vigor",     240,  0, 0,  0,  0,  0,  0,  0,  0,  0,  8, 60,  0 },
 };
 
 // The buff's lines for tooltips: "+10 STR", "+50% XP", "+5% Dodge".
@@ -60,6 +70,9 @@ inline int BuffLines(int b, char out[4][48])
 	if (d.intl) _snprintf(out[n++], 47, "+%d INT", d.intl);
 	if (d.mag)  _snprintf(out[n++], 47, "+%d MAG", d.mag);
 	if (d.def)  _snprintf(out[n++], 47, "+%d Defense", d.def);
+	if (d.vit)  _snprintf(out[n++], 47, "+%d VIT", d.vit);
+	if (d.hp)   _snprintf(out[n++], 47, "+%d Max HP", d.hp);
+	if (d.mp)   _snprintf(out[n++], 47, "+%d Max MP", d.mp);
 	if (d.xpPct) _snprintf(out[n++], 47, "+%d%% XP", d.xpPct);
 	if (d.goldPct && n < 4) _snprintf(out[n++], 47, "+%d%% Gold find", d.goldPct);
 	if (d.itemPct && n < 4) _snprintf(out[n++], 47, "+%d%% Item find", d.itemPct);

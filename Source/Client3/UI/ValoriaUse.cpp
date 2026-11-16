@@ -36,6 +36,9 @@ int CGame::ValoriaBuffTotal(int iKind) const
 		case GEAR_INT: v += d.intl; break;
 		case GEAR_MAG: v += d.mag; break;
 		case GEAR_DEF: v += d.def; break;
+		case GEAR_VIT: v += d.vit; break;
+		case GEAR_HP:  v += d.hp; break;
+		case GEAR_MP:  v += d.mp; break;
 		}
 	}
 	return v;

@@ -537,6 +537,13 @@ public:
 	void DrawDialogBox_Achievements();
 	void DlgBoxClick_Achievements();
 
+	// VALORIA shrines and chests (UI\WorldProps.cpp)
+	std::vector<DWORD> m_propReadyAt;	// per prop: when it is back (0 = ready)
+	std::vector<int> m_propsHere;		// the props of the map being drawn
+	void NotifyMsg_WorldProp(char * pData);
+	void WorldPropsBegin();
+	void DrawWorldProp(int tx, int ty, int sx, int sy);
+
 	// VALORIA side quests (UI\SideQuestPanel.cpp)
 	enum { SIDEWIN_W = 640, SIDEWIN_H = 420 };
 	int  m_iSideGiver = 0, m_iSideSel = -1;		// giver: 67 / 68 / 69, or 0 for the journal

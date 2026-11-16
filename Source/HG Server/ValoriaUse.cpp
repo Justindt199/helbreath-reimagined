@@ -29,7 +29,7 @@ using namespace ValoriaUse;
 // (char_database.ValoriaPassive), one byte per buff in 5-second steps, so up to 21 minutes.
 const int BUFF_SAVE_AT = 40;
 const int BUFF_SAVE_STEP = 5;
-static_assert(BUFF_SAVE_AT > ValoriaPassive::BIT_BYTES && BUFF_SAVE_AT + BUFF_COUNT <= ValoriaPassive::DATA_BYTES,
+static_assert(BUFF_SAVE_AT > ValoriaPassive::BIT_BYTES && BUFF_SAVE_AT + BUFF_SAVED <= ValoriaPassive::DATA_BYTES,
 	"saved buffs must sit in the passive block's spare bytes");
 
 void CGame::ValoriaSaveBuffs(int iClientH, unsigned char * pPassive)
@@ -37,7 +37,7 @@ void CGame::ValoriaSaveBuffs(int iClientH, unsigned char * pPassive)
 	CClient * p = m_pClientList[iClientH];
 	if (p == NULL) return;
 	const uint32 t = timeGetTime();
-	for (int b = 0; b < BUFF_COUNT; b++) {
+	for (int b = 0; b < BUFF_SAVED; b++) {
 		uint32 left = (p->m_valBuffEnd[b] != 0 && (int)(p->m_valBuffEnd[b] - t) > 0) ? (p->m_valBuffEnd[b] - t + 999) / 1000 : 0;
 		left = (left + BUFF_SAVE_STEP - 1) / BUFF_SAVE_STEP;
 		pPassive[BUFF_SAVE_AT + b] = (unsigned char)(left > 255 ? 255 : left);
@@ -48,7 +48,7 @@ void CGame::ValoriaLoadBuffs(CClient * p, const unsigned char * pPassive)
 {
 	if (p == NULL) return;
 	const uint32 t = timeGetTime();
-	for (int b = 0; b < BUFF_COUNT; b++) {
+	for (int b = 0; b < BUFF_SAVED; b++) {
 		const uint32 left = (uint32)pPassive[BUFF_SAVE_AT + b] * BUFF_SAVE_STEP;
 		p->m_valBuffEnd[b] = left ? t + left * 1000 : 0;
 	}
@@ -117,6 +117,9 @@ void CGame::ValoriaBuffBonus(int iClientH)
 		p->m_gearInt += d.intl;
 		p->m_gearMag += d.mag;
 		p->m_gearDef += d.def;
+		p->m_gearVit += d.vit;
+		p->m_gearHP += d.hp;
+		p->m_gearMP += d.mp;
 		p->m_passXpPct += d.xpPct;
 		p->m_val.goldFind += d.goldPct;
 		p->m_val.itemFind += d.itemPct;
@@ -211,6 +214,7 @@ void CGame::ValoriaBuffTick(int iClientH)
 	if (p == NULL) return;
 	if (p->m_bValoriaItemsDirty) { p->m_bValoriaItemsDirty = false; EnchantSendItems(iClientH); }	// after the item itself arrived
 	if (p->m_bAchDirty) { p->m_bAchDirty = false; EnchantSendStats(iClientH); }	// achievement counters (Achievements.cpp)
+	WorldTick(iClientH);	// VALORIA shrines and chests (WorldProps.cpp)
 	const uint32 t = timeGetTime();
 	bool bEnded = false;
 	for (int b = 0; b < BUFF_COUNT; b++) {
