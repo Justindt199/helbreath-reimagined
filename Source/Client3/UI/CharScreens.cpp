@@ -203,7 +203,11 @@ void CGame::DrawCharScreenBackdrop()
 	m_Renderer.FillPanel(0, 0, GAME_W, GAME_H, 0, RGB(0, 0, 0), 70);
 	char cVer[32];
 	wsprintf(cVer, "Client %d.%d", UPPER_VERSION, LOWER_VERSION);
-	m_Renderer.TextOutSized(GAME_W - 12 - Width(m_Renderer, cVer, 11), GAME_H - 18, cVer, kDim, 11);
+	if (LoginModule(LM_VERSION).show) {		// where login_layout.cfg puts it
+		int vx, vy;
+		LoginPlace(LM_VERSION, Width(m_Renderer, cVer, 11), 11, &vx, &vy);
+		m_Renderer.TextOutSized(vx, vy, cVer, kDim, 11);
+	}
 }
 
 void CGame::CharPedestalSpot(int * pX, int * pY)
@@ -422,14 +426,18 @@ void CGame::CampBack()
 // Back, Delete and Play with one chosen
 void CGame::CampRects(RECT * pInfo, RECT * pBack, RECT * pDelete, RECT * pPlay, RECT * pLogout, RECT * pChangePw)
 {
-	const int W = GAME_W, H = GAME_H;
-	if (pInfo) { const int pw = (std::max)(176, W * 30 / 100), x0 = W * 60 / 100; SetRect(pInfo, x0, H * 9 / 100, (std::min)(x0 + pw, W - 12), H * 9 / 100 + 176); }
-	const int bw = 84, bh = 26, gap = 8, x0 = (W - (3 * bw + 2 * gap)) / 2, y = H - 46;
-	if (pBack) SetRect(pBack, x0, y, x0 + bw, y + bh);
-	if (pDelete) SetRect(pDelete, x0 + bw + gap, y, x0 + 2 * bw + gap, y + bh);
-	if (pPlay) SetRect(pPlay, x0 + 2 * (bw + gap), y, x0 + 3 * bw + 2 * gap, y + bh);
-	if (pLogout) SetRect(pLogout, 16, y, 16 + bw, y + bh);
-	if (pChangePw) SetRect(pChangePw, 16 + bw + 12, y + 4, 16 + bw + 12 + 110, y + 22);
+	// from login_layout.cfg (UI\LoginLayout.cpp): each piece on the screen. Change password can be hidden
+	// (an empty rectangle: neither drawn nor clicked).
+	const struct { RECT * rc; int mod; } k[6] = { { pInfo, LM_SEL_INFO }, { pBack, LM_SEL_BACK }, { pDelete, LM_SEL_DELETE },
+		{ pPlay, LM_SEL_PLAY }, { pLogout, LM_SEL_LOGOUT }, { pChangePw, LM_SEL_CHANGEPW } };
+	for (int i = 0; i < 6; i++) {
+		if (k[i].rc == NULL) continue;
+		const LoginMod & m = LoginModule(k[i].mod);
+		int x, y;
+		LoginPlace(k[i].mod, m.w, m.h, &x, &y);
+		if (m.show || k[i].mod != LM_SEL_CHANGEPW) SetRect(k[i].rc, x, y, x + m.w, y + m.h);
+		else SetRect(k[i].rc, 0, 0, 0, 0);
+	}
 }
 
 bool CGame::CharSlotFilled(int i)
@@ -592,7 +600,11 @@ void CGame::_Draw_SelectScreen(int msX, int msY, bool bIgnoreFocus)
 	const int iLast = LastPlayed(m_pCharList);
 	if (zk < 1.f) {
 		R.m_iFadeA = (int)(255 * (1.f - zk) * Clamp01((tOpen - 0.6f) / 0.4f));
-		R.TitleOut(16, 14, "CHARACTERS", kGold, 15);
+		if (LoginModule(LM_SEL_TITLE).show) {
+			int tx, ty;
+			LoginPlace(LM_SEL_TITLE, R.TitleWidth(LoginModule(LM_SEL_TITLE).text.c_str(), 15), 15, &tx, &ty);
+			R.TitleOut(tx, ty, LoginModule(LM_SEL_TITLE).text.c_str(), kGold, 15);
+		}
 		for (int i = 0; i < 4; i++) {
 			R.m_iFadeA = (int)(255 * (1.f - zk) * Clamp01((tOpen - 0.9f - i * 0.15f) / 0.4f));	// one after another
 			if (R.m_iFadeA <= 0) continue;
@@ -680,26 +692,34 @@ void CGame::_Draw_SelectScreen(int msX, int msY, bool bIgnoreFocus)
 
 	// the hint, and the buttons
 	const bool bChosen = c.iSel >= 0, bChar = bChosen && CharSlotFilled(c.iSel);
-	const char * pHint = !bChosen ? "Choose a character to take a closer look."
-		: (bChar ? "Press Play to enter the world." : "An empty seat at the fire.");
-	CenterText(R, W / 2, rcPlay.top - 20, pHint, RGB(186, 192, 200), 12);
+	const LoginMod & hm = LoginModule(LM_SEL_HINT);
+	const char * pHint = hm.line[!bChosen ? 0 : (bChar ? 1 : 2)].c_str();
+	if (hm.show && pHint[0]) {
+		int hx, hy;
+		LoginPlace(LM_SEL_HINT, Width(R, pHint, 12), 12, &hx, &hy);
+		R.TextOutSized(hx, hy, pHint, RGB(186, 192, 200), 12);
+	}
 	if (bChosen) {
 		const bool bCanDelete = bChar && CanDeleteCharacter(c.iSel);
-		Button(R, rcBack, "BACK", 0, bHere && InRect(rcBack, msX, msY));
+		Button(R, rcBack, LoginModule(LM_SEL_BACK).text.c_str(), 0, bHere && InRect(rcBack, msX, msY));
 		if (bChar) {
-			Button(R, rcDel, "DELETE", bCanDelete ? 0 : 2, bHere && bCanDelete && InRect(rcDel, msX, msY));
-			Button(R, rcPlay, "PLAY", 1, bHere && InRect(rcPlay, msX, msY));
+			Button(R, rcDel, LoginModule(LM_SEL_DELETE).text.c_str(), bCanDelete ? 0 : 2, bHere && bCanDelete && InRect(rcDel, msX, msY));
+			Button(R, rcPlay, LoginModule(LM_SEL_PLAY).text.c_str(), 1, bHere && InRect(rcPlay, msX, msY));
 		}
-		else Button(R, rcDel, "CREATE", 1, bHere && InRect(rcDel, msX, msY));
+		else Button(R, rcDel, LoginModule(LM_SEL_DELETE).text2.c_str(), 1, bHere && InRect(rcDel, msX, msY));
 	}
 	else {
-		Button(R, rcLogout, "LOG OUT", 0, bHere && InRect(rcLogout, msX, msY));
+		Button(R, rcLogout, LoginModule(LM_SEL_LOGOUT).text.c_str(), 0, bHere && InRect(rcLogout, msX, msY));
 		const bool bOn = bHere && InRect(rcPw, msX, msY);
-		R.TextOutSized(rcPw.left, rcPw.top, "Change password", bOn ? kGold : kDim, 11);
+		if (rcPw.right > rcPw.left) R.TextOutSized(rcPw.left, rcPw.top, LoginModule(LM_SEL_CHANGEPW).text.c_str(), bOn ? kGold : kDim, 11);
 	}
 	char cVer[32];
 	wsprintf(cVer, "Client %d.%d", UPPER_VERSION, LOWER_VERSION);
-	R.TextOutSized(W - 12 - Width(R, cVer, 11), H - 18, cVer, kDim, 11);
+	if (LoginModule(LM_VERSION).show) {		// where login_layout.cfg puts it
+		int vx, vy;
+		LoginPlace(LM_VERSION, Width(m_Renderer, cVer, 11), 11, &vx, &vy);
+		m_Renderer.TextOutSized(vx, vy, cVer, kDim, 11);
+	}
 	if (tOpen < 1.f) R.FillPanel(0, 0, W, H, 0, RGB(0, 0, 0), (int)(255.f * (1.f - Ease(tOpen))));	// fading up
 }
 

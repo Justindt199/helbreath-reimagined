@@ -1,0 +1,5933 @@
+{
+ "targets": [
+  {
+   "npc": "Slime",
+   "name": "Slime",
+   "cat": 0
+  },
+  {
+   "npc": "Rabbit",
+   "name": "Rabbit",
+   "cat": 0
+  },
+  {
+   "npc": "Cat",
+   "name": "Cat",
+   "cat": 0
+  },
+  {
+   "npc": "Giant-Ant",
+   "name": "Giant Ant",
+   "cat": 0
+  },
+  {
+   "npc": "Giant-Frog",
+   "name": "Giant Frog",
+   "cat": 0
+  },
+  {
+   "npc": "Orc",
+   "name": "Orc",
+   "cat": 0
+  },
+  {
+   "npc": "Scorpion",
+   "name": "Scorpion",
+   "cat": 0
+  },
+  {
+   "npc": "Zombie",
+   "name": "Zombie",
+   "cat": 0
+  },
+  {
+   "npc": "Skeleton",
+   "name": "Skeleton",
+   "cat": 0
+  },
+  {
+   "npc": "Orc-Mage",
+   "name": "Orc Mage",
+   "cat": 0
+  },
+  {
+   "npc": "Clay-Golem",
+   "name": "Clay Golem",
+   "cat": 0
+  },
+  {
+   "npc": "Giant-Lizard",
+   "name": "Giant Lizard",
+   "cat": 0
+  },
+  {
+   "npc": "Giant-Plant",
+   "name": "Giant Plant",
+   "cat": 0
+  },
+  {
+   "npc": "Cannibal-Plant",
+   "name": "Cannibal Plant",
+   "cat": 0
+  },
+  {
+   "npc": "Giant-Crayfish",
+   "name": "Giant Crayfish",
+   "cat": 0
+  },
+  {
+   "npc": "Stone-Golem",
+   "name": "Stone Golem",
+   "cat": 0
+  },
+  {
+   "npc": "Hellbound",
+   "name": "Hellhound",
+   "cat": 0
+  },
+  {
+   "npc": "Troll",
+   "name": "Troll",
+   "cat": 0
+  },
+  {
+   "npc": "Orge",
+   "name": "Ogre",
+   "cat": 0
+  },
+  {
+   "npc": "Cyclops",
+   "name": "Cyclops",
+   "cat": 0
+  },
+  {
+   "npc": "DireBoar",
+   "name": "Dire Boar",
+   "cat": 0
+  },
+  {
+   "npc": "WereWolf",
+   "name": "Werewolf",
+   "cat": 0
+  },
+  {
+   "npc": "MasterMage-Orc",
+   "name": "Master Mage Orc",
+   "cat": 0
+  },
+  {
+   "npc": "Beholder",
+   "name": "Beholder",
+   "cat": 0
+  },
+  {
+   "npc": "Dark-Elf",
+   "name": "Dark Elf",
+   "cat": 0
+  },
+  {
+   "npc": "Ettin",
+   "name": "Ettin",
+   "cat": 0
+  },
+  {
+   "npc": "Minotaurs",
+   "name": "Minotaur",
+   "cat": 0
+  },
+  {
+   "npc": "Unicorn",
+   "name": "Unicorn",
+   "cat": 0
+  },
+  {
+   "npc": "Stalker",
+   "name": "Stalker",
+   "cat": 0
+  },
+  {
+   "npc": "Frost",
+   "name": "Frost",
+   "cat": 0
+  },
+  {
+   "npc": "Ice-Golem",
+   "name": "Ice Golem",
+   "cat": 0
+  },
+  {
+   "npc": "Claw-Turtle",
+   "name": "Claw Turtle",
+   "cat": 0
+  },
+  {
+   "npc": "Centaurus",
+   "name": "Centaurus",
+   "cat": 0
+  },
+  {
+   "npc": "Tentocle",
+   "name": "Tentocle",
+   "cat": 0
+  },
+  {
+   "npc": "Mountain-Giant",
+   "name": "Mountain Giant",
+   "cat": 0
+  },
+  {
+   "npc": "Liche",
+   "name": "Liche",
+   "cat": 0
+  },
+  {
+   "npc": "Gagoyle",
+   "name": "Gargoyle",
+   "cat": 0
+  },
+  {
+   "npc": "Demon",
+   "name": "Demon",
+   "cat": 0
+  },
+  {
+   "npc": "Nizie",
+   "name": "Nizie",
+   "cat": 0
+  },
+  {
+   "npc": "Hellclaw",
+   "name": "Hellclaw",
+   "cat": 1
+  },
+  {
+   "npc": "Tigerworm",
+   "name": "Tigerworm",
+   "cat": 1
+  },
+  {
+   "npc": "Wyvern",
+   "name": "Wyvern",
+   "cat": 1
+  },
+  {
+   "npc": "Fire-Wyvern",
+   "name": "Fire Wyvern",
+   "cat": 1
+  },
+  {
+   "npc": "Barlog",
+   "name": "Balrog King",
+   "cat": 1
+  },
+  {
+   "npc": "Abaddon",
+   "name": "Abaddon",
+   "cat": 1
+  },
+  {
+   "npc": "Amphis",
+   "name": "Amphis",
+   "cat": 0
+  },
+  {
+   "npc": "Ghost",
+   "name": "Ghost",
+   "cat": 0
+  },
+  {
+   "npc": "Vampire",
+   "name": "Vampire",
+   "cat": 0
+  },
+  {
+   "npc": "Ice-Pixie",
+   "name": "Ice Pixie",
+   "cat": 0
+  },
+  {
+   "npc": "Air-Pixie",
+   "name": "Air Pixie",
+   "cat": 0
+  },
+  {
+   "npc": "Rudolph",
+   "name": "Rudolph",
+   "cat": 0
+  }
+ ],
+ "defs": [
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Slime",
+   "title": "Slime Hunter"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Slimes",
+   "title": "Slime Tracker"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Slimes",
+   "title": "Slime Slayer"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Slimes",
+   "title": "Slime Bane"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Slimes",
+   "title": "Slime Reaper"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Slimes",
+   "title": "Slime Scourge"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Slimes",
+   "title": "Slime Butcher"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Slimes",
+   "title": "Slime Executioner"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Slimes",
+   "title": "Slime Annihilator"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Slimes",
+   "title": "Slime Nemesis"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Slimes",
+   "title": "Slime Exterminator"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Slimes",
+   "title": "Slime Destroyer"
+  },
+  {
+   "counter": 0,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Slimes",
+   "title": "Legendary Slime Slayer"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Rabbit",
+   "title": "Rabbit Hunter"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Rabbits",
+   "title": "Rabbit Tracker"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Rabbits",
+   "title": "Rabbit Slayer"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Rabbits",
+   "title": "Rabbit Bane"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Rabbits",
+   "title": "Rabbit Reaper"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Rabbits",
+   "title": "Rabbit Scourge"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Rabbits",
+   "title": "Rabbit Butcher"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Rabbits",
+   "title": "Rabbit Executioner"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Rabbits",
+   "title": "Rabbit Annihilator"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Rabbits",
+   "title": "Rabbit Nemesis"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Rabbits",
+   "title": "Rabbit Exterminator"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Rabbits",
+   "title": "Rabbit Destroyer"
+  },
+  {
+   "counter": 1,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Rabbits",
+   "title": "Legendary Rabbit Slayer"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Cat",
+   "title": "Cat Hunter"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Cats",
+   "title": "Cat Tracker"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Cats",
+   "title": "Cat Slayer"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Cats",
+   "title": "Cat Bane"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Cats",
+   "title": "Cat Reaper"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Cats",
+   "title": "Cat Scourge"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Cats",
+   "title": "Cat Butcher"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Cats",
+   "title": "Cat Executioner"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Cats",
+   "title": "Cat Annihilator"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Cats",
+   "title": "Cat Nemesis"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Cats",
+   "title": "Cat Exterminator"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Cats",
+   "title": "Cat Destroyer"
+  },
+  {
+   "counter": 2,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Cats",
+   "title": "Legendary Cat Slayer"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Giant Ant",
+   "title": "Giant Ant Hunter"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Giant Ants",
+   "title": "Giant Ant Tracker"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Giant Ants",
+   "title": "Giant Ant Slayer"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Giant Ants",
+   "title": "Giant Ant Bane"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Giant Ants",
+   "title": "Giant Ant Reaper"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Giant Ants",
+   "title": "Giant Ant Scourge"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Giant Ants",
+   "title": "Giant Ant Butcher"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Giant Ants",
+   "title": "Giant Ant Executioner"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Giant Ants",
+   "title": "Giant Ant Annihilator"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Giant Ants",
+   "title": "Giant Ant Nemesis"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Giant Ants",
+   "title": "Giant Ant Exterminator"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Giant Ants",
+   "title": "Giant Ant Destroyer"
+  },
+  {
+   "counter": 3,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Giant Ants",
+   "title": "Legendary Giant Ant Slayer"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Giant Frog",
+   "title": "Giant Frog Hunter"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Giant Frogs",
+   "title": "Giant Frog Tracker"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Giant Frogs",
+   "title": "Giant Frog Slayer"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Giant Frogs",
+   "title": "Giant Frog Bane"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Giant Frogs",
+   "title": "Giant Frog Reaper"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Giant Frogs",
+   "title": "Giant Frog Scourge"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Giant Frogs",
+   "title": "Giant Frog Butcher"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Giant Frogs",
+   "title": "Giant Frog Executioner"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Giant Frogs",
+   "title": "Giant Frog Annihilator"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Giant Frogs",
+   "title": "Giant Frog Nemesis"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Giant Frogs",
+   "title": "Giant Frog Exterminator"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Giant Frogs",
+   "title": "Giant Frog Destroyer"
+  },
+  {
+   "counter": 4,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Giant Frogs",
+   "title": "Legendary Giant Frog Slayer"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Orc",
+   "title": "Orc Hunter"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Orcs",
+   "title": "Orc Tracker"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Orcs",
+   "title": "Orc Slayer"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Orcs",
+   "title": "Orc Bane"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Orcs",
+   "title": "Orc Reaper"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Orcs",
+   "title": "Orc Scourge"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Orcs",
+   "title": "Orc Butcher"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Orcs",
+   "title": "Orc Executioner"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Orcs",
+   "title": "Orc Annihilator"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Orcs",
+   "title": "Orc Nemesis"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Orcs",
+   "title": "Orc Exterminator"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Orcs",
+   "title": "Orc Destroyer"
+  },
+  {
+   "counter": 5,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Orcs",
+   "title": "Legendary Orc Slayer"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Scorpion",
+   "title": "Scorpion Hunter"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Scorpions",
+   "title": "Scorpion Tracker"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Scorpions",
+   "title": "Scorpion Slayer"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Scorpions",
+   "title": "Scorpion Bane"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Scorpions",
+   "title": "Scorpion Reaper"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Scorpions",
+   "title": "Scorpion Scourge"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Scorpions",
+   "title": "Scorpion Butcher"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Scorpions",
+   "title": "Scorpion Executioner"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Scorpions",
+   "title": "Scorpion Annihilator"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Scorpions",
+   "title": "Scorpion Nemesis"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Scorpions",
+   "title": "Scorpion Exterminator"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Scorpions",
+   "title": "Scorpion Destroyer"
+  },
+  {
+   "counter": 6,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Scorpions",
+   "title": "Legendary Scorpion Slayer"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Zombie",
+   "title": "Zombie Hunter"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Zombies",
+   "title": "Zombie Tracker"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Zombies",
+   "title": "Zombie Slayer"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Zombies",
+   "title": "Zombie Bane"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Zombies",
+   "title": "Zombie Reaper"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Zombies",
+   "title": "Zombie Scourge"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Zombies",
+   "title": "Zombie Butcher"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Zombies",
+   "title": "Zombie Executioner"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Zombies",
+   "title": "Zombie Annihilator"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Zombies",
+   "title": "Zombie Nemesis"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Zombies",
+   "title": "Zombie Exterminator"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Zombies",
+   "title": "Zombie Destroyer"
+  },
+  {
+   "counter": 7,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Zombies",
+   "title": "Legendary Zombie Slayer"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Skeleton",
+   "title": "Skeleton Hunter"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Skeletons",
+   "title": "Skeleton Tracker"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Skeletons",
+   "title": "Skeleton Slayer"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Skeletons",
+   "title": "Skeleton Bane"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Skeletons",
+   "title": "Skeleton Reaper"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Skeletons",
+   "title": "Skeleton Scourge"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Skeletons",
+   "title": "Skeleton Butcher"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Skeletons",
+   "title": "Skeleton Executioner"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Skeletons",
+   "title": "Skeleton Annihilator"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Skeletons",
+   "title": "Skeleton Nemesis"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Skeletons",
+   "title": "Skeleton Exterminator"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Skeletons",
+   "title": "Skeleton Destroyer"
+  },
+  {
+   "counter": 8,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Skeletons",
+   "title": "Legendary Skeleton Slayer"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Orc Mage",
+   "title": "Orc Mage Hunter"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Orc Mages",
+   "title": "Orc Mage Tracker"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Orc Mages",
+   "title": "Orc Mage Slayer"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Orc Mages",
+   "title": "Orc Mage Bane"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Orc Mages",
+   "title": "Orc Mage Reaper"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Orc Mages",
+   "title": "Orc Mage Scourge"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Orc Mages",
+   "title": "Orc Mage Butcher"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Orc Mages",
+   "title": "Orc Mage Executioner"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Orc Mages",
+   "title": "Orc Mage Annihilator"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Orc Mages",
+   "title": "Orc Mage Nemesis"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Orc Mages",
+   "title": "Orc Mage Exterminator"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Orc Mages",
+   "title": "Orc Mage Destroyer"
+  },
+  {
+   "counter": 9,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Orc Mages",
+   "title": "Legendary Orc Mage Slayer"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Clay Golem",
+   "title": "Clay Golem Hunter"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Clay Golems",
+   "title": "Clay Golem Tracker"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Clay Golems",
+   "title": "Clay Golem Slayer"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Clay Golems",
+   "title": "Clay Golem Bane"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Clay Golems",
+   "title": "Clay Golem Reaper"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Clay Golems",
+   "title": "Clay Golem Scourge"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Clay Golems",
+   "title": "Clay Golem Butcher"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Clay Golems",
+   "title": "Clay Golem Executioner"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Clay Golems",
+   "title": "Clay Golem Annihilator"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Clay Golems",
+   "title": "Clay Golem Nemesis"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Clay Golems",
+   "title": "Clay Golem Exterminator"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Clay Golems",
+   "title": "Clay Golem Destroyer"
+  },
+  {
+   "counter": 10,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Clay Golems",
+   "title": "Legendary Clay Golem Slayer"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Giant Lizard",
+   "title": "Giant Lizard Hunter"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Giant Lizards",
+   "title": "Giant Lizard Tracker"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Giant Lizards",
+   "title": "Giant Lizard Slayer"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Giant Lizards",
+   "title": "Giant Lizard Bane"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Giant Lizards",
+   "title": "Giant Lizard Reaper"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Giant Lizards",
+   "title": "Giant Lizard Scourge"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Giant Lizards",
+   "title": "Giant Lizard Butcher"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Giant Lizards",
+   "title": "Giant Lizard Executioner"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Giant Lizards",
+   "title": "Giant Lizard Annihilator"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Giant Lizards",
+   "title": "Giant Lizard Nemesis"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Giant Lizards",
+   "title": "Giant Lizard Exterminator"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Giant Lizards",
+   "title": "Giant Lizard Destroyer"
+  },
+  {
+   "counter": 11,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Giant Lizards",
+   "title": "Legendary Giant Lizard Slayer"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Giant Plant",
+   "title": "Giant Plant Hunter"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Giant Plants",
+   "title": "Giant Plant Tracker"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Giant Plants",
+   "title": "Giant Plant Slayer"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Giant Plants",
+   "title": "Giant Plant Bane"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Giant Plants",
+   "title": "Giant Plant Reaper"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Giant Plants",
+   "title": "Giant Plant Scourge"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Giant Plants",
+   "title": "Giant Plant Butcher"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Giant Plants",
+   "title": "Giant Plant Executioner"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Giant Plants",
+   "title": "Giant Plant Annihilator"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Giant Plants",
+   "title": "Giant Plant Nemesis"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Giant Plants",
+   "title": "Giant Plant Exterminator"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Giant Plants",
+   "title": "Giant Plant Destroyer"
+  },
+  {
+   "counter": 12,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Giant Plants",
+   "title": "Legendary Giant Plant Slayer"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Cannibal Plant",
+   "title": "Cannibal Plant Hunter"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Cannibal Plants",
+   "title": "Cannibal Plant Tracker"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Cannibal Plants",
+   "title": "Cannibal Plant Slayer"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Cannibal Plants",
+   "title": "Cannibal Plant Bane"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Cannibal Plants",
+   "title": "Cannibal Plant Reaper"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Cannibal Plants",
+   "title": "Cannibal Plant Scourge"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Cannibal Plants",
+   "title": "Cannibal Plant Butcher"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Cannibal Plants",
+   "title": "Cannibal Plant Executioner"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Cannibal Plants",
+   "title": "Cannibal Plant Annihilator"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Cannibal Plants",
+   "title": "Cannibal Plant Nemesis"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Cannibal Plants",
+   "title": "Cannibal Plant Exterminator"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Cannibal Plants",
+   "title": "Cannibal Plant Destroyer"
+  },
+  {
+   "counter": 13,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Cannibal Plants",
+   "title": "Legendary Cannibal Plant Slayer"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Giant Crayfish",
+   "title": "Giant Crayfish Hunter"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Giant Crayfish",
+   "title": "Giant Crayfish Tracker"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Giant Crayfish",
+   "title": "Giant Crayfish Slayer"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Giant Crayfish",
+   "title": "Giant Crayfish Bane"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Giant Crayfish",
+   "title": "Giant Crayfish Reaper"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Giant Crayfish",
+   "title": "Giant Crayfish Scourge"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Giant Crayfish",
+   "title": "Giant Crayfish Butcher"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Giant Crayfish",
+   "title": "Giant Crayfish Executioner"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Giant Crayfish",
+   "title": "Giant Crayfish Annihilator"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Giant Crayfish",
+   "title": "Giant Crayfish Nemesis"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Giant Crayfish",
+   "title": "Giant Crayfish Exterminator"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Giant Crayfish",
+   "title": "Giant Crayfish Destroyer"
+  },
+  {
+   "counter": 14,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Giant Crayfish",
+   "title": "Legendary Giant Crayfish Slayer"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Stone Golem",
+   "title": "Stone Golem Hunter"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Stone Golems",
+   "title": "Stone Golem Tracker"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Stone Golems",
+   "title": "Stone Golem Slayer"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Stone Golems",
+   "title": "Stone Golem Bane"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Stone Golems",
+   "title": "Stone Golem Reaper"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Stone Golems",
+   "title": "Stone Golem Scourge"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Stone Golems",
+   "title": "Stone Golem Butcher"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Stone Golems",
+   "title": "Stone Golem Executioner"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Stone Golems",
+   "title": "Stone Golem Annihilator"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Stone Golems",
+   "title": "Stone Golem Nemesis"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Stone Golems",
+   "title": "Stone Golem Exterminator"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Stone Golems",
+   "title": "Stone Golem Destroyer"
+  },
+  {
+   "counter": 15,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Stone Golems",
+   "title": "Legendary Stone Golem Slayer"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Hellhound",
+   "title": "Hellhound Hunter"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Hellhounds",
+   "title": "Hellhound Tracker"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Hellhounds",
+   "title": "Hellhound Slayer"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Hellhounds",
+   "title": "Hellhound Bane"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Hellhounds",
+   "title": "Hellhound Reaper"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Hellhounds",
+   "title": "Hellhound Scourge"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Hellhounds",
+   "title": "Hellhound Butcher"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Hellhounds",
+   "title": "Hellhound Executioner"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Hellhounds",
+   "title": "Hellhound Annihilator"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Hellhounds",
+   "title": "Hellhound Nemesis"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Hellhounds",
+   "title": "Hellhound Exterminator"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Hellhounds",
+   "title": "Hellhound Destroyer"
+  },
+  {
+   "counter": 16,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Hellhounds",
+   "title": "Legendary Hellhound Slayer"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Troll",
+   "title": "Troll Hunter"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Trolls",
+   "title": "Troll Tracker"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Trolls",
+   "title": "Troll Slayer"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Trolls",
+   "title": "Troll Bane"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Trolls",
+   "title": "Troll Reaper"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Trolls",
+   "title": "Troll Scourge"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Trolls",
+   "title": "Troll Butcher"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Trolls",
+   "title": "Troll Executioner"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Trolls",
+   "title": "Troll Annihilator"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Trolls",
+   "title": "Troll Nemesis"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Trolls",
+   "title": "Troll Exterminator"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Trolls",
+   "title": "Troll Destroyer"
+  },
+  {
+   "counter": 17,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Trolls",
+   "title": "Legendary Troll Slayer"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Ogre",
+   "title": "Ogre Hunter"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Ogres",
+   "title": "Ogre Tracker"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Ogres",
+   "title": "Ogre Slayer"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Ogres",
+   "title": "Ogre Bane"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Ogres",
+   "title": "Ogre Reaper"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Ogres",
+   "title": "Ogre Scourge"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Ogres",
+   "title": "Ogre Butcher"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Ogres",
+   "title": "Ogre Executioner"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Ogres",
+   "title": "Ogre Annihilator"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Ogres",
+   "title": "Ogre Nemesis"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Ogres",
+   "title": "Ogre Exterminator"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Ogres",
+   "title": "Ogre Destroyer"
+  },
+  {
+   "counter": 18,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Ogres",
+   "title": "Legendary Ogre Slayer"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Cyclops",
+   "title": "Cyclops Hunter"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Cyclopes",
+   "title": "Cyclops Tracker"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Cyclopes",
+   "title": "Cyclops Slayer"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Cyclopes",
+   "title": "Cyclops Bane"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Cyclopes",
+   "title": "Cyclops Reaper"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Cyclopes",
+   "title": "Cyclops Scourge"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Cyclopes",
+   "title": "Cyclops Butcher"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Cyclopes",
+   "title": "Cyclops Executioner"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Cyclopes",
+   "title": "Cyclops Annihilator"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Cyclopes",
+   "title": "Cyclops Nemesis"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Cyclopes",
+   "title": "Cyclops Exterminator"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Cyclopes",
+   "title": "Cyclops Destroyer"
+  },
+  {
+   "counter": 19,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Cyclopes",
+   "title": "Legendary Cyclops Slayer"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Dire Boar",
+   "title": "Dire Boar Hunter"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Dire Boars",
+   "title": "Dire Boar Tracker"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Dire Boars",
+   "title": "Dire Boar Slayer"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Dire Boars",
+   "title": "Dire Boar Bane"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Dire Boars",
+   "title": "Dire Boar Reaper"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Dire Boars",
+   "title": "Dire Boar Scourge"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Dire Boars",
+   "title": "Dire Boar Butcher"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Dire Boars",
+   "title": "Dire Boar Executioner"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Dire Boars",
+   "title": "Dire Boar Annihilator"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Dire Boars",
+   "title": "Dire Boar Nemesis"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Dire Boars",
+   "title": "Dire Boar Exterminator"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Dire Boars",
+   "title": "Dire Boar Destroyer"
+  },
+  {
+   "counter": 20,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Dire Boars",
+   "title": "Legendary Dire Boar Slayer"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Werewolf",
+   "title": "Werewolf Hunter"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Werewolves",
+   "title": "Werewolf Tracker"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Werewolves",
+   "title": "Werewolf Slayer"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Werewolves",
+   "title": "Werewolf Bane"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Werewolves",
+   "title": "Werewolf Reaper"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Werewolves",
+   "title": "Werewolf Scourge"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Werewolves",
+   "title": "Werewolf Butcher"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Werewolves",
+   "title": "Werewolf Executioner"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Werewolves",
+   "title": "Werewolf Annihilator"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Werewolves",
+   "title": "Werewolf Nemesis"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Werewolves",
+   "title": "Werewolf Exterminator"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Werewolves",
+   "title": "Werewolf Destroyer"
+  },
+  {
+   "counter": 21,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Werewolves",
+   "title": "Legendary Werewolf Slayer"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Master Mage Orc",
+   "title": "Mage Orc Hunter"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Master Mage Orcs",
+   "title": "Mage Orc Tracker"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Master Mage Orcs",
+   "title": "Mage Orc Slayer"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Master Mage Orcs",
+   "title": "Mage Orc Bane"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Master Mage Orcs",
+   "title": "Mage Orc Reaper"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Master Mage Orcs",
+   "title": "Mage Orc Scourge"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Master Mage Orcs",
+   "title": "Mage Orc Butcher"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Master Mage Orcs",
+   "title": "Mage Orc Executioner"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Master Mage Orcs",
+   "title": "Mage Orc Annihilator"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Master Mage Orcs",
+   "title": "Mage Orc Nemesis"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Master Mage Orcs",
+   "title": "Mage Orc Exterminator"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Master Mage Orcs",
+   "title": "Mage Orc Destroyer"
+  },
+  {
+   "counter": 22,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Master Mage Orcs",
+   "title": "Legendary Mage Orc Slayer"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Beholder",
+   "title": "Beholder Hunter"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Beholders",
+   "title": "Beholder Tracker"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Beholders",
+   "title": "Beholder Slayer"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Beholders",
+   "title": "Beholder Bane"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Beholders",
+   "title": "Beholder Reaper"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Beholders",
+   "title": "Beholder Scourge"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Beholders",
+   "title": "Beholder Butcher"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Beholders",
+   "title": "Beholder Executioner"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Beholders",
+   "title": "Beholder Annihilator"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Beholders",
+   "title": "Beholder Nemesis"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Beholders",
+   "title": "Beholder Exterminator"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Beholders",
+   "title": "Beholder Destroyer"
+  },
+  {
+   "counter": 23,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Beholders",
+   "title": "Legendary Beholder Slayer"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Dark Elf",
+   "title": "Dark Elf Hunter"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Dark Elves",
+   "title": "Dark Elf Tracker"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Dark Elves",
+   "title": "Dark Elf Slayer"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Dark Elves",
+   "title": "Dark Elf Bane"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Dark Elves",
+   "title": "Dark Elf Reaper"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Dark Elves",
+   "title": "Dark Elf Scourge"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Dark Elves",
+   "title": "Dark Elf Butcher"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Dark Elves",
+   "title": "Dark Elf Executioner"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Dark Elves",
+   "title": "Dark Elf Annihilator"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Dark Elves",
+   "title": "Dark Elf Nemesis"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Dark Elves",
+   "title": "Dark Elf Exterminator"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Dark Elves",
+   "title": "Dark Elf Destroyer"
+  },
+  {
+   "counter": 24,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Dark Elves",
+   "title": "Legendary Dark Elf Slayer"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Ettin",
+   "title": "Ettin Hunter"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Ettins",
+   "title": "Ettin Tracker"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Ettins",
+   "title": "Ettin Slayer"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Ettins",
+   "title": "Ettin Bane"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Ettins",
+   "title": "Ettin Reaper"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Ettins",
+   "title": "Ettin Scourge"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Ettins",
+   "title": "Ettin Butcher"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Ettins",
+   "title": "Ettin Executioner"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Ettins",
+   "title": "Ettin Annihilator"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Ettins",
+   "title": "Ettin Nemesis"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Ettins",
+   "title": "Ettin Exterminator"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Ettins",
+   "title": "Ettin Destroyer"
+  },
+  {
+   "counter": 25,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Ettins",
+   "title": "Legendary Ettin Slayer"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Minotaur",
+   "title": "Minotaur Hunter"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Minotaurs",
+   "title": "Minotaur Tracker"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Minotaurs",
+   "title": "Minotaur Slayer"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Minotaurs",
+   "title": "Minotaur Bane"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Minotaurs",
+   "title": "Minotaur Reaper"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Minotaurs",
+   "title": "Minotaur Scourge"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Minotaurs",
+   "title": "Minotaur Butcher"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Minotaurs",
+   "title": "Minotaur Executioner"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Minotaurs",
+   "title": "Minotaur Annihilator"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Minotaurs",
+   "title": "Minotaur Nemesis"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Minotaurs",
+   "title": "Minotaur Exterminator"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Minotaurs",
+   "title": "Minotaur Destroyer"
+  },
+  {
+   "counter": 26,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Minotaurs",
+   "title": "Legendary Minotaur Slayer"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Unicorn",
+   "title": "Unicorn Hunter"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Unicorns",
+   "title": "Unicorn Tracker"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Unicorns",
+   "title": "Unicorn Slayer"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Unicorns",
+   "title": "Unicorn Bane"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Unicorns",
+   "title": "Unicorn Reaper"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Unicorns",
+   "title": "Unicorn Scourge"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Unicorns",
+   "title": "Unicorn Butcher"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Unicorns",
+   "title": "Unicorn Executioner"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Unicorns",
+   "title": "Unicorn Annihilator"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Unicorns",
+   "title": "Unicorn Nemesis"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Unicorns",
+   "title": "Unicorn Exterminator"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Unicorns",
+   "title": "Unicorn Destroyer"
+  },
+  {
+   "counter": 27,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Unicorns",
+   "title": "Legendary Unicorn Slayer"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Stalker",
+   "title": "Stalker Hunter"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Stalkers",
+   "title": "Stalker Tracker"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Stalkers",
+   "title": "Stalker Slayer"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Stalkers",
+   "title": "Stalker Bane"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Stalkers",
+   "title": "Stalker Reaper"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Stalkers",
+   "title": "Stalker Scourge"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Stalkers",
+   "title": "Stalker Butcher"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Stalkers",
+   "title": "Stalker Executioner"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Stalkers",
+   "title": "Stalker Annihilator"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Stalkers",
+   "title": "Stalker Nemesis"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Stalkers",
+   "title": "Stalker Exterminator"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Stalkers",
+   "title": "Stalker Destroyer"
+  },
+  {
+   "counter": 28,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Stalkers",
+   "title": "Legendary Stalker Slayer"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Frost",
+   "title": "Frost Hunter"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Frost Wraiths",
+   "title": "Frost Tracker"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Frost Wraiths",
+   "title": "Frost Slayer"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Frost Wraiths",
+   "title": "Frost Bane"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Frost Wraiths",
+   "title": "Frost Reaper"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Frost Wraiths",
+   "title": "Frost Scourge"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Frost Wraiths",
+   "title": "Frost Butcher"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Frost Wraiths",
+   "title": "Frost Executioner"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Frost Wraiths",
+   "title": "Frost Annihilator"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Frost Wraiths",
+   "title": "Frost Nemesis"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Frost Wraiths",
+   "title": "Frost Exterminator"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Frost Wraiths",
+   "title": "Frost Destroyer"
+  },
+  {
+   "counter": 29,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Frost Wraiths",
+   "title": "Legendary Frost Slayer"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Ice Golem",
+   "title": "Ice Golem Hunter"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Ice Golems",
+   "title": "Ice Golem Tracker"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Ice Golems",
+   "title": "Ice Golem Slayer"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Ice Golems",
+   "title": "Ice Golem Bane"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Ice Golems",
+   "title": "Ice Golem Reaper"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Ice Golems",
+   "title": "Ice Golem Scourge"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Ice Golems",
+   "title": "Ice Golem Butcher"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Ice Golems",
+   "title": "Ice Golem Executioner"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Ice Golems",
+   "title": "Ice Golem Annihilator"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Ice Golems",
+   "title": "Ice Golem Nemesis"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Ice Golems",
+   "title": "Ice Golem Exterminator"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Ice Golems",
+   "title": "Ice Golem Destroyer"
+  },
+  {
+   "counter": 30,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Ice Golems",
+   "title": "Legendary Ice Golem Slayer"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Claw Turtle",
+   "title": "Claw Turtle Hunter"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Claw Turtles",
+   "title": "Claw Turtle Tracker"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Claw Turtles",
+   "title": "Claw Turtle Slayer"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Claw Turtles",
+   "title": "Claw Turtle Bane"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Claw Turtles",
+   "title": "Claw Turtle Reaper"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Claw Turtles",
+   "title": "Claw Turtle Scourge"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Claw Turtles",
+   "title": "Claw Turtle Butcher"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Claw Turtles",
+   "title": "Claw Turtle Executioner"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Claw Turtles",
+   "title": "Claw Turtle Annihilator"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Claw Turtles",
+   "title": "Claw Turtle Nemesis"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Claw Turtles",
+   "title": "Claw Turtle Exterminator"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Claw Turtles",
+   "title": "Claw Turtle Destroyer"
+  },
+  {
+   "counter": 31,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Claw Turtles",
+   "title": "Legendary Claw Turtle Slayer"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Centaurus",
+   "title": "Centaurus Hunter"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Centauri",
+   "title": "Centaurus Tracker"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Centauri",
+   "title": "Centaurus Slayer"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Centauri",
+   "title": "Centaurus Bane"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Centauri",
+   "title": "Centaurus Reaper"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Centauri",
+   "title": "Centaurus Scourge"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Centauri",
+   "title": "Centaurus Butcher"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Centauri",
+   "title": "Centaurus Executioner"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Centauri",
+   "title": "Centaurus Annihilator"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Centauri",
+   "title": "Centaurus Nemesis"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Centauri",
+   "title": "Centaurus Exterminator"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Centauri",
+   "title": "Centaurus Destroyer"
+  },
+  {
+   "counter": 32,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Centauri",
+   "title": "Legendary Centaurus Slayer"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Tentocle",
+   "title": "Tentocle Hunter"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Tentocles",
+   "title": "Tentocle Tracker"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Tentocles",
+   "title": "Tentocle Slayer"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Tentocles",
+   "title": "Tentocle Bane"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Tentocles",
+   "title": "Tentocle Reaper"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Tentocles",
+   "title": "Tentocle Scourge"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Tentocles",
+   "title": "Tentocle Butcher"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Tentocles",
+   "title": "Tentocle Executioner"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Tentocles",
+   "title": "Tentocle Annihilator"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Tentocles",
+   "title": "Tentocle Nemesis"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Tentocles",
+   "title": "Tentocle Exterminator"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Tentocles",
+   "title": "Tentocle Destroyer"
+  },
+  {
+   "counter": 33,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Tentocles",
+   "title": "Legendary Tentocle Slayer"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Mountain Giant",
+   "title": "Mountain Giant Hunter"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Mountain Giants",
+   "title": "Mountain Giant Tracker"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Mountain Giants",
+   "title": "Mountain Giant Slayer"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Mountain Giants",
+   "title": "Mountain Giant Bane"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Mountain Giants",
+   "title": "Mountain Giant Reaper"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Mountain Giants",
+   "title": "Mountain Giant Scourge"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Mountain Giants",
+   "title": "Mountain Giant Butcher"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Mountain Giants",
+   "title": "Mountain Giant Executioner"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Mountain Giants",
+   "title": "Mountain Giant Annihilator"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Mountain Giants",
+   "title": "Mountain Giant Nemesis"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Mountain Giants",
+   "title": "Mountain Giant Exterminator"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Mountain Giants",
+   "title": "Mountain Giant Destroyer"
+  },
+  {
+   "counter": 34,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Mountain Giants",
+   "title": "Legendary Mountain Giant Slayer"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Liche",
+   "title": "Liche Hunter"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Liches",
+   "title": "Liche Tracker"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Liches",
+   "title": "Liche Slayer"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Liches",
+   "title": "Liche Bane"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Liches",
+   "title": "Liche Reaper"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Liches",
+   "title": "Liche Scourge"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Liches",
+   "title": "Liche Butcher"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Liches",
+   "title": "Liche Executioner"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Liches",
+   "title": "Liche Annihilator"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Liches",
+   "title": "Liche Nemesis"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Liches",
+   "title": "Liche Exterminator"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Liches",
+   "title": "Liche Destroyer"
+  },
+  {
+   "counter": 35,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Liches",
+   "title": "Legendary Liche Slayer"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Gargoyle",
+   "title": "Gargoyle Hunter"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Gargoyles",
+   "title": "Gargoyle Tracker"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Gargoyles",
+   "title": "Gargoyle Slayer"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Gargoyles",
+   "title": "Gargoyle Bane"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Gargoyles",
+   "title": "Gargoyle Reaper"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Gargoyles",
+   "title": "Gargoyle Scourge"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Gargoyles",
+   "title": "Gargoyle Butcher"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Gargoyles",
+   "title": "Gargoyle Executioner"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Gargoyles",
+   "title": "Gargoyle Annihilator"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Gargoyles",
+   "title": "Gargoyle Nemesis"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Gargoyles",
+   "title": "Gargoyle Exterminator"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Gargoyles",
+   "title": "Gargoyle Destroyer"
+  },
+  {
+   "counter": 36,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Gargoyles",
+   "title": "Legendary Gargoyle Slayer"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Demon",
+   "title": "Demon Hunter"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Demons",
+   "title": "Demon Tracker"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Demons",
+   "title": "Demon Slayer"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Demons",
+   "title": "Demon Bane"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Demons",
+   "title": "Demon Reaper"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Demons",
+   "title": "Demon Scourge"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Demons",
+   "title": "Demon Butcher"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Demons",
+   "title": "Demon Executioner"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Demons",
+   "title": "Demon Annihilator"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Demons",
+   "title": "Demon Nemesis"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Demons",
+   "title": "Demon Exterminator"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Demons",
+   "title": "Demon Destroyer"
+  },
+  {
+   "counter": 37,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Demons",
+   "title": "Legendary Demon Slayer"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Nizie",
+   "title": "Nizie Hunter"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Nizies",
+   "title": "Nizie Tracker"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Nizies",
+   "title": "Nizie Slayer"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Nizies",
+   "title": "Nizie Bane"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Nizies",
+   "title": "Nizie Reaper"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Nizies",
+   "title": "Nizie Scourge"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Nizies",
+   "title": "Nizie Butcher"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Nizies",
+   "title": "Nizie Executioner"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Nizies",
+   "title": "Nizie Annihilator"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Nizies",
+   "title": "Nizie Nemesis"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Nizies",
+   "title": "Nizie Exterminator"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Nizies",
+   "title": "Nizie Destroyer"
+  },
+  {
+   "counter": 38,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Nizies",
+   "title": "Legendary Nizie Slayer"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Hellclaw",
+   "title": "Hellclaw Hunter"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Hellclaws",
+   "title": "Hellclaw Tracker"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Hellclaws",
+   "title": "Hellclaw Slayer"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Hellclaws",
+   "title": "Hellclaw Bane"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Hellclaws",
+   "title": "Hellclaw Reaper"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Hellclaws",
+   "title": "Hellclaw Scourge"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Hellclaws",
+   "title": "Hellclaw Butcher"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Hellclaws",
+   "title": "Hellclaw Executioner"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Hellclaws",
+   "title": "Hellclaw Annihilator"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Hellclaws",
+   "title": "Hellclaw Nemesis"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Hellclaws",
+   "title": "Hellclaw Exterminator"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Hellclaws",
+   "title": "Hellclaw Destroyer"
+  },
+  {
+   "counter": 39,
+   "cat": 1,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Hellclaws",
+   "title": "Legendary Hellclaw Slayer"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Tigerworm",
+   "title": "Tigerworm Hunter"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Tigerworms",
+   "title": "Tigerworm Tracker"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Tigerworms",
+   "title": "Tigerworm Slayer"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Tigerworms",
+   "title": "Tigerworm Bane"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Tigerworms",
+   "title": "Tigerworm Reaper"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Tigerworms",
+   "title": "Tigerworm Scourge"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Tigerworms",
+   "title": "Tigerworm Butcher"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Tigerworms",
+   "title": "Tigerworm Executioner"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Tigerworms",
+   "title": "Tigerworm Annihilator"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Tigerworms",
+   "title": "Tigerworm Nemesis"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Tigerworms",
+   "title": "Tigerworm Exterminator"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Tigerworms",
+   "title": "Tigerworm Destroyer"
+  },
+  {
+   "counter": 40,
+   "cat": 1,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Tigerworms",
+   "title": "Legendary Tigerworm Slayer"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Wyvern",
+   "title": "Wyvern Hunter"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Wyverns",
+   "title": "Wyvern Tracker"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Wyverns",
+   "title": "Wyvern Slayer"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Wyverns",
+   "title": "Wyvern Bane"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Wyverns",
+   "title": "Wyvern Reaper"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Wyverns",
+   "title": "Wyvern Scourge"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Wyverns",
+   "title": "Wyvern Butcher"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Wyverns",
+   "title": "Wyvern Executioner"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Wyverns",
+   "title": "Wyvern Annihilator"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Wyverns",
+   "title": "Wyvern Nemesis"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Wyverns",
+   "title": "Wyvern Exterminator"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Wyverns",
+   "title": "Wyvern Destroyer"
+  },
+  {
+   "counter": 41,
+   "cat": 1,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Wyverns",
+   "title": "Legendary Wyvern Slayer"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Fire Wyvern",
+   "title": "Fire Wyvern Hunter"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Fire Wyverns",
+   "title": "Fire Wyvern Tracker"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Fire Wyverns",
+   "title": "Fire Wyvern Slayer"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Fire Wyverns",
+   "title": "Fire Wyvern Bane"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Fire Wyverns",
+   "title": "Fire Wyvern Reaper"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Fire Wyverns",
+   "title": "Fire Wyvern Scourge"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Fire Wyverns",
+   "title": "Fire Wyvern Butcher"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Fire Wyverns",
+   "title": "Fire Wyvern Executioner"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Fire Wyverns",
+   "title": "Fire Wyvern Annihilator"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Fire Wyverns",
+   "title": "Fire Wyvern Nemesis"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Fire Wyverns",
+   "title": "Fire Wyvern Exterminator"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Fire Wyverns",
+   "title": "Fire Wyvern Destroyer"
+  },
+  {
+   "counter": 42,
+   "cat": 1,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Fire Wyverns",
+   "title": "Legendary Fire Wyvern Slayer"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Balrog King",
+   "title": "Balrog Hunter"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Balrog Kings",
+   "title": "Balrog Tracker"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Balrog Kings",
+   "title": "Balrog Slayer"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Balrog Kings",
+   "title": "Balrog Bane"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Balrog Kings",
+   "title": "Balrog Reaper"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Balrog Kings",
+   "title": "Balrog Scourge"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Balrog Kings",
+   "title": "Balrog Butcher"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Balrog Kings",
+   "title": "Balrog Executioner"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Balrog Kings",
+   "title": "Balrog Annihilator"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Balrog Kings",
+   "title": "Balrog Nemesis"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Balrog Kings",
+   "title": "Balrog Exterminator"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Balrog Kings",
+   "title": "Balrog Destroyer"
+  },
+  {
+   "counter": 43,
+   "cat": 1,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Balrog Kings",
+   "title": "Legendary Balrog Slayer"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Abaddon",
+   "title": "Abaddon Hunter"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Abaddons",
+   "title": "Abaddon Tracker"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Abaddons",
+   "title": "Abaddon Slayer"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Abaddons",
+   "title": "Abaddon Bane"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Abaddons",
+   "title": "Abaddon Reaper"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Abaddons",
+   "title": "Abaddon Scourge"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Abaddons",
+   "title": "Abaddon Butcher"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Abaddons",
+   "title": "Abaddon Executioner"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Abaddons",
+   "title": "Abaddon Annihilator"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Abaddons",
+   "title": "Abaddon Nemesis"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Abaddons",
+   "title": "Abaddon Exterminator"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Abaddons",
+   "title": "Abaddon Destroyer"
+  },
+  {
+   "counter": 44,
+   "cat": 1,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Abaddons",
+   "title": "Legendary Abaddon Slayer"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Amphis",
+   "title": "Amphis Hunter"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Amphises",
+   "title": "Amphis Tracker"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Amphises",
+   "title": "Amphis Slayer"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Amphises",
+   "title": "Amphis Bane"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Amphises",
+   "title": "Amphis Reaper"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Amphises",
+   "title": "Amphis Scourge"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Amphises",
+   "title": "Amphis Butcher"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Amphises",
+   "title": "Amphis Executioner"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Amphises",
+   "title": "Amphis Annihilator"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Amphises",
+   "title": "Amphis Nemesis"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Amphises",
+   "title": "Amphis Exterminator"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Amphises",
+   "title": "Amphis Destroyer"
+  },
+  {
+   "counter": 45,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Amphises",
+   "title": "Legendary Amphis Slayer"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Ghost",
+   "title": "Ghost Hunter"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Ghosts",
+   "title": "Ghost Tracker"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Ghosts",
+   "title": "Ghost Slayer"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Ghosts",
+   "title": "Ghost Bane"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Ghosts",
+   "title": "Ghost Reaper"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Ghosts",
+   "title": "Ghost Scourge"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Ghosts",
+   "title": "Ghost Butcher"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Ghosts",
+   "title": "Ghost Executioner"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Ghosts",
+   "title": "Ghost Annihilator"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Ghosts",
+   "title": "Ghost Nemesis"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Ghosts",
+   "title": "Ghost Exterminator"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Ghosts",
+   "title": "Ghost Destroyer"
+  },
+  {
+   "counter": 46,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Ghosts",
+   "title": "Legendary Ghost Slayer"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Vampire",
+   "title": "Vampire Hunter"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Vampires",
+   "title": "Vampire Tracker"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Vampires",
+   "title": "Vampire Slayer"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Vampires",
+   "title": "Vampire Bane"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Vampires",
+   "title": "Vampire Reaper"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Vampires",
+   "title": "Vampire Scourge"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Vampires",
+   "title": "Vampire Butcher"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Vampires",
+   "title": "Vampire Executioner"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Vampires",
+   "title": "Vampire Annihilator"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Vampires",
+   "title": "Vampire Nemesis"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Vampires",
+   "title": "Vampire Exterminator"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Vampires",
+   "title": "Vampire Destroyer"
+  },
+  {
+   "counter": 47,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Vampires",
+   "title": "Legendary Vampire Slayer"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Ice Pixie",
+   "title": "Ice Pixie Hunter"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Ice Pixies",
+   "title": "Ice Pixie Tracker"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Ice Pixies",
+   "title": "Ice Pixie Slayer"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Ice Pixies",
+   "title": "Ice Pixie Bane"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Ice Pixies",
+   "title": "Ice Pixie Reaper"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Ice Pixies",
+   "title": "Ice Pixie Scourge"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Ice Pixies",
+   "title": "Ice Pixie Butcher"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Ice Pixies",
+   "title": "Ice Pixie Executioner"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Ice Pixies",
+   "title": "Ice Pixie Annihilator"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Ice Pixies",
+   "title": "Ice Pixie Nemesis"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Ice Pixies",
+   "title": "Ice Pixie Exterminator"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Ice Pixies",
+   "title": "Ice Pixie Destroyer"
+  },
+  {
+   "counter": 48,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Ice Pixies",
+   "title": "Legendary Ice Pixie Slayer"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Air Pixie",
+   "title": "Air Pixie Hunter"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Air Pixies",
+   "title": "Air Pixie Tracker"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Air Pixies",
+   "title": "Air Pixie Slayer"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Air Pixies",
+   "title": "Air Pixie Bane"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Air Pixies",
+   "title": "Air Pixie Reaper"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Air Pixies",
+   "title": "Air Pixie Scourge"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Air Pixies",
+   "title": "Air Pixie Butcher"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Air Pixies",
+   "title": "Air Pixie Executioner"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Air Pixies",
+   "title": "Air Pixie Annihilator"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Air Pixies",
+   "title": "Air Pixie Nemesis"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Air Pixies",
+   "title": "Air Pixie Exterminator"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Air Pixies",
+   "title": "Air Pixie Destroyer"
+  },
+  {
+   "counter": 49,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Air Pixies",
+   "title": "Legendary Air Pixie Slayer"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 1,
+   "count": 1,
+   "name": "Kill 1 Rudolph",
+   "title": "Rudolph Hunter"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 2,
+   "count": 10,
+   "name": "Kill 10 Rudolphs",
+   "title": "Rudolph Tracker"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 3,
+   "count": 50,
+   "name": "Kill 50 Rudolphs",
+   "title": "Rudolph Slayer"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 4,
+   "count": 100,
+   "name": "Kill 100 Rudolphs",
+   "title": "Rudolph Bane"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 5,
+   "count": 250,
+   "name": "Kill 250 Rudolphs",
+   "title": "Rudolph Reaper"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 6,
+   "count": 500,
+   "name": "Kill 500 Rudolphs",
+   "title": "Rudolph Scourge"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 7,
+   "count": 1000,
+   "name": "Kill 1,000 Rudolphs",
+   "title": "Rudolph Butcher"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 8,
+   "count": 2500,
+   "name": "Kill 2,500 Rudolphs",
+   "title": "Rudolph Executioner"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 9,
+   "count": 5000,
+   "name": "Kill 5,000 Rudolphs",
+   "title": "Rudolph Annihilator"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 10,
+   "count": 10000,
+   "name": "Kill 10,000 Rudolphs",
+   "title": "Rudolph Nemesis"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 11,
+   "count": 25000,
+   "name": "Kill 25,000 Rudolphs",
+   "title": "Rudolph Exterminator"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 12,
+   "count": 50000,
+   "name": "Kill 50,000 Rudolphs",
+   "title": "Rudolph Destroyer"
+  },
+  {
+   "counter": 50,
+   "cat": 0,
+   "tier": 13,
+   "count": 100000,
+   "name": "Kill 100,000 Rudolphs",
+   "title": "Legendary Rudolph Slayer"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 1,
+   "count": 1,
+   "name": "Slay 1 monsters",
+   "title": "Blooded"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 2,
+   "count": 10,
+   "name": "Slay 10 monsters",
+   "title": "Hunter"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 3,
+   "count": 50,
+   "name": "Slay 50 monsters",
+   "title": "Slayer"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 4,
+   "count": 100,
+   "name": "Slay 100 monsters",
+   "title": "Veteran"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 5,
+   "count": 250,
+   "name": "Slay 250 monsters",
+   "title": "Battle-Hardened"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 6,
+   "count": 500,
+   "name": "Slay 500 monsters",
+   "title": "Warrior"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 7,
+   "count": 1000,
+   "name": "Slay 1,000 monsters",
+   "title": "Champion"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 8,
+   "count": 2500,
+   "name": "Slay 2,500 monsters",
+   "title": "Warmonger"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 9,
+   "count": 5000,
+   "name": "Slay 5,000 monsters",
+   "title": "Butcher of Valoria"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 10,
+   "count": 10000,
+   "name": "Slay 10,000 monsters",
+   "title": "Hero of Valoria"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 11,
+   "count": 25000,
+   "name": "Slay 25,000 monsters",
+   "title": "Legend of Valoria"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 12,
+   "count": 50000,
+   "name": "Slay 50,000 monsters",
+   "title": "Bane of Monsters"
+  },
+  {
+   "counter": 64,
+   "cat": 2,
+   "tier": 13,
+   "count": 100000,
+   "name": "Slay 100,000 monsters",
+   "title": "The Unstoppable"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 1,
+   "count": 5,
+   "name": "Reach level 5",
+   "title": "Wanderer"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 2,
+   "count": 10,
+   "name": "Reach level 10",
+   "title": "Adventurer"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 3,
+   "count": 20,
+   "name": "Reach level 20",
+   "title": "Seasoned"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 4,
+   "count": 30,
+   "name": "Reach level 30",
+   "title": "Journeyman"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 5,
+   "count": 40,
+   "name": "Reach level 40",
+   "title": "Stalwart"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 6,
+   "count": 50,
+   "name": "Reach level 50",
+   "title": "Veteran"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 7,
+   "count": 60,
+   "name": "Reach level 60",
+   "title": "Elite"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 8,
+   "count": 70,
+   "name": "Reach level 70",
+   "title": "Master"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 9,
+   "count": 80,
+   "name": "Reach level 80",
+   "title": "Grandmaster"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 10,
+   "count": 90,
+   "name": "Reach level 90",
+   "title": "Exalted"
+  },
+  {
+   "counter": 68,
+   "cat": 3,
+   "tier": 11,
+   "count": 100,
+   "name": "Reach level 100",
+   "title": "Paragon"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 1,
+   "count": 1,
+   "name": "Defeat 1 enemy player",
+   "title": "Skirmisher"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 2,
+   "count": 10,
+   "name": "Defeat 10 enemy players",
+   "title": "Raider"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 3,
+   "count": 50,
+   "name": "Defeat 50 enemy players",
+   "title": "Duelist"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 4,
+   "count": 100,
+   "name": "Defeat 100 enemy players",
+   "title": "Gladiator"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 5,
+   "count": 250,
+   "name": "Defeat 250 enemy players",
+   "title": "Warlord"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 6,
+   "count": 500,
+   "name": "Defeat 500 enemy players",
+   "title": "Conqueror"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 7,
+   "count": 1000,
+   "name": "Defeat 1,000 enemy players",
+   "title": "Crusader"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 8,
+   "count": 2500,
+   "name": "Defeat 2,500 enemy players",
+   "title": "Kingslayer"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 9,
+   "count": 5000,
+   "name": "Defeat 5,000 enemy players",
+   "title": "Scourge of Nations"
+  },
+  {
+   "counter": 65,
+   "cat": 5,
+   "tier": 10,
+   "count": 10000,
+   "name": "Defeat 10,000 enemy players",
+   "title": "God of War"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 1,
+   "count": 1,
+   "name": "Complete 1 quest",
+   "title": "Errand-Runner"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 2,
+   "count": 5,
+   "name": "Complete 5 quests",
+   "title": "Trusted"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 3,
+   "count": 10,
+   "name": "Complete 10 quests",
+   "title": "Sworn"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 4,
+   "count": 20,
+   "name": "Complete 20 quests",
+   "title": "Loyal Blade"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 5,
+   "count": 30,
+   "name": "Complete 30 quests",
+   "title": "Kingdom's Hope"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 6,
+   "count": 40,
+   "name": "Complete 40 quests",
+   "title": "Crownbearer"
+  },
+  {
+   "counter": 66,
+   "cat": 4,
+   "tier": 7,
+   "count": 54,
+   "name": "Complete 54 quests",
+   "title": "Saviour of Valoria"
+  },
+  {
+   "counter": 67,
+   "cat": 4,
+   "tier": 1,
+   "count": 1,
+   "name": "Complete 1 side quest",
+   "title": "Helpful"
+  },
+  {
+   "counter": 67,
+   "cat": 4,
+   "tier": 2,
+   "count": 5,
+   "name": "Complete 5 side quests",
+   "title": "Good Samaritan"
+  },
+  {
+   "counter": 67,
+   "cat": 4,
+   "tier": 3,
+   "count": 10,
+   "name": "Complete 10 side quests",
+   "title": "Wayfarer"
+  },
+  {
+   "counter": 67,
+   "cat": 4,
+   "tier": 4,
+   "count": 15,
+   "name": "Complete 15 side quests",
+   "title": "Troubleshooter"
+  },
+  {
+   "counter": 67,
+   "cat": 4,
+   "tier": 5,
+   "count": 23,
+   "name": "Complete 23 side quests",
+   "title": "Friend of All"
+  }
+ ]
+}

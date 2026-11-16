@@ -106,14 +106,21 @@ void CGame::WorldTick(int iClientH)
 			WorldSpill(iClientH, i, World::kChestPotion[tier - 1], dice(1, 3), false);
 			WorldSpill(iClientH, i, World::kChestMaterial[tier - 1], 1, false);
 			if ((int)dice(1, 100) <= World::ChestGearPct(tier)) {
-				int pool[World::GEAR_COUNT], n = 0;
-				for (int g = 0; g < World::GEAR_COUNT; g++)
-					if (Valoria::ItemTier(World::kGear[g].level) == tier) pool[n++] = g;
-				for (int tries = 0; tries < 8 && n > 0; tries++) {	// the craftable list also has ingots and potions
-					const char * name = World::kGear[pool[dice(1, n) - 1]].name;
-					CItem probe;
-					if (probe.InitItemAttr(name) && probe.m_cEquipPos != EQUIPPOS_NONE) { WorldSpill(iClientH, i, name, 1, true); break; }
+				// the wearable VALORIA gear of the chest's tier, or of the best tier below it that has some
+				// (the craftable list also has ingots and potions; no gear needs a tier-5 level)
+				static int s_pool[6][World::GEAR_COUNT], s_n[6] = { -1 };
+				if (s_n[0] < 0) {
+					for (int t = 0; t < 6; t++) s_n[t] = 0;
+					for (int g = 0; g < World::GEAR_COUNT; g++) {
+						CItem probe;
+						if (!probe.InitItemAttr(World::kGear[g].name) || probe.m_cEquipPos == EQUIPPOS_NONE) continue;
+						const int t = Valoria::ItemTier(World::kGear[g].level);
+						if (t >= 1 && t <= 5) s_pool[t][s_n[t]++] = g;
+					}
 				}
+				int t = tier;
+				while (t > 1 && s_n[t] == 0) t--;
+				if (s_n[t] > 0) WorldSpill(iClientH, i, World::kGear[s_pool[t][dice(1, s_n[t]) - 1]].name, 1, true);
 			}
 			g_readyAt[i] = (t + World::CHEST_REFILL * 1000) | 1;
 		}

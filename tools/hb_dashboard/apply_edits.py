@@ -6,7 +6,9 @@
 EDITS.json: the dashboard's pending edit documents, a list of {"doc": id, "kind", "id", "fields": {field: value}}.
 Each edit is applied whole or not at all. RESULT.json lists, per document, "applied" or "failed" and why,
 for marking the documents on the dashboard. Run the VALORIA generators (build_items.py,
-build_recipes.py, build_passives.py) before this, never after: they rewrite their files.
+build_recipes.py, build_passives.py, build_achievements.py, build_world.py) before this, never after:
+they rewrite their files. Changes to achievements, side quests, shrines and chests remake their
+headers (build_content.py): the game needs rebuilding for those.
 """
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +39,10 @@ def main(src, dst):
             for path, text in files.items():
                 hbdata.write(path, text)
             out.append({'doc': e['doc'], 'status': 'failed', 'note': str(ex.args[0]) if ex.args else str(ex)})
+    # the VALORIA content is compiled in: make its headers again from the changed data
+    if any(r['status'] == 'applied' and e['kind'] in hbdata.CONTENT for r, e in zip(out, edits)):
+        import subprocess
+        subprocess.run([sys.executable, os.path.join(hbdata.ROOT, 'tools', 'valoria_port', 'build_content.py')], check=True)
     json.dump(out, open(dst, 'w'), indent=1)
     for r in out:
         print(r['status'], r['doc'], r['note'])

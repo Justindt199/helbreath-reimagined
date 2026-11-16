@@ -867,7 +867,12 @@ public:
 	// loading / sign-in screens drawn in code (UI\LoginScreen.cpp)
 	void DrawLoginBackdrop(bool bNews);
 	// the sign-in screen's pieces: where they go and what they say (UI\LoginLayout.cpp, CONTENTS\login_layout.cfg)
-	enum { LM_LOGO, LM_NEWS, LM_TOWN, LM_VERSION, LM_PANEL, LM_ACCOUNT, LM_PASSWORD, LM_REMEMBER, LM_CONNECT, LM_CREATE, LM_QUIT, LM_COUNT };
+	enum { LM_LOGO, LM_NEWS, LM_TOWN, LM_VERSION, LM_PANEL, LM_ACCOUNT, LM_PASSWORD, LM_REMEMBER, LM_CONNECT, LM_CREATE, LM_QUIT,
+		// character select: each on the screen
+		LM_SEL_TITLE, LM_SEL_INFO, LM_SEL_HINT, LM_SEL_BACK, LM_SEL_DELETE, LM_SEL_PLAY, LM_SEL_LOGOUT, LM_SEL_CHANGEPW,
+		// create account: the panel on the screen, the rest inside it
+		LM_NEW_PANEL, LM_NEW_ACCOUNT, LM_NEW_PASSWORD, LM_NEW_CONFIRM, LM_NEW_EMAIL, LM_NEW_QUESTION, LM_NEW_ANSWER, LM_NEW_HELP,
+		LM_NEW_CREATE, LM_NEW_CLEAR, LM_NEW_BACK, LM_COUNT };
 	struct LoginMod { int anchor = 0, x = 0, y = 0, w = 0, h = 0; bool show = true; std::string text, text2, line[4]; };
 	static const LoginMod & LoginModule(int i);
 	void LoginPlace(int i, int w, int h, int * px, int * py);

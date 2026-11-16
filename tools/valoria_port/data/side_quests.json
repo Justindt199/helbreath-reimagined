@@ -1,0 +1,730 @@
+{
+ "quests": [
+  {
+   "giver": "McGaffin",
+   "min level": 1,
+   "title": "Pests in the Fields",
+   "offer": "The farms outside the walls are crawling again. Slimes in the furrows, ants in the grain. Clear them out before the harvest rots, and I'll see you're paid.",
+   "hand-in": "The farmers will sleep tonight. Here, you've earned this.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "arefarm|elvfarm|istfarm",
+     "count": 1,
+     "chance": 0,
+     "label": "the town farm"
+    },
+    {
+     "type": "kill",
+     "target": "Slime",
+     "count": 15,
+     "chance": 0,
+     "label": "Slime"
+    },
+    {
+     "type": "kill",
+     "target": "Giant-Ant",
+     "count": 10,
+     "chance": 0,
+     "label": "Giant Ant"
+    }
+   ],
+   "reward item": "HealthPotion",
+   "reward count": 5
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 10,
+   "title": "Stingers",
+   "offer": "Scorpions have been coming up out of the sand near town and stinging the carters. Kill them, and bring me their stingers - the apothecary pays well for the venom.",
+   "hand-in": "Good stingers, these. The carters thank you.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Scorpion",
+     "count": 15,
+     "chance": 0,
+     "label": "Scorpion"
+    },
+    {
+     "type": "collect",
+     "target": "Scorpion",
+     "count": 4,
+     "chance": 35,
+     "label": "Scorpion Stinger"
+    }
+   ],
+   "reward item": "VerdantEssence",
+   "reward count": 1
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 20,
+   "title": "The Middleland Road",
+   "offer": "The road into the Middleland isn't safe any more. Orc raiders by day, the dead by night. Go see it for yourself, and thin both out.",
+   "hand-in": "The caravans can roll again. Well done.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "middleland",
+     "count": 1,
+     "chance": 0,
+     "label": "the Middleland"
+    },
+    {
+     "type": "kill",
+     "target": "Orc",
+     "count": 20,
+     "chance": 0,
+     "label": "Orc"
+    },
+    {
+     "type": "kill",
+     "target": "Zombie",
+     "count": 12,
+     "chance": 0,
+     "label": "Zombie"
+    }
+   ],
+   "reward item": "GreaterHealthPotion",
+   "reward count": 5
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 35,
+   "title": "Wolves at Moonrise",
+   "offer": "Werewolves hunt the Middleland when the moon is up, and stalkers follow behind them for the scraps. Bring me three claws so the Council believes me.",
+   "hand-in": "Three claws, still sharp. The Council can't argue with these.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "WereWolf",
+     "count": 12,
+     "chance": 0,
+     "label": "Werewolf"
+    },
+    {
+     "type": "collect",
+     "target": "WereWolf",
+     "count": 3,
+     "chance": 30,
+     "label": "Werewolf Claw"
+    },
+    {
+     "type": "kill",
+     "target": "Stalker",
+     "count": 6,
+     "chance": 0,
+     "label": "Stalker"
+    }
+   ],
+   "reward item": "AzureEssence",
+   "reward count": 1
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 55,
+   "title": "Down the Old Stair",
+   "offer": "There's a stair under the Middleland that goes down to the second dungeon level. Cyclopes and stone golems hold it now. Go down and break their hold.",
+   "hand-in": "You came back up. Not everyone does.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "dglv2",
+     "count": 1,
+     "chance": 0,
+     "label": "the second dungeon level"
+    },
+    {
+     "type": "kill",
+     "target": "Cyclops",
+     "count": 15,
+     "chance": 0,
+     "label": "Cyclops"
+    },
+    {
+     "type": "kill",
+     "target": "Stone-Golem",
+     "count": 10,
+     "chance": 0,
+     "label": "Stone Golem"
+    }
+   ],
+   "reward item": "FluxStone",
+   "reward count": 3
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 75,
+   "title": "Troll Blood",
+   "offer": "Trolls have come down into the hunting grounds. Kill them where they stand, and bring me their blood. Troll blood heals near anything, if you can stand the smell.",
+   "hand-in": "Phew. That's troll blood all right.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Troll",
+     "count": 15,
+     "chance": 0,
+     "label": "Troll"
+    },
+    {
+     "type": "collect",
+     "target": "Troll",
+     "count": 3,
+     "chance": 30,
+     "label": "Troll Blood"
+    }
+   ],
+   "reward item": "TemperingOil",
+   "reward count": 2
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 100,
+   "title": "The Labyrinth",
+   "offer": "The Maze swallows hunters whole. Minotaurs walk its halls and beholders watch every turning. Go in, come out, and bring their horns as proof.",
+   "hand-in": "You found your way out of the Maze. I owe you a drink.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "maze",
+     "count": 1,
+     "chance": 0,
+     "label": "the Maze"
+    },
+    {
+     "type": "kill",
+     "target": "Minotaurs",
+     "count": 12,
+     "chance": 0,
+     "label": "Minotaur"
+    },
+    {
+     "type": "kill",
+     "target": "Beholder",
+     "count": 8,
+     "chance": 0,
+     "label": "Beholder"
+    },
+    {
+     "type": "collect",
+     "target": "Minotaurs",
+     "count": 3,
+     "chance": 25,
+     "label": "Minotaur Horn"
+    }
+   ],
+   "reward item": "VioletEssence",
+   "reward count": 1
+  },
+  {
+   "giver": "McGaffin",
+   "min level": 140,
+   "title": "Lair of Abaddon",
+   "offer": "Last hunt, and the worst. Abaddon's lair. Barlogs at the gate, a hellclaw and a tigerworm in the deep. Nobody's asked this of you lightly.",
+   "hand-in": "You walked into Abaddon's lair and back out. I'll tell this story until I die.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "abaddon",
+     "count": 1,
+     "chance": 0,
+     "label": "Abaddon's lair"
+    },
+    {
+     "type": "kill",
+     "target": "Barlog",
+     "count": 10,
+     "chance": 0,
+     "label": "Barlog"
+    },
+    {
+     "type": "kill",
+     "target": "Hellclaw",
+     "count": 2,
+     "chance": 0,
+     "label": "Hellclaw"
+    },
+    {
+     "type": "kill",
+     "target": "Tigerworm",
+     "count": 1,
+     "chance": 0,
+     "label": "Tigerworm"
+    }
+   ],
+   "reward item": "RadiantOrb",
+   "reward count": 1
+  },
+  {
+   "giver": "Perry",
+   "min level": 5,
+   "title": "Hides for the Tanner",
+   "offer": "The tanner's out of leather and winter's coming. Amphis hides make the softest boots. Would you fetch me a few?",
+   "hand-in": "Oh, they're lovely! Here, take some of my honey cakes.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Amphis",
+     "count": 10,
+     "chance": 0,
+     "label": "Amphis"
+    },
+    {
+     "type": "collect",
+     "target": "Amphis",
+     "count": 4,
+     "chance": 40,
+     "label": "Amphis Hide"
+    }
+   ],
+   "reward item": "HoneyCake",
+   "reward count": 5
+  },
+  {
+   "giver": "Perry",
+   "min level": 15,
+   "title": "Royal Jelly",
+   "offer": "Giant ants keep a jelly for their queen. A spoonful in tea and the healers swear by it. Bring me three jars' worth?",
+   "hand-in": "Sweet as anything. The healers will be so pleased.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Giant-Ant",
+     "count": 20,
+     "chance": 0,
+     "label": "Giant Ant"
+    },
+    {
+     "type": "collect",
+     "target": "Giant-Ant",
+     "count": 3,
+     "chance": 25,
+     "label": "Royal Jelly"
+    }
+   ],
+   "reward item": "ManaPotion",
+   "reward count": 5
+  },
+  {
+   "giver": "Perry",
+   "min level": 25,
+   "title": "Bone Meal",
+   "offer": "The town garden needs bone meal, and the skeletons outside town have plenty to spare. It's grim work, I know.",
+   "hand-in": "Grim, but the roses will love it. Thank you.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Skeleton",
+     "count": 15,
+     "chance": 0,
+     "label": "Skeleton"
+    },
+    {
+     "type": "collect",
+     "target": "Skeleton",
+     "count": 5,
+     "chance": 40,
+     "label": "Bone Dust"
+    }
+   ],
+   "reward item": "SpiritSalt",
+   "reward count": 2
+  },
+  {
+   "giver": "Perry",
+   "min level": 45,
+   "title": "Frog Song",
+   "offer": "The big frogs down in the dungeon have glands that make a fine salve for burns. Mind the cyclopes down there.",
+   "hand-in": "Slippery things! Here - these will serve you better than they serve me.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Giant-Frog",
+     "count": 15,
+     "chance": 0,
+     "label": "Giant Frog"
+    },
+    {
+     "type": "collect",
+     "target": "Giant-Frog",
+     "count": 4,
+     "chance": 35,
+     "label": "Frog Gland"
+    }
+   ],
+   "reward item": "GreaterManaPotion",
+   "reward count": 5
+  },
+  {
+   "giver": "Perry",
+   "min level": 80,
+   "title": "Lizard Scale",
+   "offer": "In Procella the giant lizards shed scales as hard as steel. The armourers would give anything for a few. Careful - the minotaurs roam there too.",
+   "hand-in": "Look how they shine! The armourers will be beside themselves.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "procella",
+     "count": 1,
+     "chance": 0,
+     "label": "Procella"
+    },
+    {
+     "type": "kill",
+     "target": "Giant-Lizard",
+     "count": 15,
+     "chance": 0,
+     "label": "Giant Lizard"
+    },
+    {
+     "type": "collect",
+     "target": "Giant-Lizard",
+     "count": 4,
+     "chance": 30,
+     "label": "Lizard Scale"
+    }
+   ],
+   "reward item": "MoonwellDew",
+   "reward count": 2
+  },
+  {
+   "giver": "Perry",
+   "min level": 90,
+   "title": "Weeds With Teeth",
+   "offer": "Procella's cannibal plants bleed a sap that cures fever. They bite, mind you. Gloves won't help.",
+   "hand-in": "Sticky and smelly and exactly right. You're a treasure.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Cannibal-Plant",
+     "count": 15,
+     "chance": 0,
+     "label": "Cannibal Plant"
+    },
+    {
+     "type": "collect",
+     "target": "Cannibal-Plant",
+     "count": 4,
+     "chance": 30,
+     "label": "Living Sap"
+    }
+   ],
+   "reward item": "SulfurBloom",
+   "reward count": 3
+  },
+  {
+   "giver": "Perry",
+   "min level": 110,
+   "title": "Shells of Druncn",
+   "offer": "Druncn City's half under water now. Claw turtles and crayfish everywhere. A turtle shell or two would make the finest shields in town.",
+   "hand-in": "These shells! The smith will make something wonderful.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "druncncity",
+     "count": 1,
+     "chance": 0,
+     "label": "Druncn City"
+    },
+    {
+     "type": "kill",
+     "target": "Claw-Turtle",
+     "count": 12,
+     "chance": 0,
+     "label": "Claw Turtle"
+    },
+    {
+     "type": "kill",
+     "target": "Giant-Crayfish",
+     "count": 12,
+     "chance": 0,
+     "label": "Giant Crayfish"
+    },
+    {
+     "type": "collect",
+     "target": "Claw-Turtle",
+     "count": 2,
+     "chance": 25,
+     "label": "Turtle Shell"
+    }
+   ],
+   "reward item": "StarmetalShard",
+   "reward count": 1
+  },
+  {
+   "giver": "Perry",
+   "min level": 130,
+   "title": "The Nizie Pearl",
+   "offer": "They say the nizies of Druncn grow a pearl inside them, once in a long while. I've always wanted to see one. Just one.",
+   "hand-in": "It's beautiful. I'll never forget you brought me this.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Nizie",
+     "count": 10,
+     "chance": 0,
+     "label": "Nizie"
+    },
+    {
+     "type": "collect",
+     "target": "Nizie",
+     "count": 1,
+     "chance": 15,
+     "label": "Nizie Pearl"
+    }
+   ],
+   "reward item": "ReforgingOrb",
+   "reward count": 1
+  },
+  {
+   "giver": "Devlin",
+   "min level": 8,
+   "title": "Restless Graves",
+   "offer": "The dead outside town won't stay down. Zombies, skeletons - someone is stirring them. Put them back in the ground while I find out who.",
+   "hand-in": "Quieter already. Here, for your trouble.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Zombie",
+     "count": 10,
+     "chance": 0,
+     "label": "Zombie"
+    },
+    {
+     "type": "kill",
+     "target": "Skeleton",
+     "count": 10,
+     "chance": 0,
+     "label": "Skeleton"
+    }
+   ],
+   "reward item": "ManaPotion",
+   "reward count": 5
+  },
+  {
+   "giver": "Devlin",
+   "min level": 30,
+   "title": "Clay That Walks",
+   "offer": "A clay golem walks because a core inside it tells it to. I want to know who wrote those cores. Bring me two.",
+   "hand-in": "Two cores, and both still warm with the spell. Fascinating.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Clay-Golem",
+     "count": 15,
+     "chance": 0,
+     "label": "Clay Golem"
+    },
+    {
+     "type": "collect",
+     "target": "Clay-Golem",
+     "count": 2,
+     "chance": 25,
+     "label": "Golem Core"
+    }
+   ],
+   "reward item": "MysticShard",
+   "reward count": 1
+  },
+  {
+   "giver": "Devlin",
+   "min level": 50,
+   "title": "Hellhounds",
+   "offer": "Hellbounds carry fire from somewhere below. The ash they leave behind is still burning. Collect it for me - carefully.",
+   "hand-in": "Still smouldering. Something down there feeds them.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Hellbound",
+     "count": 12,
+     "chance": 0,
+     "label": "Hellbound"
+    },
+    {
+     "type": "collect",
+     "target": "Hellbound",
+     "count": 3,
+     "chance": 35,
+     "label": "Ember Ash"
+    }
+   ],
+   "reward item": "SulfurBloom",
+   "reward count": 2
+  },
+  {
+   "giver": "Devlin",
+   "min level": 70,
+   "title": "The Mastermages",
+   "offer": "The orc mastermages of Procella bind their spells with a sigil. If I could read one, I could unmake them. Take two from their bodies.",
+   "hand-in": "Crude work, but clever. I'll have them read by morning.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "MasterMage-Orc",
+     "count": 10,
+     "chance": 0,
+     "label": "Mastermage Orc"
+    },
+    {
+     "type": "collect",
+     "target": "MasterMage-Orc",
+     "count": 2,
+     "chance": 30,
+     "label": "Spellbinder Sigil"
+    }
+   ],
+   "reward item": "AzureEssence",
+   "reward count": 2
+  },
+  {
+   "giver": "Devlin",
+   "min level": 95,
+   "title": "The Tower of Hell",
+   "offer": "The sigils point to the Tower of Hell. Climb it. Dark elves guard the stair and liches the top. Find out what they're guarding.",
+   "hand-in": "Liches. Of course it was liches. You did well to come back.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "toh1",
+     "count": 1,
+     "chance": 0,
+     "label": "the Tower of Hell"
+    },
+    {
+     "type": "visit",
+     "target": "toh3",
+     "count": 1,
+     "chance": 0,
+     "label": "the Tower's top floor"
+    },
+    {
+     "type": "kill",
+     "target": "Dark-Elf",
+     "count": 10,
+     "chance": 0,
+     "label": "Dark Elf"
+    },
+    {
+     "type": "kill",
+     "target": "Liche",
+     "count": 6,
+     "chance": 0,
+     "label": "Liche"
+    }
+   ],
+   "reward item": "SoulShard",
+   "reward count": 1
+  },
+  {
+   "giver": "Devlin",
+   "min level": 105,
+   "title": "Ice in the Bones",
+   "offer": "The liches draw cold from Icebound. Break their source: the ice golems and the frost there. And bring me crystals, so I can see the spell for myself.",
+   "hand-in": "Cold enough to burn. The liches will feel this.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "icebound",
+     "count": 1,
+     "chance": 0,
+     "label": "Icebound"
+    },
+    {
+     "type": "kill",
+     "target": "Ice-Golem",
+     "count": 12,
+     "chance": 0,
+     "label": "Ice Golem"
+    },
+    {
+     "type": "kill",
+     "target": "Frost",
+     "count": 10,
+     "chance": 0,
+     "label": "Frost"
+    },
+    {
+     "type": "collect",
+     "target": "Ice-Golem|Frost",
+     "count": 3,
+     "chance": 30,
+     "label": "Frost Crystal"
+    }
+   ],
+   "reward item": "PrismaticShard",
+   "reward count": 1
+  },
+  {
+   "giver": "Devlin",
+   "min level": 120,
+   "title": "Horns of the Abyss",
+   "offer": "Demons and gargoyles are coming up through the old dungeons. Demon horn is the one thing that holds a ward against them. Bring me three.",
+   "hand-in": "Three horns. My wards will hold now.",
+   "objectives": [
+    {
+     "type": "kill",
+     "target": "Demon",
+     "count": 12,
+     "chance": 0,
+     "label": "Demon"
+    },
+    {
+     "type": "kill",
+     "target": "Gagoyle",
+     "count": 8,
+     "chance": 0,
+     "label": "Gargoyle"
+    },
+    {
+     "type": "collect",
+     "target": "Demon",
+     "count": 3,
+     "chance": 25,
+     "label": "Demon Horn"
+    }
+   ],
+   "reward item": "VioletEssence",
+   "reward count": 2
+  },
+  {
+   "giver": "Devlin",
+   "min level": 150,
+   "title": "Fires of Infernia",
+   "offer": "It all ends in Infernia. Walk both halves of it, put down its barlogs, and kill a fire wyvern. Then whoever stirs the dead will have nothing left to stir.",
+   "hand-in": "It's over. Whatever woke them, it sleeps now. Thank you, truly.",
+   "objectives": [
+    {
+     "type": "visit",
+     "target": "inferniaA",
+     "count": 1,
+     "chance": 0,
+     "label": "Infernia (west)"
+    },
+    {
+     "type": "visit",
+     "target": "inferniaB",
+     "count": 1,
+     "chance": 0,
+     "label": "Infernia (east)"
+    },
+    {
+     "type": "kill",
+     "target": "Barlog",
+     "count": 8,
+     "chance": 0,
+     "label": "Barlog"
+    },
+    {
+     "type": "kill",
+     "target": "Fire-Wyvern",
+     "count": 1,
+     "chance": 0,
+     "label": "Fire Wyvern"
+    }
+   ],
+   "reward item": "AscensionOrb",
+   "reward count": 1
+  }
+ ]
+}

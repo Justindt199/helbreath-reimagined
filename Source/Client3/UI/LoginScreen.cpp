@@ -331,22 +331,21 @@ void CGame::_Draw_OnWelcome(int iFocus, int msX, int msY)
 
 void CGame::CreateAccountRects(RECT * pPanel, RECT * pField, RECT * pCreate, RECT * pClear, RECT * pBack)
 {
-	const int W = GAME_W, H = GAME_H;
-	const int pw = 300, ph = 420, px = W - 26 - pw + m_iPanelDX, py = (std::max)(8, (H - ph) / 2 - 10) + m_iPanelDY;
-	if (pPanel) SetRect(pPanel, px, py, px + pw, py + ph);
-	const int fx0 = px + 18, fx1 = px + pw - 18;
-	const int half = (fx1 - fx0 - 10) / 2;
-	if (pField) {
-		SetRect(&pField[0], fx0, py + 76, fx1, py + 102);
-		SetRect(&pField[1], fx0, py + 124, fx0 + half, py + 150);
-		SetRect(&pField[2], fx1 - half, py + 124, fx1, py + 150);
-		SetRect(&pField[3], fx0, py + 172, fx1, py + 198);
-		SetRect(&pField[4], fx0, py + 220, fx1, py + 246);
-		SetRect(&pField[5], fx0, py + 268, fx1, py + 294);
-	}
-	if (pCreate) SetRect(pCreate, fx0, py + 344, fx1, py + 376);
-	if (pClear) SetRect(pClear, fx0, py + 384, fx0 + half, py + 406);
-	if (pBack) SetRect(pBack, fx1 - half, py + 384, fx1, py + 406);
+	// from login_layout.cfg (UI\LoginLayout.cpp): the panel on the screen, the rest inside the panel
+	const LoginMod & p = LoginModule(LM_NEW_PANEL);
+	int px, py;
+	LoginPlace(LM_NEW_PANEL, p.w, p.h, &px, &py);
+	px += m_iPanelDX; py += m_iPanelDY;
+	if (pPanel) SetRect(pPanel, px, py, px + p.w, py + p.h);
+	auto Put = [&](RECT * rc, int mod) {
+		if (rc == NULL) return;
+		const LoginMod & m = LoginModule(mod);
+		SetRect(rc, px + m.x, py + m.y, px + m.x + m.w, py + m.y + m.h);
+	};
+	if (pField) for (int i = 0; i < 6; i++) Put(&pField[i], LM_NEW_ACCOUNT + i);
+	Put(pCreate, LM_NEW_CREATE);
+	Put(pClear, LM_NEW_CLEAR);
+	Put(pBack, LM_NEW_BACK);
 }
 
 void CGame::_Draw_OnCreateAccount(const char * const * pField, const bool * bOk, const bool * bGood, const char * const * pHint,
@@ -363,10 +362,11 @@ void CGame::_Draw_OnCreateAccount(const char * const * pField, const bool * bOk,
 	const int px = rcPanel.left, py = rcPanel.top;
 
 	R.StonePanel(rcPanel.left, rcPanel.top, rcPanel.right, rcPanel.bottom);
-	Title(R, px + 18, py + 16, "CREATE ACCOUNT", kGold, 15);
-	R.TextOutSized(px + 18, py + 38, "Choose your name and join the war.", kGrey, 12);
+	Title(R, px + 18, py + 16, LoginModule(LM_NEW_PANEL).text.c_str(), kGold, 15);
+	R.TextOutSized(px + 18, py + 38, LoginModule(LM_NEW_PANEL).text2.c_str(), kGrey, 12);
 
-	static const char * const kLabel[6] = { "ACCOUNT", "PASSWORD", "CONFIRM PASSWORD", "E-MAIL", "SECRET QUESTION", "ANSWER" };
+	const char * kLabel[6];		// login_layout.cfg (UI\LoginLayout.cpp)
+	for (int i = 0; i < 6; i++) kLabel[i] = LoginModule(LM_NEW_ACCOUNT + i).text.c_str();
 	const bool bCaret = ((G_dwGlobalTime / 450) % 2) == 0;
 	for (int i = 0; i < 6; i++) {
 		const RECT & rc = rcField[i];
@@ -406,23 +406,23 @@ void CGame::_Draw_OnCreateAccount(const char * const * pField, const bool * bOk,
 	// help for the field being typed in, or what's still missing
 	for (int i = 0; i < 3; i++)
 		if (pHint[i] != NULL && pHint[i][0])
-			R.TextOutSized(px + 18, py + 300 + i * 13, pHint[i], (bHintError && i == 0) ? kRed : (i == 0 ? RGB(205, 210, 218) : kGrey), 12);
+			R.TextOutSized(px + LoginModule(LM_NEW_HELP).x, py + LoginModule(LM_NEW_HELP).y + i * 13, pHint[i], (bHintError && i == 0) ? kRed : (i == 0 ? RGB(205, 210, 218) : kGrey), 12);
 
 	// Create, Clear, Back
 	{
 		const bool bOn = InRect(rcGo, msX, msY) || m_cCurFocus == 7;
 		R.FillPanel(rcGo.left, rcGo.top, rcGo.right, rcGo.bottom, 7,
 			bReady ? (bOn ? RGB(250, 214, 128) : RGB(232, 188, 92)) : RGB(120, 104, 70), bReady ? 255 : 180);
-		const char * pGo = "CREATE ACCOUNT";
-		Bold(R, (rcGo.left + rcGo.right - Width(R, pGo, 15)) / 2, rcGo.top + 7, pGo, RGB(30, 22, 8), 15);
+		const char * pGo = LoginModule(LM_NEW_CREATE).text.c_str();
+		Bold(R, (rcGo.left + rcGo.right - Width(R, pGo, 15)) / 2, (rcGo.top + rcGo.bottom) / 2 - 9, pGo, RGB(30, 22, 8), 15);
 	}
 	const struct { const RECT * rc; const char * label; bool on; } btn[2] = {
-		{ &rcClear, "Clear", InRect(rcClear, msX, msY) || m_cCurFocus == 8 },
-		{ &rcBack, "Back to sign in", InRect(rcBack, msX, msY) || m_cCurFocus == 9 } };
+		{ &rcClear, LoginModule(LM_NEW_CLEAR).text.c_str(), InRect(rcClear, msX, msY) || m_cCurFocus == 8 },
+		{ &rcBack, LoginModule(LM_NEW_BACK).text.c_str(), InRect(rcBack, msX, msY) || m_cCurFocus == 9 } };
 	for (int i = 0; i < 2; i++) {
 		const RECT & rc = *btn[i].rc;
 		R.StoneButton(rc.left, rc.top, rc.right, rc.bottom, btn[i].on ? 1 : 0);
-		R.TextOutSized((rc.left + rc.right - Width(R, btn[i].label, 12)) / 2, rc.top + 4, btn[i].label, btn[i].on ? kWhite : RGB(220, 224, 230), 12);
+		R.TextOutSized((rc.left + rc.right - Width(R, btn[i].label, 12)) / 2, (rc.top + rc.bottom) / 2 - 7, btn[i].label, btn[i].on ? kWhite : RGB(220, 224, 230), 12);
 	}
 
 	R.m_iFadeA = 255;

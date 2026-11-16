@@ -1,0 +1,699 @@
+{
+ "props": [
+  {
+   "map": "arefarm",
+   "x": 125,
+   "y": 120,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "arefarm",
+   "x": 32,
+   "y": 223,
+   "kind": "chest",
+   "tier": 1
+  },
+  {
+   "map": "arefarm",
+   "x": 219,
+   "y": 221,
+   "kind": "chest",
+   "tier": 1
+  },
+  {
+   "map": "elvfarm",
+   "x": 125,
+   "y": 125,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "elvfarm",
+   "x": 222,
+   "y": 225,
+   "kind": "chest",
+   "tier": 1
+  },
+  {
+   "map": "elvfarm",
+   "x": 27,
+   "y": 222,
+   "kind": "chest",
+   "tier": 1
+  },
+  {
+   "map": "aresden",
+   "x": 148,
+   "y": 147,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "aresden",
+   "x": 30,
+   "y": 275,
+   "kind": "shrine of fortune",
+   "tier": 0
+  },
+  {
+   "map": "aresden",
+   "x": 273,
+   "y": 265,
+   "kind": "chest",
+   "tier": 1
+  },
+  {
+   "map": "elvine",
+   "x": 154,
+   "y": 152,
+   "kind": "shrine of vigor",
+   "tier": 0
+  },
+  {
+   "map": "elvine",
+   "x": 30,
+   "y": 28,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "elvine",
+   "x": 30,
+   "y": 269,
+   "kind": "chest",
+   "tier": 1
+  },
+  {
+   "map": "middleland",
+   "x": 260,
+   "y": 263,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "middleland",
+   "x": 473,
+   "y": 38,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "middleland",
+   "x": 45,
+   "y": 486,
+   "kind": "shrine of fortune",
+   "tier": 0
+  },
+  {
+   "map": "middleland",
+   "x": 30,
+   "y": 67,
+   "kind": "shrine of vigor",
+   "tier": 0
+  },
+  {
+   "map": "middleland",
+   "x": 492,
+   "y": 445,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "middleland",
+   "x": 273,
+   "y": 485,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "middleland",
+   "x": 252,
+   "y": 28,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "middleland",
+   "x": 51,
+   "y": 277,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "middleland",
+   "x": 464,
+   "y": 242,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "middleland",
+   "x": 157,
+   "y": 151,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "middleland",
+   "x": 158,
+   "y": 385,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "huntzone1",
+   "x": 95,
+   "y": 94,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "huntzone1",
+   "x": 176,
+   "y": 25,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "huntzone1",
+   "x": 27,
+   "y": 29,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "huntzone2",
+   "x": 97,
+   "y": 104,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "huntzone2",
+   "x": 170,
+   "y": 27,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "huntzone2",
+   "x": 28,
+   "y": 26,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "aresdend1",
+   "x": 96,
+   "y": 133,
+   "kind": "shrine of fortune",
+   "tier": 0
+  },
+  {
+   "map": "aresdend1",
+   "x": 28,
+   "y": 118,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "aresdend1",
+   "x": 55,
+   "y": 165,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "elvined1",
+   "x": 92,
+   "y": 100,
+   "kind": "shrine of vigor",
+   "tier": 0
+  },
+  {
+   "map": "elvined1",
+   "x": 172,
+   "y": 52,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "elvined1",
+   "x": 134,
+   "y": 170,
+   "kind": "chest",
+   "tier": 2
+  },
+  {
+   "map": "middled1n",
+   "x": 101,
+   "y": 108,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "middled1n",
+   "x": 181,
+   "y": 183,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "middled1n",
+   "x": 163,
+   "y": 28,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "middled1n",
+   "x": 33,
+   "y": 38,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 125,
+   "y": 125,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 221,
+   "y": 223,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 221,
+   "y": 30,
+   "kind": "shrine of fortune",
+   "tier": 0
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 26,
+   "y": 35,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 42,
+   "y": 219,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 126,
+   "y": 25,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "2ndmiddle",
+   "x": 219,
+   "y": 124,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv2",
+   "x": 282,
+   "y": 222,
+   "kind": "shrine of vigor",
+   "tier": 0
+  },
+  {
+   "map": "dglv2",
+   "x": 461,
+   "y": 465,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv2",
+   "x": 466,
+   "y": 68,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv2",
+   "x": 187,
+   "y": 28,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv3",
+   "x": 272,
+   "y": 190,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "dglv3",
+   "x": 34,
+   "y": 343,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv3",
+   "x": 370,
+   "y": 345,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv3",
+   "x": 84,
+   "y": 171,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "toh1",
+   "x": 118,
+   "y": 115,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "toh1",
+   "x": 218,
+   "y": 220,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "toh1",
+   "x": 209,
+   "y": 29,
+   "kind": "chest",
+   "tier": 3
+  },
+  {
+   "map": "dglv4",
+   "x": 200,
+   "y": 200,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "dglv4",
+   "x": 119,
+   "y": 27,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "dglv4",
+   "x": 236,
+   "y": 372,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "dglv4",
+   "x": 26,
+   "y": 218,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "toh2",
+   "x": 119,
+   "y": 131,
+   "kind": "shrine of fortune",
+   "tier": 0
+  },
+  {
+   "map": "toh2",
+   "x": 263,
+   "y": 272,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "toh2",
+   "x": 272,
+   "y": 31,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "toh3",
+   "x": 167,
+   "y": 163,
+   "kind": "shrine of vigor",
+   "tier": 0
+  },
+  {
+   "map": "toh3",
+   "x": 270,
+   "y": 25,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "toh3",
+   "x": 34,
+   "y": 270,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "icebound",
+   "x": 158,
+   "y": 150,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "icebound",
+   "x": 32,
+   "y": 27,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "icebound",
+   "x": 33,
+   "y": 250,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "icebound",
+   "x": 265,
+   "y": 260,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "icebound",
+   "x": 249,
+   "y": 27,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "druncncity",
+   "x": 93,
+   "y": 103,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "druncncity",
+   "x": 170,
+   "y": 35,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "druncncity",
+   "x": 173,
+   "y": 165,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "druncncity",
+   "x": 27,
+   "y": 27,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "maze",
+   "x": 101,
+   "y": 102,
+   "kind": "shrine of fortune",
+   "tier": 0
+  },
+  {
+   "map": "maze",
+   "x": 31,
+   "y": 27,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "maze",
+   "x": 31,
+   "y": 171,
+   "kind": "chest",
+   "tier": 4
+  },
+  {
+   "map": "procella",
+   "x": 135,
+   "y": 135,
+   "kind": "shrine of vigor",
+   "tier": 0
+  },
+  {
+   "map": "procella",
+   "x": 28,
+   "y": 26,
+   "kind": "shrine of might",
+   "tier": 0
+  },
+  {
+   "map": "procella",
+   "x": 28,
+   "y": 223,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "procella",
+   "x": 223,
+   "y": 38,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "procella",
+   "x": 220,
+   "y": 218,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "inferniaa",
+   "x": 67,
+   "y": 82,
+   "kind": "shrine of swiftness",
+   "tier": 0
+  },
+  {
+   "map": "inferniaa",
+   "x": 120,
+   "y": 35,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "inferniaa",
+   "x": 122,
+   "y": 124,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "inferniaa",
+   "x": 43,
+   "y": 29,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "inferniab",
+   "x": 75,
+   "y": 75,
+   "kind": "shrine of wisdom",
+   "tier": 0
+  },
+  {
+   "map": "inferniab",
+   "x": 122,
+   "y": 32,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "inferniab",
+   "x": 32,
+   "y": 120,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "inferniab",
+   "x": 30,
+   "y": 34,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "abaddon",
+   "x": 97,
+   "y": 100,
+   "kind": "chest",
+   "tier": 5
+  },
+  {
+   "map": "abaddon",
+   "x": 27,
+   "y": 26,
+   "kind": "chest",
+   "tier": 5
+  }
+ ],
+ "chests": [
+  {
+   "tier": 1,
+   "gold": 20,
+   "potion": "SmallHealthPotion",
+   "material": "ForgeDust",
+   "gear chance": 43
+  },
+  {
+   "tier": 2,
+   "gold": 60,
+   "potion": "HealthPotion",
+   "material": "VerdantEssence",
+   "gear chance": 51
+  },
+  {
+   "tier": 3,
+   "gold": 140,
+   "potion": "GreaterHealthPotion",
+   "material": "AzureEssence",
+   "gear chance": 59
+  },
+  {
+   "tier": 4,
+   "gold": 320,
+   "potion": "GreaterHealthPotion",
+   "material": "VioletEssence",
+   "gear chance": 67
+  },
+  {
+   "tier": 5,
+   "gold": 700,
+   "potion": "SuperiorHealthPotion",
+   "material": "RadiantEssence",
+   "gear chance": 75
+  }
+ ]
+}

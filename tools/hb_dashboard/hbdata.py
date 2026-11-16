@@ -14,6 +14,12 @@ Kinds and where they live (paths from the repo root):
   forging    Server/Login Server/Config/BuildItem.cfg    id = item made       (VALORIA recipes)
   teleports  Server/Login Server/Config/Teleport.cfg     id = row number
   drops      Server/configs/droplist.xml                 id = monster|tier number|item, field = chance
+  achievements  tools/valoria_port/data/achievements.json   id = group and tier ("Slime 3"); count, name, title
+  sidequests    tools/valoria_port/data/side_quests.json    id = slot ("#01"); giver, level, words, objectives, reward
+  shrines       tools/valoria_port/data/world.json "props"  id = slot ("#01"); where it stands and what it is
+  chests        tools/valoria_port/data/world.json "chests" id = "tier 1".."tier 5"; what a chest of that tier holds
+                (these four are JSON: after a change run tools/valoria_port/build_content.py, which apply_edits.py
+                does, then rebuild the game: they are compiled in)
   login      Client/CONTENTS/login_layout.cfg            id = piece of the sign-in screen ([logo], [panel] ...),
                                                          fields = its 'key = value' lines (the game reads the file itself)
 """
@@ -80,6 +86,9 @@ def tokens(rest):
 
 def rows(kind):
     """Yields (id, fields dict, file, line number) for every row of a kind."""
+    if kind in CONTENT:
+        yield from content_rows(kind)
+        return
     if kind == 'login':
         yield from login_rows()
         return
@@ -104,6 +113,8 @@ def rows(kind):
 
 def set_field(kind, rid, field, value):
     """Changes one value of one row in its file. Returns the old value, or raises KeyError."""
+    if kind in CONTENT:
+        return set_content(kind, rid, field, value)
     if kind == 'login':
         return set_login(rid, field, value)
     if kind == 'drops':
@@ -227,4 +238,178 @@ def set_login(rid, field, value):
     raise KeyError(f'login {rid}: no field "{field}"')
 
 
-KINDS = ['items', 'monsters', 'drops', 'spells', 'alchemy', 'crafting', 'forging', 'quests', 'teleports', 'login']
+# ---- VALORIA content (tools/valoria_port/data/*.json, made into headers by build_content.py)
+import json
+CDATA = os.path.join(ROOT, 'tools', 'valoria_port', 'data')
+CONTENT = {'achievements': 'achievements.json', 'sidequests': 'side_quests.json', 'shrines': 'world.json', 'chests': 'world.json'}
+ACH_CATS = ['Monsters', 'Bosses', 'Slayer', 'Adventure', 'Quests', 'War']
+ACH_COUNTERS = {64: 'Monsters slain', 65: 'Enemy players defeated', 66: 'City Hall quests', 67: 'Side quests', 68: 'Level'}
+GIVERS = ['McGaffin', 'Perry', 'Devlin']
+OBJ_TYPES = ['none', 'kill', 'collect', 'visit']
+PROP_KINDS = ['shrine of might', 'shrine of swiftness', 'shrine of wisdom', 'shrine of fortune', 'shrine of vigor', 'chest']
+OBJ_KEYS = ['type', 'target', 'count', 'chance', 'label']
+
+
+def cload(kind):
+    path = os.path.join(CDATA, CONTENT[kind])
+    return path, json.load(open(path, encoding='utf-8'))
+
+
+def csave(kind, d):
+    path = os.path.join(CDATA, CONTENT[kind])
+    text = json.dumps(d, indent=1, ensure_ascii=False) + '\n'
+    write(path, text)
+
+
+def _ach_group(d, a):
+    return d['targets'][a['counter']]['name'] if a['counter'] < len(d['targets']) else ACH_COUNTERS.get(a['counter'], str(a['counter']))
+
+
+def _flat(kind, d):
+    """[(id, fields, the JSON object, how to write a field back)] for a content kind."""
+    out = []
+    if kind == 'achievements':
+        for a in d['defs']:
+            out.append(('%s %d' % (_ach_group(d, a), a['tier']), {'category': ACH_CATS[a['cat']], 'group': _ach_group(d, a), 'tier': str(a['tier']),
+                        'count': str(a['count']), 'name': a['name'], 'title': a['title']}, a))
+    elif kind == 'sidequests':
+        for i, q in enumerate(d['quests']):
+            f = {'giver': q['giver'], 'min level': str(q['min level']), 'title': q['title'], 'offer': q['offer'], 'hand-in': q['hand-in']}
+            for n in range(4):
+                o = q['objectives'][n] if n < len(q['objectives']) else {'type': 'none', 'target': '', 'count': 0, 'chance': 0, 'label': ''}
+                for k in OBJ_KEYS:
+                    f['objective %d %s' % (n + 1, k)] = str(o[k])
+            f['reward item'] = q['reward item']; f['reward count'] = str(q['reward count'])
+            out.append(('#%02d' % (i + 1), f, q))
+    elif kind == 'shrines':
+        for i, p in enumerate(d['props']):
+            out.append(('#%02d' % (i + 1), {'map': p['map'], 'x': str(p['x']), 'y': str(p['y']), 'kind': p['kind'], 'chest tier': str(p['tier']) if p['kind'] == 'chest' else ''}, p))
+    elif kind == 'chests':
+        for t in d['chests']:
+            out.append(('tier %d' % t['tier'], {'gold': str(t['gold']), 'potion': t['potion'], 'material': t['material'], 'gear chance': str(t['gear chance'])}, t))
+    return out
+
+
+def content_rows(kind):
+    path, d = cload(kind)
+    for i, (rid, f, _) in enumerate(_flat(kind, d)):
+        yield rid, f, path, i
+
+
+def _names(kind, key):
+    return set(f[key] for _, f, _, _ in rows(kind))
+
+
+def _int(field, value, lo, hi):
+    try:
+        v = int(str(value).strip())
+    except ValueError:
+        raise ValueError(f'{field} must be a whole number')
+    if not lo <= v <= hi:
+        raise ValueError(f'{field} must be {lo} to {hi}')
+    return v
+
+
+def _maps():
+    md = os.path.join(ROOT, 'Server', 'HG Server', 'MAPDATA')
+    return set(os.path.splitext(f)[0].lower() for f in os.listdir(md) if f.lower().endswith('.amd'))
+
+
+def set_content(kind, rid, field, value):
+    path, d = cload(kind)
+    hit = [x for x in _flat(kind, d) if x[0] == rid]
+    if not hit:
+        raise KeyError(f'no {kind} "{rid}"')
+    _, f, obj = hit[0]
+    if field not in f:
+        raise KeyError(f'no field "{field}"')
+    old, value = f[field], str(value).strip()
+    if kind == 'achievements':
+        if field in ('category', 'group', 'tier'):
+            raise ValueError(f'{field} cannot be changed: saved progress counts by it')
+        if field == 'count':
+            obj['count'] = _int(field, value, 1, 4000000000)
+        else:
+            if not value or len(value) > 60:
+                raise ValueError(f'{field}: 1 to 60 characters')
+            obj[field] = value
+    elif kind == 'sidequests':
+        if field == 'giver':
+            if value not in GIVERS:
+                raise ValueError('giver must be ' + ', '.join(GIVERS))
+            obj['giver'] = value
+        elif field == 'min level':
+            obj['min level'] = _int(field, value, 1, 255)
+        elif field in ('title', 'offer', 'hand-in'):
+            lim = 60 if field == 'title' else 600
+            if not value or len(value) > lim:
+                raise ValueError(f'{field}: 1 to {lim} characters')
+            obj[field] = value
+        elif field == 'reward item':
+            if value not in _names('items', 'name'):
+                raise ValueError(f'no item "{value}" (use its name in the item list)')
+            obj['reward item'] = value
+        elif field == 'reward count':
+            obj['reward count'] = _int(field, value, 1, 255)
+        else:
+            n, k = int(field.split()[1]) - 1, field.split(' ', 2)[2]
+            objs = obj['objectives']
+            while len(objs) <= n:
+                objs.append({'type': 'none', 'target': '', 'count': 0, 'chance': 0, 'label': ''})
+            o = objs[n]
+            if k == 'type':
+                if value not in OBJ_TYPES:
+                    raise ValueError('objective type must be ' + ', '.join(OBJ_TYPES))
+                o['type'] = value
+            elif k == 'count':
+                o['count'] = _int(field, value, 0, 65535)
+            elif k == 'chance':
+                o['chance'] = _int(field, value, 0, 100)
+            else:
+                if len(value) > 80:
+                    raise ValueError(f'{field}: up to 80 characters')
+                o[k] = value
+            # check the objective as a whole once it has a type
+            if o['type'] != 'none':
+                if not o['target'] or not o['label'] or o['count'] < 1:
+                    pass        # being filled in field by field: build_content checks complete quests
+                elif o['type'] in ('kill', 'collect'):
+                    bad = [t for t in o['target'].split('|') if t not in _names('monsters', 'name')]
+                    if bad:
+                        raise ValueError(f'{field}: no monster "{bad[0]}" (use its Npc.cfg name)')
+                elif o['type'] == 'visit':
+                    bad = [t for t in o['target'].split('|') if t.lower() not in _maps()]
+                    if bad:
+                        raise ValueError(f'{field}: no map "{bad[0]}"')
+            while objs and objs[-1]['type'] == 'none':
+                objs.pop()
+    elif kind == 'shrines':
+        if field == 'map':
+            if value.lower() not in _maps():
+                raise ValueError(f'no map "{value}"')
+            obj['map'] = value
+        elif field in ('x', 'y'):
+            obj[field] = _int(field, value, 0, 1000)
+        elif field == 'kind':
+            if value not in PROP_KINDS:
+                raise ValueError('kind must be one of ' + ', '.join(PROP_KINDS))
+            obj['kind'] = value
+            obj['tier'] = (obj['tier'] or 1) if value == 'chest' else 0
+        elif field == 'chest tier':
+            if obj['kind'] != 'chest':
+                raise ValueError('only a chest has a tier')
+            obj['tier'] = _int(field, value, 1, 5)
+    elif kind == 'chests':
+        if field == 'gold':
+            obj['gold'] = _int(field, value, 0, 60000)
+        elif field == 'gear chance':
+            obj['gear chance'] = _int(field, value, 0, 100)
+        else:
+            if value not in _names('items', 'name'):
+                raise ValueError(f'no item "{value}" (use its name in the item list)')
+            obj[field] = value
+    csave(kind, d)
+    return old
+
+
+KINDS = ['items', 'monsters', 'drops', 'spells', 'alchemy', 'crafting', 'forging', 'quests', 'teleports', 'login', 'achievements', 'sidequests', 'shrines', 'chests']
