@@ -5,7 +5,8 @@
 
 Sheet 0: bag icons (fit in 44x44), drawn centred.   Registered as item-pack sprite 23.
 Sheet 1: ground icons (fit in 24x24), drawn centred. Registered as item-ground sprite 23.
-Frame order comes from sprite_frames.json (written by build_items.py).
+Frame order comes from sprite_frames.json (written by build_items.py). An icon in icon_overrides/
+named after the item key (mithril_ore.png) replaces VALORIA's icon for that item.
 
 Each sheet is a PNG behind a 14-byte 'BM' header, which the client's loader accepts
 (CSurface::CreateFromBitmapFile). The top-left pixel is the see-through colour.
@@ -83,7 +84,10 @@ def main():
     icons_dir, sprites_dir = sys.argv[1], sys.argv[2]
     frames = json.load(open(os.path.join(os.path.dirname(__file__), 'sprite_frames.json')))
     paths = []
+    overrides = os.path.join(os.path.dirname(__file__), 'icon_overrides')   # Justin's own art, by item key
     for f in frames:
+        p = os.path.join(overrides, f['key'] + '.png')
+        if os.path.exists(p): paths.append(p); continue
         p = os.path.join(icons_dir, f['icon'] + '.png')
         if not os.path.exists(p):                          # VALORIA's one missing icon: use a near match
             alt = [n for n in os.listdir(icons_dir) if n.startswith(f['icon'].rsplit('_', 1)[0]) and n.endswith('.png')]
