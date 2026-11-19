@@ -15053,19 +15053,23 @@ bool CGame::_bReadMapInfoFiles(int iMapIndex)
 					cReadModeB = 3;
 					break;
 				default:
-					// WayPoint0~waypoint9
+					// WayPoint0~waypoint9: all ten are read before the NPC is made. (It used to be made
+					// after the first, leaving the other nine unset, so an NPC that walks between random
+					// waypoints, like the magic shop's Gandlf, usually got no valid spot and never appeared.)
 					if (_bGetIsStringIsNumber(token) == false) {
 						PutLogList("(!!!) CRITICAL ERROR! Map Info file error 11 - Wrong Data format.");
 						delete[] pContents;
 						return false;
 					}
 					cNpcWaypointIndex[cReadModeB-3] = atoi(token);
+					if (cReadModeB < 12) { cReadModeB++; break; }
 					cReadModeA = 0;
 					cReadModeB = 0;
 
 					if(!CreateNpc(cNpcName, iMapIndex, 0, cNpcMoveType, NULL, NULL, (Side)-1, cNpcWaypointIndex, NULL, NULL, false))
 					{
-						ERR("Failed to create default NPC!");
+						wsprintf(g_cTxt, "(!) Failed to create default NPC %s on %s.", cNpcName, m_pMapList[iMapIndex]->m_cName);
+						PutLogList(g_cTxt);
 						break;
 					}
 
