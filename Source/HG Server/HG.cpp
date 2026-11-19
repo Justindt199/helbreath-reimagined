@@ -25761,6 +25761,10 @@ void CGame::_CheckMiningAction(int iClientH, int dX, int dY)
 
 			} 
 
+			// VALORIA's ores come from the same deep veins as Helbreath's Mithral: Mithral is an alchemy
+			// reagent, Mithril Ore is smelted at the Blacksmith; one find in four of those is Adamantite Ore.
+			if (iMineralID == ITEM_MITHRAL && dice(1, 2) == 1) iMineralID = (dice(1, 4) == 1) ? 1224 : 1223;	// AdamantiteOre, MithrilOre
+
 			pItem = new class CItem;
 			if (pItem->InitItemAttr(iMineralID) == false) {
 				delete pItem;
@@ -30139,6 +30143,8 @@ void CGame::NpcDeadItemGenerator(int iNpcH, short sAttackerH, char cAttackerType
 	case NPC_DT:
 		return;
 	}
+
+	ValoriaCashPile(iNpcH, sAttackerH);	// VALORIA: 1-15k gold piles from non-boss monsters (ValoriaUse.cpp)
 
 	if( NpcDeadItemGeneratorWithItemEvent(iNpcH, sAttackerH, cAttackerType) == true)
 		return;

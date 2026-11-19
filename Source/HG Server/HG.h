@@ -624,6 +624,7 @@ public:
 	int  ValoriaBossDamage(short sAttackerH, short sNpcH, int iDamage);
 	int  ValoriaHurt(short sTargetH, short sAttackerH, char cAttackerType, int iDamage, bool bMelee);
 	void ValoriaRollRarity(class CItem * pItem, int iNpcType, short sKillerH);
+	void ValoriaCashPile(int iNpcH, short sAttackerH);	// gold piles from monsters (ValoriaUse.cpp)
 	void ValoriaOnHit(short sAttackerH, int iDamage);
 	void RequestRetrieveItemHandler(int iClientH, char * pData);
 	void RequestRetrieveGuildItem(CClient * player, char * data);

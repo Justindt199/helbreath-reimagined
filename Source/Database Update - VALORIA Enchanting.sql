@@ -8,4 +8,6 @@ ALTER TABLE `char_database` ADD COLUMN IF NOT EXISTS `ValoriaPassive` varchar(96
 ALTER TABLE `item` MODIFY COLUMN `Valoria` varchar(96) DEFAULT NULL;
 -- VALORIA life skills, achievements and side quests: a character's VALORIA data grew from 64 to 432 bytes (864 hex digits)
 ALTER TABLE `char_database` MODIFY COLUMN `ValoriaEnchant` varchar(880) DEFAULT NULL;
+-- every item modifier learnable (Helbreath's attributes and the resistances too): 560 bytes (1120 hex digits)
+ALTER TABLE `char_database` MODIFY COLUMN `ValoriaEnchant` varchar(1120) DEFAULT NULL;
 SELECT 'VALORIA enchanting, passive tree and rarity columns ready' AS status;

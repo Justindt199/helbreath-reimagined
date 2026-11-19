@@ -108,11 +108,11 @@ std::string CGame::ItemDisplayName(const char * pName) const
 }
 
 // The modifiers an item has (what Empower can raise and Disenchant teaches).
-void CGame::EnchantItemMods(const CItem * it, bool has[MOD_COUNT]) const
+void CGame::EnchantItemMods(const CItem * it, bool has[LEARN_COUNT]) const
 {
 	int base[MOD_CRIT + 1];
 	const bool b = GearRowOf(it->m_cName, base);
-	ItemMods(it->m_valoria, b ? base : 0, it->m_cEquipPos, has);
+	ItemMods(it->m_valoria, b ? base : 0, it->m_cEquipPos, it->m_dwAttribute, has);
 }
 
 // Tooltip lines for an item's enchantments and empowering.
@@ -131,7 +131,7 @@ void CGame::EnchantTipLines(ItemTip & t, const CItem * it)
 		}
 	}
 	for (int i = 0; i < MAX_ENCHANTS; i++) {
-		if (d.enKey[i] >= MOD_COUNT) continue;
+		if (d.enKey[i] >= LEARN_COUNT) continue;
 		wsprintf(cBuf, "+%d %s", (int)d.enVal[i], ModName(d.enKey[i]));
 		t.bonus.push_back({ cBuf, "enchanted", kPurple });
 	}
@@ -148,6 +148,26 @@ void CGame::EnchantTipLines(ItemTip & t, const CItem * it)
 // The window
 
 namespace {
+
+const int kModRows = 6;		// learned modifiers shown at once on the Enchant tab
+
+// The learned modifiers that can go on this piece of gear (the Enchant tab's rows).
+std::vector<int> EnchantChoices(const CGame & g, const CItem * it)
+{
+	std::vector<int> v;
+	for (int k = 0; k < LEARN_COUNT; k++)
+		if (ModActive(k) && g.m_enchant.known[k] != 0 && ModFits(k, it->m_cEquipPos)) v.push_back(k);
+	return v;
+}
+
+// What enchanting modifier k gives this item, as shown on the Enchant tab.
+std::string EnchantPreview(const CharData & c, int k, int tier)
+{
+	char b[64];
+	if (IsHbMod(k)) wsprintf(b, "%s %d", ModName(k), HbEnchantValue(c, k, tier));
+	else wsprintf(b, "+%d %s", EnchantValueFor(c, k, tier), ModName(k));
+	return b;
+}
 
 // Everything clickable, for the current state (shared by drawing and clicking).
 std::vector<Btn> EnchantButtons(CGame & g, int X, int Y)
@@ -197,7 +217,7 @@ std::vector<Btn> EnchantButtons(CGame & g, int X, int Y)
 	const CItem * it = g.m_pItemList[sel];
 	const ItemData & d = it->m_valoria;
 	const int tier = ItemTier(it->m_sLevelLimit);
-	bool has[MOD_COUNT];
+	bool has[LEARN_COUNT];
 	g.EnchantItemMods(it, has);
 	const unsigned long gold = g.GetItemCount(kGoldName), shards = g.GetItemCount(kShard), prism = g.GetItemCount(kPrism);
 	auto Afford = [&](const Cost & k) { return gold >= (unsigned long)k.gold && shards >= (unsigned long)k.shards && prism >= (unsigned long)k.prismatic; };
@@ -205,18 +225,27 @@ std::vector<Btn> EnchantButtons(CGame & g, int X, int Y)
 	int y = Y + 236;
 
 	switch (g.m_iEnchantTab) {
-	case TAB_ENCHANT:
-		for (int k = 0; k < ENCHANTABLE; k++) {
-			if (!ModActive(k) || c.known[k] == 0) continue;
-			const bool bHas = d.EnchantSlotOf(k) >= 0;
+	case TAB_ENCHANT: {
+		const std::vector<int> ks = EnchantChoices(g, it);
+		if (g.m_iEnchantModScroll > (int)ks.size() - kModRows) g.m_iEnchantModScroll = (std::max)(0, (int)ks.size() - kModRows);
+		for (int r = 0; r < kModRows && g.m_iEnchantModScroll + r < (int)ks.size(); r++) {
+			const int k = ks[g.m_iEnchantModScroll + r];
+			// a Helbreath attribute replaces the item's own (no slot); the rest take an enchant slot
+			const bool bHas = IsHbMod(k) || d.EnchantSlotOf(k) >= 0;
 			const Cost cost = EnchantCost(tier, d.Enchants());
 			SetRect(&b.rc, x0, y, x1, y + 18);
-			b.action = ENCH_ENCHANT; b.idx = sel; b.key = k; b.label = bHas ? "Re-enchant" : "Enchant";
+			b.action = ENCH_ENCHANT; b.idx = sel; b.key = k; b.label = (!IsHbMod(k) && bHas) ? "Re-enchant" : "Enchant";
 			b.enabled = lv > 0 && tier <= EnchantTierCap(lv) && (bHas || d.Enchants() < EnchantSlots(lv)) && Afford(cost);
 			out.push_back(b);
 			y += 22;
 		}
-		break;
+		if ((int)ks.size() > kModRows) {
+			SetRect(&b.rc, x0 - 96, Y + 236 + kModRows * 22 + 2, x0 - 50, Y + 236 + kModRows * 22 + 20); b.action = -32; b.idx = 0; b.key = 0; b.label = "Up";
+			b.enabled = g.m_iEnchantModScroll > 0; out.push_back(b);
+			SetRect(&b.rc, x0 - 44, Y + 236 + kModRows * 22 + 2, x0 + 2, Y + 236 + kModRows * 22 + 20); b.action = -33; b.label = "Down";
+			b.enabled = g.m_iEnchantModScroll + kModRows < (int)ks.size(); out.push_back(b);
+		}
+		break; }
 	case TAB_DISENCHANT:
 		SetRect(&b.rc, x0 - 30, Y + H - 40, x1, Y + H - 16);
 		b.action = ENCH_DISENCHANT; b.idx = sel; b.key = 0; b.label = "Disenchant";
@@ -261,13 +290,10 @@ void CGame::DrawDialogBox_Enchant()
 		Bold(R, X + 16, Y + 42, cTxt, kWhite, 12);
 		wsprintf(cTxt, "Up to %d enchantment%s per item, gear up to tier %d. Disenchanting gear is how you learn and level.", EnchantSlots(lv), EnchantSlots(lv) == 1 ? "" : "s", EnchantTierCap(lv));
 		R.TextOutSized(X + 16, Y + 62, cTxt, kGrey, 10);
-		std::string known;
-		for (int k = 0; k < ENCHANTABLE; k++) {
-			if (!ModActive(k) || c.known[k] == 0) continue;
-			wsprintf(cTxt, "%s%s T%d L%d", known.empty() ? "" : ",  ", ModName(k), (int)c.known[k], ModLevel(c, k));
-			known += cTxt;
-		}
-		R.TextOutSized(X + 16, Y + 76, known.empty() ? "Learned: nothing yet" : ("Learned: " + known).c_str(), known.empty() ? kDim : kPurple, 10);
+		int nKnown = 0;
+		for (int k = 0; k < LEARN_COUNT; k++) if (ModActive(k) && c.known[k] != 0) nKnown++;
+		wsprintf(cTxt, "Learned %d of %d modifiers (tier T and level L of each on the Enchant tab)", nKnown, (int)LEARN_COUNT);
+		R.TextOutSized(X + 16, Y + 76, nKnown == 0 ? "Learned: nothing yet" : cTxt, nKnown == 0 ? kDim : kPurple, 10);
 	}
 	else {
 		R.TextOutSized(X + 16, Y + 42, "You haven't learned Enchanting. The lesson teaches level 1 and gives a blade to disenchant.", kGrey, 10);
@@ -322,7 +348,7 @@ void CGame::DrawDialogBox_Enchant()
 		const CItem * it = m_pItemList[m_iEnchantSel];
 		const ItemData & d = it->m_valoria;
 		const int tier = ItemTier(it->m_sLevelLimit);
-		bool has[MOD_COUNT];
+		bool has[LEARN_COUNT];
 		EnchantItemMods(it, has);
 		int y = Y + 126;
 		Bold(R, rx, y, ItemDisplayName(it->m_cName).c_str(), kWhite, 13);
@@ -331,7 +357,7 @@ void CGame::DrawDialogBox_Enchant()
 		R.TextOutSized(rx, y, cTxt, kGrey, 10);
 		y += 16;
 		std::string mods;
-		for (int i = 0; i < MAX_ENCHANTS; i++) if (d.enKey[i] < MOD_COUNT) {
+		for (int i = 0; i < MAX_ENCHANTS; i++) if (d.enKey[i] < LEARN_COUNT) {
 			wsprintf(cTxt, "%s+%d %s", mods.empty() ? "" : ", ", (int)d.enVal[i], ModName(d.enKey[i]));
 			mods += cTxt;
 		}
@@ -356,21 +382,22 @@ void CGame::DrawDialogBox_Enchant()
 				R.TextOutSized(rx, Y + 222, cTxt, kBad, 10);
 			}
 			else if (lv > 0 && d.Enchants() >= EnchantSlots(lv)) R.TextOutSized(rx, Y + 222, "No free slot: re-enchant a modifier it has.", kGrey, 10);
-			for (int k = 0; k < ENCHANTABLE; k++) {
-				if (!ModActive(k) || c.known[k] == 0) continue;
+			const std::vector<int> ks = EnchantChoices(*this, it);
+			for (int r = 0; r < kModRows && m_iEnchantModScroll + r < (int)ks.size(); r++) {
+				const int k = ks[m_iEnchantModScroll + r];
 				bAny = true;
 				const Cost cost = EnchantCost(tier, d.Enchants());
-				wsprintf(cTxt, "+%d %s", EnchantValueFor(c, k, tier), ModName(k));
-				R.TextOutSized(rx, y + 1, cTxt, kWhite, 11);
-				R.TextOutSized(rx + 96, y + 2, CostText(cost).c_str(), kDim, 9);
+				R.TextOutSized(rx, y - 1, EnchantPreview(c, k, tier).c_str(), IsHbMod(k) ? RGB(160, 200, 255) : kWhite, 11);
+				wsprintf(cTxt, "T%d L%d   %s", (int)c.known[k], ModLevel(c, k), CostText(cost).c_str());
+				R.TextOutSized(rx, y + 10, cTxt, kDim, 9);
 				y += 22;
 			}
-			if (!bAny) R.TextOutSized(rx, y, lv > 0 ? "Disenchant gear to learn modifiers." : "Take the lesson first.", kGrey, 11);
+			if (!bAny) R.TextOutSized(rx, y, lv > 0 ? "Disenchant gear to learn modifiers that fit it." : "Take the lesson first.", kGrey, 11);
 			break; }
 		case TAB_DISENCHANT: {
 			int iNew = 0;
 			std::string teach;
-			for (int k = 0; k < ENCHANTABLE; k++) {
+			for (int k = 0; k < LEARN_COUNT; k++) {
 				if (!has[k]) continue;
 				const bool bNew = tier > c.known[k];
 				if (bNew) iNew++;
@@ -381,7 +408,10 @@ void CGame::DrawDialogBox_Enchant()
 			R.TextOutSized(rx, y, cTxt, kWhite, 11); y += 18;
 			wsprintf(cTxt, "+%u Enchanting XP", SkillXP(DisenchantXP(tier, iNew)));
 			R.TextOutSized(rx, y, cTxt, kWhite, 11); y += 18;
-			R.TextOutSized(rx, y, teach.empty() ? "Teaches nothing (no modifiers)." : ("Teaches: " + teach).c_str(), teach.empty() ? kDim : kPurple, 10); y += 18;
+			{	const std::string s = teach.empty() ? "Teaches nothing (no modifiers)." : "Teaches: " + teach;
+				RECT rc; SetRect(&rc, rx, y, X + W - 12, y + 48);
+				R.DrawTextEx(&rc, s.c_str(), teach.empty() ? kDim : kPurple, DT_LEFT, true);
+				y += 50; }
 			R.TextOutSized(rx, y, "The item is destroyed.", kBad, 10); y += 16;
 			if (m_bIsItemEquipped[m_iEnchantSel]) R.TextOutSized(rx, y, "Unequip it first.", kBad, 10);
 			break; }
@@ -420,9 +450,11 @@ void CGame::DlgBoxClick_Enchant()
 		switch (b.action) {
 		case -1: DisableDialogBox(DIALOG_ENCHANT); return;
 		case -10: case -11: case -12: m_iEnchantTab = -10 - b.action; m_dwEnchantConfirmAt = 0; return;
-		case -20: m_iEnchantSel = b.idx; m_dwEnchantConfirmAt = 0; return;
+		case -20: m_iEnchantSel = b.idx; m_iEnchantModScroll = 0; m_dwEnchantConfirmAt = 0; return;
 		case -30: if (m_iEnchantScroll > 0) m_iEnchantScroll--; return;
 		case -31: m_iEnchantScroll++; return;
+		case -32: if (m_iEnchantModScroll > 0) m_iEnchantModScroll--; return;
+		case -33: m_iEnchantModScroll++; return;
 		case ENCH_DISENCHANT:
 			if (m_dwEnchantConfirmAt == 0 || m_dwCurTime - m_dwEnchantConfirmAt >= 4000) { m_dwEnchantConfirmAt = m_dwCurTime; return; }
 			m_dwEnchantConfirmAt = 0;

@@ -57,11 +57,11 @@ bool GearBase(const CItem * it, int base[MOD_CRIT + 1])
 	return true;
 }
 
-void Mods(const CItem * it, bool has[MOD_COUNT])
+void Mods(const CItem * it, bool has[LEARN_COUNT])
 {
 	int base[MOD_CRIT + 1];
 	const bool bBase = GearBase(it, base);
-	ItemMods(it->m_valoria, bBase ? base : 0, it->m_cEquipPos, has);
+	ItemMods(it->m_valoria, bBase ? base : 0, it->m_cEquipPos, it->m_dwAttribute, has);
 }
 
 std::string ItemLabel(const CItem * it) { return std::string(it->m_cName); }
@@ -206,7 +206,7 @@ void CGame::EnchantAddXP(int iClientH, int n)
 void CGame::EnchantAddModXP(int iClientH, int k, int n)
 {
 	CClient * p = m_pClientList[iClientH];
-	if (p == NULL || n <= 0 || k < 0 || k >= MOD_COUNT || p->m_enchant.known[k] == 0) return;
+	if (p == NULL || n <= 0 || k < 0 || k >= LEARN_COUNT || p->m_enchant.known[k] == 0) return;
 	const int before = ModLevel(p->m_enchant, k);
 	p->m_enchant.modXp[k] += (unsigned int)n;
 	const int after = ModLevel(p->m_enchant, k);
@@ -275,7 +275,7 @@ void CGame::EnchantRequest(int iClientH, char * pData)
 	if (!IsGear(it)) { Say(this, iClientH, "Only gear can be enchanted, disenchanted or empowered."); return; }
 	const int tier = Tier(it);
 	ItemData & d = it->m_valoria;
-	bool has[MOD_COUNT];
+	bool has[LEARN_COUNT];
 	Mods(it, has);
 	char cTxt[200];
 
@@ -286,8 +286,8 @@ void CGame::EnchantRequest(int iClientH, char * pData)
 		// learn its modifiers (at the item's tier) and practise every one of them
 		std::string learned;
 		int iNew = 0;
-		for (int k = 0; k < MOD_COUNT; k++) {
-			if (!has[k] || k >= ENCHANTABLE) continue;
+		for (int k = 0; k < LEARN_COUNT; k++) {
+			if (!has[k]) continue;
 			if (tier > c.known[k]) {
 				if (c.known[k] == 0) c.modXp[k] = 0;
 				c.known[k] = (unsigned char)tier;
@@ -307,19 +307,55 @@ void CGame::EnchantRequest(int iClientH, char * pData)
 			std::string s = "Learned for Enchanting: " + learned;
 			ShowClientMsg(iClientH, (char *)s.c_str());
 		}
-		for (int k = 0; k < ENCHANTABLE; k++) if (has[k] && c.known[k] > 0) EnchantAddModXP(iClientH, k, DisenchantModXP(tier));
+		for (int k = 0; k < LEARN_COUNT; k++) if (has[k] && c.known[k] > 0) EnchantAddModXP(iClientH, k, DisenchantModXP(tier));
 		EnchantAddXP(iClientH, DisenchantXP(tier, iNew));
 		EnchantSendStats(iClientH);
 		EnchantSendItems(iClientH);
 		return; }
 
 	case ENCH_ENCHANT: {
-		if (key >= ENCHANTABLE || !ModActive(key)) return;
+		if (key >= LEARN_COUNT || !ModActive(key)) return;
 		if (lv <= 0) { Say(this, iClientH, "Learn Enchanting first: use the Enchanter's Tome."); return; }
 		if (tier > EnchantTierCap(lv)) { wsprintf(cTxt, "Tier %d gear needs Enchanting %d.", tier, (tier - 3) * 8); ShowClientMsg(iClientH, cTxt); return; }
 		if (c.known[key] == 0) { Say(this, iClientH, "You haven't learned that modifier: disenchant gear that has it."); return; }
-		int slot = d.EnchantSlotOf(key);
+		if (!ModFits(key, it->m_cEquipPos)) { wsprintf(cTxt, "%s can't go on this kind of gear.", ModName(key)); ShowClientMsg(iClientH, cTxt); return; }
 		const int n = d.Enchants();
+		if (IsHbMod(key)) {		// a Helbreath attribute: the item's own primary or secondary, replaced
+			const Cost cost = EnchantCost(tier, n);
+			if (dwGetItemCount(iClientH, kGold) < (uint32)cost.gold) { wsprintf(cTxt, "You need %d gold.", cost.gold); ShowClientMsg(iClientH, cTxt); return; }
+			if (dwGetItemCount(iClientH, kShard) < (uint32)cost.shards) { wsprintf(cTxt, "You need %d Mystic Shards.", cost.shards); ShowClientMsg(iClientH, cTxt); return; }
+			if (dwGetItemCount(iClientH, kPrism) < (uint32)cost.prismatic) { Say(this, iClientH, "You need a Prismatic Shard."); return; }
+			PayItems(this, iClientH, kGold, cost.gold);
+			PayItems(this, iClientH, kShard, cost.shards);
+			PayItems(this, iClientH, kPrism, cost.prismatic);
+			const int v = HbEnchantValue(c, key, tier);
+			if (IsHb1(key)) {
+				// the primary changes the item itself (Agile: speed, Light: weight, Strong / Ancient:
+				// durability): start again from the item's own values, then apply the new one
+				CItem base;
+				if (base.InitItemAttr(it->m_cName)) {
+					const double life = (it->m_wMaxLifeSpan > 0) ? (double)it->m_wCurLifeSpan / it->m_wMaxLifeSpan : 1.0;
+					it->m_cSpeed = base.m_cSpeed;
+					it->m_wWeight = base.m_wWeight;
+					it->m_wMaxLifeSpan = base.m_wMaxLifeSpan;
+					SetNibble(it->m_dwAttribute, 5, HbType(key));
+					SetNibble(it->m_dwAttribute, 4, v);
+					it->AdjustByStat();
+					it->m_wCurLifeSpan = (int)(life * it->m_wMaxLifeSpan + 0.5);
+				}
+				else { SetNibble(it->m_dwAttribute, 5, HbType(key)); SetNibble(it->m_dwAttribute, 4, v); }
+			}
+			else {
+				SetNibble(it->m_dwAttribute, 3, HbType(key));
+				SetNibble(it->m_dwAttribute, 2, v);
+			}
+			SendNotifyMsg(NULL, iClientH, NOTIFY_ITEMATTRIBUTECHANGE, idx, it->m_dwAttribute, NULL, NULL);
+			wsprintf(cTxt, "Enchanted %s with %s %d (%s level %d)", it->m_cName, ModName(key), v, ModName(key), ModLevel(c, key));
+			ShowClientMsg(iClientH, cTxt);
+			EnchantAddModXP(iClientH, key, EnchantModXP(tier));
+			break;
+		}
+		int slot = d.EnchantSlotOf(key);
 		if (slot < 0 && n >= EnchantSlots(lv)) { wsprintf(cTxt, "No enchant slots left (%d).", EnchantSlots(lv)); ShowClientMsg(iClientH, cTxt); return; }
 		const Cost cost = EnchantCost(tier, n);
 		if (dwGetItemCount(iClientH, kGold) < (uint32)cost.gold) { wsprintf(cTxt, "You need %d gold.", cost.gold); ShowClientMsg(iClientH, cTxt); return; }

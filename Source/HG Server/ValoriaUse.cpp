@@ -18,8 +18,10 @@
 #include "..\shared\Maths.h"
 #include "..\shared\npcType.h"
 #include "char\Npc.h"
+#include "map\Map.h"
 
 #include <cstring>
+#include <cmath>
 
 extern char g_cTxt[512];
 
@@ -376,4 +378,33 @@ void CGame::ValoriaAdminRarity(int iClientH, const char * pArgs)
 		return;
 	}
 	Say(this, iClientH, "/vrarity: no such item in your bag.");
+}
+
+// Cash piles: every monster that isn't a boss (nor a town's guard or soldier) has a 1 in 4 chance to
+// drop a pile of 1,000 to 15,000 gold besides its usual drop. The pile grows with the monster's
+// strength (its hit dice: a Slime ~1.8k, a Troll ~5k, a Liche ~7.5k, 600 and up 15k), +-20%, and
+// with the killer's gold find. (NpcDeadItemGenerator)
+void CGame::ValoriaCashPile(int iNpcH, short sAttackerH)
+{
+	CNpc * npc = m_pNpcList[iNpcH];
+	if (npc == NULL || npc->m_bIsSummoned || IsBoss(npc->m_sType) || npc->IsAres() || npc->IsElv()) return;
+	if (sAttackerH <= 0 || sAttackerH >= MAXCLIENTS || m_pClientList[sAttackerH] == NULL) return;
+	if (npc->m_iHitDice <= 0 || dice(1, 4) != 1) return;
+	const int CASH_MIN = 1000, CASH_MAX = 15000, CASH_FULL_AT = 600;
+	const double s = sqrt((double)((npc->m_iHitDice < CASH_FULL_AT) ? npc->m_iHitDice : CASH_FULL_AT) / CASH_FULL_AT);
+	double v = (CASH_MIN + (CASH_MAX - CASH_MIN) * s) * (80 + (int)dice(1, 41) - 1) / 100.0;
+	const int find = m_pClientList[sAttackerH]->m_val.goldFind;
+	if (find > 0) v += v * find / 100.0;
+	uint32 n = (uint32)(v + 0.5);
+	if (n < (uint32)CASH_MIN) n = CASH_MIN;
+	if (n > (uint32)CASH_MAX) n = CASH_MAX;
+	CItem * pItem = new CItem;
+	if (!pItem->InitItemAttr("Gold")) { delete pItem; return; }
+	pItem->m_dwCount = n;
+	CMap * pMap = m_pMapList[npc->m_cMapIndex];
+	if (pMap == NULL || pMap->iCheckItem(npc->m_sX, npc->m_sY) == ITEMTYPE_RELIC) { delete pItem; return; }
+	pMap->bSetItem(npc->m_sX, npc->m_sY, pItem);
+	SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, COMMONTYPE_ITEMDROP, npc->m_cMapIndex, npc->m_sX, npc->m_sY,
+		pItem->m_sSprite, pItem->m_sSpriteFrame, pItem->m_cItemColor);
+	AddGroundItem(pItem, npc->m_sX, npc->m_sY, npc->m_cMapIndex, TILECLEANTIME);
 }

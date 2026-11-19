@@ -25,6 +25,8 @@
 			<item_t name="TacticalGem5" prob="15"/>
 			<item_t name="TacticalGem7" prob="5"/>
 			<item_t name="VortexGem" prob="7"/>
+			<item_t name="HeartOfAbaddon" prob="132"/>
+			<item_t name="InfernalCore" prob="132"/>
 		</tier_t>
 		<tier_t type="secondary" prob="150">
 			<item_t name="nothing" prob="1"/>
@@ -76,6 +78,7 @@
 			<item_t name="SnakeSkin" prob="20"/>
 			<item_t name="SnakeTeeth" prob="20"/>
 			<item_t name="SnakeTongue" prob="17"/>
+			<item_t name="TurtleShell" prob="120"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="2500"/>
@@ -87,6 +90,7 @@
 	<npc_t name="Beholder">
 		<tier_t type="secondary" prob="999">
 			<item_t name="nothing" prob="100"/>
+			<item_t name="BeholderEye" prob="11"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="10000"/>
@@ -96,6 +100,7 @@
 	<npc_t name="Cannibal-Plant">
 		<tier_t type="secondary" prob="999">
 			<item_t name="nothing" prob="100"/>
+			<item_t name="AncientBark" prob="11"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="500"/>
@@ -111,6 +116,7 @@
 		<tier_t type="secondary" prob="999">
 			<item_t name="nothing" prob="1000"/>
 			<item_t name="LumpofClay" prob="20"/>
+			<item_t name="GolemCore" prob="113"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="8000"/>
@@ -143,6 +149,7 @@
 			<item_t name="ArmorGem14" prob="3"/>
 			<item_t name="MindGem7" prob="9"/>
 			<item_t name="MindGem14" prob="3"/>
+			<item_t name="DarkElfSilk" prob="3340"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="1000"/>
@@ -159,6 +166,7 @@
 			<item_t name="DemonLeather" prob="20"/>
 			<item_t name="DemonEye" prob="15"/>
 			<item_t name="DemonHeart" prob="10"/>
+			<item_t name="DemonHorn" prob="114"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="MassFireStrikeManual" prob="400"/>
@@ -180,6 +188,8 @@
 	<npc_t name="DireBoar">
 		<tier_t type="secondary" prob="999">
 			<item_t name="nothing" prob="100"/>
+			<item_t name="BeastHide" prob="13"/>
+			<item_t name="RawMeat" prob="13"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="700"/>
@@ -191,6 +201,7 @@
 			<item_t name="nothing" prob="10000"/>
 			<item_t name="BloodGem7" prob="10"/>
 			<item_t name="BloodGem14" prob="3"/>
+			<item_t name="MinotaurHorn" prob="1114"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="1000"/>
@@ -231,6 +242,9 @@
 			<item_t name="MagicNecklace(RM10)" prob="40"/>
 			<item_t name="LuckyGoldRing" prob="5"/>
 			<item_t name="EmeraldRing" prob="5"/>
+			<item_t name="DragonScale" prob="119"/>
+			<item_t name="DragonHeart" prob="119"/>
+			<item_t name="BlackDragonScale" prob="119"/>
 		</tier_t>
 		<tier_t type="secondary" prob="10">
 			<item_t name="RingofWizard" prob="1400"/>
@@ -258,6 +272,7 @@
 			<item_t name="ArmorGem7" prob="9"/>
 			<item_t name="ArmorGem14" prob="3"/>
 			<item_t name="TacticalGem3" prob="1"/>
+			<item_t name="FrostCrystal" prob="3337"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="MagicWand(M.Shield)" prob="2000"/>
@@ -301,6 +316,7 @@
 			<item_t name="nothing" prob="300"/>
 			<item_t name="AntLeg" prob="17"/>
 			<item_t name="AntFeeler" prob="15"/>
+			<item_t name="ChitinPlate" prob="37"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="3000"/>
@@ -312,6 +328,7 @@
 	<npc_t name="Giant-Frog">
 		<tier_t type="secondary" prob="1400">
 			<item_t name="nothing" prob="100"/>
+			<item_t name="FrogLeg" prob="11"/>
 		</tier_t>
 		<tier_t type="secondary" prob="2">
 			<item_t name="nothing" prob="3000"/>
@@ -334,6 +351,7 @@
 			<item_t name="HelboundTail" prob="6"/>
 			<item_t name="HelboundHeart" prob="5"/>
 			<item_t name="HelboundTongue" prob="4"/>
+			<item_t name="HellfireEmber" prob="116"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="MagicNecklace(DF+10)" prob="150"/>
@@ -371,6 +389,7 @@
 			<item_t name="RingofWizard" prob="100"/>
 			<item_t name="RubyRing" prob="100"/>
 			<item_t name="MagicWand(M.Shield)" prob="100"/>
+			<item_t name="HellclawPincer" prob="79"/>
 		</tier_t>
 		<tier_t type="secondary" prob="25">
 			<item_t name="nothing" prob="1"/>
@@ -395,6 +414,7 @@
 	<npc_t name="Ice-Golem">
 		<tier_t type="secondary" prob="1400">
 			<item_t name="nothing" prob="100"/>
+			<item_t name="FrostCrystal" prob="11"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="MagicWand(M.Shield)" prob="2000"/>
@@ -410,6 +430,7 @@
 			<item_t name="BloodGem7" prob="7"/>
 			<item_t name="RejuGem14" prob="2"/>
 			<item_t name="BloodGem14" prob="2"/>
+			<item_t name="SoulShard" prob="3451"/>
 		</tier_t>
 		<tier_t type="secondary" prob="2">
 			<item_t name="MagicWand(M.Shield)" prob="2500"/>
@@ -435,6 +456,7 @@
 			<item_t name="nothing" prob="25000"/>
 			<item_t name="RejuGem7" prob="10"/>
 			<item_t name="RejuGem14" prob="3"/>
+			<item_t name="ManaCrystal" prob="2784"/>
 		</tier_t>
 		<tier_t type="secondary" prob="2">
 			<item_t name="MagicWand(M.Shield)" prob="1300"/>
@@ -471,6 +493,7 @@
 			<item_t name="OgreTeeth" prob="10"/>
 			<item_t name="OgreClaw" prob="10"/>
 			<item_t name="nothing" prob="1000"/>
+			<item_t name="OgreHide" prob="122"/>
 		</tier_t>
 		<tier_t type="secondary" prob="3">
 			<item_t name="MagicNecklace(DF+10)" prob="500"/>
@@ -488,6 +511,7 @@
 			<item_t name="OrcMeat" prob="35"/>
 			<item_t name="OrcLeather" prob="25"/>
 			<item_t name="OrcTeeth" prob="20"/>
+			<item_t name="OrcTusk" prob="120"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="6000"/>
@@ -522,6 +546,7 @@
 			<item_t name="ScorpionSkin" prob="12"/>
 			<item_t name="ScorpionPincers" prob="10"/>
 			<item_t name="ScorpionSting" prob="9"/>
+			<item_t name="ScorpionStinger" prob="117"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="6000"/>
@@ -539,6 +564,7 @@
 		<tier_t type="secondary" prob="999">
 			<item_t name="nothing" prob="1000"/>
 			<item_t name="SkeletonBones" prob="30"/>
+			<item_t name="BoneDust" prob="115"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="4000"/>
@@ -564,6 +590,7 @@
 		</tier_t>
 		<tier_t type="secondary" prob="500">
 			<item_t name="nothing" prob="100"/>
+			<item_t name="SlimeGel" prob="25"/>
 		</tier_t>
 		<tier_t type="secondary" prob="500">
 			<item_t name="nothing" prob="300"/>
@@ -620,6 +647,7 @@
 		<tier_t type="secondary" prob="1400">
 			<item_t name="nothing" prob="1000"/>
 			<item_t name="StoneGolemPiece" prob="18"/>
+			<item_t name="GolemCore" prob="113"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="10000"/>
@@ -655,6 +683,7 @@
 			<item_t name="RubyRing" prob="138"/>
 			<item_t name="MagicWand(M.Shield)" prob="138"/>
 			<item_t name="EmeraldRing" prob="5"/>
+			<item_t name="TigerwormHide" prob="111"/>
 		</tier_t>
 		<tier_t type="secondary" prob="30">
 			<item_t name="nothing" prob="1"/>
@@ -691,6 +720,7 @@
 			<item_t name="TrollClaw" prob="8"/>
 			<item_t name="TrollHeart" prob="6"/>
 			<item_t name="nothing" prob="1000"/>
+			<item_t name="TrollBlood" prob="115"/>
 		</tier_t>
 		<tier_t type="secondary" prob="3">
 			<item_t name="nothing" prob="1000"/>
@@ -744,6 +774,7 @@
 			<item_t name="WerewolfTail" prob="35"/>
 			<item_t name="WerewolfLeather" prob="30"/>
 			<item_t name="WerewolfNail" prob="25"/>
+			<item_t name="WolfPelt" prob="253"/>
 		</tier_t>
 		<tier_t type="secondary" prob="1">
 			<item_t name="nothing" prob="600"/>
@@ -770,6 +801,8 @@
 			<item_t name="MagicNecklace(RM10)" prob="40"/>
 			<item_t name="LuckyGoldRing" prob="5"/>
 			<item_t name="EmeraldRing" prob="5"/>
+			<item_t name="DragonScale" prob="104"/>
+			<item_t name="DragonFang" prob="104"/>
 		</tier_t>
 		<tier_t type="secondary" prob="10">
 			<item_t name="RingofWizard" prob="2000"/>
@@ -789,6 +822,7 @@
 	<npc_t name="Zombie">
 		<tier_t type="secondary" prob="1400">
 			<item_t name="nothing" prob="1000"/>
+			<item_t name="Ectoplasm" prob="111"/>
 		</tier_t>
 		<tier_t type="secondary" prob="2">
 			<item_t name="nothing" prob="3000"/>

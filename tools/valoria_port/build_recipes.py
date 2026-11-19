@@ -42,6 +42,53 @@ SLOTS = 6
 # Items Justin wants found, not made: the Blessed Upgrade Stone is a super-rare boss drop (build_passives.py).
 DROP_ONLY = {'blessed_stone'}
 
+# Monster parts that VALORIA and Helbreath both have (Slime Gel and Slime Jelly...). One rule for every
+# pair: VALORIA's part is a Smithing / Crafting material, Helbreath's is an Alchemy reagent.
+#   VALORIA part   Helbreath part
+DUPLICATES = {
+    'slime_gel':        'SlimeJelly',
+    'orc_tusk':         'OrcTeeth',
+    'scorpion_stinger': 'ScorpionSting',
+    'ogre_hide':        'OgreLeather',
+    'bone_dust':        'SkeletonBones',
+    'wolf_pelt':        'WerewolfLeather',
+    'mithril_ore':      'Mithral',
+}
+# So each part of a pair has its own use: what is added to VALORIA's recipes (ingredient: count).
+# Gel binds the gem settings of the plain rings; the tusk, stinger, hide and pelt go into early gear;
+# the Helbreath parts into potions and elixirs.
+RECIPE_ADD = {
+    'ruby_ring':        {'slime_gel': 1},
+    'sapphire_ring':    {'slime_gel': 1},
+    'emerald_ring':     {'slime_gel': 1},
+    'amethyst_ring':    {'slime_gel': 1},
+    'broadsword':       {'orc_tusk': 2},
+    'studded_leggings': {'scorpion_stinger': 2},
+    'studded_leather':  {'ogre_hide': 1},
+    'wind_boots':       {'wolf_pelt': 2},
+    'potion_sp_x':      {'ScorpionSting': 1},
+    'potion_hp_x':      {'OgreLeather': 1},
+    'potion_mp_l':      {'SkeletonBones': 1},
+    'elixir_swiftness': {'WerewolfLeather': 1},
+    'elixir_ironskin':  {'Mithral': 1},
+}
+
+
+def apply_purposes(recipes, items):
+    """Alchemy recipes take the Helbreath part of a pair in place of VALORIA's; RECIPE_ADD is added."""
+    for r in recipes:
+        alch = r['station'] != 'blacksmith' and items.get(r['out'], {}).get('type') in ALCHEMY_TYPES
+        ins = {}
+        for k, n in r['in'].items():
+            if alch and k in DUPLICATES: k = DUPLICATES[k]
+            ins[k] = ins.get(k, 0) + n
+        for k, n in RECIPE_ADD.get(r['out'], {}).items():
+            ins[k] = ins.get(k, 0) + n
+        r['in'] = ins
+        for k in ins:   # check the rule holds
+            if alch and k in DUPLICATES: sys.exit('alchemy recipe %s uses %s' % (r['out'], k))
+            if not alch and k in DUPLICATES.values(): sys.exit('%s recipe %s uses %s' % (r['station'], r['out'], k))
+
 def all_items():
     rows = {}
     for f in sorted(os.listdir(CFG_DIR)):
@@ -59,6 +106,8 @@ def main():
     items = items if isinstance(items, dict) else {x['id']: x for x in items}
     imap = json.load(open(os.path.join(HERE, 'item_map.json')))
     hb = all_items()
+    apply_purposes(recipes, items)
+    for name in DUPLICATES.values(): imap.setdefault(name, [name])   # Helbreath parts, by their own name
 
     build, potion, craft, extra, skipped = [], [], [], [], []
     for r in recipes:

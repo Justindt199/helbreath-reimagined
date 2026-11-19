@@ -143,10 +143,9 @@
 #define SELECTEDOBJTYPE_DLGBOX	1
 #define SELECTEDOBJTYPE_ITEM	2
 
-// A double-click: the second click within the Windows double-click time (Control Panel > Mouse,
-// 500 ms by default; HB used a fixed 300 ms, too short for many players) and within DOUBLECLICKMOVE pixels.
-#define DOUBLECLICKTIME			((DWORD)GetDoubleClickTime())
-#define DOUBLECLICKMOVE			4
+// A double-click: the second click within 300 ms and DOUBLECLICKMOVE pixels (Helbreath's own timing).
+#define DOUBLECLICKTIME			300
+#define DOUBLECLICKMOVE			2
 #define MAXCRUSADESTRUCTURES	300
 
 #define NONE						-1
@@ -498,13 +497,13 @@ public:
 	// VALORIA enchanting (UI\EnchantPanel.cpp)
 	enum { ENCHANTWIN_W = 480, ENCHANTWIN_H = 440 };
 	Valoria::CharData m_enchant;
-	int  m_iEnchantTab = 0, m_iEnchantSel = -1, m_iEnchantScroll = 0;
+	int  m_iEnchantTab = 0, m_iEnchantSel = -1, m_iEnchantScroll = 0, m_iEnchantModScroll = 0;
 	DWORD m_dwEnchantConfirmAt = 0;
 	void NotifyMsg_EnchantStats(char * pData);
 	void NotifyMsg_EnchantItems(char * pData);
 	void OpenEnchantWindow();
 	std::string ItemDisplayName(const char * pName) const;
-	void EnchantItemMods(const class CItem * it, bool has[Valoria::MOD_COUNT]) const;
+	void EnchantItemMods(const class CItem * it, bool has[Valoria::LEARN_COUNT]) const;
 	void EnchantTipLines(ItemTip & t, const class CItem * it);
 	void DrawDialogBox_Enchant();
 	void DlgBoxClick_Enchant();

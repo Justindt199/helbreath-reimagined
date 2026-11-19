@@ -16,8 +16,11 @@
 //                             10 x empower level (uint8, one per Mod), 2 x rune (uint8, Mod + 1),
 //                             2 spare, rarity (uint8, 0 Common .. 4 Legendary), 4 x bonus key
 //                             (uint8, Bonus + 1, 0 = empty), 4 x bonus value (int16), 3 spare
-//   character data, 80 bytes: Enchanting XP (uint32), 10 x known tier (uint8, 0 = not learned),
-//                             10 x modifier XP (uint32), 10 spare, 4 x life skill XP (uint32, Life)
+//   character data, CHAR_BYTES: Enchanting XP (uint32), 10 x known tier (uint8, 0 = not learned),
+//                             10 x modifier XP (uint32), 10 spare, 4 x life skill XP (uint32, Life),
+//                             achievements, title and side quests (80-430), then from 432 the known
+//                             tier of the learnable modifiers after the first 10 (uint8 each) and
+//                             from 460 their XP (uint32 each)
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -30,7 +33,29 @@ namespace Valoria {
 enum Mod { MOD_STR, MOD_DEX, MOD_VIT, MOD_INT, MOD_MAG, MOD_HP, MOD_MP, MOD_DEF, MOD_CRIT, MOD_DMG, MOD_COUNT };
 const unsigned char MOD_NONE = 255;
 
-const int ENCHANTABLE   = MOD_CRIT + 1;	// weapon damage can be empowered, not enchanted
+// Every modifier an item can carry can be learned by disenchanting it and then enchanted (the
+// "learnable" modifiers). The first MOD_COUNT are the Mods above (the ones Empower can raise, one
+// byte each in an item's data); after them come VALORIA's two resistances (enchant slots, worn
+// armour) and Helbreath's own item attributes: the primary (Critical .. Critical II, one per item)
+// and the secondary (Poison resist .. Gold, one per item). Enchanting a Helbreath attribute sets
+// the item's own primary or secondary attribute, replacing the one it had.
+enum LearnMod {
+	LMOD_PRES = MOD_COUNT, LMOD_MRES,
+	LMOD_HB1,					// Helbreath primaries, in HB1_TYPE order
+	LMOD_HB2 = LMOD_HB1 + 11,	// Helbreath secondaries: ITEMSTAT2 1..12
+	LEARN_COUNT = LMOD_HB2 + 12
+};
+const int HB1_COUNT = LMOD_HB2 - LMOD_HB1, HB2_COUNT = LEARN_COUNT - LMOD_HB2;
+// the Helbreath primary attribute (ITEMSTAT_*) of each primary modifier (4 is unused in Helbreath)
+const unsigned char HB1_TYPE[HB1_COUNT] = { 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12 };
+inline bool IsHb1(int k)	{ return k >= LMOD_HB1 && k < LMOD_HB2; }
+inline bool IsHb2(int k)	{ return k >= LMOD_HB2 && k < LEARN_COUNT; }
+inline bool IsHbMod(int k)	{ return IsHb1(k) || IsHb2(k); }
+inline int  HbType(int k)	{ return IsHb1(k) ? HB1_TYPE[k - LMOD_HB1] : IsHb2(k) ? k - LMOD_HB2 + 1 : 0; }
+inline int  Hb1Mod(int t)	{ for (int i = 0; i < HB1_COUNT; i++) if (HB1_TYPE[i] == t) return LMOD_HB1 + i; return -1; }
+inline int  Hb2Mod(int t)	{ return (t >= 1 && t <= HB2_COUNT) ? LMOD_HB2 + t - 1 : -1; }
+
+const int ENCHANTABLE   = MOD_COUNT;	// the Mods that go in enchant slots (damage %: weapons only)
 const int MAX_ENCHANTS  = 6;
 const int MAX_RUNES     = 2;	// VALORIA: runes an item can hold (bytes 28-29 of ItemData)
 const int EMPOWER_MAX   = 5;
@@ -38,7 +63,7 @@ const int ENCHANT_MAX   = 50;			// Enchanting level
 const int MOD_MAX       = 50;			// each modifier's own enchanting level
 const int CORE_MOD_MAX  = 5;
 const int ITEM_BYTES    = 48;		// was 32 before rarity: older saves read with the rest as zero (Common)
-const int CHAR_BYTES    = 432;		// 64 before life skills, 80 before achievements, 356 before side quests: older saves read the new parts as 0
+const int CHAR_BYTES    = 560;		// 64 before life skills, 80 before achievements, 356 before side quests, 432 before every modifier became learnable: older saves read the new parts as 0
 const int GOLD_DIVISOR  = 4;
 const int MAX_TIER      = 10;
 const double SKILL_XP_MULT = 0.5;		// VALORIA's skill XP multiplier
@@ -47,8 +72,30 @@ inline bool IsCore(int k) { return k >= MOD_STR && k <= MOD_MAG; }
 
 inline const char * ModName(int k)
 {
-	static const char * n[MOD_COUNT] = { "STR", "DEX", "VIT", "INT", "MAG", "Max HP", "Max MP", "Defense", "Crit recharge %", "Damage %" };
-	return (k >= 0 && k < MOD_COUNT) ? n[k] : "?";
+	static const char * n[LEARN_COUNT] = { "STR", "DEX", "VIT", "INT", "MAG", "Max HP", "Max MP", "Defense", "Crit recharge %", "Damage %",
+		"Physical resist %", "Magic resist %",
+		"Critical", "Poisoning", "Righteous", "Agile", "Light", "Sharp", "Strong", "Ancient", "Casting", "Mana converting", "Critical II",
+		"Poison resist", "Hit chance", "Defense ratio", "HP recovery", "SP recovery", "MP recovery", "Magic resist", "Physical absorb",
+		"Magic absorb", "Consecutive attack", "Experience", "Gold" };
+	return (k >= 0 && k < LEARN_COUNT) ? n[k] : "?";
+}
+
+// The gear a modifier can be enchanted on: 1 = weapons, 2 = other gear (armour, shields, jewellery), 3 = both.
+inline int ModGear(int k)
+{
+	switch (k) {
+	case MOD_DMG: return 1;
+	case LMOD_PRES: case LMOD_MRES: return 2;
+	}
+	if (IsHb1(k)) {	// Light and Strong: any gear; Mana converting and Critical II: armour and jewellery
+		const int t = HbType(k);
+		return (t == 6 || t == 8) ? 3 : (t == 11 || t == 12) ? 2 : 1;
+	}
+	if (IsHb2(k)) {	// hit chance and consecutive attack: weapons; experience and gold: any gear
+		const int t = HbType(k);
+		return (t == 2 || t == 10) ? 1 : (t == 11 || t == 12) ? 3 : 2;
+	}
+	return 3;
 }
 
 // ---- rarity (VALORIA's game_state.gd: roll_rarity, roll_bonus, bonus_pool_for) -----------------------
@@ -146,14 +193,14 @@ struct ItemData {
 		}
 	}
 	int  Runes() const { int n = 0; for (int i = 0; i < MAX_RUNES; i++) if (rune[i] < MOD_COUNT) n++; return n; }
-	int  Enchants() const { int n = 0; for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] < MOD_COUNT) n++; return n; }
+	int  Enchants() const { int n = 0; for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] < LMOD_HB1) n++; return n; }
 	int  EnchantSlotOf(int k) const { for (int i = 0; i < MAX_ENCHANTS; i++) if (enKey[i] == k) return i; return -1; }
 	int  EnchantValue(int k) const { const int s = EnchantSlotOf(k); return s < 0 ? 0 : enVal[s]; }
 	int  EmpowerTotal() const { int n = 0; for (int k = 0; k < MOD_COUNT; k++) n += em[k]; return n; }
 
 	void Write(unsigned char * p) const {
 		memset(p, 0, ITEM_BYTES);
-		for (int i = 0; i < MAX_ENCHANTS; i++) p[i] = (enKey[i] < MOD_COUNT) ? (unsigned char)(enKey[i] + 1) : 0;	// 0 = empty, so all-zero bytes are an item without enchantments
+		for (int i = 0; i < MAX_ENCHANTS; i++) p[i] = (enKey[i] < LMOD_HB1) ? (unsigned char)(enKey[i] + 1) : 0;	// 0 = empty, so all-zero bytes are an item without enchantments
 		for (int i = 0; i < MAX_ENCHANTS; i++) { p[6 + i*2] = (unsigned char)(enVal[i] & 0xFF); p[7 + i*2] = (unsigned char)((enVal[i] >> 8) & 0xFF); }
 		for (int k = 0; k < MOD_COUNT; k++) p[18 + k] = em[k];
 		for (int i = 0; i < MAX_RUNES; i++) p[28 + i] = (rune[i] < MOD_COUNT) ? (unsigned char)(rune[i] + 1) : 0;
@@ -162,7 +209,7 @@ struct ItemData {
 		for (int i = 0; i < MAX_BONUSES; i++) { p[37 + i*2] = (unsigned char)(bVal[i] & 0xFF); p[38 + i*2] = (unsigned char)((bVal[i] >> 8) & 0xFF); }
 	}
 	void Read(const unsigned char * p) {
-		for (int i = 0; i < MAX_ENCHANTS; i++) enKey[i] = (p[i] >= 1 && p[i] <= MOD_COUNT) ? (unsigned char)(p[i] - 1) : MOD_NONE;
+		for (int i = 0; i < MAX_ENCHANTS; i++) enKey[i] = (p[i] >= 1 && p[i] <= LMOD_HB1) ? (unsigned char)(p[i] - 1) : MOD_NONE;
 		for (int i = 0; i < MAX_ENCHANTS; i++) enVal[i] = (short)(p[6 + i*2] | (p[7 + i*2] << 8));
 		for (int k = 0; k < MOD_COUNT; k++) em[k] = (p[18 + k] <= EMPOWER_MAX) ? p[18 + k] : EMPOWER_MAX;
 		for (int i = 0; i < MAX_RUNES; i++) rune[i] = (p[28 + i] >= 1 && p[28 + i] <= MOD_COUNT) ? (unsigned char)(p[28 + i] - 1) : MOD_NONE;
@@ -223,8 +270,8 @@ enum { SIDE_NONE = 0, SIDE_TAKEN, SIDE_DONE };
 
 struct CharData {
 	unsigned int  xp;					// Enchanting XP
-	unsigned char known[MOD_COUNT];		// highest tier each modifier was learned at (0 = not known)
-	unsigned int  modXp[MOD_COUNT];		// each modifier's own enchanting XP
+	unsigned char known[LEARN_COUNT];	// highest tier each modifier was learned at (0 = not known)
+	unsigned int  modXp[LEARN_COUNT];	// each modifier's own enchanting XP
 	unsigned int  lifeXp[LIFE_COUNT];	// life skill XP (Life)
 	unsigned int  ach[ACH_SAVED];		// achievement counters (bytes 80-351)
 	unsigned char titleCounter, titleTier;	// the title shown before your name (tier 0 = none)
@@ -254,7 +301,12 @@ struct CharData {
 			p[404 + a*9] = (unsigned char)(sideQuest[a] + 1);	// 0 = free, so old saves read as free
 			for (int o = 0; o < SIDE_OBJ; o++) { p[405 + a*9 + o*2] = (unsigned char)(sideProg[a][o] & 0xFF); p[406 + a*9 + o*2] = (unsigned char)(sideProg[a][o] >> 8); }
 		}
+		for (int k = MOD_COUNT; k < LEARN_COUNT; k++) {
+			p[KNOWN2_AT + k - MOD_COUNT] = known[k];
+			for (int b = 0; b < 4; b++) p[XP2_AT + (k - MOD_COUNT)*4 + b] = (unsigned char)((modXp[k] >> (8*b)) & 0xFF);
+		}
 	}
+	static const int KNOWN2_AT = 432, XP2_AT = 460;
 	void Read(const unsigned char * p) {
 		xp = 0;
 		for (int b = 0; b < 4; b++) xp |= (unsigned int)p[b] << (8*b);
@@ -276,6 +328,11 @@ struct CharData {
 		for (int a = 0; a < SIDE_ACTIVE; a++) {
 			sideQuest[a] = (unsigned char)(p[404 + a*9] - 1);
 			for (int o = 0; o < SIDE_OBJ; o++) sideProg[a][o] = (unsigned short)(p[405 + a*9 + o*2] | (p[406 + a*9 + o*2] << 8));
+		}
+		for (int k = MOD_COUNT; k < LEARN_COUNT; k++) {
+			known[k] = (p[KNOWN2_AT + k - MOD_COUNT] <= MAX_TIER) ? p[KNOWN2_AT + k - MOD_COUNT] : MAX_TIER;
+			modXp[k] = 0;
+			for (int b = 0; b < 4; b++) modXp[k] |= (unsigned int)p[XP2_AT + (k - MOD_COUNT)*4 + b] << (8*b);
 		}
 	}
 };
@@ -301,7 +358,7 @@ inline int EnchantTierCap(int lv)	{ return lv <= 0 ? 0 : 3 + lv / 8; }
 inline unsigned int ModXPTotal(int lv)	{ return lv <= 1 ? 0u : (unsigned int)(30.0 * (double)(lv - 1) * (double)(lv - 1)); }
 inline int ModLevel(const CharData & c, int k)
 {
-	if (k < 0 || k >= MOD_COUNT || c.known[k] == 0) return 0;
+	if (k < 0 || k >= LEARN_COUNT || c.known[k] == 0) return 0;
 	int lv = 1;
 	while (lv < MOD_MAX && c.modXp[k] >= ModXPTotal(lv + 1)) lv++;
 	return lv;
@@ -324,12 +381,37 @@ inline int EnchantValueFor(const CharData & c, int k, int iItemTier)
 	switch (k) {
 	case MOD_HP:   base = 10.0 * power; break;
 	case MOD_MP:   base = 7.0 * power; break;
-	case MOD_CRIT: base = 1.0 + power * 0.5; break;
-	default:       base = 1.5 * power; break;		// core stats and defense
+	case MOD_CRIT: case LMOD_PRES: case LMOD_MRES: base = 1.0 + power * 0.5; break;
+	default:       base = 1.5 * power; break;		// core stats, defense and damage %
 	}
 	const double v = floor(base * ModPower(ModLevel(c, k)) + 0.5);
 	if (IsCore(k)) return CoreMod(k, v < 1.0 ? 1.0 : v);
 	return v < 1.0 ? 1 : (int)v;
+}
+
+// The value (Helbreath's 1..13 attribute step) a Helbreath attribute modifier gets when enchanted:
+// 1.3 steps per tier, times the modifier's strength (0.5x .. 1.6x), with Helbreath's own floors and
+// caps for each attribute (the same as on dropped gear).
+inline int HbEnchantValue(const CharData & c, int k, int iItemTier)
+{
+	if (!IsHbMod(k) || c.known[k] == 0) return 0;
+	const int power = (iItemTier < c.known[k]) ? iItemTier : c.known[k];
+	int v = (int)floor(1.3 * power * ModPower(ModLevel(c, k)) + 0.5);
+	v = v < 1 ? 1 : (v > 13 ? 13 : v);
+	const int t = HbType(k);
+	if (IsHb1(k)) {
+		if (t == 1 && v < 5) v = 5;					// Critical
+		if ((t == 2 || t == 6) && v < 4) v = 4;		// Poisoning, Light
+		if (t == 8 && v < 2) v = 2;					// Strong
+		if (t == 11 || t == 12) v = (v + 1) / 2;	// Mana converting, Critical II
+	}
+	else {
+		if ((t == 1 || t == 3 || t == 7 || t == 8 || t == 9 || t == 2) && v < 3) v = 3;	// resists, defense, absorbs, hit chance
+		if (t == 10 && v > 7) v = 7;		// consecutive attack
+		if (t == 11) v = 2;					// experience
+		if (t == 12) v = 5;					// gold
+	}
+	return v;
 }
 
 struct Cost { int gold, shards, prismatic; };
@@ -406,20 +488,35 @@ inline bool IsArmourPos(int pos)	{ return pos == 1 || pos == 2 || pos == 3 || po
 
 // Modifiers that do something in Helbreath Reimagined yet. Crit is stored on VALORIA gear but not
 // used in combat, so it can't be enchanted, learned or empowered until it is.
-inline bool ModActive(int k)		{ return k >= 0 && k < MOD_COUNT; }
+inline bool ModActive(int k)		{ return k >= 0 && k < LEARN_COUNT; }
 
-// The modifiers an item has, so the ones Empower can raise and Disenchant teaches: its own VALORIA
-// stats (base[] in Mod order, STR..CRIT, from valoria_gear.txt), its enchantments, defense on armour
-// and damage on weapons.
-inline void ItemMods(const ItemData & d, const int * base, int iEquipPos, bool has[MOD_COUNT])
+// Can modifier k be enchanted on gear worn at iEquipPos?
+inline bool ModFits(int k, int iEquipPos)
 {
-	for (int k = 0; k < MOD_COUNT; k++) has[k] = false;
+	const int g = ModGear(k);
+	return IsWeaponPos(iEquipPos) ? (g & 1) != 0 : (g & 2) != 0;
+}
+
+// Every modifier an item has (what Disenchant teaches; Empower raises the first MOD_COUNT): its own
+// VALORIA stats (base[] in Mod order, STR..CRIT, from valoria_gear.txt), its enchantments and runes,
+// its rarity bonus stats and resistances, Helbreath's primary and secondary attribute (dwAttribute:
+// nibble 5 the primary, nibble 3 the secondary), defense on armour and damage on weapons.
+inline void ItemMods(const ItemData & d, const int * base, int iEquipPos, unsigned int dwAttribute, bool has[LEARN_COUNT])
+{
+	for (int k = 0; k < LEARN_COUNT; k++) has[k] = false;
 	if (base != 0) for (int k = 0; k <= MOD_CRIT; k++) if (base[k] != 0) has[k] = true;
-	for (int i = 0; i < MAX_ENCHANTS; i++) if (d.enKey[i] < MOD_COUNT) has[d.enKey[i]] = true;
+	for (int i = 0; i < MAX_ENCHANTS; i++) if (d.enKey[i] < LEARN_COUNT) has[d.enKey[i]] = true;
 	for (int i = 0; i < MAX_RUNES; i++) if (d.rune[i] < MOD_COUNT) has[d.rune[i]] = true;
+	for (int i = 0; i < MAX_BONUSES; i++) {
+		if (d.bKey[i] <= MOD_CRIT) has[d.bKey[i]] = true;
+		else if (d.bKey[i] == BONUS_PHYS_RES) has[LMOD_PRES] = true;
+		else if (d.bKey[i] == BONUS_MAG_RES) has[LMOD_MRES] = true;
+	}
+	const int h1 = Hb1Mod((dwAttribute >> 20) & 0xF), h2 = Hb2Mod((dwAttribute >> 12) & 0xF);
+	if (h1 >= 0) has[h1] = true;
+	if (h2 >= 0) has[h2] = true;
 	if (IsArmourPos(iEquipPos)) has[MOD_DEF] = true;
 	if (IsWeaponPos(iEquipPos)) has[MOD_DMG] = true;
-	for (int k = 0; k < MOD_COUNT; k++) if (!ModActive(k)) has[k] = false;
 }
 
 // What an item's enchantments and empowering add to modifier k while it is worn (damage: %).
@@ -434,5 +531,5 @@ inline int ItemBonus(const ItemData & d, int k, int iItemTier)
 }
 
 // Physical (bMagic false) or magic resistance % an item's rarity bonuses give while it is worn.
-inline int ItemResist(const ItemData & d, bool bMagic) { return d.BonusValue(bMagic ? BONUS_MAG_RES : BONUS_PHYS_RES); }
+inline int ItemResist(const ItemData & d, bool bMagic) { return d.BonusValue(bMagic ? BONUS_MAG_RES : BONUS_PHYS_RES) + d.EnchantValue(bMagic ? LMOD_MRES : LMOD_PRES); }
 }
