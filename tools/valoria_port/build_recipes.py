@@ -42,6 +42,8 @@ SLOTS = 6
 # Items Justin wants found, not made: the Blessed Upgrade Stone is a super-rare boss drop (build_passives.py).
 DROP_ONLY = {'blessed_stone'}
 
+# (Mithril Ore is not a pair: Helbreath's "Mithral" was the same ore misnamed, and the game server
+# reads it as Mithril Ore; mining gives Mithril Ore.)
 # Monster parts that VALORIA and Helbreath both have (Slime Gel and Slime Jelly...). One rule for every
 # pair: VALORIA's part is a Smithing / Crafting material, Helbreath's is an Alchemy reagent.
 #   VALORIA part   Helbreath part
@@ -52,7 +54,6 @@ DUPLICATES = {
     'ogre_hide':        'OgreLeather',
     'bone_dust':        'SkeletonBones',
     'wolf_pelt':        'WerewolfLeather',
-    'mithril_ore':      'Mithral',
 }
 # So each part of a pair has its own use: what is added to VALORIA's recipes (ingredient: count).
 # Gel binds the gem settings of the plain rings; the tusk, stinger, hide and pelt go into early gear;
@@ -70,7 +71,6 @@ RECIPE_ADD = {
     'potion_hp_x':      {'OgreLeather': 1},
     'potion_mp_l':      {'SkeletonBones': 1},
     'elixir_swiftness': {'WerewolfLeather': 1},
-    'elixir_ironskin':  {'Mithral': 1},
 }
 
 

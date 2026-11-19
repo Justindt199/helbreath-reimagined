@@ -4528,7 +4528,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 		{
 			uint16 IndexForItem = (charIndexEnd+1 + (b*Valoria::BAG_RECORD));
 			ZeroMemory(ItemName, sizeof(ItemName));
-			SafeCopy(ItemName, pData+IndexForItem, 20);
+			SafeCopy(ItemName, pData+IndexForItem, 20); if (strcmp(ItemName, "Mithral") == 0) strcpy(ItemName, "MithrilOre"); else if (strcmp(ItemName, "MithralIngot") == 0) strcpy(ItemName, "MithrilIngot");	// Helbreath misnamed them: the same ore and bar
 			item = player->m_pItemList[b] = new CItem;
 			if(item->InitItemAttr(ItemName) == false)
 			{
@@ -4630,7 +4630,7 @@ bool CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, uint32 dw
 			{
 				uint16 IndexForItem = (BankItemIndex+1 + (b*Valoria::BANK_RECORD));
 				ZeroMemory(ItemName, sizeof(ItemName));
-				SafeCopy(ItemName, pData+IndexForItem, 20);
+				SafeCopy(ItemName, pData+IndexForItem, 20); if (strcmp(ItemName, "Mithral") == 0) strcpy(ItemName, "MithrilOre"); else if (strcmp(ItemName, "MithralIngot") == 0) strcpy(ItemName, "MithrilIngot");	// Helbreath misnamed them: the same ore and bar
 				item = player->m_pItemInBankList[b] = new CItem;
 				if(item->InitItemAttr(ItemName) == false)
 				{
@@ -25761,9 +25761,9 @@ void CGame::_CheckMiningAction(int iClientH, int dX, int dY)
 
 			} 
 
-			// VALORIA's ores come from the same deep veins as Helbreath's Mithral: Mithral is an alchemy
-			// reagent, Mithril Ore is smelted at the Blacksmith; one find in four of those is Adamantite Ore.
-			if (iMineralID == ITEM_MITHRAL && dice(1, 2) == 1) iMineralID = (dice(1, 4) == 1) ? 1224 : 1223;	// AdamantiteOre, MithrilOre
+			// The deep veins give Mithril Ore (Helbreath's "Mithral" was the same ore, misnamed), and one find in
+			// four Adamantite Ore.
+			if (iMineralID == ITEM_MITHRAL) iMineralID = (dice(1, 4) == 1) ? 1224 : 1223;	// AdamantiteOre, MithrilOre
 
 			pItem = new class CItem;
 			if (pItem->InitItemAttr(iMineralID) == false) {
