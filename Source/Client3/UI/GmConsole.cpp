@@ -257,8 +257,6 @@ std::string CGame::GmBuildLine(std::string * pErr) const
 	return s;
 }
 
-namespace {
-
 void CGame::GmSend(const std::string & s)
 {
 	char cTxt[200];
