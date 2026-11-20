@@ -1742,6 +1742,7 @@ void CGame::PlayerMapEntry(int iClientH, bool setRecallTime)
 	PassiveSendState(iClientH);	// VALORIA passive tree (Passives.cpp)
 	ValoriaSendBuffs(iClientH);	// VALORIA elixirs and scrolls (ValoriaUse.cpp)
 	EnchantSendItems(iClientH);
+	GmSendLevel(iClientH);		// the GM console opens only for GMs (GmConsole.cpp)
 }
 
 // Largest number of bytes WriteTileData can write for one tile (owner + corpse + item + dynamic object).
@@ -5943,6 +5944,8 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, uint32 dwMsgSize)
 			ValoriaAdminCraft(iClientH, cp + 8);
 		} else if (memcmp(cp, "/vside ", 7) == 0) {	// GM: fill a side quest's objectives (SideQuests.cpp)
 			SideAdmin(iClientH, cp + 7);
+		} else if (memcmp(cp, "/gm ", 4) == 0) {	// GM console commands (GmConsole.cpp)
+			GmCommand(iClientH, cp + 4);
 		} else if (memcmp(cp, "/vkill", 6) == 0) {	// GM: kill the monsters around you as your own kills (Achievements.cpp)
 			AchAdminKill(iClientH);
 		} else if (memcmp(cp, "/vach ", 6) == 0) {	// GM: add to an achievement counter (Achievements.cpp)

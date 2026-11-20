@@ -171,6 +171,7 @@
     <ClCompile Include="Passives.cpp" />
     <ClCompile Include="Achievements.cpp" />
     <ClCompile Include="SideQuests.cpp" />
+    <ClCompile Include="GmConsole.cpp" />
     <ClCompile Include="WorldProps.cpp" />
     <ClCompile Include="ValoriaUse.cpp" />
     <ClCompile Include="char\Client.cpp">

@@ -80,7 +80,8 @@ enum dialogIDs
 	DIALOG_ENCHANT = 67,	// VALORIA enchanting (UI\EnchantPanel.cpp)
 	DIALOG_PASSIVE = 68,	// VALORIA passive tree (UI\PassivePanel.cpp)
 	DIALOG_ACHIEVE = 69,	// VALORIA achievements (UI\AchievePanel.cpp)
-	DIALOG_SIDEQUEST = 70	// VALORIA side quests (UI\SideQuestPanel.cpp)
+	DIALOG_SIDEQUEST = 70,	// VALORIA side quests (UI\SideQuestPanel.cpp)
+	DIALOG_GMCONSOLE = 71	// GM console (UI\GmConsole.cpp)
 };
 
 // The NPC window (dialog 20, UI\NpcQueryPanel.cpp): its width, the id of its close button, and its

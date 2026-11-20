@@ -732,6 +732,10 @@ void CGame::SetupDialogBoxes()
 	m_dialogBoxes[DIALOG_SIDEQUEST].SetupDialog(DIALOG_SIDEQUEST, 60, 30, SIDEWIN_W, SIDEWIN_H);
 	m_dialogBoxes[DIALOG_SIDEQUEST].SetupHandlers(GAMEFUNCT(DrawDialogBox_SideQuests), GAMEFUNCT(DlgBoxClick_SideQuests));
 
+	// GM console (UI\GmConsole.cpp)
+	m_dialogBoxes[DIALOG_GMCONSOLE].SetupDialog(DIALOG_GMCONSOLE, 10, 10, GMWIN_W, GMWIN_H);
+	m_dialogBoxes[DIALOG_GMCONSOLE].SetupHandlers(GAMEFUNCT(DrawDialogBox_GmConsole), GAMEFUNCT(DlgBoxClick_GmConsole));
+
 	for(int i = 0; i < MAXDIALOGBOX; i++)
 	{		
 		m_dialogBoxes[i].SetMode(0); //Setup default buttons
@@ -5646,6 +5650,7 @@ void CGame::AddEventList(char const * const pTxt, char cColor, BOOL bDupAllow)
 {int i;
 	if ((bDupAllow == FALSE) && (strcmp(m_stEventHistory[5].cTxt, pTxt) == 0)) return;
 	if (!m_bChatEcho && m_cGameMode == GAMEMODE_ONMAINGAME) AddChatLine(CHAT_SYSTEM, NULL, pTxt);
+	if (m_bIsDialogEnabled[DIALOG_GMCONSOLE]) GmLog(pTxt, RGB(150, 230, 150));	// what the server answers, in the GM console
 	if (cColor == 10)
 	{	for (i = 1; i < 6; i++)
 		{	strcpy(m_stEventHistory2[i-1].cTxt, m_stEventHistory2[i].cTxt);
@@ -25172,7 +25177,12 @@ void CGame::OnKeyUp(WPARAM wParam)
 		}
 		break;
 
+	case 0xC0:	// the ` key: the GM console (UI\GmConsole.cpp)
+		if (m_iGmLevel > 0 && m_cGameMode == GAMEMODE_ONMAINGAME && (!m_bInputStatus || GmTyping())) ToggleGmConsole();
+		break;
+
 	case VK_UP:
+		if (GmConsoleKey(wParam)) break;
 		m_cArrowPressed	= 1;
 		if( m_cGameMode == GAMEMODE_ONMAINGAME )
 		{	int iTotalMsg=0;
@@ -25196,6 +25206,7 @@ void CGame::OnKeyUp(WPARAM wParam)
 		break;
 
 	case VK_DOWN:
+		if (GmConsoleKey(wParam)) break;
 		m_cArrowPressed	= 3;
 		if( m_cGameMode == GAMEMODE_ONMAINGAME )
 		{	int iTotalMsg=0;
@@ -27708,6 +27719,7 @@ void CGame::NotifyMsgHandler(char * pData)
 	case NOTIFY_PASSIVES: NotifyMsg_Passives((char *)pData); break;
 	case NOTIFY_TITLEINFO: NotifyMsg_TitleInfo((char *)pData); break;
 	case NOTIFY_WORLDPROP: NotifyMsg_WorldProp((char *)pData); break;	// VALORIA shrines and chests (UI\WorldProps.cpp)
+	case NOTIFY_GMLEVEL: NotifyMsg_GmLevel((char *)pData); break;	// GM console (UI\GmConsole.cpp)
 	case NOTIFY_SIDEEVENT: NotifyMsg_SideEvent((char *)pData); break;	// VALORIA side quests (UI\SideQuestPanel.cpp)	// VALORIA achievement titles (UI\AchievePanel.cpp)	// VALORIA passive tree (UI\PassivePanel.cpp)
 	case NOTIFY_VALORIABUFFS: NotifyMsg_ValoriaBuffs((char *)pData); break;	// VALORIA elixirs and scrolls (UI\ValoriaUse.cpp)
 
@@ -31155,6 +31167,9 @@ void CGame::UpdateScreen_OnGame()
 		{
 			EndInputString();
 		}
+		else if (m_bInputStatus && GmConsoleOnEnter())	// typing in the GM console
+		{
+		}
 		else if (m_bInputStatus && BountyOnEnter())	// typing in the bounty board
 		{
 		} else {
@@ -31289,7 +31304,8 @@ void CGame::UpdateScreen_OnGame()
 			(m_bIsDialogEnabled[58] && m_dialogBoxes[58].GetMode() == 1) ||
 			(m_bIsDialogEnabled[DIALOG_MAILBOX] && m_dialogBoxes[DIALOG_MAILBOX].GetMode() == 1) ||
 			(m_bIsDialogEnabled[DIALOG_GUILD] && m_dialogBoxes[DIALOG_GUILD].GetMode() == 10) ||
-			(m_bIsDialogEnabled[DIALOG_BOUNTY] && (m_pInputBuffer == m_cBountyAmount || m_pInputBuffer == m_cBountyName))
+			(m_bIsDialogEnabled[DIALOG_BOUNTY] && (m_pInputBuffer == m_cBountyAmount || m_pInputBuffer == m_cBountyName)) ||
+			(m_bIsDialogEnabled[DIALOG_GMCONSOLE] && GmTyping())
 			)
 		{}else m_Renderer.DrawShadowBox(0, VIEW_BOTTOM-14, GAME_W-1, VIEW_BOTTOM+2);
 		ShowReceivedString();
@@ -31796,6 +31812,7 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			}else if (iRet == 0)
 			{	
 				m_stMCursor.cPrevStatus = CURSORSTATUS_PRESSED;
+				if (GmClickTeleport(msX, msY)) { m_stMCursor.cPrevStatus = CURSORSTATUS_NULL; return; }	// GM console click-teleport
 				// Snoopy: Added Golden LevelUp
 				if (   (msX >GAME_W-80) && (msX <GAME_W-20) && (msY>VIEW_BOTTOM-37) && (msY<VIEW_BOTTOM-22)
 					&& (m_iLU_Point >0))

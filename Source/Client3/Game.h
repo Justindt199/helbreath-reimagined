@@ -73,7 +73,7 @@
 #define RBTNPOSX			154
 #define BTNPOSY			292
 
-#define MAXDIALOGBOX		71
+#define MAXDIALOGBOX		72
 
 
 #define INDEX4_MSGID		0
@@ -555,6 +555,26 @@ public:
 	void NotifyMsg_SideEvent(char * pData);
 	void DrawDialogBox_SideQuests();
 	void DlgBoxClick_SideQuests();
+
+	// GM console, only for Game Masters (UI\GmConsole.cpp)
+	enum { GMWIN_W = 640, GMWIN_H = 560 };
+	int  m_iGmLevel = 0;					// from the server (NOTIFY_GMLEVEL); 0 = not a GM
+	int  m_iGmTab = 0, m_iGmPage = 0, m_iGmQty = 1, m_iGmHist = 0;
+	bool m_bGmClickTp = false, m_bGmGod = false, m_bGmNoAggro = false, m_bGmInvis = false, m_bGmEth = false;
+	char m_cGmInput[96] = {}, m_cGmSearch[32] = {};
+	std::vector<std::string> m_gmLog, m_gmHistory;
+	std::vector<COLORREF> m_gmLogCol;
+	void NotifyMsg_GmLevel(char * pData);
+	void GmLog(const std::string & s, COLORREF c = RGB(204, 210, 220));
+	bool GmTyping() const;
+	void ToggleGmConsole();
+	bool GmConsoleOnEnter();
+	bool GmConsoleKey(WPARAM wParam);
+	bool GmClickTeleport(short msX, short msY);
+	void GmSend(const std::string & s);
+	void GmRun(const char * pCmd);
+	void DrawDialogBox_GmConsole();
+	void DlgBoxClick_GmConsole();
 
 	// VALORIA usable items: elixir / scroll buffs, rune and stone tooltips (UI\ValoriaUse.cpp)
 	DWORD m_dwValBuffEnd[ValoriaUse::BUFF_COUNT] = {};

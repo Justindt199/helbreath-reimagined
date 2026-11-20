@@ -597,6 +597,8 @@ public:
 	void AchTitleRequest(int iClientH, char * pData);
 	void AchAdmin(int iClientH, const char * pArgs);
 	void AchAdminKill(int iClientH);
+	void GmSendLevel(int iClientH);					// GM console (GmConsole.cpp)
+	void GmCommand(int iClientH, const char * pArgs);
 	// VALORIA shrines and chests (WorldProps.cpp)
 	void WorldSendProp(int iToH, int iProp);
 	void WorldOnMapEntry(int h);

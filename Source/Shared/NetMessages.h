@@ -349,7 +349,8 @@ enum NetMessages_Notify
 	NOTIFY_VALORIABUFFS,	// your elixir / scroll buffs: uint8 count, then uint8 buff, uint16 seconds left (Shared\ValoriaUse.h)
 	NOTIFY_TITLEINFO,		// a player's achievement title: char[10] name, uint8 counter, uint8 tier (0 = none) (HG Server Achievements.cpp)
 	NOTIFY_WORLDPROP,		// a shrine or chest was used: uint16 prop (Shared\ValoriaWorld.h), uint16 seconds until it is back (HG Server WorldProps.cpp)
-	NOTIFY_SIDEEVENT		// side quests: uint8 code, uint8 quest, uint8 objective / reason, uint16 value, uint32 XP (HG Server SideQuests.cpp)
+	NOTIFY_SIDEEVENT,		// side quests: uint8 code, uint8 quest, uint8 objective / reason, uint16 value, uint32 XP (HG Server SideQuests.cpp)
+	NOTIFY_GMLEVEL			// your GM level: uint8 admin level, 0 = not a GM (HG Server GmConsole.cpp -> Client3 UI\GmConsole.cpp)
 };
 
 enum { REBIRTHRES_REBORN = 1, REBIRTHRES_PAUSED, REBIRTHRES_RESUMED, REBIRTHRES_COMPLETED,
