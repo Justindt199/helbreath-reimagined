@@ -1481,6 +1481,80 @@ void CRenderer::StoneBarFrame(int x0, int y0, int x1, int y1)
 	StoneBox(STONE_BAR, x0 - 4, y0 - 3, x1 + 4, y1 + 3);	// VALORIA puts the housing 9 x 5 px outside the bar
 }
 
+bool CRenderer::GlassTube(int x0, int y0, int x1, int y1, float frac, COLORREF liquid, COLORREF light, DWORD dwTime)
+{
+	CUiGpu * pG = UiGpuRecorder();
+	if (pG == NULL || x1 - x0 < 4 || y1 - y0 < 3) return false;
+	const int W = 2 * (x1 - x0), H = 2 * (y1 - y0);
+	if (frac < 0.f) frac = 0.f;
+	if (frac > 1.f) frac = 1.f;
+	const float t = (float)(dwTime % 600000u);
+	const float lr = GetRValue(liquid), lg = GetGValue(liquid), lb = GetBValue(liquid);
+	const float hr = GetRValue(light), hg = GetGValue(light), hb = GetBValue(light);
+	const float level = frac * W;
+	const bool bFull = frac >= 0.999f, bEmpty = frac <= 0.001f;
+	// bubbles: rising slowly through the liquid, each from its own place every few seconds
+	struct Bub { float x, y, r; };
+	Bub bub[7]; int nb = 0;
+	if (!bEmpty && level > 8.f)
+		for (int i = 0; i < 7; i++) {
+			const float period = 1700.f + i * 430.f;
+			const float tt = t + i * 977.f;
+			const unsigned cyc = (unsigned)(tt / period);
+			const float ph = (tt - cyc * period) / period;
+			unsigned s = cyc * 2654435761u + (unsigned)i * 40503u; s ^= s >> 13; s *= 1274126177u;
+			const float bx = 3.f + (float)(s % 10000u) / 10000.f * (level - 6.f) + sinf(ph * 9.f + i) * 1.5f;
+			const float r = (i % 3 == 0) ? 1.7f : 1.1f;
+			bub[nb++] = { bx, H - 2.f - ph * (H - 3.f), r };
+		}
+	const float sheen = fmodf(t / 7000.f, 1.f) * W * 1.8f - W * 0.4f;	// a soft glint sweeping along the glass
+	std::vector<std::uint32_t> buf((size_t)W * H);
+	for (int y = 0; y < H; y++) {
+		const float n = ((y + 0.5f) / H) * 2.f - 1.f;			// -1 top .. 1 bottom of the tube
+		const float depth = sqrtf((std::max)(0.f, 1.f - n * n));	// how far the glass faces you
+		// where the liquid ends on this row: creeping up the glass (a curved surface) and moving
+		float xe = level;
+		if (!bFull && !bEmpty) xe += 3.f * n * n - 1.5f + 1.6f * sinf(t * 0.0042f + y * 0.33f) + 0.8f * sinf(t * 0.0071f - y * 0.21f);
+		for (int x = 0; x < W; x++) {
+			float r, g, b;
+			if (!bEmpty && x < xe) {	// liquid
+				float k = 0.32f + 0.86f * depth;					// round tube: bright where it faces you
+				k *= 1.f - 0.3f * (std::max)(n, 0.f);				// deeper at the bottom
+				const float sw = 0.5f + 0.5f * sinf(x * 0.11f - t * 0.0016f + 2.2f * sinf(y * 0.37f + t * 0.0023f + x * 0.03f));
+				k *= 0.86f + 0.24f * sw;							// slow swirls
+				const float glow = 0.32f * powf(depth, 6.f);		// light caught in the middle
+				r = lr * k + hr * glow; g = lg * k + hg * glow; b = lb * k + hb * glow;
+				const float edge = xe - x;							// the surface: bright
+				if (edge < 3.f && !bFull) { const float e = (3.f - edge) / 3.f * 0.75f; r += (hr - r) * e; g += (hg - g) * e; b += (hb - b) * e; }
+				for (int i = 0; i < nb; i++) {						// bubbles: a light ring with a dark middle
+					const float dx = x - bub[i].x, dy = y - bub[i].y, d = sqrtf(dx * dx + dy * dy);
+					if (d > bub[i].r + 0.9f || bub[i].x >= xe - 2.f) continue;
+					const float ring = 1.f - fabsf(d - bub[i].r) / 0.9f;
+					if (ring > 0.f) { const float e = ring * 0.8f; r += (255 - r) * e * 0.7f; g += (255 - g) * e * 0.7f; b += (255 - b) * e * 0.7f; }
+				}
+			}
+			else {						// empty glass: dark, tinted by what it holds
+				const float k = 0.10f + 0.12f * depth;
+				r = 10 + lr * k; g = 11 + lg * k; b = 14 + lb * k;
+			}
+			// the glass over it all: a strong shine high up, a soft one low down, bright rims, the sweeping glint
+			float spec = 0.62f * expf(-((n + 0.55f) * (n + 0.55f)) / 0.018f);
+			spec += 0.10f * expf(-((n - 0.62f) * (n - 0.62f)) / 0.01f);
+			spec += 0.22f * powf(fabsf(n), 12.f);
+			const float gx = (x + (y * 0.6f) - sheen);
+			spec += 0.16f * expf(-(gx * gx) / 90.f);
+			if (spec > 0.9f) spec = 0.9f;
+			r += (255 - r) * spec; g += (255 - g) * spec; b += (255 - b) * spec;
+			const float shade = 1.f - 0.45f * powf(fabsf(n), 6.f);	// the tube rounds away at its edges
+			r *= shade; g *= shade; b *= shade;
+			const int R = (int)(std::min)(255.f, (std::max)(0.f, r)), G = (int)(std::min)(255.f, (std::max)(0.f, g)), B = (int)(std::min)(255.f, (std::max)(0.f, b));
+			buf[(size_t)y * W + x] = (std::uint32_t)R | ((std::uint32_t)G << 8) | ((std::uint32_t)B << 16) | 0xFF000000u;
+		}
+	}
+	pG->AddImage(buf.data(), W, H, true, 2.f * x0, 2.f * y0, (float)W, (float)H, 0, 0, 2 * RENDER_WIDTH, 2 * RENDER_HEIGHT, UIBL_ALPHA);
+	return true;
+}
+
 void CRenderer::Slate(int x0, int y0, int x1, int y1, int iFillA)
 {
 	FillPanel(x0, y0, x1, y1, 1, RGB(8, 8, 9), iFillA, RGB(107, 97, 84), 230);

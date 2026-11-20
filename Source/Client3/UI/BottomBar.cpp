@@ -66,6 +66,11 @@ void DrawVital(CRenderer & r, const RECT & rc, double f, COLORREF fill, COLORREF
 	const DWORD t = timeGetTime();
 	const int h = rc.bottom - rc.top;
 	const int x0 = rc.left + 2, x1 = rc.right - 2, y0 = rc.top + 2, y1 = rc.bottom - 2, ih = y1 - y0;
+	if (r.GlassTube(rc.left, rc.top, rc.right, rc.bottom, (float)f, fill, light, t)) {	// drawn pixel by pixel (graphics card picture)
+		r.StoneBarFrame(rc.left, rc.top, rc.right, rc.bottom);
+		if (pText && pText[0]) CentredShadow(r, rc.left, rc.right, rc.top + (h - iPx - 3) / 2, pText, kWhite, iPx);
+		return;
+	}
 	r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 0, RGB(6, 7, 9), 240);		// the tube's back
 	if (ih > 0) r.FillPanel(x0, y0, x1, y1, 0, Shade(fill, 0.45f), 60);				// empty glass, faintly tinted
 	if (f < 0) f = 0;

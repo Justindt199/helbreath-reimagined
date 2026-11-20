@@ -191,6 +191,11 @@ public:
 	void StoneButton(int x0, int y0, int x1, int y1, int iState, const char * cLabel = NULL);
 	// the housing goes round [x0, x1) x [y0, y1) (a bar), a little outside it
 	void StoneBarFrame(int x0, int y0, int x1, int y1);
+	// A health / mana / stamina bar as a glass tube of liquid, drawn pixel by pixel at twice the
+	// size: the liquid (colour liquid, highlights light) filled to frac with a moving curved
+	// surface, swirls and bubbles, under curved glass with its shine. dwTime moves it. False when
+	// the graphics card picture is off (the caller draws a plain bar then).
+	bool GlassTube(int x0, int y0, int x1, int y1, float frac, COLORREF liquid, COLORREF light, DWORD dwTime);
 	// a dark recessed box with a thin carved edge (VALORIA's "slate": lists, text boxes, tooltips)
 	void Slate(int x0, int y0, int x1, int y1, int iFillA = 235);
 	// text centred in [x0, x1) x [y0, y1) in the display font (Cinzel Decorative), drop shadow
