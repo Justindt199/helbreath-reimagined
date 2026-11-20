@@ -1341,13 +1341,14 @@ struct StoneTex {
 	bool tried = false;
 };
 StoneTex g_stone[CRenderer::STONE_COUNT] = {
-	{ "CONTENTS\\ui\\panel.png", 24, 24, 0.75f },
-	{ "CONTENTS\\ui\\button.png", 16, 9, 0.7f },
-	{ "CONTENTS\\ui\\button_hover.png", 16, 9, 0.7f },
-	{ "CONTENTS\\ui\\button_pressed.png", 16, 9, 0.7f },
-	{ "CONTENTS\\ui\\slot.png", 10, 10, 0.8f },
-	{ "CONTENTS\\ui\\slot_active.png", 10, 10, 0.8f },
-	{ "CONTENTS\\ui\\bar_frame.png", 11, 6, 1.0f },
+	// HD pictures (Hi3D, 3x VALORIA's): the edges cover the same screen size as before
+	{ "CONTENTS\\ui\\panel.png", 60, 60, 0.333f },			// 384 x 384
+	{ "CONTENTS\\ui\\button.png", 48, 20, 0.27f },			// 384 x 140
+	{ "CONTENTS\\ui\\button_hover.png", 48, 20, 0.27f },
+	{ "CONTENTS\\ui\\button_pressed.png", 48, 20, 0.27f },
+	{ "CONTENTS\\ui\\slot.png", 30, 30, 0.27f },			// 192 x 192
+	{ "CONTENTS\\ui\\slot_active.png", 30, 30, 0.27f },
+	{ "CONTENTS\\ui\\bar_frame.png", 44, 14, 0.3f },		// 456 x 48
 };
 StoneTex * Stone(int i)
 {
