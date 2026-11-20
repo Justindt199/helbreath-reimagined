@@ -25163,6 +25163,10 @@ void CGame::OnKeyUp(WPARAM wParam)
 		break;
 
 	case VK_F12:
+		if (m_bCtrlPressed && m_iGmLevel > 0 && m_cGameMode == GAMEMODE_ONMAINGAME)	// Ctrl+F12: the GM console (UI\GmConsole.cpp)
+		{	if (!m_bInputStatus || GmTyping()) ToggleGmConsole();
+			break;
+		}
 		if(m_bInputStatus) return;
 		ToggleSettingsMenu();
 		break;
@@ -25231,10 +25235,6 @@ void CGame::OnKeyUp(WPARAM wParam)
 
 #ifndef USING_WIN_IME
 	case VK_TAB:
-		if (m_bCtrlPressed && m_iGmLevel > 0 && m_cGameMode == GAMEMODE_ONMAINGAME)	// Ctrl+Tab: the GM console (UI\GmConsole.cpp)
-		{	if (!m_bInputStatus || GmTyping()) ToggleGmConsole();
-			break;
-		}
 		if (m_cGameMode == GAMEMODE_ONMAINGAME && m_bInputStatus && m_pInputBuffer == m_cChatMsg)
 		{	CycleChatChannel(m_bShiftPressed == TRUE);	// typing: switch the channel instead
 			break;

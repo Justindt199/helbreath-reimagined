@@ -2,7 +2,7 @@
 // Masters get it: the server tells the client its GM level on entering the game (NOTIFY_GMLEVEL,
 // HG Server GmConsole.cpp), and checks it again on every command.
 //
-//   - toggle with Ctrl+Tab; the command line takes the typing while it is open (help lists the
+//   - toggle with Ctrl+F12; the command line takes the typing while it is open (help lists the
 //     commands, Up / Down go through the ones you typed, Enter runs one).
 //   - tabs: Player (fixes, cheats, progress, stats), Teleport (every map, shrines and chests),
 //     Items (search and give), Monsters (search and spawn, kill), World (weather, map tools).
@@ -98,7 +98,7 @@ void CGame::NotifyMsg_GmLevel(char * pData)
 	if (m_iGmLevel <= 0 && m_bIsDialogEnabled[DIALOG_GMCONSOLE]) ToggleGmConsole();
 	if (m_iGmLevel > 0 && m_gmLog.empty()) {
 		GmLog("GM console. Type help for the commands. Ctrl+click teleports when Click-teleport is on.", kAccent);
-		AddEventList("GM console ready: press Ctrl+Tab.", 10);
+		AddEventList("GM console ready: press Ctrl+F12.", 10);
 	}
 }
 
@@ -452,7 +452,7 @@ void CGame::DrawDialogBox_GmConsole()
 
 	R.StonePanel(X, Y, X + W, Y + H);
 	R.TitleOut(X + 14, Y + 8, "GM CONSOLE", kAccent, 15);
-	R.TextOutSized(X + 140, Y + 13, "Ctrl+Tab opens and closes it", kDim, 10);
+	R.TextOutSized(X + 140, Y + 13, "Ctrl+F12 opens and closes it", kDim, 10);
 	R.FillPanel(X + 1, Y + 33, X + W - 1, Y + 34, 0, RGB(255, 255, 255), 26);
 	R.Slate(X + 10, Y + kBodyTop, X + W - 10, Y + BodyBottom());
 
