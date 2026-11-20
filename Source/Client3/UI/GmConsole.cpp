@@ -17,6 +17,7 @@
 #include "..\..\shared\buffer.h"
 #include "..\..\shared\ValoriaWorld.h"
 #include "GmData.h"
+#include "GmCommands.h"
 
 #include <algorithm>
 #include <string>
@@ -34,17 +35,20 @@ const COLORREF kBad		= RGB(255, 135, 115);
 const COLORREF kGold	= RGB(232, 188, 92);
 const COLORREF kBoss	= RGB(255, 165, 90);
 
-const int W = CGame::GMWIN_W, H = CGame::GMWIN_H;
+const int W = CGame::GMWIN_W;
+int GmWinH() { return (std::min)((int)CGame::GMWIN_H, (int)GAME_H - 20); }	// smaller on small screens
+#define H (GmWinH())
 const int kBodyTop = 66, kLogH = 104, kInputH = 24;
 const int kListRows = 12;
 
 bool InRect(const RECT & rc, int x, int y) { return x >= rc.left && x < rc.right && y >= rc.top && y < rc.bottom; }
 
-enum { TAB_PLAYER, TAB_TELEPORT, TAB_ITEMS, TAB_MONSTERS, TAB_WORLD, TAB_COUNT };
-const char * const kTabs[TAB_COUNT] = { "Player", "Teleport", "Items", "Monsters", "World" };
+enum { TAB_PLAYER, TAB_TELEPORT, TAB_ITEMS, TAB_MONSTERS, TAB_WORLD, TAB_COMMANDS, TAB_COUNT };
+const char * const kTabs[TAB_COUNT] = { "Player", "Teleport", "Items", "Monsters", "World", "All commands" };
 
 // Something clickable: a button runs its command; a few have special actions.
-enum { ACT_RUN, ACT_TAB, ACT_PAGE, ACT_QTY, ACT_SEARCH, ACT_INPUT, ACT_CLOSE, ACT_HEAD, ACT_LABEL };
+enum { ACT_RUN, ACT_TAB, ACT_PAGE, ACT_QTY, ACT_SEARCH, ACT_INPUT, ACT_CLOSE, ACT_HEAD, ACT_LABEL,
+	ACT_CAT, ACT_CMDSEL, ACT_BACK, ACT_ARGEDIT, ACT_ARGPICK, ACT_ARGSET, ACT_ARGADD, ACT_ARGCLEAR, ACT_BUILD_RUN, ACT_BUILD_LINE };
 struct Btn {
 	RECT rc;
 	int act, arg;
@@ -111,7 +115,7 @@ void CGame::GmLog(const std::string & s, COLORREF c)
 
 bool CGame::GmTyping() const
 {
-	return m_bInputStatus && (m_pInputBuffer == m_cGmInput || m_pInputBuffer == m_cGmSearch);
+	return m_bInputStatus && (m_pInputBuffer == m_cGmInput || m_pInputBuffer == m_cGmSearch || m_pInputBuffer == m_cGmArgEdit);
 }
 
 void CGame::ToggleGmConsole()
@@ -136,6 +140,12 @@ bool CGame::GmConsoleOnEnter()
 	if (!GmTyping()) return false;
 	if (!m_bIsDialogEnabled[DIALOG_GMCONSOLE]) { EndInputString(); return true; }	// closed while typing: nothing to run
 	if (m_pInputBuffer == m_cGmSearch) { EndInputString(); m_iGmPage = 0; return true; }
+	if (m_pInputBuffer == m_cGmArgEdit) {	// a value typed into the command builder
+		EndInputString();
+		if (m_iGmEdit >= 0 && m_iGmEdit < GmCmd::MAX_ARGS) m_gmArgs[m_iGmEdit] = m_cGmArgEdit;
+		m_iGmEdit = -1;
+		return true;
+	}
 	EndInputString();
 	char cLine[sizeof(m_cGmInput)];
 	strcpy(cLine, m_cGmInput);
@@ -197,6 +207,58 @@ const char * const kHelp[] = {
 
 } // namespace
 
+// "/summon <monster> <count> [ability]"
+std::string GmSyntax(int i)
+{
+	const GmCmd::Cmd & c = GmCmd::kCmds[i];
+	std::string s = c.cmd;
+	for (int a = 0; a < GmCmd::MAX_ARGS && c.args[a].name; a++)
+		s += c.args[a].optional ? std::string(" [") + c.args[a].name + "]" : std::string(" <") + c.args[a].name + ">";
+	return s;
+}
+
+// The values an argument can take from a list (value, label), for the builder's picker.
+std::vector<std::pair<std::string, std::string>> CGame::GmOptions(int iType) const
+{
+	std::vector<std::pair<std::string, std::string>> v;
+	switch (iType) {
+	case GmCmd::T_MAP: for (int i = 0; i < GmData::MAP_COUNT; i++) v.push_back({ GmData::kMaps[i].id, GmData::kMaps[i].name }); break;
+	case GmCmd::T_MONSTER: for (int i = 0; i < GmData::MONSTER_COUNT; i++) v.push_back({ GmData::kMonsters[i].name, GmData::kMonsters[i].name }); break;
+	case GmCmd::T_FORM: for (int i = 0; i < GmCmd::FORM_COUNT; i++) v.push_back({ GmCmd::kForms[i], GmCmd::kForms[i] }); break;
+	case GmCmd::T_ITEM:
+		for (int i = 0; i < MAXITEMNAMES; i++) if (m_pItemNameList[i] != NULL) v.push_back({ m_pItemNameList[i]->m_cOriginName, m_pItemNameList[i]->m_cName });
+		break;
+	case GmCmd::T_SPELL:
+		for (int i = 0; i < MAXMAGICTYPE; i++) if (m_pMagicCfgList[i] != NULL && m_pMagicCfgList[i]->m_cName[0]) v.push_back({ m_pMagicCfgList[i]->m_cName, m_pMagicCfgList[i]->m_cName });
+		break;
+	}
+	return v;
+}
+
+// The builder's command as it would be sent; empty with *pErr set when a needed value is missing.
+std::string CGame::GmBuildLine(std::string * pErr) const
+{
+	if (m_iGmCmd < 0 || m_iGmCmd >= GmCmd::CMD_COUNT) return "";
+	const GmCmd::Cmd & c = GmCmd::kCmds[m_iGmCmd];
+	std::string s = c.cmd, pending;
+	for (int a = 0; a < GmCmd::MAX_ARGS && c.args[a].name; a++) {
+		const GmCmd::Arg & g = c.args[a];
+		std::string v = (m_iGmEdit == a && m_bInputStatus && m_pInputBuffer == m_cGmArgEdit) ? std::string(m_cGmArgEdit) : m_gmArgs[a];
+		for (auto & ch : v) if (ch == ' ' && g.type != GmCmd::T_TEXT) ch = '-';
+		if (v.empty()) {
+			if (!g.optional) { if (pErr) *pErr = std::string("Pick a value for ") + g.name + "."; return ""; }
+			// an optional value left out: the ones after it go only if one is set (then this takes its default)
+			pending += " " + (g.type == GmCmd::T_INT ? std::to_string(g.def) : std::string("0"));
+			continue;
+		}
+		s += pending + " " + v;
+		pending.clear();
+	}
+	return s;
+}
+
+namespace {
+
 void CGame::GmSend(const std::string & s)
 {
 	char cTxt[200];
@@ -219,7 +281,25 @@ void CGame::GmRun(const char * pCmd)
 	if (arg.find(' ') != std::string::npos) { a2 = arg.substr(arg.find(' ') + 1); while (!a2.empty() && a2[0] == ' ') a2.erase(0, 1); }
 	char cTxt[200];
 
-	if (c == "help" || c == "?") { for (const char * h : kHelp) GmLog(h, kText); }
+	if ((c == "help" || c == "?") && !a1.empty()) {	// help <command>: its syntax
+		bool bAny = false;
+		for (int i = 0; i < GmCmd::CMD_COUNT; i++) {
+			const std::string n = GmCmd::kCmds[i].cmd;
+			if (Lower(n) != Lower(a1) && Lower(n) != "/" + Lower(a1)) continue;
+			GmLog(GmSyntax(i) + "   (GM level " + std::to_string(GmCmd::kCmds[i].lv) + ")", kAccent);
+			GmLog(GmCmd::kCmds[i].desc, kText);
+			bAny = true;
+		}
+		if (!bAny) GmLog("No command " + a1 + ". The All commands tab lists every one.", kBad);
+	}
+	else if (c == "cmds" || c == "commands") {
+		for (int k = 0; k < GmCmd::CAT_COUNT; k++) {
+			std::string s = std::string(GmCmd::kCats[k]) + ": ";
+			for (int i = 0; i < GmCmd::CMD_COUNT; i++) if (strcmp(GmCmd::kCmds[i].cat, GmCmd::kCats[k]) == 0) s += std::string(GmCmd::kCmds[i].cmd) + " ";
+			GmLog(s, kText);
+		}
+	}
+	else if (c == "help" || c == "?") { for (const char * h : kHelp) GmLog(h, kText); GmLog("help <command> shows one command; cmds lists them all.", kText); }
 	else if (c == "clear") { m_gmLog.clear(); m_gmLogCol.clear(); }
 	else if (c == "heal" || c == "learn" || c == "killall" || c == "town") GmSend("/gm " + c);
 	else if (c == "levelup" || c == "level") GmSend("/gm levelup " + (a1.empty() ? std::string("1") : a1));
@@ -287,7 +367,7 @@ void CGame::GmRun(const char * pCmd)
 	else if (c == "kill") GmSend("/vkill");
 	else if (c == "unsummon") GmSend("/unsummonall");
 	else if (c == "weather") GmSend("/setweather " + (a1.empty() ? std::string("0") : a1));
-	else if (c == "clearmap") GmSend("/clearmap");
+	else if (c == "clearmap") { char cMap[12] = {}; memcpy(cMap, m_cMapName, 10); GmSend(std::string("/clearmap ") + (a1.empty() ? cMap : a1)); }
 	else if (c == "who") GmSend("/who");
 	else if (c == "count") GmSend("/mcount");
 	else GmLog("Unknown command: " + c + "   (type help)", kBad);
@@ -436,8 +516,101 @@ void GmButtons(CGame & g, std::vector<Btn> & out)
 		f.Button("Who is online", "who");
 		f.Label("goto <name> jumps to a player, bring <name> brings them to you.", W - 40, kDim);
 		f.Gap(); f.Head("CONSOLE");
-		f.Button("Help", "help"); f.Button("Clear log", "clear");
+		f.Button("Help", "help"); f.Button("Every command", "cmds"); f.Button("Clear log", "clear");
 		break;
+	case TAB_COMMANDS: {
+		if (g.m_iGmCmd < 0) {		// the list, by category
+			for (int k = 0; k < GmCmd::CAT_COUNT; k++) f.Button(GmCmd::kCats[k], "", g.m_iGmCat == k, ACT_CAT, k);
+			f.Gap();
+			for (int i = 0; i < GmCmd::CMD_COUNT; i++) {
+				const GmCmd::Cmd & c = GmCmd::kCmds[i];
+				if (strcmp(c.cat, GmCmd::kCats[g.m_iGmCat]) != 0) continue;
+				f.Button(GmSyntax(i), "", false, ACT_CMDSEL, i, 250);
+				wsprintf(cTxt, "lv %d", c.lv);
+				f.Label(cTxt, 34, c.lv > g.m_iGmLevel ? kBad : kDim);
+				f.Label(c.desc, W - 40 - 250 - 34 - 12, kGrey);
+				f.NewLine();
+				f.y -= 3;
+			}
+			f.Gap();
+			f.Label("Click a command to fill in its values. Red levels are above yours.", W - 40, kDim);
+			break;
+		}
+		// the builder
+		const GmCmd::Cmd & c = GmCmd::kCmds[g.m_iGmCmd];
+		f.Button("< All commands", "", false, ACT_BACK);
+		wsprintf(cTxt, "GM level %d%s", c.lv, c.lv > g.m_iGmLevel ? " - above yours, the server will refuse it" : "");
+		f.Label(cTxt, 330, c.lv > g.m_iGmLevel ? kBad : kGrey);
+		f.Gap();
+		f.Head(GmSyntax(g.m_iGmCmd).c_str());
+		f.Label(c.desc, W - 40, kText);
+		f.Gap();
+		for (int a = 0; a < GmCmd::MAX_ARGS && c.args[a].name; a++) {
+			if (g.m_iGmPick >= 0 && a != g.m_iGmPick) continue;		// picking: just that value, to make room
+			const GmCmd::Arg & ar = c.args[a];
+			f.Label(std::string(ar.name) + (ar.optional ? " (optional)" : ""), 120, kGrey);
+			const bool bEditing = g.m_iGmEdit == a && g.m_bInputStatus && g.m_pInputBuffer == g.m_cGmArgEdit;
+			const std::string val = g.m_gmArgs[a].empty() ? std::string("(empty)") : g.m_gmArgs[a];
+			switch (ar.type) {
+			case GmCmd::T_TEXT: case GmCmd::T_PLAYER:
+				f.Button(bEditing ? std::string("typing...") : val, "", bEditing, ACT_ARGEDIT, a, 160);
+				if (ar.type == GmCmd::T_PLAYER) { char cMe[12] = {}; memcpy(cMe, g.m_cPlayerName, 10); f.Button("Myself", cMe, false, ACT_ARGSET, a); }
+				break;
+			case GmCmd::T_INT: {
+				f.Button(bEditing ? std::string("typing...") : val, "", bEditing, ACT_ARGEDIT, a, 90);
+				static const char * const kD[6] = { "-100", "-10", "-1", "+1", "+10", "+100" };
+				for (int d = 0; d < 6; d++) f.Button(kD[d], kD[d], false, ACT_ARGADD, a, 40);
+				break; }
+			case GmCmd::T_CHOICE: {
+				const std::string all = ar.choices;
+				size_t p = 0;
+				while (p < all.size()) {
+					size_t e = all.find('|', p); if (e == std::string::npos) e = all.size();
+					const std::string it = all.substr(p, e - p);
+					const size_t q = it.find('=');
+					const std::string v = it.substr(0, q), lab = it.substr(q + 1);
+					f.Button(lab, v, g.m_gmArgs[a] == v, ACT_ARGSET, a);
+					p = e + 1;
+				}
+				break; }
+			default:		// picked from a list
+				f.Button(val, "", g.m_iGmPick == a, ACT_ARGPICK, a, 200);
+				f.Button(g.m_iGmPick == a ? "Hide list" : "Pick from list", "", g.m_iGmPick == a, ACT_ARGPICK, a);
+				if (ar.type == GmCmd::T_MAP) { char cMap[12] = {}; memcpy(cMap, g.m_cMapName, 10); f.Button("This map", cMap, false, ACT_ARGSET, a); }
+				break;
+			}
+			if (ar.optional && !g.m_gmArgs[a].empty()) f.Button("Leave out", "", false, ACT_ARGCLEAR, a);
+			f.NewLine();
+		}
+		if (g.m_iGmPick >= 0 && g.m_iGmPick < GmCmd::MAX_ARGS && c.args[g.m_iGmPick].name) {	// the picker
+			f.Gap();
+			f.Button(g.m_cGmSearch[0] ? std::string("Search: ") + g.m_cGmSearch : std::string("Search..."), "", g.GmTyping() && g.m_pInputBuffer == g.m_cGmSearch, ACT_SEARCH, 0, 200);
+			const std::vector<std::pair<std::string, std::string>> opts = g.GmOptions(c.args[g.m_iGmPick].type);
+			std::vector<int> v;
+			const std::string q = Lower(g.m_cGmSearch);
+			for (int i = 0; i < (int)opts.size(); i++)
+				if (q.empty() || Lower(opts[i].first).find(q) != std::string::npos || Lower(opts[i].second).find(q) != std::string::npos) v.push_back(i);
+			const int per = 12, pages = (std::max)(1, ((int)v.size() + per - 1) / per);
+			if (g.m_iGmPage >= pages) g.m_iGmPage = pages - 1;
+			wsprintf(cTxt, "%d  -  page %d/%d", (int)v.size(), g.m_iGmPage + 1, pages);
+			f.Label(cTxt, 110, kGrey);
+			f.Button("<", "", false, ACT_PAGE, -1, 26); f.Button(">", "", false, ACT_PAGE, 1, 26);
+			f.NewLine();
+			for (int r = 0; r < per && g.m_iGmPage * per + r < (int)v.size(); r++) {
+				const auto & o = opts[v[g.m_iGmPage * per + r]];
+				std::string lab = o.second.size() > 22 ? o.second.substr(0, 21) + "." : o.second;
+				f.Button(lab, o.first, g.m_gmArgs[g.m_iGmPick] == o.first, ACT_ARGSET, g.m_iGmPick, 190);
+			}
+		}
+		f.Gap();
+		std::string err;
+		const std::string line = g.GmBuildLine(&err);
+		f.Label(line.empty() ? err : "Sends:  " + line, W - 40, line.empty() ? kBad : kOk);
+		f.NewLine();
+		const bool bConfirm = strcmp(c.cmd, "/shutdownthisserverrightnow") == 0 && g.m_dwGmConfirmAt != 0 && g.m_dwCurTime - g.m_dwGmConfirmAt < 4000;
+		f.Button(bConfirm ? "Click again to shut the server down" : "Run", "", bConfirm, ACT_BUILD_RUN, 0, 90);
+		f.Button("Put on the command line", "", false, ACT_BUILD_LINE);
+		break; }
 	}
 }
 
@@ -478,7 +651,8 @@ void CGame::DrawDialogBox_GmConsole()
 			R.TitleCentered(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, b.label.c_str(), b.on ? RGB(255, 242, 199) : kText, 12);
 			break;
 		default: {
-			if (b.act == ACT_SEARCH && m_bInputStatus && m_pInputBuffer == m_cGmSearch) {
+			if ((b.act == ACT_SEARCH && m_bInputStatus && m_pInputBuffer == m_cGmSearch) ||
+				(b.act == ACT_ARGEDIT && b.on && m_bInputStatus && m_pInputBuffer == m_cGmArgEdit)) {
 				R.FillPanel(b.rc.left, b.rc.top, b.rc.right, b.rc.bottom, 4, RGB(0, 0, 0), 170, kAccent, 200);
 				m_iInputX = b.rc.left + 8; m_iInputY = b.rc.top + 4; m_iInputX2 = b.rc.right - 8;
 				break;
@@ -530,6 +704,61 @@ void CGame::DlgBoxClick_GmConsole()
 			GmLog("> " + b.cmd, kGrey);
 			GmRun(b.cmd.c_str());
 			return;
+		case ACT_CAT: m_iGmCat = b.arg; PlaySound('E', 14, 5); return;
+		case ACT_CMDSEL:
+			m_iGmCmd = b.arg; m_iGmPick = -1; m_iGmEdit = -1; m_iGmPage = 0; m_dwGmConfirmAt = 0;
+			ZeroMemory(m_cGmSearch, sizeof(m_cGmSearch));
+			for (int a = 0; a < GmCmd::MAX_ARGS; a++) {		// numbers and choices start on their default
+				const GmCmd::Arg & ar = GmCmd::kCmds[m_iGmCmd].args[a];
+				m_gmArgs[a].clear();
+				if (ar.name && !ar.optional && ar.type == GmCmd::T_INT) m_gmArgs[a] = std::to_string(ar.def);
+			}
+			PlaySound('E', 14, 5);
+			return;
+		case ACT_BACK: if (GmTyping() && m_pInputBuffer != m_cGmInput) EndInputString(); m_iGmCmd = -1; m_iGmPick = -1; m_iGmEdit = -1; PlaySound('E', 14, 5); return;
+		case ACT_ARGEDIT: {
+			if (m_bInputStatus) EndInputString();
+			m_iGmEdit = b.arg;
+			ZeroMemory(m_cGmArgEdit, sizeof(m_cGmArgEdit));
+			strncpy(m_cGmArgEdit, m_gmArgs[b.arg].c_str(), sizeof(m_cGmArgEdit) - 1);
+			StartInputString(b.rc.left + 8, b.rc.top + 4, sizeof(m_cGmArgEdit), m_cGmArgEdit, FALSE, b.rc.right - 8);
+			return; }
+		case ACT_ARGPICK:
+			m_iGmPick = (m_iGmPick == b.arg) ? -1 : b.arg; m_iGmPage = 0;
+			ZeroMemory(m_cGmSearch, sizeof(m_cGmSearch));
+			PlaySound('E', 14, 5);
+			return;
+		case ACT_ARGSET: m_gmArgs[b.arg] = b.cmd; PlaySound('E', 14, 5); return;
+		case ACT_ARGCLEAR: m_gmArgs[b.arg].clear(); PlaySound('E', 14, 5); return;
+		case ACT_ARGADD: {
+			const GmCmd::Arg & ar = GmCmd::kCmds[m_iGmCmd].args[b.arg];
+			long long v = m_gmArgs[b.arg].empty() ? ar.def : atoll(m_gmArgs[b.arg].c_str());
+			v += atoi(b.cmd.c_str());
+			if (v < ar.lo) v = ar.lo;
+			if (v > ar.hi) v = ar.hi;
+			m_gmArgs[b.arg] = std::to_string(v);
+			PlaySound('E', 14, 5);
+			return; }
+		case ACT_BUILD_RUN:
+		case ACT_BUILD_LINE: {
+			std::string err;
+			const std::string line = GmBuildLine(&err);
+			if (line.empty()) { GmLog(err, kBad); return; }
+			PlaySound('E', 14, 5);
+			if (b.act == ACT_BUILD_LINE) {
+				if (m_bInputStatus) EndInputString();
+				ZeroMemory(m_cGmInput, sizeof(m_cGmInput));
+				strncpy(m_cGmInput, line.c_str(), sizeof(m_cGmInput) - 1);
+				StartInputString(dlg.m_X + 22, dlg.m_Y + H - kInputH - 8, sizeof(m_cGmInput), m_cGmInput, FALSE, dlg.m_X + W - 22);
+				return;
+			}
+			if (strcmp(GmCmd::kCmds[m_iGmCmd].cmd, "/shutdownthisserverrightnow") == 0 && (m_dwGmConfirmAt == 0 || m_dwCurTime - m_dwGmConfirmAt >= 4000)) {
+				m_dwGmConfirmAt = m_dwCurTime; return;
+			}
+			m_dwGmConfirmAt = 0;
+			GmLog("> " + line, kGrey);
+			GmRun(line.c_str());
+			return; }
 		default: return;
 		}
 	}

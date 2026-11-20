@@ -561,7 +561,12 @@ public:
 	int  m_iGmLevel = 0;					// from the server (NOTIFY_GMLEVEL); 0 = not a GM
 	int  m_iGmTab = 0, m_iGmPage = 0, m_iGmQty = 1, m_iGmHist = 0;
 	bool m_bGmClickTp = false, m_bGmGod = false, m_bGmNoAggro = false, m_bGmInvis = false, m_bGmEth = false;
-	char m_cGmInput[96] = {}, m_cGmSearch[32] = {};
+	char m_cGmInput[96] = {}, m_cGmSearch[32] = {}, m_cGmArgEdit[64] = {};
+	int  m_iGmCat = 0, m_iGmCmd = -1, m_iGmPick = -1, m_iGmEdit = -1;	// All commands tab: category, command, picker, value being typed
+	std::string m_gmArgs[6];
+	DWORD m_dwGmConfirmAt = 0;
+	std::vector<std::pair<std::string, std::string>> GmOptions(int iType) const;
+	std::string GmBuildLine(std::string * pErr) const;
 	std::vector<std::string> m_gmLog, m_gmHistory;
 	std::vector<COLORREF> m_gmLogCol;
 	void NotifyMsg_GmLevel(char * pData);
