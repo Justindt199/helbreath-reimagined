@@ -76,8 +76,8 @@ static const Monster kMonsters[] = {
 };
 const int MONSTER_COUNT = (int)(sizeof(kMonsters) / sizeof(kMonsters[0]));
 
-struct Map { const char * id, * name; };
-static const Map kMaps[] = {
+struct Place { const char * id, * name; };
+static const Place kMaps[] = {
 	{ "aresden", "Aresden" },
 	{ "elvine", "Elvine" },
 	{ "middleland", "Middleland" },

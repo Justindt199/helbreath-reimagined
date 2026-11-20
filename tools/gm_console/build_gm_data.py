@@ -47,7 +47,7 @@ out = ['// GmData.h: the GM console\'s lists. Written by tools/gm_console/build_
        'static const Monster kMonsters[] = {']
 out += ['\t{ %s, %d, %d, %s },' % (c(n), hd, xp, 'true' if b else 'false') for n, hd, xp, b in mons]
 out += ['};', 'const int MONSTER_COUNT = (int)(sizeof(kMonsters) / sizeof(kMonsters[0]));', '',
-        'struct Map { const char * id, * name; };', 'static const Map kMaps[] = {']
+        'struct Place { const char * id, * name; };', 'static const Place kMaps[] = {']
 out += ['\t{ %s, %s },' % (c(m), c(MAP_NAMES.get(m, m))) for m in maps]
 out += ['};', 'const int MAP_COUNT = (int)(sizeof(kMaps) / sizeof(kMaps[0]));', '', '} // namespace GmData', '']
 p = os.path.join(ROOT, 'Source', 'Client3', 'UI', 'GmData.h')
