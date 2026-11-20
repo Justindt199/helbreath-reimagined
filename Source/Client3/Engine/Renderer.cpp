@@ -1348,7 +1348,7 @@ StoneTex g_stone[CRenderer::STONE_COUNT] = {
 	{ "CONTENTS\\ui\\button_pressed.png", 48, 20, 0.27f },
 	{ "CONTENTS\\ui\\slot.png", 30, 30, 0.27f },			// 192 x 192
 	{ "CONTENTS\\ui\\slot_active.png", 30, 30, 0.27f },
-	{ "CONTENTS\\ui\\bar_frame.png", 44, 14, 0.3f },		// 456 x 48
+	{ "CONTENTS\\ui\\bar_frame.png", 44, 13, 0.3f },		// 456 x 48, the groove see-through (the bar shows in it)
 };
 StoneTex * Stone(int i)
 {

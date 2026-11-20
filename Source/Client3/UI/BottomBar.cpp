@@ -51,20 +51,58 @@ std::string Commas(long long v)
 	return out;
 }
 
-// A bar: dark track, fill for the fraction, a lighter top half, and "cur / max" on it.
+// A colour times k (0 .. 2), clamped.
+COLORREF Shade(COLORREF c, float k)
+{
+	auto ch = [k](int v) { const int x = (int)(v * k + 0.5f); return x < 0 ? 0 : (x > 255 ? 255 : x); };
+	return RGB(ch(GetRValue(c)), ch(GetGValue(c)), ch(GetBValue(c)));
+}
+
+// A bar as a glass tube with liquid in it: dark tinted glass, the liquid filled to the fraction (deeper
+// at the bottom, bright through the middle, a moving surface at its end and a few rising bubbles), a
+// shine along the top of the glass over everything, and "cur / max" on it.
 void DrawVital(CRenderer & r, const RECT & rc, double f, COLORREF fill, COLORREF light, const char * pText, int iPx)
 {
+	const DWORD t = timeGetTime();
 	const int h = rc.bottom - rc.top;
-	r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 0, RGB(8, 8, 9), 242);	// VALORIA: a squared dark track
+	const int x0 = rc.left + 2, x1 = rc.right - 2, y0 = rc.top + 2, y1 = rc.bottom - 2, ih = y1 - y0;
+	r.FillPanel(rc.left, rc.top, rc.right, rc.bottom, 0, RGB(6, 7, 9), 240);		// the tube's back
+	if (ih > 0) r.FillPanel(x0, y0, x1, y1, 0, Shade(fill, 0.45f), 60);				// empty glass, faintly tinted
 	if (f < 0) f = 0;
 	if (f > 1) f = 1;
-	const int w = (int)((rc.right - rc.left - 4) * f + 0.5);
-	if (w > 0) {
-		const int fx1 = rc.left + 2 + w;
-		r.FillPanel(rc.left + 2, rc.top + 2, (std::min)(fx1, (int)rc.right - 2), rc.bottom - 2, 0, fill, 255);
-		r.FillPanel(rc.left + 2, rc.top + 2, (std::min)(fx1, (int)rc.right - 2), rc.top + h / 2, 0, light, 70);
+	const int w = (int)((x1 - x0) * f + 0.5);
+	if (w > 0 && ih > 0) {
+		const bool bFull = (w >= x1 - x0);
+		for (int y = y0; y < y1; y++) {		// the liquid, row by row
+			const float v = (ih > 1) ? (float)(y - y0) / (ih - 1) : 0.5f;	// 0 top .. 1 bottom
+			const float k = (1.05f + 0.7f * sinf(3.14159f * v) * (1.f - v)) * (1.f - 0.4f * v);	// bright upper middle, deep bottom
+			int xe = x0 + w;
+			if (!bFull) xe += (int)floorf(1.4f * sinf(t * 0.006f + y * 0.9f) + 0.5f);	// the surface moves
+			xe = (std::min)(xe, x1);
+			if (xe > x0) r.FillPanel(x0, y, xe, y + 1, 0, Shade(fill, k), 255);
+		}
+		if (!bFull && w > 2) {	// the surface: a bright edge
+			r.FillPanel(x0 + w - 2, y0, (std::min)(x0 + w, x1), y1, 0, light, 140);
+			r.FillPanel(x0 + w - 4, y0, x0 + w - 2, y1, 0, light, 50);
+		}
+		for (int b = 0; b < 4 && w > 6 && ih > 4; b++) {	// bubbles rising through the liquid
+			const DWORD period = 1400 + b * 370;
+			const DWORD cycle = (t + b * 911) / period;
+			const float ph = (float)((t + b * 911) % period) / period;
+			const unsigned seed = (unsigned)(cycle * 2654435761u + b * 40503u);
+			const int bx = x0 + 2 + (int)(seed % (unsigned)(w - 4));
+			const int by = y1 - 2 - (int)(ph * (ih - 3));
+			r.FillPanel(bx, by, bx + 2, by + (ih > 8 ? 2 : 1), 0, Shade(light, 1.15f), (int)(170 * (1.f - ph * 0.6f)));
+		}
 	}
-	r.StoneBarFrame(rc.left, rc.top, rc.right, rc.bottom);	// VALORIA's carved stone housing
+	if (ih > 0) {	// the glass over it all: a shine along the top, a softer one below the middle, a rim line
+		const int band = (std::max)(1, ih * 3 / 10);
+		r.FillPanel(x0, y0, x1, y0 + 1, 0, RGB(255, 255, 255), 95);
+		r.FillPanel(x0 + 1, y0 + 1, x1 - 1, y0 + band, 0, RGB(255, 255, 255), 48);
+		if (ih > 6) r.FillPanel(x0 + 2, y0 + ih * 6 / 10, x1 - 2, y0 + ih * 6 / 10 + 1, 0, RGB(255, 255, 255), 18);
+		r.FillPanel(x0, y1 - 1, x1, y1, 0, RGB(255, 255, 255), 28);
+	}
+	r.StoneBarFrame(rc.left, rc.top, rc.right, rc.bottom);	// the iron housing
 	if (pText && pText[0]) CentredShadow(r, rc.left, rc.right, rc.top + (h - iPx - 3) / 2, pText, kWhite, iPx);
 }
 
